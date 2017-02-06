@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="is_scale_tag" type="id"></item>
+    <item name="is_scale_fontsize_tag" type="id"></item>
+
+    <item name="title_bar" type="id"/>
+    <item name="btn_title_left" type="id"/>
+    <item name="btn_title_right" type="id"/>
+    <item name="text_title" type="id"/>
+    <item name="text_title_right" type="id"/>
+    <item name="text_title_left" type="id"/>
+    <item name="toolbar" type="id"/>
+    <item name="product_id" type="id"/>
+    <item name="detail_link" type="id"/>
+    <item name="user_id" type="id"/>
+
+</resources>

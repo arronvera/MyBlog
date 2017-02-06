@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--侧滑菜单-->
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/dl_left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--主布局-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <!--toolbar-->
+            <include layout="@layout/layout_toolbar" />
+           <RelativeLayout
+               android:id="@+id/fl_content"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"></RelativeLayout>
+        </LinearLayout>
+        <!--侧滑菜单-->
+        <RelativeLayout
+            android:id="@+id/ll_left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:background="@mipmap/ic_menu_background"
+            android:layout_gravity="start">
+            <RelativeLayout
+                android:id="@+id/rl_close"
+                android:layout_width="match_parent"
+                android:layout_height="120dp" >
+                <ImageView
+                    android:id="@+id/iv_menu_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_menu_close"
+                    android:layout_centerInParent="true"/>
+                </RelativeLayout>
+            <ListView
+                android:layout_below="@+id/rl_close"
+                android:id="@+id/lv_left_menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:layout_above="@+id/iv_sign_out" />
+            <ImageView
+                android:id="@+id/iv_sign_out"
+                android:layout_alignParentBottom="true"
+                android:layout_width="120dp"
+                android:layout_height="70dp"
+                android:src="@mipmap/ic_sign_out"/>
+        </RelativeLayout>
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>

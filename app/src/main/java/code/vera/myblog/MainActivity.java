@@ -1,0 +1,204 @@
+package code.vera.myblog;
+
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import code.vera.myblog.adapter.MenuItemAdapter;
+import code.vera.myblog.bean.MenuItem;
+import code.vera.myblog.model.MainModel;
+import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.fragment.MenuFragment;
+import code.vera.myblog.presenter.fragment.find.FindFragment;
+import code.vera.myblog.presenter.fragment.home.HomeFragment;
+import code.vera.myblog.presenter.fragment.me.MeFragment;
+import code.vera.myblog.presenter.fragment.message.MessageFragment;
+import code.vera.myblog.utils.DialogUtils;
+import code.vera.myblog.view.VoidView;
+
+import static code.vera.myblog.R.id.lv_left_menu;
+
+/**
+ * 主界面
+ */
+public class MainActivity extends PresenterActivity<VoidView, MainModel> implements AdapterView.OnItemClickListener,MenuFragment.FragmentDrawerListener
+ {
+     @BindView(R.id.dl_left)
+     DrawerLayout dlLeft;
+     @BindView(lv_left_menu)
+     ListView lvMenu;
+     @BindView(R.id.toolbar)
+     Toolbar toolbar;
+
+     private ActionBarDrawerToggle drawerToggle;
+     private Activity activity;
+     //使用集合来储存侧滑菜单的菜单项
+     private ArrayList<MenuItem> menuList;
+     //使用ArrayAdapter来对ListView的内容进行填充
+     private MenuItemAdapter adapter;
+     private FragmentManager fragmentManager;
+     private boolean isExit=false;
+     private long firstTime = 0;
+
+     @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void onAttach() {
+        super.onAttach();
+        initView();
+        initData();
+        setAdapter();
+        addListener();
+    }
+
+     private void addListener() {
+         lvMenu.setOnItemClickListener(this);
+     }
+
+     private void setAdapter() {
+         //初始化adapter
+         adapter = new MenuItemAdapter(menuList,this);
+         //为侧边菜单填充上内容
+         lvMenu.setAdapter(adapter);
+     }
+     private void initData() {
+         //初始化menulists
+         menuList = new ArrayList<>();
+         MenuItem item=new MenuItem();
+         item.setText("首页");
+         item.setPic(R.mipmap.ic_home);
+         menuList.add(item);
+         item=new MenuItem();
+         item.setText("消息");
+         item.setPic(R.mipmap.ic_message);
+         menuList.add(item);
+         item=new MenuItem();
+         item.setText("发现");
+         item.setPic(R.mipmap.ic_find);
+         menuList.add(item);
+         item=new MenuItem();
+         item.setText("我");
+         item.setPic(R.mipmap.ic_mine);
+         menuList.add(item);
+     }
+     private void initView() {
+         //设置菜单
+         toolbar.inflateMenu(R.menu.toolbar_menu);
+         //开关
+         drawerToggle = new ActionBarDrawerToggle(activity, dlLeft, toolbar, R.string.drawer_open, R.string.drawer_close);
+         drawerToggle.syncState();
+         dlLeft.setDrawerListener(drawerToggle);
+
+         //
+          fragmentManager = getSupportFragmentManager();
+
+     }
+
+
+     @OnClick({R.id.iv_sign_out,R.id.iv_menu_close})
+     public void doClick(View v){
+         switch (v.getId()){
+             case R.id.iv_sign_out:
+                 //退出登录
+                 DialogUtils.showDialog(this, "", "你是否确定注销登陆？", "确定", new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialog, int which) {
+                         logOut();
+                     }
+                 },"取消",null);
+                 break;
+             case R.id.iv_menu_close://关闭菜单
+                 dlLeft.closeDrawer(GravityCompat.START);
+                 break;
+         }
+     }
+
+     /**
+      * 退出登录
+      */
+     private void logOut() {
+         //清空token
+         AccessTokenKeeper.clear(this);
+         //跳转
+         Intent intent=new Intent(this,LoginActivity.class);
+         startActivity(intent);
+         finish();
+     }
+
+     @Override
+     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+         selectItem(position);
+     }
+
+     /**
+      * 跳转到对应Fragment
+      * @param position
+      */
+     private void selectItem(int position) {
+         Fragment fragment = null;
+         switch (position){
+             case 0:
+                 fragment=new HomeFragment();
+                 break;
+             case 1:
+                 fragment=new MessageFragment();
+
+                 break;
+             case 2:
+                 fragment=new FindFragment();
+
+                 break;
+             case 3:
+                 fragment=new MeFragment();
+                 break;
+         }
+         fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
+         dlLeft.closeDrawer(GravityCompat.START);
+         lvMenu.setItemChecked(position,true);
+
+     }
+
+     @Override
+     public void onDrawerItemSelected(View view, int ption) {
+         lvMenu.setOnItemClickListener(this);
+     }
+
+     @Override
+     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){//返回
+            if (dlLeft.isDrawerOpen(GravityCompat.START)){//如果菜单打开则关闭菜单
+                dlLeft.closeDrawer(GravityCompat.START);
+                return  false;
+            }else{
+                long secondTime = System.currentTimeMillis();
+                if (secondTime - firstTime > 2000) {                                       //如果两次按键时间间隔大于2秒，则不退出
+                    Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    firstTime = secondTime;//更新firstTime
+                    return true;
+                } else {//两次按键小于2秒时，退出应用
+                    System.exit(0);
+                }
+            }
+        }
+         return super.onKeyDown(keyCode, event);
+
+     }
+ }

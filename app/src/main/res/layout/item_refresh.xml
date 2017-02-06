@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ww.com.core.widget.CustomSwipeRefreshLayout
+        android:id="@+id/csr_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ww.com.core.widget.CustomRecyclerView
+            android:id="@+id/crv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </ww.com.core.widget.CustomSwipeRefreshLayout>
+
+</LinearLayout>

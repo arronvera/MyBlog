@@ -1,0 +1,26 @@
+package code.vera.myblog.presenter;
+
+import code.vera.myblog.model.IModel;
+import code.vera.myblog.view.BaseView;
+import rx.Subscription;
+
+/**
+ * Created by vera on 2016/12/28 0028.
+ */
+
+public class BasePresenter<M extends IModel, V extends BaseView> implements presenter  {
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
+
+    @Override
+    public void unSubscribe(Subscription subscription) {
+
+    }
+}
