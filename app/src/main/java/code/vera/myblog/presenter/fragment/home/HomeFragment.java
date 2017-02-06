@@ -27,9 +27,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
     protected void onAttach() {
         super.onAttach();
         requestBean=new HomeRequestBean();
-
         getData();
-
     }
 
     private void getData() {

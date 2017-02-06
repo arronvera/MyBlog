@@ -5,6 +5,8 @@ import android.app.Application;
 
 import java.util.ArrayList;
 
+import ww.com.core.Debug;
+
 /**
  * Created by vera on 2017/1/4 0004.
  */
@@ -16,6 +18,8 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        //设置debug的标签
+        Debug.setTag("myblog");
     }
     public static BaseApplication getInstance() {
         return instance;
