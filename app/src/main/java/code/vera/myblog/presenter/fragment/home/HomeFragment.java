@@ -28,7 +28,27 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
     protected void onAttach() {
         super.onAttach();
         requestBean=new HomeRequestBean();
+        getUser();
         getData();
+    }
+
+    private void getUser() {
+        model.getUserInfo(getContext(), bindUntilEvent(FragmentEvent.DESTROY), new Subscriber<Boolean>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+
+            }
+        });
     }
 
     private void getData() {

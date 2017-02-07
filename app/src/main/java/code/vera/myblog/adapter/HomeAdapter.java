@@ -6,13 +6,13 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import code.vera.myblog.R;
-import code.vera.myblog.bean.home.HomeWeiboBean;
+import code.vera.myblog.bean.home.StatusesBean;
 
 /**
  * Created by vera on 2017/2/7 0007.
  */
 
-public class HomeAdapter extends RvAdapter<HomeWeiboBean>{
+public class HomeAdapter extends RvAdapter<StatusesBean>{
     private Context context;
 
     public HomeAdapter(Context context) {
@@ -26,10 +26,10 @@ public class HomeAdapter extends RvAdapter<HomeWeiboBean>{
     }
 
     @Override
-    protected RvViewHolder<HomeWeiboBean> getViewHolder(int viewType, View view) {
+    protected RvViewHolder<StatusesBean> getViewHolder(int viewType, View view) {
         return new HomeViewHolder(view);
     }
-    class HomeViewHolder extends RvViewHolder<HomeWeiboBean> {
+    class HomeViewHolder extends RvViewHolder<StatusesBean> {
         @BindView(R.id.tv_content)
         TextView tvContent;
         public HomeViewHolder(View itemView) {
@@ -37,8 +37,8 @@ public class HomeAdapter extends RvAdapter<HomeWeiboBean>{
         }
 
         @Override
-        public void onBindData(int position, HomeWeiboBean bean) {
-//            tvContent.setText(bean.get);
+        public void onBindData(int position, StatusesBean bean) {
+            tvContent.setText(bean.getText());
         }
     }
 }

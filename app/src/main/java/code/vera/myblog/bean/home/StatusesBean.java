@@ -79,12 +79,12 @@ public class StatusesBean {
     private int positive_recom_flag;
     private String gif_ids;
     private int is_show_bulletin;
-    private List<?> pic_urls;
+    private List<String> pic_urls;
     private List<AnnotationsBean> annotations;
     private List<Integer> biz_ids;
-    private List<?> darwin_tags;
-    private List<?> hot_weibo_tags;
-    private List<?> text_tag_tips;
+    private List<String> darwin_tags;
+    private List<String> hot_weibo_tags;
+    private List<String> text_tag_tips;
 
     public String getCreated_at() {
         return created_at;
@@ -338,7 +338,7 @@ public class StatusesBean {
         return pic_urls;
     }
 
-    public void setPic_urls(List<?> pic_urls) {
+    public void setPic_urls(List<String> pic_urls) {
         this.pic_urls = pic_urls;
     }
 
@@ -358,27 +358,27 @@ public class StatusesBean {
         this.biz_ids = biz_ids;
     }
 
-    public List<?> getDarwin_tags() {
+    public List<String> getDarwin_tags() {
         return darwin_tags;
     }
 
-    public void setDarwin_tags(List<?> darwin_tags) {
+    public void setDarwin_tags(List<String> darwin_tags) {
         this.darwin_tags = darwin_tags;
     }
 
-    public List<?> getHot_weibo_tags() {
+    public List<String> getHot_weibo_tags() {
         return hot_weibo_tags;
     }
 
-    public void setHot_weibo_tags(List<?> hot_weibo_tags) {
+    public void setHot_weibo_tags(List<String> hot_weibo_tags) {
         this.hot_weibo_tags = hot_weibo_tags;
     }
 
-    public List<?> getText_tag_tips() {
+    public List<String> getText_tag_tips() {
         return text_tag_tips;
     }
 
-    public void setText_tag_tips(List<?> text_tag_tips) {
+    public void setText_tag_tips(List<String> text_tag_tips) {
         this.text_tag_tips = text_tag_tips;
     }
 
