@@ -76,8 +76,8 @@ public class HomeModel implements IModel{
      * @param subscriber
      */
     public void getUserInfo(Context context,Observable.Transformer
-            transformer,  Subscriber<Boolean> subscriber){
-        HomeApi.getUid(context) .map(new Func1<String, UserInfoBean>() {
+            transformer,  Subscriber<UserInfoBean> subscriber){
+        HomeApi.getUserInfo(context) .map(new Func1<String, UserInfoBean>() {
             @Override
             public  UserInfoBean call(String s) {
                 UserInfoBean userInfoBean=new UserInfoBean();

@@ -5,8 +5,10 @@ import com.trello.rxlifecycle.FragmentEvent;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.HomeAdapter;
 import code.vera.myblog.bean.home.HomeRequestBean;
+import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.model.home.HomeModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
+import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.HomeView;
 import rx.Subscriber;
 
@@ -33,20 +35,11 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
     }
 
     private void getUser() {
-        model.getUserInfo(getContext(), bindUntilEvent(FragmentEvent.DESTROY), new Subscriber<Boolean>() {
+        model.getUserInfo(getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<UserInfoBean>(getContext(),true){
             @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Boolean aBoolean) {
-
+            public void onNext(UserInfoBean bean) {
+                super.onNext(bean);
+                view.showUserInfo(bean);
             }
         });
     }
