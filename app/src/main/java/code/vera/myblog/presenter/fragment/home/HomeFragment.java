@@ -3,6 +3,7 @@ package code.vera.myblog.presenter.fragment.home;
 import com.trello.rxlifecycle.FragmentEvent;
 
 import code.vera.myblog.R;
+import code.vera.myblog.adapter.HomeAdapter;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.model.home.HomeModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
@@ -17,7 +18,7 @@ import rx.Subscriber;
 
 public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
     private HomeRequestBean requestBean;
-
+    private HomeAdapter adapter;//适配器
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_home;
@@ -35,6 +36,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
             @Override
             public void onCompleted() {
                 //todo
+
             }
 
             @Override

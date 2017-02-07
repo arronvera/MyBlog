@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -39,6 +40,25 @@
                     android:textColor="@color/color_bcbcbc"
                     tools:text="San Franco" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="20dp"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:background="@mipmap/btn_follow"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/btn_message"/>
+            </LinearLayout>
+            <include layout="@layout/item_refresh"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
