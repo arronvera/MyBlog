@@ -17,11 +17,11 @@
             android:layout_width="match_parent"
             android:padding="5dp"
             android:layout_height="wrap_content">
-            <ww.com.core.widget.CustomRecyclerView
-                android:id="@+id/crv_item_photo"
+            <code.vera.myblog.view.CircleImageView
                 android:layout_width="50dp"
-                android:layout_height="50dp"
-                ></ww.com.core.widget.CustomRecyclerView>
+                android:id="@+id/crv_item_photo"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp" />
             <TextView
                 android:id="@+id/tv_item_name"
                 android:layout_width="wrap_content"

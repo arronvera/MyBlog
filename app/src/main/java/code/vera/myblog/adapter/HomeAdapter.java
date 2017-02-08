@@ -4,9 +4,14 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import butterknife.BindView;
+import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.view.CircleImageView;
+import ww.com.core.Debug;
 
 /**
  * Created by vera on 2017/2/7 0007.
@@ -34,6 +39,8 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         TextView tvContent;
         @BindView(R.id.tv_item_name)
         TextView tvName;
+        @BindView(R.id.crv_item_photo)
+        CircleImageView civPhoto;
 
         public HomeViewHolder(View itemView) {
             super(itemView);
@@ -41,9 +48,17 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 
         @Override
         public void onBindData(int position, StatusesBean bean) {
-            tvContent.setText(bean.getText());
-//            tvName.setText(bean.getUserBean().getName());
-//            ImageLoader.getInstance().displayImage(bean.ge);
+            tvContent.setText(bean.getText());//内容
+            Debug.d("bean="+bean.toString());
+            if (bean.getUserBean()!=null){
+                tvName.setText(bean.getUserBean().getName());//用户名
+                ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
+                        .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
+            }else {
+                civPhoto.setImageResource(R.mipmap.ic_user_default);
+                tvName.setText("未知");
+            }
+
         }
     }
 }

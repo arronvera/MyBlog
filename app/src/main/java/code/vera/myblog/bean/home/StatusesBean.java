@@ -1,23 +1,26 @@
 package code.vera.myblog.bean.home;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * Created by vera on 2017/1/19 0019.
  */
 
 public class StatusesBean {
     private String created_at;//创建时间
-//    private int id;
-//    private String mid;
-//    private String idstr;
+    private long id;
+    private String mid;
+    private String idstr;
     private String text;//文字
-//    private int textLength; //文字长度
-//    private int  source_allowclick;//来源是否可以点击
-//    private String source;//来源
+    private int textLength; //文字长度
+    private int  source_allowclick;//来源是否可以点击
+    private String source;//来源
 //    private List<PicBean> pic_urls;//配图
-//    private UserBean userBean;
-//    private int reposts_count;//	转发数
-//    private int comments_count;//评论数
-//    private int attitudes_count;//表态数
+    private String user;
+    private UserBean userbean;
+    private int reposts_count;//	转发数
+    private int comments_count;//评论数
+    private int attitudes_count;//表态数
 
     public String getCreated_at() {
         return created_at;
@@ -26,15 +29,23 @@ public class StatusesBean {
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
-//
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
 //    public String getMid() {
 //        return mid;
 //    }
@@ -91,13 +102,13 @@ public class StatusesBean {
 //        this.pic_urls = pic_urls;
 //    }
 
-//    public UserBean getUserBean() {
-//        return userBean;
-//    }
-//
-//    public void setUserBean(UserBean userBean) {
-//        this.userBean = userBean;
-//    }
+    public UserBean getUserBean() {
+        return JSONObject.parseObject(user, UserBean.class);
+    }
+
+    public void setUserBean(UserBean user) {
+        this.userbean = user;
+    }
 
 //    public int getReposts_count() {
 //        return reposts_count;
@@ -122,4 +133,22 @@ public class StatusesBean {
 //    public void setAttitudes_count(int attitudes_count) {
 //        this.attitudes_count = attitudes_count;
 //    }
+
+    @Override
+    public String toString() {
+        return "StatusesBean{" +
+                "created_at='" + created_at + '\'' +
+                ", id=" + id +
+                ", mid='" + mid + '\'' +
+                ", idstr='" + idstr + '\'' +
+                ", text='" + text + '\'' +
+                ", textLength=" + textLength +
+                ", source_allowclick=" + source_allowclick +
+//                ", source='" + source + '\'' +
+                ", user=" + user +
+                ", reposts_count=" + reposts_count +
+                ", comments_count=" + comments_count +
+                ", attitudes_count=" + attitudes_count +
+                '}';
+    }
 }
