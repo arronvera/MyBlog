@@ -13,5 +13,6 @@ public class NetWorkConfig {
     public static final String USER_UID=BASE_URL+"/account/get_uid.json";
     //用户信息
     public static final String USER_INFO=BASE_URL+"/users/show.json";
-
+    //搜索用户时的联想搜索建议
+    public static final String SEARCH_USER=BASE_URL+"/search/suggestions/users.json";
 }

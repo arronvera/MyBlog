@@ -1,6 +1,9 @@
 package code.vera.myblog.bean.home;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by vera on 2017/1/19 0019.
@@ -15,7 +18,10 @@ public class StatusesBean {
     private int textLength; //文字长度
     private int  source_allowclick;//来源是否可以点击
     private String source;//来源
-//    private List<PicBean> pic_urls;//配图
+    //配图
+    private String pic_urls;
+    private List<PicBean> pic_list;//
+
     private String user;
     private UserBean userbean;
     private int reposts_count;//	转发数
@@ -24,6 +30,22 @@ public class StatusesBean {
 
     public String getCreated_at() {
         return created_at;
+    }
+
+    public String getPic_urls() {
+        return pic_urls;
+    }
+
+    public void setPic_urls(String pic_urls) {
+        this.pic_urls = pic_urls;
+    }
+
+    public List<PicBean> getPic_list() {
+        return JSONArray.parseArray(pic_urls,PicBean.class);
+    }
+
+    public void setPic_list(List<PicBean> pic_list) {
+        this.pic_list = pic_list;
     }
 
     public void setCreated_at(String created_at) {

@@ -1,24 +1,19 @@
 package code.vera.myblog.presenter.fragment.home;
 
-import android.content.Intent;
-import android.view.View;
-
 import com.trello.rxlifecycle.FragmentEvent;
 
 import java.util.List;
 
-import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.HomeAdapter;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
-import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.model.home.HomeModel;
-import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.HomeView;
 import ww.com.core.Debug;
+import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 
 /**
@@ -29,7 +24,6 @@ import ww.com.core.Debug;
 public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
-    private UserInfoBean userInfoBean;
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_home;
@@ -40,8 +34,24 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
         super.onAttach();
         requestBean=new HomeRequestBean();
         setAdater();
-        getUser();
         getData();
+        //上下拉刷新
+        view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
+            @Override
+            public void onHeaderRefreshing() {
+                //下拉刷新
+                requestBean.setPage("1");
+                getData();
+            }
+
+            @Override
+            public void onFooterRefreshing() {
+                //上拉加载
+                int nextPage=Integer.parseInt(requestBean.getPage())+1;
+                requestBean.setPage(nextPage+"");
+                getData();
+            }
+        });
 
     }
 
@@ -50,17 +60,10 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
         view.setAdapter(adapter);
     }
 
-    private void getUser() {
-        model.getUserInfo(getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<UserInfoBean>(getContext(),true){
-            @Override
-            public void onNext(UserInfoBean bean) {
-                super.onNext(bean);
-                HomeFragment.this.userInfoBean=bean;
-                view.showUserInfo(bean);
-            }
-        });
-    }
 
+    /**
+     * 获取数据
+     */
     private void getData() {
         model.getHomeTimeLine(requestBean, getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext,true){
             @Override
@@ -68,19 +71,14 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
                 super.onNext(statusesBeen);
                 if (statusesBeen!=null){
                     Debug.d("size="+statusesBeen.size());
-                    adapter.addList(statusesBeen);
+                    if (requestBean.getPage().equals("1")){
+                        adapter.addList(statusesBeen);//清空加载进去
+                    }else {//往后面追加
+                        adapter.appendList(statusesBeen);
+                    }
                 }
             }
         });
     }
-    @OnClick({R.id.civ_head_photo})
-    public void doClick(View v){
-        switch (v.getId()){
-            case R.id.civ_head_photo:
-                Intent intent=new Intent(getContext(), PersonalityActivity.class);
-                intent.putExtra("user",userInfoBean);
-                startActivity(intent);
-                break;
-        }
-    }
+
 }

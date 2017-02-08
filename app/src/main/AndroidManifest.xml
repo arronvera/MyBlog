@@ -12,13 +12,15 @@
         android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:supportsRtl="true"
-       >
-        <activity android:name=".MainActivity"
-            android:theme="@style/AppBaseTheme2"></activity>
-        <activity android:name=".SplashActivity"
-            android:theme="@style/AppBaseTheme"/>
-        <activity android:name=".LoginActivity"
+        android:supportsRtl="true">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppBaseTheme2" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/AppBaseTheme" />
+        <activity
+            android:name=".LoginActivity"
             android:theme="@style/AppBaseTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,17 +28,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".OAuthActivity"></activity>
-        <activity android:name=".presenter.activity.PersonalityActivity"
-            android:theme="@style/AppBaseTheme">
-        </activity>
+        <activity android:name=".OAuthActivity" />
+        <activity
+            android:name=".presenter.activity.PersonalityActivity"
+            android:theme="@style/AppBaseTheme"></activity>
         <!-- 必须注册在微博授权，分享微博时候用到 -->
-        <activity android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
-            android:windowSoftInputMode="adjustResize"
+            android:exported="false"
             android:theme="@style/AppBaseTheme"
-            android:exported="false" >
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".presenter.activity.SearchActivity"
+            android:theme="@style/AppBaseTheme"></activity>
     </application>
 
 </manifest>
