@@ -1,11 +1,13 @@
 package code.vera.myblog.bean.home;
 
+import java.io.Serializable;
+
 /**
  * 用户信息
  * Created by vera on 2017/2/7 0007.
  */
 
-public class UserInfoBean {
+public class UserInfoBean implements Serializable {
 
     /**
      * id : 1404376560

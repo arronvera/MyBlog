@@ -39,6 +39,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         @Override
         public void onBindData(int position, StatusesBean bean) {
             tvContent.setText(bean.getText());
+//            ImageLoader.getInstance().displayImage(bean.ge);
         }
     }
 }

@@ -61,6 +61,7 @@
                     android:background="@mipmap/btn_message"/>
             </LinearLayout>
             <include layout="@layout/item_refresh"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

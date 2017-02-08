@@ -28,8 +28,6 @@ public class RefreshView extends BaseView {
     @BindView(R.id.crv)
     public CustomRecyclerView crv;
 
-//    private PagingBean pagingBean;
-
     protected RvAdapter adapter;
     private View emptyView;
 
@@ -74,23 +72,6 @@ public class RefreshView extends BaseView {
 
 
     }
-
-//    public PagingBean getPagingBean() {
-//        return pagingBean;
-//    }
-//
-//    public void setPagingBean(@NonNull PagingBean pagingBean) {
-////        emptyView.setVisibility(View.VISIBLE);
-//        this.pagingBean = pagingBean;
-//        if (pagingBean.isBottom()) {
-//            csrLayout.setFooterRefreshAble(false);
-//        } else {
-//            csrLayout.setFooterRefreshAble(true);
-////            showMoreView();
-//        }
-//    }
-
-
     @Optional
     public void refreshFinished() {
 //        hideMoreView();

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
@@ -33,17 +32,15 @@ public class HomeModel implements IModel{
      * 获取当前登录用户及其所关注（授权）用户的最新微博
      */
     public void getHomeTimeLine(HomeRequestBean bean, Context context,Observable.Transformer
-                                       transformer,  Subscriber<Boolean> subscriber){
+                                       transformer,  Subscriber<List<StatusesBean>> subscriber){
         HomeApi.getHomeTimeLine(bean,context)
                 .map(new Func1<String, List<StatusesBean>>() {
                     @Override
                     public  List<StatusesBean> call(String s) {
                         List<StatusesBean>beanList=new ArrayList<>();
                         JSONObject result= JSON.parseObject(s);
-//                        HomeWeiboBean homeWeiboBean=new HomeWeiboBean();
                         if (result!=null){
-//                             homeWeiboBean=JSON.parseObject(s,HomeWeiboBean.class);
-                          beanList= JSONArray.parseArray(result.getString("statuses"),StatusesBean.class);
+                          beanList= JSON.parseArray(result.getString("statuses"),StatusesBean.class);
                             Debug.d("beanlist.size="+beanList.size());
                         }
                         return beanList;
