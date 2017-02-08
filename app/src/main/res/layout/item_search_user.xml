@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorWhite"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <code.vera.myblog.view.CircleImageView
+            android:layout_width="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="50dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_item_user_name"
+                android:layout_width="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/color_ff8162"
+                android:layout_height="wrap_content"
+                tools:text="某某某"/>
+            <TextView
+                android:id="@+id/tv_item_user_intro"
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                tools:text="某某某"/>
+            <TextView
+                android:id="@+id/tv_item_user_fans"
+                android:layout_width="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/color_bcbcbc"
+                android:layout_height="wrap_content"
+                tools:text="粉丝：1698万"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

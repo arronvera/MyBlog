@@ -11,7 +11,7 @@ import code.vera.myblog.R;
  * Created by vera on 2017/2/8 0008.
  */
 
-public class SearchView extends BaseView {
+public class SearchView extends RefreshView {
     @BindView(R.id.et_info)
     EditText etInfo;
 
