@@ -27,7 +27,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".OAuthActivity"></activity>
-        <activity android:name=".presenter.activity.PersonalityActivity"/>
+        <activity android:name=".presenter.activity.PersonalityActivity"
+            android:theme="@style/AppBaseTheme">
+        </activity>
         <!-- 必须注册在微博授权，分享微博时候用到 -->
         <activity android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"

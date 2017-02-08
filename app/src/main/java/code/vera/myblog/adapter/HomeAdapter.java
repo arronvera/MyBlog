@@ -30,8 +30,11 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         return new HomeViewHolder(view);
     }
     class HomeViewHolder extends RvViewHolder<StatusesBean> {
-        @BindView(R.id.tv_content)
+        @BindView(R.id.tv_item_text)
         TextView tvContent;
+        @BindView(R.id.tv_item_name)
+        TextView tvName;
+
         public HomeViewHolder(View itemView) {
             super(itemView);
         }
@@ -39,6 +42,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         @Override
         public void onBindData(int position, StatusesBean bean) {
             tvContent.setText(bean.getText());
+//            tvName.setText(bean.getUserBean().getName());
 //            ImageLoader.getInstance().displayImage(bean.ge);
         }
     }

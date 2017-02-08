@@ -41,6 +41,7 @@ public class RefreshView extends BaseView {
 
         LinearLayoutManager llm = new LinearLayoutManager(view.getContext());
         if (crv != null) {
+//            Debug.d("refreshview存在");
             crv.setLayoutManager(llm);
             emptyView = LayoutInflater.from(view.getContext())
                     .inflate(R.layout.layout_empty, null, false);

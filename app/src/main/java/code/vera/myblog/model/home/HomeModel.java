@@ -80,7 +80,7 @@ public class HomeModel implements IModel{
                 UserInfoBean userInfoBean=new UserInfoBean();
                 if (!TextUtils.isEmpty(s)){
                     userInfoBean=JSON.parseObject(s,UserInfoBean.class);
-                    Debug.d("userinfobean="+userInfoBean.toString());
+//                    Debug.d("userinfobean="+userInfoBean.toString());
                 }
                 return userInfoBean;
             }

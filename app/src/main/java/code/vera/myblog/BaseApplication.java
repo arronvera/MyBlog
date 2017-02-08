@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import java.util.ArrayList;
 
 import ww.com.core.Debug;
+import ww.com.http.OkHttpRequest;
 
 /**
  * Created by vera on 2017/1/4 0004.
@@ -28,6 +29,8 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        //请求打印
+        OkHttpRequest.setLogging(true);
         //设置debug的标签
         Debug.setTag("myblog");
         initImageLoader(getApplicationContext());

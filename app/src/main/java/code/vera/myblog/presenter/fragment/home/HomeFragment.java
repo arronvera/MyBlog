@@ -18,6 +18,7 @@ import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.HomeView;
+import ww.com.core.Debug;
 
 
 /**
@@ -41,6 +42,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
         setAdater();
         getUser();
         getData();
+
     }
 
     private void setAdater() {
@@ -65,6 +67,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
                 if (statusesBeen!=null){
+                    Debug.d("size="+statusesBeen.size());
                     adapter.addList(statusesBeen);
                 }
             }
