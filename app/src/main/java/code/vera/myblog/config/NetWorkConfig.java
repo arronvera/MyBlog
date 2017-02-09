@@ -22,4 +22,10 @@ public class NetWorkConfig {
     public static final String UPLOAD_WEIB=BASE_URL+"/statuses/upload.json";
     //发布上传（不带图片）
     public static final String UPDATE_WEIB=BASE_URL+"/statuses/update.json";
+
+    //评论
+    public static final String COMMENT_INFO=BASE_URL+"/comments/create.json";
+    //获取定微博的转发微博列表
+    public static final String REPOSTS_INFO=BASE_URL+  "/statuses/repost_timeline.json";
+
 }

@@ -59,4 +59,5 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     //九宫格
     compile 'com.jaeger.ninegridimageview:library:1.0.0'
+    compile 'com.android.support:design:24.2.1'
 }

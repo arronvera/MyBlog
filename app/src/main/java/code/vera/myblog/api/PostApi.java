@@ -6,11 +6,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import code.vera.myblog.AccessTokenKeeper;
+import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.UploadRequestBean;
 import code.vera.myblog.config.NetWorkConfig;
 import rx.Observable;
 import ww.com.http.core.AjaxParams;
 
+import static code.vera.myblog.api.BaseApi.onGet;
 import static code.vera.myblog.api.BaseApi.onPost;
 
 /**
@@ -66,5 +68,46 @@ public class PostApi {
         params.addParameters("annotations", bean.getAnnotations());
         params.addParameters("rip", bean.getRip());
         return onPost(url, params);
+    }
+
+    /**
+     * 评论
+     * @param context
+     * @param bean
+     * @return
+     */
+    public static Observable<String > commentMsg(Context context, CommentRequestBean bean) {
+        String url = NetWorkConfig.COMMENT_INFO;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        try {
+            params.addParameters("comment", URLEncoder.encode(bean.getComment(),"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        params.addParameters("id", bean.getId()+"");
+        params.addParameters("comment_ori", bean.getComment_ori()+"");
+        params.addParameters("rip", bean.getRip());
+        return onPost(url, params);
+    }
+
+    /**
+     * 获取转发列表
+     * @param context
+     * @param id
+     * @return
+     */
+    public static Observable<String > getReposts(Context context, long id) {
+        String url = NetWorkConfig.COMMENT_INFO;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("id", id+"");
+//        params.addParameters("since_id", "");
+//        params.addParameters("max_id", "");
+        //  todo
+        params.addParameters("count", "20");
+        params.addParameters("page","1");
+        params.addParameters("filter_by_author","0");//	作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
+        return onGet(url, params);
     }
 }

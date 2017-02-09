@@ -82,6 +82,7 @@
             android:orientation="horizontal">
 
             <RelativeLayout
+                android:id="@+id/rl_item_repost"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -99,8 +100,8 @@
                        android:layout_height="wrap_content" />
                </LinearLayout>
             </RelativeLayout>
-
             <RelativeLayout
+                android:id="@+id/rl_item_comment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -119,6 +120,7 @@
 
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/rl_item_like"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">

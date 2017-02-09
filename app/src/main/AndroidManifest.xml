@@ -42,8 +42,11 @@
         <activity
             android:name=".presenter.activity.SearchActivity"
             android:theme="@style/AppBaseTheme" />
-        <activity android:name=".presenter.activity.PostActivity"
-            android:theme="@style/AppBaseTheme2"></activity>
+        <activity
+            android:name=".presenter.activity.PostActivity"
+            android:theme="@style/AppBaseTheme2" />
+        <activity android:name=".presenter.activity.CommentDetailActivity"
+            android:theme="@style/AppBaseTheme2" ></activity>
     </application>
 
 </manifest>

@@ -18,6 +18,7 @@
         android:textSize="16sp"
         android:text="取消"/>
         <TextView
+            android:id="@+id/tv_post_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="分享圈子"

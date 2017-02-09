@@ -1,5 +1,8 @@
 package code.vera.myblog.presenter.fragment.home;
 
+import android.content.Intent;
+import android.view.View;
+
 import com.trello.rxlifecycle.FragmentEvent;
 
 import java.util.List;
@@ -8,9 +11,13 @@ import code.vera.myblog.R;
 import code.vera.myblog.adapter.HomeAdapter;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.home.HomeModel;
+import code.vera.myblog.presenter.activity.CommentDetailActivity;
+import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.HomeView;
 import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
@@ -21,7 +28,8 @@ import ww.com.core.widget.CustomSwipeRefreshLayout;
  * Created by vera on 2017/1/20 0020.
  */
 
-public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
+public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>implements
+        HomeAdapter.OnItemCommentListener,HomeAdapter.OnItemRepostListener,HomeAdapter.OnItemLikeListener {
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
     @Override
@@ -52,6 +60,13 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
                 getData();
             }
         });
+        addListener();
+    }
+
+    private void addListener() {
+        adapter.setOnItemCommentListener(this);
+        adapter.setOnItemRepostListener(this);
+        adapter.setOnItemLikeListener(this);
 
     }
 
@@ -81,4 +96,35 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel> {
         });
     }
 
+    @Override
+    public void onItemCommentListener(View v, int pos) {
+        //评论
+//        ToastUtil.showToast(getContext(),"评论");
+        if (adapter.getItem(pos).getComments_count()==0){//如果没有评论数，直接跳到发布评论
+            Intent intent=new Intent(getActivity(), PostActivity.class);
+            intent.putExtra("type", Constants.COMMENT_TYPE);
+            intent.putExtra("id",adapter.getItem(pos).getId()+"");
+            startActivity(intent);
+        }else {//跳转到评论详情
+
+            Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
+            intent.putExtra("id",adapter.getItem(pos).getId()+"");
+            startActivity(intent);
+        }
+
+    }
+
+    @Override
+    public void onItemRepostListener(View v, int pos) {
+        //转发
+        ToastUtil.showToast(getContext(),"转发");
+
+    }
+
+    @Override
+    public void onItemLikeListener(View v, int pos) {
+        //喜欢
+        ToastUtil.showToast(getContext(),"喜欢");
+
+    }
 }

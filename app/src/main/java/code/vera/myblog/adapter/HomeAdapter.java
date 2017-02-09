@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaeger.ninegridimageview.NineGridImageView;
@@ -26,6 +27,11 @@ import ww.com.core.Debug;
 public class HomeAdapter extends RvAdapter<StatusesBean>{
     private Context context;
     private NineGridImageViewAdapter<PicBean>adapter;
+
+    private OnItemRepostListener onItemRepostListener;//转发监听
+    private OnItemCommentListener onItemCommentListener;//评论监听
+    private OnItemLikeListener onItemLikeListener;//喜欢监听
+
     public HomeAdapter(Context context) {
         super(context);
         this.context=context;
@@ -57,10 +63,16 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         TextView tvAuthorText;
         @BindView(R.id.tv_item_repost)
         TextView tvRepost;//转发
+        @BindView(R.id.rl_item_repost)
+        RelativeLayout rlRepost;
         @BindView(R.id.tv_item_comment)
         TextView tvComment;//评论
+        @BindView(R.id.rl_item_comment)
+        RelativeLayout rlComment;
         @BindView(R.id.tv_item_like)
         TextView tvLike;//喜欢
+        @BindView(R.id.rl_item_like)
+        RelativeLayout rlLike;
 
         public HomeViewHolder(View itemView) {
             super(itemView);
@@ -75,7 +87,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         }
 
         @Override
-        public void onBindData(int position, StatusesBean bean) {
+        public void onBindData(final int position, StatusesBean bean) {
             tvContent.setText(bean.getText());//内容
             tvTime.setText(TimeUtils.dateTransfer(bean.getCreated_at()));
             Debug.d("bean="+bean.toString());
@@ -113,6 +125,58 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             if (bean.getAttitudes_count()!=0){
                 tvLike.setText(bean.getAttitudes_count()+"");
             }
+            //监听
+            rlRepost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemRepostListener.onItemRepostListener(v, position);
+                }
+            });
+            rlComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemCommentListener.onItemCommentListener(v, position);
+                }
+            });
+            rlLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemLikeListener.onItemLikeListener(v, position);
+                }
+            });
+
+
         }
+    }
+
+    /**
+     * 转发监听
+     */
+    public interface OnItemRepostListener {
+        void onItemRepostListener(View v, int pos);
+    }
+
+    public void setOnItemRepostListener(OnItemRepostListener onItemActionListener) {
+        this.onItemRepostListener = onItemActionListener;
+    }
+    /**
+     *评论监听
+     */
+    public interface OnItemCommentListener {
+        void onItemCommentListener(View v, int pos);
+    }
+
+    public void setOnItemCommentListener(OnItemCommentListener onItemCommentListener) {
+        this.onItemCommentListener = onItemCommentListener;
+    }
+    /**
+     * 喜欢监听
+     */
+    public interface OnItemLikeListener {
+        void onItemLikeListener(View v, int pos);
+    }
+
+    public void setOnItemLikeListener(OnItemLikeListener onItemLikeListener) {
+        this.onItemLikeListener = onItemLikeListener;
     }
 }

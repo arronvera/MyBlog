@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import code.vera.myblog.R;
+import code.vera.myblog.config.Constants;
 
 /**
  * Created by vera on 2017/2/9 0009.
@@ -25,6 +26,8 @@ public class PostView extends BaseView {
     TextView tvNum;
     @BindView(R.id.btn_post)
     Button btnUpload;
+    @BindView(R.id.tv_post_title)
+    TextView tvTitle;//标题
 
     private Context context;
     private TextWatcher textWatcher;
@@ -76,5 +79,21 @@ public class PostView extends BaseView {
     }
     public String getEditStr(){
         return etMessage.getText().toString();
+    }
+
+    /*
+     * 显示标题和提示
+     */
+    public void showTitleAndHint(int type) {
+        switch (type){
+            case Constants.COMMENT_TYPE:
+                tvTitle.setText("发评论");
+                etMessage.setHint("写评论");
+                break;
+            case Constants.REPOST_TYPE:
+                tvTitle.setText("转发");
+                etMessage.setHint("转发");
+                break;
+        }
     }
 }
