@@ -31,16 +31,19 @@
         <activity android:name=".OAuthActivity" />
         <activity
             android:name=".presenter.activity.PersonalityActivity"
-            android:theme="@style/AppBaseTheme"></activity>
+            android:theme="@style/AppBaseTheme" />
         <!-- 必须注册在微博授权，分享微博时候用到 -->
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:theme="@style/AppBaseTheme"
-            android:windowSoftInputMode="adjustResize"></activity>
-        <activity android:name=".presenter.activity.SearchActivity"
-            android:theme="@style/AppBaseTheme"></activity>
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".presenter.activity.SearchActivity"
+            android:theme="@style/AppBaseTheme" />
+        <activity android:name=".presenter.activity.PostActivity"
+            android:theme="@style/AppBaseTheme2"></activity>
     </application>
 
 </manifest>

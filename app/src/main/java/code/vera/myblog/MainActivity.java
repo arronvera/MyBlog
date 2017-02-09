@@ -23,6 +23,7 @@ import code.vera.myblog.adapter.MenuItemAdapter;
 import code.vera.myblog.bean.MenuItem;
 import code.vera.myblog.model.MainModel;
 import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.SearchActivity;
 import code.vera.myblog.presenter.fragment.MenuFragment;
 import code.vera.myblog.presenter.fragment.find.FindFragment;
@@ -117,14 +118,17 @@ public class MainActivity extends PresenterActivity<VoidView, MainModel> impleme
             @Override
             public boolean onMenuItemClick(android.view.MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_edit:
-                        Toast.makeText(MainActivity.this, "点击了编辑", Toast.LENGTH_SHORT).show();
+                    case R.id.action_edit://发布
+//                        Toast.makeText(MainActivity.this, "点击了编辑", Toast.LENGTH_SHORT).show();
+                        //跳转
+                        Intent intent=new Intent(MainActivity.this, PostActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.action_search://搜索
-                        Toast.makeText(MainActivity.this, "点击了搜索", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "点击了搜索", Toast.LENGTH_SHORT).show();
                         //跳转
-                        Intent intent=new Intent(MainActivity.this, SearchActivity.class);
-                        startActivity(intent);
+                        Intent intent2=new Intent(MainActivity.this, SearchActivity.class);
+                        startActivity(intent2);
                         break;
                 }
                 return true;

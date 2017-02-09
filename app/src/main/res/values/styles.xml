@@ -25,12 +25,12 @@
     </style>
     <style name="AppBaseTheme2" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowContentTransitions">true</item>
-        <item name="windowActionBar">false</item>
+        <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">@color/colorWhite</item>
-        <item name="android:navigationBarColor">@color/colorWhite</item>
+        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+        <!--<item name="android:statusBarColor">@color/colorWhite</item>-->
+        <!--<item name="android:navigationBarColor">@color/colorWhite</item>-->
 
     </style>
 

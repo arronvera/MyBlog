@@ -15,4 +15,9 @@ public class NetWorkConfig {
     public static final String USER_INFO=BASE_URL+"/users/show.json";
     //搜索用户时的联想搜索建议
     public static final String SEARCH_USER=BASE_URL+"/search/suggestions/users.json";
+
+    //转发一条微博
+    public static final String REPOST_WEIB=BASE_URL+"/statuses/repost.json";
+    //发布上传
+    public static final String POST_WEIB=BASE_URL+"/statuses/upload.json";
 }
