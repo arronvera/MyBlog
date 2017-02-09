@@ -74,4 +74,7 @@ public class PostView extends BaseView {
         };
         etMessage.addTextChangedListener(textWatcher);
     }
+    public String getEditStr(){
+        return etMessage.getText().toString();
+    }
 }

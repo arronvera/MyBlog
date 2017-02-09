@@ -24,9 +24,9 @@ public class StatusesBean {
 
     private String user;
     private UserBean userbean;
-    private int reposts_count;//	转发数
-    private int comments_count;//评论数
-    private int attitudes_count;//表态数
+    private long reposts_count;//	转发数
+    private long comments_count;//评论数
+    private long attitudes_count;//表态数
 
     public String getCreated_at() {
         return created_at;
@@ -155,6 +155,30 @@ public class StatusesBean {
 //    public void setAttitudes_count(int attitudes_count) {
 //        this.attitudes_count = attitudes_count;
 //    }
+
+    public long getComments_count() {
+        return comments_count;
+    }
+
+    public void setComments_count(long comments_count) {
+        this.comments_count = comments_count;
+    }
+
+    public long getReposts_count() {
+        return reposts_count;
+    }
+
+    public void setReposts_count(long reposts_count) {
+        this.reposts_count = reposts_count;
+    }
+
+    public long getAttitudes_count() {
+        return attitudes_count;
+    }
+
+    public void setAttitudes_count(long attitudes_count) {
+        this.attitudes_count = attitudes_count;
+    }
 
     @Override
     public String toString() {

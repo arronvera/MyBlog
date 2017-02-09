@@ -18,6 +18,8 @@ public class NetWorkConfig {
 
     //转发一条微博
     public static final String REPOST_WEIB=BASE_URL+"/statuses/repost.json";
-    //发布上传
-    public static final String POST_WEIB=BASE_URL+"/statuses/upload.json";
+    //发布上传（带图片）
+    public static final String UPLOAD_WEIB=BASE_URL+"/statuses/upload.json";
+    //发布上传（不带图片）
+    public static final String UPDATE_WEIB=BASE_URL+"/statuses/update.json";
 }

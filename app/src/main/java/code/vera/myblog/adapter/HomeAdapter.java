@@ -3,6 +3,7 @@ package code.vera.myblog.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jaeger.ninegridimageview.NineGridImageView;
@@ -14,6 +15,7 @@ import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
 import ww.com.core.Debug;
 
@@ -49,6 +51,17 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         CircleImageView civPhoto;
         @BindView(R.id.nineGridImageView)
         NineGridImageView nineGridImageView;
+        @BindView(R.id.ll_item_author)
+        LinearLayout llAuthorInfo;//微博作者信息
+        @BindView(R.id.tv_item_author_info)
+        TextView tvAuthorText;
+        @BindView(R.id.tv_item_repost)
+        TextView tvRepost;//转发
+        @BindView(R.id.tv_item_comment)
+        TextView tvComment;//评论
+        @BindView(R.id.tv_item_like)
+        TextView tvLike;//喜欢
+
         public HomeViewHolder(View itemView) {
             super(itemView);
             adapter=new NineGridImageViewAdapter<PicBean>() {
@@ -64,8 +77,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         @Override
         public void onBindData(int position, StatusesBean bean) {
             tvContent.setText(bean.getText());//内容
-            //todo 时间解析
-            tvTime.setText(bean.getCreated_at());
+            tvTime.setText(TimeUtils.dateTransfer(bean.getCreated_at()));
             Debug.d("bean="+bean.toString());
             if (bean.getUserBean()!=null){
                 tvName.setText(bean.getUserBean().getName());//用户名
@@ -78,10 +90,29 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             //九宫格图片
             if (bean.getPic_list()!=null&&bean.getPic_list().size()!=0){
                 nineGridImageView.setImagesData(bean.getPic_list());
+                nineGridImageView.setVisibility(View.VISIBLE);
             }else {
                 nineGridImageView.setVisibility(View.GONE);
             }
-
+            //微博作者
+            if (bean.getUserBean()!=null){
+//                llAuthorInfo.setVisibility(View.VISIBLE);
+//                tvAuthorText.setText("@"+bean.getUserBean().getName()+":"+bean.getText());
+            }else {
+//                llAuthorInfo.setVisibility(View.GONE);
+            }
+            //转发
+            if (bean.getReposts_count()!=0){
+              tvRepost.setText(bean.getReposts_count()+"");
+            }
+            //评论
+            if (bean.getComments_count()!=0){
+                tvComment.setText(bean.getComments_count()+"");
+            }
+            //喜欢
+            if (bean.getAttitudes_count()!=0){
+                tvLike.setText(bean.getAttitudes_count()+"");
+            }
         }
     }
 }

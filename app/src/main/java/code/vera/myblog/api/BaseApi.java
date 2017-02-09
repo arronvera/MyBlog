@@ -25,4 +25,27 @@ public class BaseApi {
                 .setRequestMethod(RequestMethod.GET);
         return OkHttpRequest.newObservable(params);
     }
+    //post请求
+    public static Observable<String> onPost(String url, AjaxParams params) {
+
+        return post(url, params)
+                .map(new StringFunc());
+    }
+
+    /**
+     * @param url    请求的地址
+     * @param params 请求的参数
+     * @return
+     */
+    public static final Observable<ResponseBody> post(String url,
+                                                      AjaxParams params) {
+        params = params.setBaseUrl(url)
+                .setRequestMethod(RequestMethod.POST);
+        return OkHttpRequest.newObservable(params);
+    }
+//    protected static final AjaxParams getAjaxParams(AjaxParams params) {
+//        params.addHeaders("Content-Type", "multipart/form-data");
+//
+//        return params;
+//    }
 }
