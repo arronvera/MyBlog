@@ -49,7 +49,7 @@ public class UserInfoBean implements Serializable {
     private String profile_image_url;
     private String domain;
     private String gender;
-    private int followers_count;
+    private long followers_count;
     private int friends_count;
     private int statuses_count;
     private int favourites_count;
@@ -153,11 +153,11 @@ public class UserInfoBean implements Serializable {
         this.gender = gender;
     }
 
-    public int getFollowers_count() {
+    public long getFollowers_count() {
         return followers_count;
     }
 
-    public void setFollowers_count(int followers_count) {
+    public void setFollowers_count(long followers_count) {
         this.followers_count = followers_count;
     }
 

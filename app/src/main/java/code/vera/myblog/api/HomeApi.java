@@ -1,6 +1,7 @@
 package code.vera.myblog.api;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.bean.home.HomeRequestBean;
@@ -42,11 +43,15 @@ public class HomeApi  extends BaseApi{
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
         return onGet(url, params);
     }
-    public static Observable<String>getUserInfo(Context context){
+    public static Observable<String>getUserInfo(Context context,String uid){
         String url = NetWorkConfig.USER_INFO;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
-        params.addParameters("uid", AccessTokenKeeper.readAccessToken(context).getUid());
+        if (TextUtils.isEmpty(uid)){//如果u传入的uid为空，则获取自身的信息
+            params.addParameters("uid", AccessTokenKeeper.readAccessToken(context).getUid());
+        }else {
+            params.addParameters("uid", uid);
+        }
         //uid和screen_nam二选一
         //params.addParameters("",)
         return onGet(url, params);

@@ -29,7 +29,7 @@ public class MeModel implements IModel {
      */
     public void getUserInfo(Context context, Observable.Transformer
             transformer, Subscriber<UserInfoBean> subscriber){
-        HomeApi.getUserInfo(context) .map(new Func1<String, UserInfoBean>() {
+        HomeApi.getUserInfo(context,"") .map(new Func1<String, UserInfoBean>() {
             @Override
             public  UserInfoBean call(String s) {
                 UserInfoBean userInfoBean=new UserInfoBean();

@@ -1,14 +1,17 @@
 package code.vera.myblog.model;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import code.vera.myblog.api.HomeApi;
 import code.vera.myblog.api.SearchApi;
 import code.vera.myblog.bean.SearchUserBean;
+import code.vera.myblog.bean.home.UserInfoBean;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
@@ -37,6 +40,21 @@ public class SearchModel implements IModel {
                         return beanList;
                     }
                 }).compose(RxHelper.<List<SearchUserBean>>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+    public void getUserInfo(Context context,String uid, Observable.Transformer
+            transformer, Subscriber<UserInfoBean> subscriber){
+        HomeApi.getUserInfo(context,uid) .map(new Func1<String, UserInfoBean>() {
+            @Override
+            public  UserInfoBean call(String s) {
+                UserInfoBean userInfoBean=new UserInfoBean();
+                if (!TextUtils.isEmpty(s)){
+                    userInfoBean= JSON.parseObject(s,UserInfoBean.class);
+                }
+                return userInfoBean;
+            }
+        }).compose(RxHelper.<UserInfoBean>cutMain())
                 .compose(transformer)
                 .subscribe(subscriber);
     }
