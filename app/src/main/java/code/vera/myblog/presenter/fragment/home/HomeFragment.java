@@ -19,7 +19,6 @@ import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.HomeView;
-import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 
@@ -85,7 +84,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
                 if (statusesBeen!=null){
-                    Debug.d("size="+statusesBeen.size());
+//                    Debug.d("size="+statusesBeen.size());
                     if (requestBean.getPage().equals("1")){
                         adapter.addList(statusesBeen);//清空加载进去
                     }else {//往后面追加
@@ -106,9 +105,8 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
             intent.putExtra("id",adapter.getItem(pos).getId()+"");
             startActivity(intent);
         }else {//跳转到评论详情
-
             Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
-            intent.putExtra("id",adapter.getItem(pos).getId()+"");
+            intent.putExtra("status",adapter.getItem(pos));
             startActivity(intent);
         }
 

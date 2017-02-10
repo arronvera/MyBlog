@@ -15,7 +15,6 @@ import code.vera.myblog.model.IModel;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
-import ww.com.core.Debug;
 import ww.com.http.rx.RxHelper;
 
 /**
@@ -39,7 +38,7 @@ public class HomeModel implements IModel{
                         JSONObject result= JSON.parseObject(s);
                         if (result!=null){
                           beanList= JSON.parseArray(result.getString("statuses"),StatusesBean.class);
-                            Debug.d("beanlist.size="+beanList.size());
+//                            Debug.d("beanlist.size="+beanList.size());
                         }
                         return beanList;
                     }

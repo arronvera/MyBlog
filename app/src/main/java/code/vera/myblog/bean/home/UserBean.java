@@ -9,7 +9,7 @@ public  class UserBean {
     private String idstr;
     private String name;
     private String profile_image_url;
-
+    private long favourites_count;
     private String followers_count;//粉丝数
 
     public String getFollowers_count() {
@@ -18,6 +18,14 @@ public  class UserBean {
 
     public void setFollowers_count(String followers_count) {
         this.followers_count = followers_count;
+    }
+
+    public long getFavourites_count() {
+        return favourites_count;
+    }
+
+    public void setFavourites_count(long favourites_count) {
+        this.favourites_count = favourites_count;
     }
 
     public String getProfile_image_url() {

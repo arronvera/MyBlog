@@ -18,7 +18,6 @@ import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
-import ww.com.core.Debug;
 
 /**
  * Created by vera on 2017/2/7 0007.
@@ -90,7 +89,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         public void onBindData(final int position, StatusesBean bean) {
             tvContent.setText(bean.getText());//内容
             tvTime.setText(TimeUtils.dateTransfer(bean.getCreated_at()));
-            Debug.d("bean="+bean.toString());
+//            Debug.d("bean="+bean.toString());
             if (bean.getUserBean()!=null){
                 tvName.setText(bean.getUserBean().getName());//用户名
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication

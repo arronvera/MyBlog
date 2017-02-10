@@ -3,13 +3,14 @@ package code.vera.myblog.bean.home;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by vera on 2017/1/19 0019.
  */
 
-public class StatusesBean {
+public class StatusesBean implements Serializable {
     private String created_at;//创建时间
     private long id;
     private String mid;

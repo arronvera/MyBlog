@@ -92,13 +92,13 @@ public class PostApi {
     }
 
     /**
-     * 获取转发列表
+     * 获取评论列表
      * @param context
      * @param id
      * @return
      */
-    public static Observable<String > getReposts(Context context, long id) {
-        String url = NetWorkConfig.COMMENT_INFO;
+    public static Observable<String > getComments(Context context, long id) {
+        String url = NetWorkConfig.COMMENT_INFO_BY_ID;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
         params.addParameters("id", id+"");

@@ -25,7 +25,8 @@ public class NetWorkConfig {
 
     //评论
     public static final String COMMENT_INFO=BASE_URL+"/comments/create.json";
+    //根据ID返回某条微博的评论列表
+    public static final String COMMENT_INFO_BY_ID=BASE_URL+  "/comments/show.json";
     //获取定微博的转发微博列表
     public static final String REPOSTS_INFO=BASE_URL+  "/statuses/repost_timeline.json";
-
 }
