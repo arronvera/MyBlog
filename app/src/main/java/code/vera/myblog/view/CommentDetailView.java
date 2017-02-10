@@ -1,15 +1,19 @@
 package code.vera.myblog.view;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaeger.ninegridimageview.NineGridImageView;
+import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
+import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.utils.TimeUtils;
 
@@ -28,10 +32,19 @@ public class CommentDetailView extends BaseView {
     CircleImageView civPhoto;
     @BindView(R.id.nineGridImageView)
     NineGridImageView nineGridImageView;
+    private NineGridImageViewAdapter<PicBean> adapter;
 
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
+        adapter=new NineGridImageViewAdapter<PicBean>() {
+            @Override
+            protected void onDisplayImage(Context context, ImageView imageView, PicBean s) {
+                ImageLoader.getInstance().displayImage(s.getThumbnail_pic(), imageView, BaseApplication
+                        .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
+            }
+        };
+        nineGridImageView.setAdapter(adapter);
     }
     public void showInfo(StatusesBean statusesBean){
         tvContent.setText(statusesBean.getText());

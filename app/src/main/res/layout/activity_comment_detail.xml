@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_comment_detail"
@@ -8,84 +8,89 @@
     android:orientation="vertical"
     tools:context="code.vera.myblog.presenter.activity.CommentDetailActivity">
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:gravity="center"
-        app:layout_scrollFlags="scroll|enterAlways"
-        android:layout_height="50dp">
-        <TextView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="互动详情"
-            android:textColor="@color/colorBlack" />
-    </android.support.design.widget.AppBarLayout>
-    <LinearLayout
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <RelativeLayout
+        android:layout_height="wrap_content">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_height="50dp">-->
+            <!--<TextView-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="互动详情"-->
+                <!--android:textColor="@color/colorBlack" />-->
+        <!--</RelativeLayout>-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp">
-
-            <code.vera.myblog.view.CircleImageView
-                android:id="@+id/crv_photo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp" />
-
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/crv_photo"
-                tools:text="vera" />
-
-            <LinearLayout
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll">
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_name"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/crv_photo"
-                android:orientation="horizontal">
+                android:padding="5dp">
 
-                <ImageView
-                    android:id="@+id/iv_time"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@mipmap/ic_time" />
+                <code.vera.myblog.view.CircleImageView
+                    android:id="@+id/crv_photo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp" />
 
                 <TextView
-                    android:id="@+id/tv_time"
+                    android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/iv_item_time"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toEndOf="@+id/iv_item_time"
-                    tools:text="这个一个time" />
+                    android:layout_toRightOf="@+id/crv_photo"
+                    tools:text="vera" />
 
-            </LinearLayout>
-        </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_name"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/crv_photo"
+                    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            tools:text="这个一个text" />
-        <com.jaeger.ninegridimageview.NineGridImageView
-            android:id="@+id/nineGridImageView"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            app:imgGap="4dp"
-            app:showStyle="fill"
-            app:singleImgSize="120dp"/>
+                    <ImageView
+                        android:id="@+id/iv_time"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/ic_time" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/iv_item_time"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toEndOf="@+id/iv_item_time"
+                        tools:text="这个一个time" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                tools:text="这个一个text" />
+            <com.jaeger.ninegridimageview.NineGridImageView
+                android:id="@+id/nineGridImageView"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                app:imgGap="4dp"
+                app:showStyle="fill"
+                app:singleImgSize="120dp"/>
+        </LinearLayout>
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_comment_detail"
             android:layout_width="match_parent"
@@ -93,14 +98,16 @@
             android:background="@color/colorWhite"
             app:tabIndicatorColor="@color/color_ff8162"
             app:tabSelectedTextColor="@color/colorBlack"
-            app:tabTextColor="@color/color_bcbcbc"></android.support.design.widget.TabLayout>
-        <!--可滑动的布局内容-->
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vp_comment_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:background="@color/colorWhite" />
-    </LinearLayout>
-</LinearLayout>
+            app:tabTextColor="@color/color_bcbcbc">
+
+        </android.support.design.widget.TabLayout>
+    </android.support.design.widget.AppBarLayout>
+    <!--可滑动的布局内容-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_comment_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/colorWhite" />
+</android.support.design.widget.CoordinatorLayout>
