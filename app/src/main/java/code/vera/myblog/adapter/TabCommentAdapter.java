@@ -15,12 +15,12 @@ import code.vera.myblog.presenter.fragment.tab.TabRepostFragment;
  * Created by vera on 2017/1/23 0023.
  */
 
-public class TabAdapter extends FragmentPagerAdapter {
+public class TabCommentAdapter extends FragmentPagerAdapter {
     List<Fragment> fragmentList = new ArrayList<>();
     // 标题数组
     String[] titles = {"转发", "评论","喜欢"};
 
-    public TabAdapter(FragmentManager fm) {
+    public TabCommentAdapter(FragmentManager fm) {
         super(fm);
         fragmentList.add(new TabRepostFragment());
         fragmentList.add(new TabCommentFragment());

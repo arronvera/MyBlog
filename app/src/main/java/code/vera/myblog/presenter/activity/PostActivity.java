@@ -85,6 +85,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> {
      * 评论
      */
     private void comment() {
+        commentRequestBean=new CommentRequestBean();
         model.commentMessage(this, commentRequestBean, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
             @Override
             public void onNext(String s) {
@@ -119,7 +120,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> {
             @Override
             public void onNext(String s) {
                 super.onNext(s);
-                if (TextUtils.isEmpty(s)) {
+                if (!TextUtils.isEmpty(s)) {
                     ToastUtil.showToast(PostActivity.this, "发布成功");
                     finish();
                 } else {

@@ -106,13 +106,18 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 }
             };
             int start=content.indexOf("http://");
+            int end=content.indexOf(" ",start);
             if (start!=-1){//如果有链接
-                spannable.setSpan(ccs, start, content.indexOf(" "), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                tvContent.setText(spannable);
-                tvContent.setHighlightColor(Color.GRAY);
-                tvContent.setMovementMethod(new CustomLinkMovement(ccs));
+                if (end>start){
+                    spannable.setSpan(ccs, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                    tvContent.setText(spannable);
+                    tvContent.setHighlightColor(Color.GRAY);
+                    tvContent.setMovementMethod(new CustomLinkMovement(ccs));
+                }else {
+                    tvContent.setText(content);
+                }
             }else {
-                tvComment.setText(content);
+                tvContent.setText(content);
             }
             if (bean.getUserBean()!=null){
                 tvName.setText(bean.getUserBean().getName());//用户名
