@@ -5,7 +5,7 @@ import android.view.View;
 import butterknife.ButterKnife;
 import code.vera.myblog.model.IModel;
 import code.vera.myblog.presenter.base.PresenterHelper;
-import code.vera.myblog.view.IView;
+import code.vera.myblog.view.base.IView;
 
 /**
  * Created by vera on 2017/1/4 0004.

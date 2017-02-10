@@ -1,4 +1,4 @@
-package code.vera.myblog.view;
+package code.vera.myblog.view.base;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.widget.TextView;
  * Created by vera on 2016/12/28 0028.
  */
 
-public class BaseView  implements IView{
+public class BaseView  implements IView {
     protected View rootView;
 
     @Override

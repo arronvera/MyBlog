@@ -1,6 +1,9 @@
 package code.vera.myblog.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +21,8 @@ import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
+import code.vera.myblog.view.other.CustomClickableSpan;
+import code.vera.myblog.view.other.CustomLinkMovement;
 
 /**
  * Created by vera on 2017/2/7 0007.
@@ -26,10 +31,12 @@ import code.vera.myblog.view.CircleImageView;
 public class HomeAdapter extends RvAdapter<StatusesBean>{
     private Context context;
     private NineGridImageViewAdapter<PicBean>adapter;
+    private CustomClickableSpan ccs;
 
     private OnItemRepostListener onItemRepostListener;//转发监听
     private OnItemCommentListener onItemCommentListener;//评论监听
     private OnItemLikeListener onItemLikeListener;//喜欢监听
+
 
     public HomeAdapter(Context context) {
         super(context);
@@ -87,9 +94,26 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 
         @Override
         public void onBindData(final int position, StatusesBean bean) {
-            tvContent.setText(bean.getText());//内容
-            tvTime.setText(TimeUtils.dateTransfer(bean.getCreated_at()));
-//            Debug.d("bean="+bean.toString());
+            String timeStr=bean.getCreated_at();
+            tvTime.setText(TimeUtils.dateTransfer(timeStr));
+            //内容
+            String content=bean.getText();
+            SpannableString spannable = new SpannableString(content);
+            ccs = new CustomClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    //todo
+                }
+            };
+            int start=content.indexOf("http://");
+            if (start!=-1){//如果有链接
+                spannable.setSpan(ccs, start, content.indexOf(" "), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                tvContent.setText(spannable);
+                tvContent.setHighlightColor(Color.GRAY);
+                tvContent.setMovementMethod(new CustomLinkMovement(ccs));
+            }else {
+                tvComment.setText(content);
+            }
             if (bean.getUserBean()!=null){
                 tvName.setText(bean.getUserBean().getName());//用户名
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication

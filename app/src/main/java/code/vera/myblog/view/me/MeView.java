@@ -11,7 +11,7 @@ import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.view.CircleImageView;
-import code.vera.myblog.view.IView;
+import code.vera.myblog.view.base.IView;
 
 /**
  * Created by vera on 2017/2/8 0008.

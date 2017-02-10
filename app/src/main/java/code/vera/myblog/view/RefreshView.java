@@ -12,6 +12,7 @@ import butterknife.Optional;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.RvAdapter;
 import code.vera.myblog.listener.SimpleItemTouchListener;
+import code.vera.myblog.view.base.BaseView;
 import ww.com.core.ScreenUtil;
 import ww.com.core.widget.CustomRecyclerView;
 import ww.com.core.widget.CustomSwipeRefreshLayout;

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import code.vera.myblog.R;
 import code.vera.myblog.config.Constants;
+import code.vera.myblog.view.base.BaseView;
 
 /**
  * Created by vera on 2017/2/9 0009.

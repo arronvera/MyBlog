@@ -3,7 +3,7 @@ package code.vera.myblog.presenter.base;
 import code.vera.myblog.model.IModel;
 import code.vera.myblog.presenter.IPresenter;
 import code.vera.myblog.utils.ClassUtils;
-import code.vera.myblog.view.IView;
+import code.vera.myblog.view.base.IView;
 
 /**
  * Created by vera on 2017/1/4 0004.

@@ -16,6 +16,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.utils.TimeUtils;
+import code.vera.myblog.view.base.BaseView;
 
 /**
  * Created by vera on 2017/2/9 0009.

@@ -31,7 +31,7 @@ import code.vera.myblog.presenter.fragment.home.HomeFragment;
 import code.vera.myblog.presenter.fragment.me.MeFragment;
 import code.vera.myblog.presenter.fragment.message.MessageFragment;
 import code.vera.myblog.utils.DialogUtils;
-import code.vera.myblog.view.VoidView;
+import code.vera.myblog.view.base.VoidView;
 
 import static code.vera.myblog.R.id.lv_left_menu;
 

@@ -3,7 +3,7 @@ package code.vera.myblog.presenter;
 import android.view.View;
 
 import code.vera.myblog.model.IModel;
-import code.vera.myblog.view.IView;
+import code.vera.myblog.view.base.IView;
 
 /**
  * Created by vera on 2017/1/4 0004.

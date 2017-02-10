@@ -18,7 +18,8 @@ import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.ToastUtil;
-import code.vera.myblog.view.HomeView;
+import code.vera.myblog.view.home.HomeView;
+import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 
@@ -99,6 +100,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     public void onItemCommentListener(View v, int pos) {
         //评论
 //        ToastUtil.showToast(getContext(),"评论");
+        Debug.d("count="+adapter.getItem(pos).getComments_count());
         if (adapter.getItem(pos).getComments_count()==0){//如果没有评论数，直接跳到发布评论
             Intent intent=new Intent(getActivity(), PostActivity.class);
             intent.putExtra("type", Constants.COMMENT_TYPE);

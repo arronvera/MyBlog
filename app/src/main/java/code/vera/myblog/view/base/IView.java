@@ -1,4 +1,4 @@
-package code.vera.myblog.view;
+package code.vera.myblog.view.base;
 
 import android.support.annotation.NonNull;
 import android.view.View;
