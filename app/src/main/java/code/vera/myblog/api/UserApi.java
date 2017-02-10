@@ -5,4 +5,5 @@ package code.vera.myblog.api;
  */
 
 public class UserApi  {
+
 }

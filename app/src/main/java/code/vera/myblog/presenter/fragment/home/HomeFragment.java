@@ -1,14 +1,22 @@
 package code.vera.myblog.presenter.fragment.home;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 
 import com.trello.rxlifecycle.FragmentEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.HomeAdapter;
+import code.vera.myblog.adapter.HomeTypeListAdpater;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
@@ -32,6 +40,8 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         HomeAdapter.OnItemCommentListener,HomeAdapter.OnItemRepostListener,HomeAdapter.OnItemLikeListener {
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
+    private View contentView ;
+    private   PopupWindow popupWindow;
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_home;
@@ -41,6 +51,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     protected void onAttach() {
         super.onAttach();
         requestBean=new HomeRequestBean();
+        initPopuwindow();
         setAdater();
         getData();
         //上下拉刷新
@@ -61,6 +72,22 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
             }
         });
         addListener();
+    }
+
+    private void initPopuwindow() {
+        contentView= LayoutInflater.from(mContext).inflate(R.layout.pop_window, null);
+        ListView listView= (ListView) contentView.findViewById(R.id.lv_filter_type);
+        List<String>list=new ArrayList<>();
+        list.add("所有");
+        list.add("互相关注");
+        list.add("朋友圈");
+        list.add("特别关注");
+        listView.setAdapter(new HomeTypeListAdpater(list,getContext()));
+        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+
     }
 
     private void addListener() {
@@ -125,6 +152,13 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     public void onItemLikeListener(View v, int pos) {
         //喜欢
         ToastUtil.showToast(getContext(),"喜欢");
+    }
+    @OnClick(R.id.iv_filter)
+    public void filter(View v){
+        showPopWindow(v);
+    }
 
+    private void showPopWindow(View v) {
+        popupWindow.showAsDropDown(v);
     }
 }

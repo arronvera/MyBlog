@@ -11,6 +11,7 @@ import code.vera.myblog.view.RefreshView;
  */
 
 public class HomeView extends RefreshView {
+
     private RvAdapter adapter;
     @Override
     public void onAttachView(@NonNull View view) {
