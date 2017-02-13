@@ -10,7 +10,7 @@ import java.util.List;
 
 import code.vera.myblog.api.MessageApi;
 import code.vera.myblog.bean.CommentUserBean;
-import code.vera.myblog.model.IModel;
+import code.vera.myblog.model.base.IModel;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;

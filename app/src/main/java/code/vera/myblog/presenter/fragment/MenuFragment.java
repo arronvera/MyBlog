@@ -23,6 +23,7 @@ import code.vera.myblog.adapter.NavigationDrawerAdapter;
 import code.vera.myblog.bean.NavDrawerItem;
 
 /**
+ * 左侧菜单
  * Created by vera on 2017/1/20 0020.
  */
 

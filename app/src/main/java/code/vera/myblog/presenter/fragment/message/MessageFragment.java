@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import butterknife.BindView;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.TabMessageAdapter;
-import code.vera.myblog.model.MessageModel;
+import code.vera.myblog.model.message.MessageModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.view.message.MessageView;
 

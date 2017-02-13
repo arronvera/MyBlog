@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import code.vera.myblog.api.PostApi;
 import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.UploadRequestBean;
+import code.vera.myblog.model.base.IModel;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;

@@ -2,6 +2,7 @@ package code.vera.myblog.presenter.fragment.home;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +86,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         listView.setAdapter(new HomeTypeListAdpater(list,getContext()));
         popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setTouchable(true);
+        popupWindow.setOutsideTouchable(true);
         // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
 
@@ -126,7 +128,6 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     @Override
     public void onItemCommentListener(View v, int pos) {
         //评论
-//        ToastUtil.showToast(getContext(),"评论");
         Debug.d("count="+adapter.getItem(pos).getComments_count());
         if (adapter.getItem(pos).getComments_count()==0){//如果没有评论数，直接跳到发布评论
             Intent intent=new Intent(getActivity(), PostActivity.class);
@@ -159,6 +160,9 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     }
 
     private void showPopWindow(View v) {
-        popupWindow.showAsDropDown(v);
+        int[] location = new int[2];
+        v.getLocationOnScreen(location);
+        //显示在上方
+        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0], location[1]-popupWindow.getHeight());
     }
 }

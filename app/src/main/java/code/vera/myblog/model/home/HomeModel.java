@@ -11,7 +11,7 @@ import java.util.List;
 import code.vera.myblog.api.HomeApi;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
-import code.vera.myblog.model.IModel;
+import code.vera.myblog.model.base.IModel;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;

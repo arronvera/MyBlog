@@ -1,6 +1,6 @@
 package code.vera.myblog.presenter;
 
-import code.vera.myblog.model.IModel;
+import code.vera.myblog.model.base.IModel;
 import code.vera.myblog.view.base.BaseView;
 import rx.Subscription;
 

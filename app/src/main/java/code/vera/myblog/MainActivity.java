@@ -26,10 +26,12 @@ import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.SearchActivity;
 import code.vera.myblog.presenter.fragment.MenuFragment;
+import code.vera.myblog.presenter.fragment.draft.DraftFragment;
 import code.vera.myblog.presenter.fragment.find.FindFragment;
 import code.vera.myblog.presenter.fragment.home.HomeFragment;
 import code.vera.myblog.presenter.fragment.me.MeFragment;
 import code.vera.myblog.presenter.fragment.message.MessageFragment;
+import code.vera.myblog.presenter.fragment.set.SetFragment;
 import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.view.base.VoidView;
 
@@ -103,10 +105,20 @@ public class MainActivity extends PresenterActivity<VoidView, MainModel> impleme
         item.setText("我");
         item.setPic(R.mipmap.ic_mine);
         menuList.add(item);
+        //草稿箱
+        item = new MenuItem();
+        item.setText("草稿箱");
+        menuList.add(item);
+        //设置
+        item = new MenuItem();
+        item.setPic(R.mipmap.ic_mine);
+        item.setText("设置");
+        menuList.add(item);
+
     }
 
     private void initView() {
-        //设置菜单
+        //设置toolbar菜单
         toolbar.inflateMenu(R.menu.toolbar_menu);
         //开关
         drawerToggle = new ActionBarDrawerToggle(activity, dlLeft, toolbar, R.string.drawer_open, R.string.drawer_close);
@@ -192,6 +204,12 @@ public class MainActivity extends PresenterActivity<VoidView, MainModel> impleme
                 break;
             case 3:
                 fragment = new MeFragment();
+                break;
+            case 4:
+                fragment = new DraftFragment();
+                break;
+            case 5://设置
+                fragment=new SetFragment();
                 break;
         }
         fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();

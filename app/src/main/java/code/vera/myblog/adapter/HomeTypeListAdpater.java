@@ -42,12 +42,20 @@ public class HomeTypeListAdpater extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView textView = null;
+        ViewHolder holder;
         if (convertView==null){
+            holder=new ViewHolder();
             convertView= LayoutInflater.from(context).inflate(R.layout.item_home_type,parent,false);
-            textView= (TextView) convertView.findViewById(R.id.tv);
+            holder.textView= (TextView) convertView.findViewById(R.id.type_tv);
+            convertView.setTag(holder);
         }else{
+            holder= (ViewHolder) convertView.getTag();
         }
-        textView.setText(data.get(position));
+        holder.textView.setText(data.get(position));
         return convertView;
+    }
+    class ViewHolder {
+        TextView textView;
+
     }
 }

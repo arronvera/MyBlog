@@ -2,7 +2,7 @@ package code.vera.myblog.presenter;
 
 import android.view.View;
 
-import code.vera.myblog.model.IModel;
+import code.vera.myblog.model.base.IModel;
 import code.vera.myblog.view.base.IView;
 
 /**
