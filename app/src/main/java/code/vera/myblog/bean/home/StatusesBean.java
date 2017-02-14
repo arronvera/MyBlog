@@ -1,5 +1,8 @@
 package code.vera.myblog.bean.home;
 
+import android.support.annotation.Nullable;
+
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -12,9 +15,9 @@ import java.util.List;
 
 public class StatusesBean implements Serializable {
     private String created_at;//创建时间
-    private long id;
-    private String mid;
-    private String idstr;
+    private long id;//微博ID
+    private String mid;//微博MID
+    private String idstr;//	字符串型的微博ID
     private String text;//文字
     private int textLength; //文字长度
     private int  source_allowclick;//来源是否可以点击
@@ -28,6 +31,27 @@ public class StatusesBean implements Serializable {
     private long reposts_count;//	转发数
     private long comments_count;//评论数
     private long attitudes_count;//表态数
+
+    @Nullable
+    private String retweeted_status;//被转发的原微博信息字段，当该微博为转发微博时返回
+    @Nullable
+    private RetweetedStatusBean retweetedStatusBean;
+    @Nullable
+    public String getRetweeted_status() {
+        return retweeted_status;
+    }
+    @Nullable
+    public void setRetweeted_status(String retweeted_status) {
+        this.retweeted_status = retweeted_status;
+    }
+    @Nullable
+    public RetweetedStatusBean getRetweetedStatusBean() {
+        return JSON.parseObject(retweeted_status,RetweetedStatusBean.class);
+    }
+    @Nullable
+    public void setRetweetedStatusBean(RetweetedStatusBean retweetedStatusBean) {
+        this.retweetedStatusBean = retweetedStatusBean;
+    }
 
     public String getCreated_at() {
         return created_at;

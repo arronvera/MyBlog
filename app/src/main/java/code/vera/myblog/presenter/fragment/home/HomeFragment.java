@@ -38,7 +38,7 @@ import ww.com.core.widget.CustomSwipeRefreshLayout;
  */
 
 public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>implements
-        HomeAdapter.OnItemCommentListener,HomeAdapter.OnItemRepostListener,HomeAdapter.OnItemLikeListener {
+        HomeAdapter.OnItemCommentListener,HomeAdapter.OnItemRepostListener,HomeAdapter.OnItemLikeListener,HomeAdapter.OnItemOriginalListener{
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
     private View contentView ;
@@ -164,5 +164,13 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         v.getLocationOnScreen(location);
         //显示在上方
         popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0], location[1]-popupWindow.getHeight());
+    }
+
+    @Override
+    public void onItemOriginalListener(View v, int pos) {
+        //原
+        Intent intent=new Intent(getActivity(),CommentDetailActivity.class);
+        intent.putExtra("retweeted_status",adapter.getItem(pos).getRetweetedStatusBean());
+        startActivity(intent);
     }
 }

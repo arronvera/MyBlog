@@ -17,6 +17,7 @@ import code.vera.myblog.R;
 import ww.com.core.ScreenUtil;
 
 /**
+ * 弹框
  * Created by vera on 2017/1/5 0005.
  */
 
@@ -167,29 +168,6 @@ public class DialogUtils {
 //        builder.show();
         show(builder);
     }
-
-//
-//    public static void showWebList(Context context, List<WebInfo> infos, OnClickListener
-// itemClick) {
-//        ArrayAdapter<WebInfo> itemAdater = new ArrayAdapter<WebInfo>(context, android.R.layout
-// .simple_list_item_1, infos) {
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                TextView textView = (TextView) super.getView(position, convertView, parent);
-//                textView.setTextColor(Color.parseColor("#53a9ff"));
-//                int padding = ScreenUtil.getScalePxValue(72);
-//                textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ScreenUtil.getScalePxValue(42));
-//                textView.setPadding(padding, 0, padding, 0);
-//                textView.setCompoundDrawablePadding(padding);
-//                textView.setCompoundDrawables(getItem(position).ico, null, null, null);
-//                return textView;
-//            }
-//        };
-//        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//        builder.setTitle("浏览器选择");
-//        builder.setAdapter(itemAdater, itemClick);
-//        show(builder);
-//    }
 
     public static void show(AlertDialog.Builder builder) {
         AlertDialog dialog = builder.show();

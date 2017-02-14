@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import butterknife.BindView;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.TabCommentAdapter;
+import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.model.CommentDetailModel;
 import code.vera.myblog.presenter.PresenterActivity;
@@ -38,6 +39,11 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
         if (statusesBean!=null){
             id=statusesBean.getId();
             view.showInfo(statusesBean);
+        }
+        RetweetedStatusBean retweetedStatusBean= (RetweetedStatusBean) intent.getSerializableExtra("retweeted_status");
+        if (retweetedStatusBean!=null){
+            id=retweetedStatusBean.getId();
+            view.showInfo2(retweetedStatusBean);
         }
         setAdapter();
     }

@@ -14,6 +14,7 @@ import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.PicBean;
+import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.base.BaseView;
@@ -54,6 +55,19 @@ public class CommentDetailView extends BaseView {
         ImageLoader.getInstance().displayImage(statusesBean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
                 .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
         //九宫格图片
+        if (statusesBean.getPic_list()!=null&&statusesBean.getPic_list().size()!=0){
+            nineGridImageView.setImagesData(statusesBean.getPic_list());
+            nineGridImageView.setVisibility(View.VISIBLE);
+        }else {
+            nineGridImageView.setVisibility(View.GONE);
+        }
+    }
+    public void showInfo2(RetweetedStatusBean statusesBean){
+        tvContent.setText(statusesBean.getText());
+        tvName.setText(statusesBean.getUserbean().getName());
+        tvTime.setText(TimeUtils.dateTransfer(statusesBean.getCreated_at()));
+        ImageLoader.getInstance().displayImage(statusesBean.getUserbean().getProfile_image_url(), civPhoto, BaseApplication
+                .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
         if (statusesBean.getPic_list()!=null&&statusesBean.getPic_list().size()!=0){
             nineGridImageView.setImagesData(statusesBean.getPic_list());
             nineGridImageView.setVisibility(View.VISIBLE);

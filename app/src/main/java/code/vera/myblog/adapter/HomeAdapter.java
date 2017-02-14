@@ -14,6 +14,8 @@ import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.util.List;
+
 import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
@@ -24,7 +26,10 @@ import code.vera.myblog.view.CircleImageView;
 import code.vera.myblog.view.other.CustomClickableSpan;
 import code.vera.myblog.view.other.CustomLinkMovement;
 
+//import static com.sina.weibo.sdk.openapi.legacy.AccountAPI.CAPITAL.R;
+
 /**
+ * 首页适配器
  * Created by vera on 2017/2/7 0007.
  */
 
@@ -36,6 +41,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
     private OnItemRepostListener onItemRepostListener;//转发监听
     private OnItemCommentListener onItemCommentListener;//评论监听
     private OnItemLikeListener onItemLikeListener;//喜欢监听
+    private OnItemOriginalListener onItemOriginalListener;//原weib监听
 
 
     public HomeAdapter(Context context) {
@@ -64,9 +70,11 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         @BindView(R.id.nineGridImageView)
         NineGridImageView nineGridImageView;
         @BindView(R.id.ll_item_author)
-        LinearLayout llAuthorInfo;//微博作者信息
+        LinearLayout llAuthorInfo;//微博原作者信息
         @BindView(R.id.tv_item_author_info)
         TextView tvAuthorText;
+        @BindView(R.id.original_nineGridImageView)
+        NineGridImageView oriNineGirdImageView;////微博原图片
         @BindView(R.id.tv_item_repost)
         TextView tvRepost;//转发
         @BindView(R.id.rl_item_repost)
@@ -83,13 +91,21 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         public HomeViewHolder(View itemView) {
             super(itemView);
             adapter=new NineGridImageViewAdapter<PicBean>() {
+                //显示
                 @Override
                 protected void onDisplayImage(Context context, ImageView imageView, PicBean s) {
                     ImageLoader.getInstance().displayImage(s.getThumbnail_pic(), imageView, BaseApplication
                             .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
                 }
+                //点击
+                @Override
+                protected void onItemImageClick(Context context, int index, List<PicBean> list) {
+                    super.onItemImageClick(context, index, list);
+
+                }
             };
             nineGridImageView.setAdapter(adapter);
+            oriNineGirdImageView.setAdapter(adapter);
         }
 
         @Override
@@ -134,12 +150,13 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             }else {
                 nineGridImageView.setVisibility(View.GONE);
             }
-            //微博作者
-            if (bean.getUserBean()!=null){
-//                llAuthorInfo.setVisibility(View.VISIBLE);
-//                tvAuthorText.setText("@"+bean.getUserBean().getName()+":"+bean.getText());
+            //微博原作者-有的才返回
+            if (bean.getRetweetedStatusBean()!=null){
+                llAuthorInfo.setVisibility(View.VISIBLE);
+                tvAuthorText.setText("@"+bean.getRetweetedStatusBean().getUserbean().getName()+":"+bean.getText());
+                oriNineGirdImageView.setImagesData(bean.getRetweetedStatusBean().getPic_list());
             }else {
-//                llAuthorInfo.setVisibility(View.GONE);
+                llAuthorInfo.setVisibility(View.GONE);
             }
             //转发
             if (bean.getReposts_count()!=0){
@@ -172,7 +189,12 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                     onItemLikeListener.onItemLikeListener(v, position);
                 }
             });
-
+            llAuthorInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemOriginalListener.onItemOriginalListener(v,position);
+                }
+            });
 
         }
     }
@@ -206,5 +228,15 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 
     public void setOnItemLikeListener(OnItemLikeListener onItemLikeListener) {
         this.onItemLikeListener = onItemLikeListener;
+    }
+    /**
+     * 原weib监听
+     */
+    public interface OnItemOriginalListener {
+        void onItemOriginalListener(View v, int pos);
+    }
+
+    public void setOnItemOriginalListener(OnItemOriginalListener onItemOriginalListener) {
+        this.onItemOriginalListener = onItemOriginalListener;
     }
 }
