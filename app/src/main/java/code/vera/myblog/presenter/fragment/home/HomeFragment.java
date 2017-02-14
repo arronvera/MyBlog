@@ -38,7 +38,9 @@ import ww.com.core.widget.CustomSwipeRefreshLayout;
  */
 
 public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>implements
-        HomeAdapter.OnItemCommentListener,HomeAdapter.OnItemRepostListener,HomeAdapter.OnItemLikeListener,HomeAdapter.OnItemOriginalListener{
+        HomeAdapter.OnItemCommentListener,HomeAdapter.OnItemRepostListener,
+        HomeAdapter.OnItemLikeListener,HomeAdapter.OnItemOriginalListener,
+        HomeAdapter.OnItemLinkListener{
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
     private View contentView ;
@@ -97,6 +99,8 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         adapter.setOnItemRepostListener(this);
         adapter.setOnItemLikeListener(this);
         adapter.setOnItemOriginalListener(this);
+        adapter.setOnItemLinkListener(this);
+
     }
 
     private void setAdater() {
@@ -171,5 +175,13 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         Intent intent=new Intent(getActivity(),CommentDetailActivity.class);
         intent.putExtra("retweeted_status",adapter.getItem(pos).getRetweetedStatusBean());
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemLinkListener(View v, int pos) {
+        //链接
+//        Intent intent=new Intent(getActivity(),Browser.class);
+//        intent.putExtra("link",adapter.getItem(pos).getRetweetedStatusBean());
+//        startActivity(intent);
     }
 }

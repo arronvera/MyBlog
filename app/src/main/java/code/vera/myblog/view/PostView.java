@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,10 @@ public class PostView extends BaseView {
     Button btnUpload;
     @BindView(R.id.tv_post_title)
     TextView tvTitle;//标题
+    @BindView(R.id.iv_choose_pic)
+    ImageView ivChoosePic;//选择图片
+    @BindView(R.id.iv_repost)
+    ImageView ivRepost;
 
     private Context context;
     private TextWatcher textWatcher;
@@ -54,14 +59,14 @@ public class PostView extends BaseView {
             public void afterTextChanged(Editable s) {
                 editStart = etMessage.getSelectionStart();
                 editEnd = etMessage.getSelectionEnd();
-                tvNum.setText("您输入了" + temp.length() + "个字符");
+                tvNum.setText(temp.length()+"");
                 if (temp.length()>0){
                     btnUpload.setBackgroundResource(R.drawable.btn_send_shape_2);
-                    btnUpload.setTextColor(Color.parseColor("#e8512e"));
+                    btnUpload.setTextColor(Color.parseColor("#ff8162"));
                     btnUpload.setEnabled(true);
                 }else {
                     btnUpload.setBackgroundResource(R.drawable.btn_send_shape);
-                    btnUpload.setTextColor(Color.parseColor("#bcbcbc"));
+                    btnUpload.setTextColor(Color.parseColor("#ff8162"));
                     btnUpload.setEnabled(false);
 
                 }
@@ -95,6 +100,14 @@ public class PostView extends BaseView {
                 tvTitle.setText("转发");
                 etMessage.setHint("转发");
                 break;
+        }
+    }
+    public void setRepostVisible(boolean isVisible){
+        if (isVisible){
+            ivRepost.setVisibility(View.VISIBLE);
+        }else {
+            ivRepost.setVisibility(View.GONE);
+
         }
     }
 }

@@ -43,6 +43,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
     private OnItemCommentListener onItemCommentListener;//评论监听
     private OnItemLikeListener onItemLikeListener;//喜欢监听
     private OnItemOriginalListener onItemOriginalListener;//原weib监听
+    private OnItemLinkListener onItemLinkListener;
 
 
     public HomeAdapter(Context context) {
@@ -102,7 +103,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 @Override
                 protected void onItemImageClick(Context context, int index, List<PicBean> list) {
                     super.onItemImageClick(context, index, list);
-
+                    //TODO
                 }
             };
             nineGridImageView.setAdapter(adapter);
@@ -114,12 +115,12 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             String timeStr=bean.getCreated_at();
             tvTime.setText(TimeUtils.dateTransfer(timeStr));
             //内容
-            String content=bean.getText();
-            SpannableString spannable = new SpannableString(content);
+            final String content=bean.getText();
+            final SpannableString spannable = new SpannableString(content);
             ccs = new CustomClickableSpan() {
                 @Override
                 public void onClick(View widget) {
-                    //todo
+                    onItemLinkListener.onItemLinkListener(widget,position);
                 }
             };
             int start=content.indexOf("http://");
@@ -245,5 +246,15 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 
     public void setOnItemOriginalListener(OnItemOriginalListener onItemOriginalListener) {
         this.onItemOriginalListener = onItemOriginalListener;
+    }
+    /**
+     * link监听
+     */
+    public interface OnItemLinkListener {
+        void onItemLinkListener(View v, int pos);
+    }
+
+    public void setOnItemLinkListener(OnItemLinkListener onItemLinkListener) {
+        this.onItemLinkListener = onItemLinkListener;
     }
 }
