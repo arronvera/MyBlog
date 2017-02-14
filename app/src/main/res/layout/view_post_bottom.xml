@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/color_ff8162">
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="horizontal">
+    <LinearLayout style="@style/ItemPostBottomLlayout"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_photo_light"/>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/ItemPostBottomLlayout"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_emoticon_light"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ItemPostBottomLlayout"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_drawer_at"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ItemPostBottomLlayout"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_topic_light"/>
+    </LinearLayout>
+</LinearLayout>
+    <LinearLayout
+        style="@style/ItemPostBottomLlayout"
+        android:gravity="center_vertical|right">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/ic_send_light"/>
+    </LinearLayout>
+</LinearLayout>

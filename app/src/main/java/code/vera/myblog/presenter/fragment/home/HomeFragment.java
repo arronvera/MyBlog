@@ -96,7 +96,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         adapter.setOnItemCommentListener(this);
         adapter.setOnItemRepostListener(this);
         adapter.setOnItemLikeListener(this);
-
+        adapter.setOnItemOriginalListener(this);
     }
 
     private void setAdater() {
@@ -114,7 +114,6 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
                 if (statusesBeen!=null){
-//                    Debug.d("size="+statusesBeen.size());
                     if (requestBean.getPage().equals("1")){
                         adapter.addList(statusesBeen);//清空加载进去
                     }else {//往后面追加

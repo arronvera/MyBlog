@@ -20,6 +20,7 @@ import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.PicBean;
+import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
@@ -152,9 +153,15 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             }
             //微博原作者-有的才返回
             if (bean.getRetweetedStatusBean()!=null){
+                RetweetedStatusBean statusBean=bean.getRetweetedStatusBean();
                 llAuthorInfo.setVisibility(View.VISIBLE);
-                tvAuthorText.setText("@"+bean.getRetweetedStatusBean().getUserbean().getName()+":"+bean.getText());
-                oriNineGirdImageView.setImagesData(bean.getRetweetedStatusBean().getPic_list());
+                tvAuthorText.setText("@"+statusBean.getUserbean().getName()+":"+bean.getText());
+                if (statusBean.getPic_list()!=null&&statusBean.getPic_list().size()!=0){
+                    oriNineGirdImageView.setImagesData(statusBean.getPic_list());
+                    oriNineGirdImageView.setVisibility(View.VISIBLE);
+                }else {
+                    oriNineGirdImageView.setVisibility(View.GONE);
+                }
             }else {
                 llAuthorInfo.setVisibility(View.GONE);
             }
