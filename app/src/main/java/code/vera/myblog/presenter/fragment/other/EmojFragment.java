@@ -1,6 +1,5 @@
 package code.vera.myblog.presenter.fragment.other;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -65,16 +64,17 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    protected int getLayoutResId() {
+        return R.layout.fragment_emoj;
+    }
+
+    @Override
+    protected void onAttach() {
+        super.onAttach();
         if (activity instanceof OnEmojiClickListener) {
             this.listener = (OnEmojiClickListener) activity;
         }
         recentManager = RecentEmojiManager.make(activity);
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
         emojiList = EmojiUtil.getEmojiList();
         try {
             if (recentManager.getCollection(RecentEmojiManager.PREFERENCE_NAME) != null) {
@@ -87,17 +87,6 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.fragment_emoj;
-    }
-
-    @Override
-    protected void onAttach() {
-        super.onAttach();
         initViews();
     }
     private void initViews() {

@@ -22,6 +22,10 @@ import code.vera.myblog.bean.Emoji;
 public class EmojiUtil {
     private static ArrayList<Emoji> emojiList;
 
+    /**
+     * 获取表情集合
+     * @return
+     */
     public static ArrayList<Emoji> getEmojiList() {
         if (emojiList == null) {
             emojiList = generateEmojis();
@@ -29,6 +33,10 @@ public class EmojiUtil {
         return emojiList;
     }
 
+    /**
+     * 生成表情对象集合
+     * @return
+     */
     private static ArrayList<Emoji> generateEmojis() {
         ArrayList<Emoji> list = new ArrayList<>();
         for (int i = 0; i < EmojiResArray.length; i++) {
@@ -48,6 +56,8 @@ public class EmojiUtil {
             R.drawable.d_wu,
             R.drawable.d_weixiao,
             R.drawable.d_haha,
+            R.drawable.d_keai,
+
     };
 
     public static final String[] EmojiTextArray = {
@@ -57,7 +67,7 @@ public class EmojiUtil {
             "[污]",
             "[微笑]",
             "[哈哈]",
-
+            "[可爱]",
 
     };
 
@@ -101,6 +111,13 @@ public class EmojiUtil {
         return (int) (dipValue * scale + 0.5f);
     }
 
+    /**
+     * 处理表情文本
+     * @param comment
+     * @param content
+     * @param context
+     * @throws IOException
+     */
     public static void handlerEmojiText(TextView comment, String content, Context context) throws IOException {
         SpannableStringBuilder sb = new SpannableStringBuilder(content);
         String regex = "\\[(\\S+?)\\]";
