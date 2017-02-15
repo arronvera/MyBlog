@@ -64,7 +64,13 @@
     android:id="@+id/rl_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:layout_alignParentBottom="true">
     <include layout="@layout/view_post_bottom" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_container"></LinearLayout>
 </LinearLayout>
 </RelativeLayout>

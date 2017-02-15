@@ -5,23 +5,32 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.trello.rxlifecycle.ActivityEvent;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentRequestBean;
+import code.vera.myblog.bean.Emoji;
 import code.vera.myblog.bean.UploadRequestBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.PostModel;
 import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.fragment.other.EmojFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.utils.EmojiUtil;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.PostView;
 
@@ -29,7 +38,7 @@ import code.vera.myblog.view.PostView;
 /**
  * 发布
  */
-public class PostActivity extends PresenterActivity<PostView, PostModel>  {
+public class PostActivity extends PresenterActivity<PostView, PostModel> implements EmojFragment.OnEmojiClickListener {
     public static final int TAKE_PICTURE=0025;
     public static final int   CHOOSE_PICTURE=0026;
     private UploadRequestBean uploadRequestBean;
@@ -37,7 +46,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel>  {
     private String id;//id
     private int type;
     private String picPath;
-
+    private EmojFragment emojFragment;//表情
+    List<Fragment> fragments=new ArrayList<>();
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_post;
@@ -54,7 +64,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel>  {
         }
     }
 
-    @OnClick({R.id.tv_cancle, R.id.btn_post,R.id.iv_choose_pic})
+    @OnClick({R.id.tv_cancle, R.id.btn_post,R.id.iv_choose_pic,R.id.iv_emotion})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
@@ -87,6 +97,11 @@ public class PostActivity extends PresenterActivity<PostView, PostModel>  {
                 break;
             case R.id.iv_choose_pic://选择图片
                 showChosePicDialog();
+                break;
+            case R.id.iv_emotion://表情
+                EmojFragment emojFragment = EmojFragment.Instance();
+                getSupportFragmentManager().beginTransaction().add(R.id.ll_container,emojFragment).commit();
+//                view.setEmotionVisible(true);
                 break;
         }
     }
@@ -202,6 +217,57 @@ public class PostActivity extends PresenterActivity<PostView, PostModel>  {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    @Override
+    public void onEmojiDelete() {
+        //表情删除
+        String text = view.getEditStr();
+        if (text.isEmpty()) {
+            return;
+        }
+        if ("]".equals(text.substring(text.length() - 1, text.length()))) {
+            int index = text.lastIndexOf("[");
+            if (index == -1) {
+                int action = KeyEvent.ACTION_DOWN;
+                int code = KeyEvent.KEYCODE_DEL;
+                KeyEvent event = new KeyEvent(action, code);
+                view.getEt().onKeyDown(KeyEvent.KEYCODE_DEL, event);
+                displayTextView();
+                return;
+            }
+            view.getEt().getText().delete(index, text.length());
+            displayTextView();
+            return;
+        }
+        int action = KeyEvent.ACTION_DOWN;
+        int code = KeyEvent.KEYCODE_DEL;
+        KeyEvent event = new KeyEvent(action, code);
+        view.getEt().onKeyDown(KeyEvent.KEYCODE_DEL, event);
+        displayTextView();
+    }
+
+    @Override
+    public void onEmojiClick(Emoji emoji) {
+        //表情点击
+        if (emoji != null) {
+            int index = view.getEt().getSelectionStart();
+            Editable editable = view.getEt().getEditableText();
+            if (index < 0) {
+                editable.append(emoji.getValue());
+            } else {
+                editable.insert(index, emoji.getValue());
+            }
+        }
+        displayTextView();
+
+    }
+    private void displayTextView() {
+        try {
+            EmojiUtil.handlerEmojiText(view.getEt(), view.getEditStr(), this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

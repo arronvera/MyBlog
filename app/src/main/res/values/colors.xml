@@ -12,4 +12,11 @@
     <color name="color_bcbcbc">#bcbcbc</color>
     <color name="color_dddddd">#dddddd</color>
     <color name="color_efefef">#efefef</color>
+    <color name="bg_horizontal_line_color">#80a3a4a7</color>
+    <color name="bg_horizontal_btn_normal">#eeeeee</color>
+    <color name="bg_horizontal_btn_selected">#70a3a4a7</color>
+
+    <color name="bg_indicator_point_normal">#D8D8D8</color>
+    <color name="bg_indicator_point_selected">#A6A6A6</color>
+    <color name="bg_edittext_color">#00000000</color>
 </resources>

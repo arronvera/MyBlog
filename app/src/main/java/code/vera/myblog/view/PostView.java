@@ -110,4 +110,8 @@ public class PostView extends BaseView {
 
         }
     }
+    public EditText getEt(){
+        return etMessage;
+    }
+
 }
