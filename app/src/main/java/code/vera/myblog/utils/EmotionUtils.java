@@ -18,7 +18,7 @@ public class EmotionUtils {
 	/**
 	 * 表情类型标志符
 	 */
-	public static final int EMOTION_CLASSIC_TYPE=0x0001;//经典表情
+	public static final int EMOTION_FACE_TYPE=0x0001;//脸表情
 
 	/**
 	 * key-表情文字;
@@ -31,12 +31,17 @@ public class EmotionUtils {
 	static {
 		EMPTY_MAP = new ArrayMap<>();
 		EMOTION_CLASSIC_MAP = new ArrayMap<>();
-
 		EMOTION_CLASSIC_MAP.put("[呵呵]", R.drawable.d_huaixiao);
 		EMOTION_CLASSIC_MAP.put("[舔屏]", R.drawable.d_tianping);
 		EMOTION_CLASSIC_MAP.put("[污]", R.drawable.d_wu);
 		EMOTION_CLASSIC_MAP.put("[微笑]", R.drawable.d_weixiao);
 		EMOTION_CLASSIC_MAP.put("[嘻嘻]", R.drawable.d_xixi);
+		EMOTION_CLASSIC_MAP.put("[吃惊]", R.drawable.d_chijing);
+		EMOTION_CLASSIC_MAP.put("[害羞]", R.drawable.d_haixiu);
+		EMOTION_CLASSIC_MAP.put("[挖鼻]", R.drawable.d_wabi);
+		EMOTION_CLASSIC_MAP.put("[可怜]", R.drawable.d_kelian);
+		EMOTION_CLASSIC_MAP.put("[可爱]", R.drawable.d_keai);
+		EMOTION_CLASSIC_MAP.put("[挤眼]", R.drawable.d_jiyan);
 
 	}
 
@@ -49,7 +54,7 @@ public class EmotionUtils {
 	public static int getImgByName(int EmotionType,String imgName) {
 		Integer integer=null;
 		switch (EmotionType){
-			case EMOTION_CLASSIC_TYPE:
+			case EMOTION_FACE_TYPE:
 				integer = EMOTION_CLASSIC_MAP.get(imgName);
 				break;
 			default:
@@ -67,7 +72,7 @@ public class EmotionUtils {
 	public static ArrayMap<String, Integer> getEmojiMap(int EmotionType){
 		ArrayMap EmojiMap=null;
 		switch (EmotionType){
-			case EMOTION_CLASSIC_TYPE:
+			case EMOTION_FACE_TYPE:
 				EmojiMap=EMOTION_CLASSIC_MAP;
 				break;
 			default:

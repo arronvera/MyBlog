@@ -2,15 +2,11 @@ package code.vera.myblog.presenter.fragment.other;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -19,6 +15,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import code.vera.myblog.R;
+import code.vera.myblog.adapter.EmojGvAdapter;
+import code.vera.myblog.adapter.EmojVpAdapter;
 import code.vera.myblog.bean.Emoji;
 import code.vera.myblog.manager.RecentEmojiManager;
 import code.vera.myblog.model.base.VoidModel;
@@ -101,9 +99,9 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
         for (int i = 0; i < getPagerCount(list); i++) {
             ViewPagerItems.add(getViewPagerItem(i, list));
         }
-        FaceVPAdapter mVpAdapter = new FaceVPAdapter(ViewPagerItems);
-        faceViewPager.setAdapter(mVpAdapter);
-        faceViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        EmojVpAdapter vpAdapter = new EmojVpAdapter(ViewPagerItems);
+        faceViewPager.setAdapter(vpAdapter);
+        faceViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             int oldPosition = 0;
 
             @Override
@@ -185,8 +183,8 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
         Emoji deleteEmoji = new Emoji();
         deleteEmoji.setDrawable(R.drawable.compose_emotion_delete);
         subList.add(deleteEmoji);
-        FaceGVAdapter mGvAdapter = new FaceGVAdapter(subList, getActivity());
-        gridview.setAdapter(mGvAdapter);
+        EmojGvAdapter emojGvAdapter = new EmojGvAdapter(subList, getActivity());
+        gridview.setAdapter(emojGvAdapter);
         gridview.setNumColumns(columns);
         // 单击表情执行的操作
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -238,89 +236,7 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
     }
 
 
-    class FaceGVAdapter extends BaseAdapter {
-        private List<Emoji> list;
-        private Context mContext;
 
-        public FaceGVAdapter(List<Emoji> list, Context mContext) {
-            super();
-            this.list = list;
-            this.mContext = mContext;
-        }
-
-
-        @Override
-        public int getCount() {
-            // TODO Auto-generated method stub
-            return list.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            // TODO Auto-generated method stub
-            return list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            // TODO Auto-generated method stub
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                holder = new ViewHolder();
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_face, null);
-                holder.iv = (ImageView) convertView.findViewById(R.id.face_image);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            if (list.get(position) != null) {
-                holder.iv.setImageBitmap(EmojiUtil.decodeSampledBitmapFromResource(getActivity().getResources(), list.get(position).getDrawable(),
-                        EmojiUtil.dip2px(getActivity(), 32), EmojiUtil.dip2px(getActivity(), 32)));
-            }
-            return convertView;
-        }
-
-        class ViewHolder {
-            ImageView iv;
-        }
-    }
-
-    class FaceVPAdapter extends PagerAdapter {
-        // 界面列表
-        private List<View> views;
-
-        public FaceVPAdapter(List<View> views) {
-            this.views = views;
-        }
-
-        @Override
-        public void destroyItem(View arg0, int arg1, Object arg2) {
-            ((ViewPager) arg0).removeView((View) (arg2));
-        }
-
-        @Override
-        public int getCount() {
-            return views.size();
-        }
-
-        // 初始化arg1位置的界面
-        @Override
-        public Object instantiateItem(View arg0, int arg1) {
-            ((ViewPager) arg0).addView(views.get(arg1));
-            return views.get(arg1);
-        }
-
-        // 判断是否由对象生成界
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return (arg0 == arg1);
-        }
-    }
 
     public interface OnEmojiClickListener {
         void onEmojiDelete();

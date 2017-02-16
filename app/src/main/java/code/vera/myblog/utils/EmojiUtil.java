@@ -57,6 +57,10 @@ public class EmojiUtil {
             R.drawable.d_weixiao,
             R.drawable.d_haha,
             R.drawable.d_keai,
+            R.drawable.d_wabi,
+            R.drawable.d_chijing,
+            R.drawable.d_jiyan,
+            R.drawable.d_kelian,
 
     };
 
@@ -68,6 +72,10 @@ public class EmojiUtil {
             "[微笑]",
             "[哈哈]",
             "[可爱]",
+            "[挖鼻]",
+            "[吃惊]",
+            "[挤眼]",
+            "[可怜]",
 
     };
 
