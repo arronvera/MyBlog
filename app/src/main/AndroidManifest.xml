@@ -7,7 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -50,6 +51,17 @@
         <activity android:name=".presenter.activity.BrowserActivity"
             android:theme="@style/AppBaseTheme2">
         </activity>
+        <activity android:name=".presenter.activity.PicturesActivity"
+            android:theme="@style/AppBaseTheme2"/>
+        <activity
+            android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:theme="@style/AppBaseTheme2"/>
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppBaseTheme2"/>
     </application>
 
 </manifest>

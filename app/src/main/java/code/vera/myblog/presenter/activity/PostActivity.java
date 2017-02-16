@@ -21,6 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.OnClick;
+import cn.finalteam.rxgalleryfinal.RxGalleryFinal;
+import cn.finalteam.rxgalleryfinal.imageloader.ImageLoaderType;
+import cn.finalteam.rxgalleryfinal.rxbus.RxBusResultSubscriber;
+import cn.finalteam.rxgalleryfinal.rxbus.event.BaseResultEvent;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.Emoji;
@@ -47,8 +51,10 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private int type;
     private String picPath;
     private EmojFragment emojFragment;//表情
-    List<Fragment> fragments=new ArrayList<>();
+    private List<Fragment> fragments=new ArrayList<>();
     private  boolean isShowEmoj=false;//是否表情已经显示
+    private static final int REQUEST_CODE = 732;
+    private ArrayList<String> results = new ArrayList<>();
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_post;
@@ -217,15 +223,26 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
      * 选择图片
      */
     private void choosePic() {
-        Intent openAlbumIntent = new Intent(Intent.ACTION_PICK);
-        openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(openAlbumIntent, PostActivity.CHOOSE_PICTURE);
+//        Intent openAlbumIntent = new Intent(Intent.ACTION_PICK);
+//        openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+//        startActivityForResult(openAlbumIntent, PostActivity.CHOOSE_PICTURE);
+        RxGalleryFinal.with(this)
+                .image()
+                .multiple()
+                .maxSize(8)
+                .imageLoader(ImageLoaderType.GLIDE)
+                .subscribe(new RxBusResultSubscriber<BaseResultEvent>() {
+                    @Override
+                    protected void onEvent(BaseResultEvent baseResultEvent) throws Exception {
+                    //图片选择结果
+
+                    }
+                }).openGallery();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
     }
 
     @Override
