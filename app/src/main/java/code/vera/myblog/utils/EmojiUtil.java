@@ -61,6 +61,9 @@ public class EmojiUtil {
             R.drawable.d_chijing,
             R.drawable.d_jiyan,
             R.drawable.d_kelian,
+            R.drawable.d_aini,
+            R.drawable.d_bishi,
+            R.drawable.d_bizui,
 
     };
 
@@ -76,6 +79,9 @@ public class EmojiUtil {
             "[吃惊]",
             "[挤眼]",
             "[可怜]",
+            "[爱你]",
+            "[鄙视]",
+            "[闭嘴]",
 
     };
 

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.EmojGvAdapter;
 import code.vera.myblog.adapter.EmojVpAdapter;
@@ -30,7 +31,7 @@ import code.vera.myblog.view.widget.EmojiIndicatorView;
  * Created by vera on 2017/2/15 0015.
  */
 
-public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implements View.OnClickListener  {
+public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
 
 
     public static EmojFragment Instance() {
@@ -47,10 +48,16 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
     TextView faceRecentTv;
     @BindView(R.id.face_first_set)
     TextView faceFirstSetTv;
-
+    @BindView(R.id.face_anti)
+    TextView faceAntiTv;
+    @BindView(R.id.face_cartoon)
+    TextView faceCartoonTv;
     ArrayList<View> ViewPagerItems = new ArrayList<>();
     ArrayList<Emoji> emojiList;
     ArrayList<Emoji> recentlyEmojiList;
+    ArrayList<Emoji> antiEmojiList;
+    ArrayList<Emoji> carttonEmojiList;
+
     private int columns = 7;
     private int rows = 3;
 
@@ -74,6 +81,11 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
         }
         recentManager = RecentEmojiManager.make(activity);
         emojiList = EmojiUtil.getEmojiList();
+
+        //todo 表情添加
+        antiEmojiList=new ArrayList<>();
+        carttonEmojiList=new ArrayList<>();
+
         try {
             if (recentManager.getCollection(RecentEmojiManager.PREFERENCE_NAME) != null) {
                 recentlyEmojiList = (ArrayList<Emoji>) recentManager.getCollection(RecentEmojiManager.PREFERENCE_NAME);
@@ -90,8 +102,6 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
     private void initViews() {
         initViewPager(emojiList);
         faceFirstSetTv.setSelected(true);
-        faceFirstSetTv.setOnClickListener(this);
-        faceRecentTv.setOnClickListener(this);
     }
     private void initViewPager(ArrayList<Emoji> list) {
         intiIndicator(list);
@@ -99,6 +109,10 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
         for (int i = 0; i < getPagerCount(list); i++) {
             ViewPagerItems.add(getViewPagerItem(i, list));
         }
+        setAdapter();
+    }
+
+    private void setAdapter() {
         EmojVpAdapter vpAdapter = new EmojVpAdapter(ViewPagerItems);
         faceViewPager.setAdapter(vpAdapter);
         faceViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -124,26 +138,57 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
         faceIndicator.init(getPagerCount(list));
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v.getId() == R.id.face_first_set){
-            if (faceIndicator.getVisibility() == View.GONE) {
-                faceIndicator.setVisibility(View.VISIBLE);
-            }
-            if (!faceFirstSetTv.isSelected()) {
-                faceFirstSetTv.setSelected(true);
-                initViewPager(emojiList);
-            }
-            faceRecentTv.setSelected(false);
-        }else if (v.getId() == R.id.face_recent){
-            if (faceIndicator.getVisibility() == View.VISIBLE) {
-                faceIndicator.setVisibility(View.GONE);
-            }
-            if (!faceRecentTv.isSelected()) {
-                faceRecentTv.setSelected(true);
-                initViewPager(recentlyEmojiList);
-            }
-            faceFirstSetTv.setSelected(false);
+    @OnClick({R.id.face_first_set,R.id.face_recent,R.id.face_anti,R.id.face_cartoon})
+    public void doClick(View v) {
+        switch (v.getId()){
+            case R.id.face_first_set://默认
+                if (faceIndicator.getVisibility() == View.GONE) {
+                    faceIndicator.setVisibility(View.VISIBLE);
+                }
+                if (!faceFirstSetTv.isSelected()) {
+                    faceFirstSetTv.setSelected(true);
+                    initViewPager(emojiList);
+                }
+                faceRecentTv.setSelected(false);
+                faceCartoonTv.setSelected(false);
+                faceAntiTv.setSelected(false);
+                break;
+            case R.id.face_recent:
+                if (faceIndicator.getVisibility() == View.VISIBLE) {
+                    faceIndicator.setVisibility(View.GONE);
+                }
+                if (!faceRecentTv.isSelected()) {
+                    faceRecentTv.setSelected(true);
+                    initViewPager(recentlyEmojiList);
+                }
+                faceFirstSetTv.setSelected(false);
+                faceCartoonTv.setSelected(false);
+                faceAntiTv.setSelected(false);
+                break;
+            case R.id.face_anti://漫画
+                if (faceIndicator.getVisibility() == View.GONE) {
+                    faceIndicator.setVisibility(View.VISIBLE);
+                }
+                if (!faceAntiTv.isSelected()) {
+                    faceAntiTv.setSelected(true);
+                    initViewPager(antiEmojiList);
+                }
+                faceRecentTv.setSelected(false);
+                faceCartoonTv.setSelected(false);
+                faceFirstSetTv.setSelected(false);
+                break;
+            case R.id.face_cartoon://卡通
+                if (faceIndicator.getVisibility() == View.VISIBLE) {
+                    faceIndicator.setVisibility(View.GONE);
+                }
+                if (!faceCartoonTv.isSelected()) {
+                    faceCartoonTv.setSelected(true);
+                    initViewPager(carttonEmojiList);
+                }
+                faceRecentTv.setSelected(false);
+                faceAntiTv.setSelected(false);
+                faceFirstSetTv.setSelected(false);
+                break;
         }
 
     }
@@ -244,4 +289,9 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel> implemen
         void onEmojiClick(Emoji emoji);
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return super.onBackPressed();
+
+    }
 }

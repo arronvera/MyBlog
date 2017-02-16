@@ -48,6 +48,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private String picPath;
     private EmojFragment emojFragment;//表情
     List<Fragment> fragments=new ArrayList<>();
+    private  boolean isShowEmoj=false;//是否表情已经显示
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_post;
@@ -99,9 +100,17 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 showChosePicDialog();
                 break;
             case R.id.iv_emotion://表情
-                EmojFragment emojFragment = EmojFragment.Instance();
-                getSupportFragmentManager().beginTransaction().add(R.id.ll_container,emojFragment).commit();
-//                view.setEmotionVisible(true);
+                if (!isShowEmoj){
+                    emojFragment = EmojFragment.Instance();
+                    getSupportFragmentManager().beginTransaction().add(R.id.ll_container,emojFragment).commit();
+                    isShowEmoj=true;
+                }else{
+                    //隐藏
+                    getSupportFragmentManager().beginTransaction().remove(emojFragment).commit();
+
+                    isShowEmoj=false;
+                }
+
                 break;
         }
     }
