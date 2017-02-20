@@ -70,6 +70,12 @@ public class EmojiUtil {
             R.drawable.d_shengbing,
             R.drawable.d_taikaixin,
             R.drawable.d_baiyan,
+            R.drawable.d_youhengheng,
+            R.drawable.d_zuohengheng,
+            R.drawable.d_xu,
+            R.drawable.d_shuai,
+            R.drawable.d_weiqu,
+            R.drawable.d_tu,
 
 
     };
@@ -95,6 +101,12 @@ public class EmojiUtil {
             "[生病]",
             "[太开心]",
             "[白眼]",
+            "[右哼哼]",
+            "[左哼哼]",
+            "[嘘]",
+            "[衰]",
+            "[委屈]",
+            "[吐]",
 
     };
 
