@@ -1,6 +1,7 @@
 package code.vera.myblog.adapter;
 
 import android.content.Context;
+import android.text.SpannableString;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,7 +12,6 @@ import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -20,11 +20,11 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
-import code.vera.myblog.utils.EmojiUtil;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
 import code.vera.myblog.view.other.CustomClickableSpan;
+import code.vera.myblog.view.other.CustomLinkMovement;
 
 //import static com.sina.weibo.sdk.openapi.legacy.AccountAPI.CAPITAL.R;
 
@@ -144,11 +144,11 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 //                tvContent.setText(content);
 //            }
             //处理emoj表情
-            try {
-                EmojiUtil.handlerEmojiText(tvContent,tvContent.getText().toString(), context);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                EmojiUtil.handlerEmojiText(tvContent,tvContent.getText().toString(), context);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             //处理话题-
             ccsTopic=new CustomClickableSpan() {
                 @Override
@@ -168,14 +168,15 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                     onItemAtListener.onItemAtListener(widget,position);
                 }
             };
-            try {
-                HomeUtils.handlerAtSomeOneText(ccsAt,tvContent,tvContent.getText().toString(),context);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-
+//            try {
+//                HomeUtils.handlerAtSomeOneText(ccsAt,tvContent,tvContent.getText().toString(),context);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            SpannableString spannableString=HomeUtils.getWeiBoContent(ccsAt,ccsTopic,ccs,tvContent.getText().toString(),tvContent);
+            //点击at效果
+            tvContent.setMovementMethod(new CustomLinkMovement(ccsAt));
+            tvContent.setText(spannableString);
             if (bean.getUserBean()!=null){
                 tvName.setText(bean.getUserBean().getName());//用户名
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
@@ -196,11 +197,10 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 RetweetedStatusBean statusBean=bean.getRetweetedStatusBean();
                 llAuthorInfo.setVisibility(View.VISIBLE);
                 tvAuthorText.setText("@"+statusBean.getUserbean().getName()+":"+bean.getText());
-                try {
-                    HomeUtils.handlerTopicText(ccsTopic,tvAuthorText,tvAuthorText.getText().toString(),context);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                SpannableString spannableString2=HomeUtils.getWeiBoContent(ccsAt,ccsTopic,ccs,tvAuthorText.getText().toString(),tvAuthorText);
+                //点击at效果
+                tvAuthorText.setMovementMethod(new CustomLinkMovement(ccsAt));
+                tvAuthorText.setText(spannableString2);
                 if (statusBean.getPic_list()!=null&&statusBean.getPic_list().size()!=0){
                     oriNineGirdImageView.setImagesData(statusBean.getPic_list());
                     oriNineGirdImageView.setVisibility(View.VISIBLE);

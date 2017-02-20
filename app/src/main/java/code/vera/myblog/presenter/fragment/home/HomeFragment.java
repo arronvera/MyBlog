@@ -23,6 +23,7 @@ import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.home.HomeModel;
 import code.vera.myblog.presenter.activity.CommentDetailActivity;
+import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
@@ -196,6 +197,8 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     public void onItemAtListener(View v, int pos) {
         //// TODO: 2017/2/20 0020
         ToastUtil.showToast(getContext(),"点击了at");
-
+        Debug.d("v====="+v.toString());
+        Intent intent=new Intent(getContext(), PersonalityActivity.class);
+        startActivity(intent);
     }
 }
