@@ -1,10 +1,12 @@
 package code.vera.myblog.bean.home;
 
+import java.io.Serializable;
+
 /**
  * Created by vera on 2017/2/7 0007.
  */
 
-public class PicBean {
+public class PicBean implements Serializable{
     private String thumbnail_pic;
 
     public String getThumbnail_pic() {

@@ -197,7 +197,6 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     public void onItemAtListener(View v, int pos) {
         //// TODO: 2017/2/20 0020
         ToastUtil.showToast(getContext(),"点击了at");
-        Debug.d("v====="+v.toString());
         Intent intent=new Intent(getContext(), PersonalityActivity.class);
         startActivity(intent);
     }

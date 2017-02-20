@@ -1,6 +1,7 @@
 package code.vera.myblog.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.SpannableString;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.presenter.activity.PicturesActivity;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
@@ -106,7 +108,11 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 @Override
                 protected void onItemImageClick(Context context, int index, List<PicBean> list) {
                     super.onItemImageClick(context, index, list);
-                    //TODO
+                    //跳转到图片
+                    Intent intent=new Intent(context, PicturesActivity.class);
+                    intent.putExtra("index",index);
+                    intent.putExtra("bean",getItem(position));
+                    context.startActivity(intent);
                 }
             };
             nineGridImageView.setAdapter(adapter);

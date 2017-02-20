@@ -4,8 +4,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import java.util.List;
+
 import butterknife.BindView;
 import code.vera.myblog.R;
+import code.vera.myblog.adapter.PicturesVpAdapter;
+import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.view.base.BaseView;
 
 /**
@@ -15,14 +19,14 @@ import code.vera.myblog.view.base.BaseView;
 public class PicturesView extends BaseView {
     @BindView(R.id.vp_pictures)
     ViewPager viewPager;
-
+    private PicturesVpAdapter adapter;
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
-        setAdapter();
     }
 
-    private void setAdapter() {
-
+    public void setAdapter(List<PicBean> list) {
+        adapter=new PicturesVpAdapter(list);
+        viewPager.setAdapter(adapter);
     }
 }
