@@ -1,9 +1,6 @@
 package code.vera.myblog.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +11,7 @@ import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,10 +20,11 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.utils.EmojiUtil;
+import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
 import code.vera.myblog.view.other.CustomClickableSpan;
-import code.vera.myblog.view.other.CustomLinkMovement;
 
 //import static com.sina.weibo.sdk.openapi.legacy.AccountAPI.CAPITAL.R;
 
@@ -38,12 +37,16 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
     private Context context;
     private NineGridImageViewAdapter<PicBean>adapter;
     private CustomClickableSpan ccs;
+    private CustomClickableSpan ccsTopic;
+    private CustomClickableSpan ccsAt;
 
     private OnItemRepostListener onItemRepostListener;//转发监听
     private OnItemCommentListener onItemCommentListener;//评论监听
     private OnItemLikeListener onItemLikeListener;//喜欢监听
     private OnItemOriginalListener onItemOriginalListener;//原weib监听
-    private OnItemLinkListener onItemLinkListener;
+    private OnItemLinkListener onItemLinkListener;//链接
+    private OnItemTopicListener onItemTopicListener;//话题
+    private OnItemAtListener onItemAtListener;//at
 
 
     public HomeAdapter(Context context) {
@@ -116,27 +119,63 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             tvTime.setText(TimeUtils.dateTransfer(timeStr));
             //内容
             final String content=bean.getText();
-            final SpannableString spannable = new SpannableString(content);
-            ccs = new CustomClickableSpan() {
+            tvContent.setText(content);
+
+
+//            final SpannableString spannable = new SpannableString(content);
+//            ccs = new CustomClickableSpan() {
+//                @Override
+//                public void onClick(View widget) {
+//                    onItemLinkListener.onItemLinkListener(widget,position);
+//                }
+//            };
+//            int start=content.indexOf("http://");
+//            int end=content.indexOf(" ",start);
+//            if (start!=-1){//如果有链接
+//                if (end>start){
+//                    spannable.setSpan(ccs, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+//                    tvContent.setText(spannable);
+//                    tvContent.setHighlightColor(Color.GRAY);
+//                    tvContent.setMovementMethod(new CustomLinkMovement(ccs));
+//                }else {
+//                    tvContent.setText(content);
+//                }
+//            }else {
+//                tvContent.setText(content);
+//            }
+            //处理emoj表情
+            try {
+                EmojiUtil.handlerEmojiText(tvContent,tvContent.getText().toString(), context);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //处理话题-
+            ccsTopic=new CustomClickableSpan() {
                 @Override
                 public void onClick(View widget) {
-                    onItemLinkListener.onItemLinkListener(widget,position);
+                    onItemTopicListener.onItemTopicListener(widget,position);
                 }
             };
-            int start=content.indexOf("http://");
-            int end=content.indexOf(" ",start);
-            if (start!=-1){//如果有链接
-                if (end>start){
-                    spannable.setSpan(ccs, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                    tvContent.setText(spannable);
-                    tvContent.setHighlightColor(Color.GRAY);
-                    tvContent.setMovementMethod(new CustomLinkMovement(ccs));
-                }else {
-                    tvContent.setText(content);
+//            try {
+//                HomeUtils.handlerTopicText(ccsTopic,tvContent,tvContent.getText().toString(),context);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            //处理at
+            ccsAt=new CustomClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    onItemAtListener.onItemAtListener(widget,position);
                 }
-            }else {
-                tvContent.setText(content);
+            };
+            try {
+                HomeUtils.handlerAtSomeOneText(ccsAt,tvContent,tvContent.getText().toString(),context);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+
+
             if (bean.getUserBean()!=null){
                 tvName.setText(bean.getUserBean().getName());//用户名
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
@@ -157,6 +196,11 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 RetweetedStatusBean statusBean=bean.getRetweetedStatusBean();
                 llAuthorInfo.setVisibility(View.VISIBLE);
                 tvAuthorText.setText("@"+statusBean.getUserbean().getName()+":"+bean.getText());
+                try {
+                    HomeUtils.handlerTopicText(ccsTopic,tvAuthorText,tvAuthorText.getText().toString(),context);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 if (statusBean.getPic_list()!=null&&statusBean.getPic_list().size()!=0){
                     oriNineGirdImageView.setImagesData(statusBean.getPic_list());
                     oriNineGirdImageView.setVisibility(View.VISIBLE);
@@ -256,5 +300,26 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 
     public void setOnItemLinkListener(OnItemLinkListener onItemLinkListener) {
         this.onItemLinkListener = onItemLinkListener;
+    }
+
+    /**
+     * 话题
+     */
+    public interface OnItemTopicListener {
+        void onItemTopicListener(View v, int pos);
+    }
+
+    public void setOnItemTopicListener(OnItemTopicListener onItemTopicListener) {
+        this.onItemTopicListener = onItemTopicListener;
+    }
+    /**
+     * at
+     */
+    public interface OnItemAtListener {
+        void onItemAtListener(View v, int pos);
+    }
+
+    public void setOnItemAtListener(OnItemAtListener onItemAtListener) {
+        this.onItemAtListener = onItemAtListener;
     }
 }

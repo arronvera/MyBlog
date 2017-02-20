@@ -51,14 +51,21 @@
             android:id="@+id/et_text"
             android:hint="分享你圈子有趣的事情吧~"
             android:gravity="top"
+            android:maxLength="140"
             android:background="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
-        <com.jaeger.ninegridimageview.NineGridImageView
-            android:layout_width="match_parent"
-            android:layout_height="176dp"
-            >
-        </com.jaeger.ninegridimageview.NineGridImageView>
+
+        <HorizontalScrollView
+            android:id="@+id/scrollPicContainer"
+            android:layout_width="match_parent" android:layout_height="80dip">
+            <!--图片展示容器-->
+            <LinearLayout
+                android:id="@+id/ll_pic_container"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:gravity="center_vertical" android:orientation="horizontal">
+            </LinearLayout>
+        </HorizontalScrollView>
     </LinearLayout>
 <LinearLayout
     android:id="@+id/rl_bottom"
@@ -66,11 +73,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_alignParentBottom="true">
+
     <include layout="@layout/view_post_bottom" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ll_container"></LinearLayout>
+        android:id="@+id/ll_container">
+    </LinearLayout>
 </LinearLayout>
 </RelativeLayout>

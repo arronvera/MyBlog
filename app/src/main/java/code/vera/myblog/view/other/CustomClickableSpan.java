@@ -16,18 +16,17 @@ public abstract class CustomClickableSpan extends ClickableSpan{
     }
     @Override
     public void updateDrawState(TextPaint ds) {
-        int color = Color.parseColor("#0B86EE");
+        int color = Color.parseColor("#ff8162");
         switch (action){
             case MotionEvent.ACTION_DOWN:
                 color = Color.parseColor("#FF4081");
                 break;
             case MotionEvent.ACTION_UP:
-                color = Color.parseColor("#0B86EE");
+                color = Color.parseColor("#ff8162");
                 break;
         }
         ds.setColor(color);//颜色
         ds.setUnderlineText(false);//没有下划线
-
     }
 
 }

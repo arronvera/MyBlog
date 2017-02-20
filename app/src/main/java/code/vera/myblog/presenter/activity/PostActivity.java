@@ -37,6 +37,7 @@ import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.EmojiUtil;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.PostView;
+import ww.com.core.Debug;
 
 
 /**
@@ -71,7 +72,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         }
     }
 
-    @OnClick({R.id.tv_cancle, R.id.btn_post,R.id.iv_choose_pic,R.id.iv_emotion})
+    @OnClick({R.id.tv_cancle, R.id.btn_post,R.id.iv_choose_pic,R.id.iv_emotion,R.id.iv_at,R.id.iv_topic})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
@@ -116,7 +117,16 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
 
                     isShowEmoj=false;
                 }
-
+                break;
+            case R.id.iv_at://at
+                view.getEt().append("@");
+                //todo
+                break;
+            case R.id.iv_topic://插入话题
+                view.getEt().append("##");
+                //移动光标到中间
+                view.getEt().setSelection(view.getEditStr().indexOf("#")+1);
+                //todo
                 break;
         }
     }
@@ -229,13 +239,13 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         RxGalleryFinal.with(this)
                 .image()
                 .multiple()
-                .maxSize(8)
+                .maxSize(9)
                 .imageLoader(ImageLoaderType.GLIDE)
                 .subscribe(new RxBusResultSubscriber<BaseResultEvent>() {
                     @Override
                     protected void onEvent(BaseResultEvent baseResultEvent) throws Exception {
                     //图片选择结果
-
+                        Debug.d("结果:"+   baseResultEvent.toString());
                     }
                 }).openGallery();
     }
@@ -277,7 +287,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public void onEmojiClick(Emoji emoji) {
         //表情点击
         if (emoji != null) {
-            int index = view.getEt().getSelectionStart();
+            //获取光标位置
+            int index = view.getEt().getSelectionEnd();
             Editable editable = view.getEt().getEditableText();
             if (index < 0) {
                 editable.append(emoji.getValue());
@@ -286,11 +297,16 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
             }
         }
         displayTextView();
-
     }
+
+    /**
+     * 显示
+     */
     private void displayTextView() {
         try {
             EmojiUtil.handlerEmojiText(view.getEt(), view.getEditStr(), this);
+            //光标移动到最后
+            view.getEt().setSelection(view.getEditStr().length());
         } catch (IOException e) {
             e.printStackTrace();
         }

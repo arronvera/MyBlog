@@ -40,7 +40,7 @@ import ww.com.core.widget.CustomSwipeRefreshLayout;
 public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>implements
         HomeAdapter.OnItemCommentListener,HomeAdapter.OnItemRepostListener,
         HomeAdapter.OnItemLikeListener,HomeAdapter.OnItemOriginalListener,
-        HomeAdapter.OnItemLinkListener{
+        HomeAdapter.OnItemLinkListener,HomeAdapter.OnItemTopicListener,HomeAdapter.OnItemAtListener{
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
     private View contentView ;
@@ -100,7 +100,8 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         adapter.setOnItemLikeListener(this);
         adapter.setOnItemOriginalListener(this);
         adapter.setOnItemLinkListener(this);
-
+        adapter.setOnItemTopicListener(this);
+        adapter.setOnItemAtListener(this);
     }
 
     private void setAdater() {
@@ -183,5 +184,18 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
 //        Intent intent=new Intent(getActivity(),Browser.class);
 //        intent.putExtra("link",adapter.getItem(pos).getRetweetedStatusBean());
 //        startActivity(intent);
+    }
+
+    @Override
+    public void onItemTopicListener(View v, int pos) {
+        //Todo
+        ToastUtil.showToast(getContext(),"点击了话题");
+    }
+
+    @Override
+    public void onItemAtListener(View v, int pos) {
+        //// TODO: 2017/2/20 0020
+        ToastUtil.showToast(getContext(),"点击了at");
+
     }
 }

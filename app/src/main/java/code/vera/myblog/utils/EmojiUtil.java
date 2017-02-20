@@ -64,6 +64,13 @@ public class EmojiUtil {
             R.drawable.d_aini,
             R.drawable.d_bishi,
             R.drawable.d_bizui,
+            R.drawable.d_doge,
+            R.drawable.d_touxiao,
+            R.drawable.d_qinqin,
+            R.drawable.d_shengbing,
+            R.drawable.d_taikaixin,
+            R.drawable.d_baiyan,
+
 
     };
 
@@ -82,6 +89,12 @@ public class EmojiUtil {
             "[爱你]",
             "[鄙视]",
             "[闭嘴]",
+            "[doge]",
+            "[偷笑]",
+            "[亲亲]",
+            "[生病]",
+            "[太开心]",
+            "[白眼]",
 
     };
 
