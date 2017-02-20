@@ -173,7 +173,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
-            SpannableString spannableString=HomeUtils.getWeiBoContent(ccsAt,ccsTopic,ccs,tvContent.getText().toString(),tvContent);
+            SpannableString spannableString=HomeUtils.getWeiBoContent(ccsAt,ccsTopic,ccs,tvContent.getText().toString(),context);
             //点击at效果
             tvContent.setMovementMethod(new CustomLinkMovement(ccsAt));
             tvContent.setText(spannableString);
@@ -197,7 +197,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 RetweetedStatusBean statusBean=bean.getRetweetedStatusBean();
                 llAuthorInfo.setVisibility(View.VISIBLE);
                 tvAuthorText.setText("@"+statusBean.getUserbean().getName()+":"+bean.getText());
-                SpannableString spannableString2=HomeUtils.getWeiBoContent(ccsAt,ccsTopic,ccs,tvAuthorText.getText().toString(),tvAuthorText);
+                SpannableString spannableString2=HomeUtils.getWeiBoContent(ccsAt,ccsTopic,ccs,tvAuthorText.getText().toString(),context);
                 //点击at效果
                 tvAuthorText.setMovementMethod(new CustomLinkMovement(ccsAt));
                 tvAuthorText.setText(spannableString2);

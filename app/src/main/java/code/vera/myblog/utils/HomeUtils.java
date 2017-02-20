@@ -4,13 +4,15 @@ import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.method.LinkMovementMethod;
+import android.text.style.ImageSpan;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import code.vera.myblog.bean.Emoji;
 import code.vera.myblog.view.other.CustomClickableSpan;
 
 /**
@@ -20,7 +22,7 @@ import code.vera.myblog.view.other.CustomClickableSpan;
 public class HomeUtils {
     private static final String AT = "@[\u4e00-\u9fa5\\w]+";// @人
     private static final String TOPIC = "#[\u4e00-\u9fa5\\w]+#";// ##话题
-    private static final String EMOJI = "\\[[\u4e00-\u9fa5\\w]+\\]";// 表情
+    private static final String EMOJI = "\\[(\\S+?)\\]";// 表情
     private static final String URL = "http://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";// url
     /**
      * 处理话题
@@ -79,24 +81,25 @@ public class HomeUtils {
     /**
      * 设置weib样式
      * @param source
-     * @param textView
+     * @param context
      * @return
      */
     public static SpannableString getWeiBoContent(CustomClickableSpan ccsAt,
                                                   CustomClickableSpan ccsTopic,
-                                                  CustomClickableSpan ccsUrl, String source, TextView textView) {
+                                                  CustomClickableSpan ccsUrl, String source, Context context) {
         SpannableString spannableString = new SpannableString(source);
-        String REGEX="(" +AT+ ")|(" +TOPIC+ ")|("+URL+")";
+        String REGEX="(" +AT+ ")|(" +TOPIC+ ")|("+URL+")|("+EMOJI+")";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(spannableString);
-        if (matcher.find()) {
-            textView.setMovementMethod(LinkMovementMethod.getInstance());
-            matcher.reset();
-        }
+//        if (matcher.find()) {
+//            textView.setMovementMethod(LinkMovementMethod.getInstance());
+//            matcher.reset();
+//        }
         while (matcher.find()) {
             final String at = matcher.group(1);
             final String topic = matcher.group(2);
             final String url  = matcher.group(3);
+            final String emoji= matcher.group(4);
             if (at != null) {
                 int start = matcher.start(1);
                 int end = start + at.length();
@@ -111,6 +114,22 @@ public class HomeUtils {
                 int start = matcher.start(3);
                 int end = start + url.length();
                 spannableString.setSpan(ccsUrl, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            if (emoji != null) {//表情
+                int start = matcher.start(4);
+                int end = start + emoji.length();
+                Iterator<Emoji> iterator;
+                Emoji e = null;
+                iterator = EmojiUtil.getEmojiList().iterator();
+                while (iterator.hasNext()) {
+                    e = iterator.next();
+                    if (emoji.equals(e.getValue())) {
+                        spannableString.setSpan(new ImageSpan(context, EmojiUtil.decodeSampledBitmapFromResource(context.getResources(), e.getDrawable()
+                                , EmojiUtil.dip2px(context, 18), EmojiUtil.dip2px(context, 18))),
+                                start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+
+                }
             }
         }
         return spannableString;
