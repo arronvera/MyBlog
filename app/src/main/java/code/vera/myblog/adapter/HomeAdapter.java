@@ -2,7 +2,7 @@ package code.vera.myblog.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -125,64 +125,11 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             tvTime.setText(TimeUtils.dateTransfer(timeStr));
             //内容
             final String content=bean.getText();
-            tvContent.setText(content);
-
-
-//            final SpannableString spannable = new SpannableString(content);
-//            ccs = new CustomClickableSpan() {
-//                @Override
-//                public void onClick(View widget) {
-//                    onItemLinkListener.onItemLinkListener(widget,position);
-//                }
-//            };
-//            int start=content.indexOf("http://");
-//            int end=content.indexOf(" ",start);
-//            if (start!=-1){//如果有链接
-//                if (end>start){
-//                    spannable.setSpan(ccs, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-//                    tvContent.setText(spannable);
-//                    tvContent.setHighlightColor(Color.GRAY);
-//                    tvContent.setMovementMethod(new CustomLinkMovement(ccs));
-//                }else {
-//                    tvContent.setText(content);
-//                }
-//            }else {
-//                tvContent.setText(content);
-//            }
-            //处理emoj表情
-//            try {
-//                EmojiUtil.handlerEmojiText(tvContent,tvContent.getText().toString(), context);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-            //处理话题-
-            ccsTopic=new CustomClickableSpan() {
-                @Override
-                public void onClick(View widget) {
-                    onItemTopicListener.onItemTopicListener(widget,position);
-                }
-            };
-//            try {
-//                HomeUtils.handlerTopicText(ccsTopic,tvContent,tvContent.getText().toString(),context);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-            //处理at
-            ccsAt=new CustomClickableSpan() {
-                @Override
-                public void onClick(View widget) {
-                    onItemAtListener.onItemAtListener(widget,position);
-                }
-            };
-//            try {
-//                HomeUtils.handlerAtSomeOneText(ccsAt,tvContent,tvContent.getText().toString(),context);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-            SpannableString spannableString=HomeUtils.getWeiBoContent(ccsAt,ccsTopic,ccs,tvContent.getText().toString(),context);
+            SpannableStringBuilder spannableString=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content,context,position);
             //点击at效果
             tvContent.setMovementMethod(new CustomLinkMovement(ccsAt));
-            tvContent.setText(spannableString);
+            tvContent.setText("");
+            tvContent.append(spannableString);
             if (bean.getUserBean()!=null){
                 tvName.setText(bean.getUserBean().getName());//用户名
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
@@ -202,11 +149,12 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             if (bean.getRetweetedStatusBean()!=null){
                 RetweetedStatusBean statusBean=bean.getRetweetedStatusBean();
                 llAuthorInfo.setVisibility(View.VISIBLE);
-                tvAuthorText.setText("@"+statusBean.getUserbean().getName()+":"+bean.getText());
-                SpannableString spannableString2=HomeUtils.getWeiBoContent(ccsAt,ccsTopic,ccs,tvAuthorText.getText().toString(),context);
+                String content_author="@"+statusBean.getUserbean().getName()+":"+bean.getText();
+                SpannableStringBuilder spannableString2=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content_author,context,position);
                 //点击at效果
                 tvAuthorText.setMovementMethod(new CustomLinkMovement(ccsAt));
-                tvAuthorText.setText(spannableString2);
+                tvAuthorText.setText("");
+                tvAuthorText.append(spannableString2);
                 if (statusBean.getPic_list()!=null&&statusBean.getPic_list().size()!=0){
                     oriNineGirdImageView.setImagesData(statusBean.getPic_list());
                     oriNineGirdImageView.setVisibility(View.VISIBLE);

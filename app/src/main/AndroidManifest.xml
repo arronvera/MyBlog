@@ -19,14 +19,21 @@
             android:theme="@style/AppBaseTheme2" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppBaseTheme" />
-        <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppBaseTheme">
+            android:theme="@style/AppBaseTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppBaseTheme">
+
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
             </intent-filter>
         </activity>
         <activity android:name=".OAuthActivity" />
