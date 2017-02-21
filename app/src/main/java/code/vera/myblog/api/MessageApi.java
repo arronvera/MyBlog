@@ -33,4 +33,40 @@ public class MessageApi {
 
         return onGet(url, params);
     }
+    /**
+     * 获取发出的评论列表
+     * @param context
+     * @param page
+     * @return
+     */
+    public static Observable<String > getCommentsByMe(Context context,int page) {
+        String url = NetWorkConfig.COMMENT_BY_ME;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("since_id","0");
+        params.addParameters("max_id","0");
+        params.addParameters("count","50");
+        params.addParameters("page",page+"");//返回结果的页码，默认为1。
+        params.addParameters("filter_by_author","0");//作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
+        params.addParameters("filter_by_source","0");//来源筛选类型，0：全部、1：来自微博的评论、2：来自微群的评论，默认为0
+        return onGet(url, params);
+    }
+    /**
+     * 获取接收的评论列表
+     * @param context
+     * @param page
+     * @return
+     */
+    public static Observable<String > getCommentToMe(Context context,int page) {
+        String url = NetWorkConfig.COMMENT_TO_ME;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("since_id","0");
+        params.addParameters("max_id","0");
+        params.addParameters("count","50");
+        params.addParameters("page",page+"");//返回结果的页码，默认为1。
+        params.addParameters("filter_by_source","0");//来源筛选类型，0：全部、1：来自微博的评论、2：来自微群的评论，默认为0
+
+        return onGet(url, params);
+    }
 }

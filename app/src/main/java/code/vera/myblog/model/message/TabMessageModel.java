@@ -38,7 +38,46 @@ public class TabMessageModel implements IModel {
                         JSONObject result= JSON.parseObject(s);
                         if (result!=null){
                             beanList= JSON.parseArray(result.getString("comments"),CommentUserBean.class);
-//                            Debug.d("beanlist.size="+beanList.size());
+                        }
+                        return beanList;
+                    }
+                }).compose(RxHelper.<List<CommentUserBean>>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+    /**
+     * 获取发出的评论列表评论
+     */
+    public void getCommentByMe(int page, Context context, Observable.Transformer
+            transformer, Subscriber<List<CommentUserBean>> subscriber){
+        MessageApi.getCommentsByMe(context,page)
+                .map(new Func1<String, List<CommentUserBean>>() {
+                    @Override
+                    public  List<CommentUserBean> call(String s) {
+                        List<CommentUserBean>beanList=new ArrayList<>();
+                        JSONObject result= JSON.parseObject(s);
+                        if (result!=null){
+                            beanList= JSON.parseArray(result.getString("comments"),CommentUserBean.class);
+                        }
+                        return beanList;
+                    }
+                }).compose(RxHelper.<List<CommentUserBean>>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+    /**
+     * 获取收到的的评论列表评论
+     */
+    public void getCommentToMe(int page, Context context, Observable.Transformer
+            transformer, Subscriber<List<CommentUserBean>> subscriber){
+        MessageApi.getCommentToMe(context,page)
+                .map(new Func1<String, List<CommentUserBean>>() {
+                    @Override
+                    public  List<CommentUserBean> call(String s) {
+                        List<CommentUserBean>beanList=new ArrayList<>();
+                        JSONObject result= JSON.parseObject(s);
+                        if (result!=null){
+                            beanList= JSON.parseArray(result.getString("comments"),CommentUserBean.class);
                         }
                         return beanList;
                     }

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -47,6 +48,8 @@ public class MainActivity extends PresenterActivity<VoidView, MainModel> impleme
     ListView lvMenu;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.iv_title)
+    ImageView ivTitle;
 
     private ActionBarDrawerToggle drawerToggle;
     private Activity activity;
@@ -99,7 +102,6 @@ public class MainActivity extends PresenterActivity<VoidView, MainModel> impleme
         menuList.add(item);
         item = new MenuItem();
         item.setText("发现");
-        item.setPic(R.mipmap.ic_find);
         menuList.add(item);
         item = new MenuItem();
         item.setText("我");
@@ -193,23 +195,32 @@ public class MainActivity extends PresenterActivity<VoidView, MainModel> impleme
         switch (position) {
             case 0:
                 fragment = new HomeFragment();
+                ivTitle.setImageResource(R.mipmap.ic_circle);
                 break;
             case 1:
                 fragment = new MessageFragment();
+                ivTitle.setImageResource(R.mipmap.ic_title_message);
 
                 break;
             case 2:
                 fragment = new FindFragment();
+                ivTitle.setImageResource(R.mipmap.ic_title_find);
 
                 break;
             case 3:
                 fragment = new MeFragment();
+                ivTitle.setImageResource(R.mipmap.ic_me);
+
                 break;
             case 4:
                 fragment = new DraftFragment();
+                ivTitle.setImageResource(R.mipmap.ic_draft);
+
                 break;
             case 5://设置
                 fragment=new SetFragment();
+                ivTitle.setImageResource(R.mipmap.ic_set);
+
                 break;
         }
         fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();

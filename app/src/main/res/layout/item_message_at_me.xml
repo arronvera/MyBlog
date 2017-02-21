@@ -17,7 +17,7 @@
         android:layout_toRightOf="@+id/crv_item_photo"
         tools:text="vera"/>
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_item_name"
@@ -44,6 +44,7 @@
         android:id="@+id/tv_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/crv_item_photo"
         tools:text="text-----------"
         />
