@@ -146,7 +146,7 @@ public class EmojiUtil {
 
 
     public static int dip2px(Context context, float dipValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+        final float scale = context.getResources().getDisplayMetrics().density;//屏幕的密度
         return (int) (dipValue * scale + 0.5f);
     }
 
