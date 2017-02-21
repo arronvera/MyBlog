@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import code.vera.myblog.bean.Emoji;
 import code.vera.myblog.view.other.CustomClickableSpan;
+import ww.com.core.Debug;
 
 /**
  * Created by vera on 2017/2/20 0020.
@@ -96,6 +97,9 @@ public class HomeUtils {
 //            matcher.reset();
 //        }
         while (matcher.find()) {
+            for(int i=1;i<=matcher.groupCount();i++){
+                Debug.d("group="+matcher.group(i));
+            }
             final String at = matcher.group(1);
             final String topic = matcher.group(2);
             final String url  = matcher.group(3);

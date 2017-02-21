@@ -1,8 +1,10 @@
 package code.vera.myblog.view.pic;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -19,14 +21,34 @@ import code.vera.myblog.view.base.BaseView;
 public class PicturesView extends BaseView {
     @BindView(R.id.vp_pictures)
     ViewPager viewPager;
+    @BindView(R.id.tv_pic_num)
+    TextView tvPicNum;
+
     private PicturesVpAdapter adapter;
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
     }
 
-    public void setAdapter(List<PicBean> list) {
-        adapter=new PicturesVpAdapter(list);
+    public void setAdapter(FragmentManager fm, final List<PicBean> list,int index) {
+        adapter=new PicturesVpAdapter(fm,list);
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                ////////      1/4
+                tvPicNum.setText(String.valueOf(position+1)+"/"+list.size());
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 }

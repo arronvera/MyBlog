@@ -26,8 +26,7 @@ public class PicturesActivity extends PresenterActivity<PicturesView,VoidModel> 
         int index=intent.getIntExtra("index",-1);
         StatusesBean statusesBean= (StatusesBean) intent.getSerializableExtra("bean");
         if (statusesBean!=null&&index!=-1){
-            view.setAdapter( statusesBean.getPic_list());
-
+            view.setAdapter( getSupportFragmentManager(),statusesBean.getPic_list(),index);
         }
 
     }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -13,6 +15,15 @@
             android:layout_centerInParent="true"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_pic_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1"
+            android:layout_toLeftOf="@+id/tv_big_pic"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"/>
+        <TextView
+            android:id="@+id/tv_big_pic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="查看大图"
@@ -22,6 +33,7 @@
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
+        android:background="@color/colorWhite"
         android:id="@+id/vp_pictures"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
