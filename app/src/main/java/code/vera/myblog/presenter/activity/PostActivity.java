@@ -28,12 +28,13 @@ import cn.finalteam.rxgalleryfinal.rxbus.event.BaseResultEvent;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.Emoji;
-import code.vera.myblog.bean.UploadRequestBean;
+import code.vera.myblog.bean.PostBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.PostModel;
 import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.presenter.fragment.other.EmojFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.utils.EmojiUtil;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.PostView;
@@ -46,7 +47,7 @@ import ww.com.core.Debug;
 public class PostActivity extends PresenterActivity<PostView, PostModel> implements EmojFragment.OnEmojiClickListener {
     public static final int TAKE_PICTURE=0025;
     public static final int   CHOOSE_PICTURE=0026;
-    private UploadRequestBean uploadRequestBean;
+    private PostBean postBean;
     private CommentRequestBean commentRequestBean;
     private String id;//id
     private int type;
@@ -76,7 +77,22 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
-                finish();
+                if (!TextUtils.isEmpty(view.getEditStr())){
+                    //如果有内容  提示保存到草稿箱
+                    DialogUtils.showDialog(this, "", "是否保存到草稿箱?", "是", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //todo 保存到草稿箱
+                        }
+                    }, "否", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                }else {
+                    finish();
+                }
                 break;
             case R.id.btn_post://发送
                 String msg=view.getEditStr();
@@ -91,9 +107,10 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                         repost();
                         break;
                     default://发布新的
-                        uploadRequestBean = new UploadRequestBean();
-                        uploadRequestBean.setStatus(msg);
-                        if (TextUtils.isEmpty(uploadRequestBean.getPic())) {
+                        postBean = new PostBean();
+                        postBean.setStatus(msg);
+                        postBean.setPostStatus(Constants.POST_STATUS_NEW);
+                        if (TextUtils.isEmpty(postBean.getPic())) {
                             //仅发文字
                             upDate();
                         } else {
@@ -148,8 +165,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                                 break;
                         }
                     }
-                })
-                .show();
+                }) .show();
     }
 
     /**
@@ -178,7 +194,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     }
 
     private void upLoad() {
-        model.uploadMessage(this, uploadRequestBean, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
+        model.uploadMessage(this, postBean, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
             @Override
             public void onNext(String s) {
                 super.onNext(s);
@@ -193,7 +209,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     }
 
     private void upDate() {
-        model.updateMessage(this, uploadRequestBean, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
+        model.updateMessage(this, postBean, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
             @Override
             public void onNext(String s) {
                 super.onNext(s);

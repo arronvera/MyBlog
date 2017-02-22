@@ -180,23 +180,23 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     }
 
     @Override
-    public void onItemLinkListener(View v, int pos) {
+    public void onItemLinkListener(View v, int pos,String str) {
         //链接
+        ToastUtil.showToast(getContext(),"点击了链接"+str);
 //        Intent intent=new Intent(getActivity(),Browser.class);
 //        intent.putExtra("link",adapter.getItem(pos).getRetweetedStatusBean());
 //        startActivity(intent);
     }
 
     @Override
-    public void onItemTopicListener(View v, int pos) {
+    public void onItemTopicListener(View v, int pos,String str) {
         //Todo
-        ToastUtil.showToast(getContext(),"点击了话题");
+        ToastUtil.showToast(getContext(),"点击了话题"+str);
     }
 
     @Override
-    public void onItemAtListener(View v, int pos) {
-        //// TODO: 2017/2/20 0020
-        ToastUtil.showToast(getContext(),"点击了at");
+    public void onItemAtListener(View v, int pos,String str) {
+        ToastUtil.showToast(getContext(),"点击了at"+str);
         Intent intent=new Intent(getContext(), PersonalityActivity.class);
         startActivity(intent);
     }

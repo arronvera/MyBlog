@@ -19,6 +19,10 @@ public class DraftFragment  extends PresenterFragment<DraftView, DraftModel> {
     @Override
     protected void onAttach() {
         super.onAttach();
+        getDraft();
+    }
 
+    private void getDraft() {
+        //todo
     }
 }

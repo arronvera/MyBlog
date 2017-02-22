@@ -34,6 +34,9 @@ public class PostView extends BaseView {
     ImageView ivChoosePic;//选择图片
     @BindView(R.id.iv_repost)
     ImageView ivRepost;
+    @BindView(R.id.tv_cancle)
+    TextView tvCancel;//取消
+
 
     private Context context;
     private TextWatcher textWatcher;
@@ -63,12 +66,13 @@ public class PostView extends BaseView {
                 if (temp.length()>0){
                     btnUpload.setBackgroundResource(R.drawable.btn_send_shape_2);
                     btnUpload.setTextColor(Color.parseColor("#ff8162"));
+                    tvCancel.setTextColor(Color.parseColor("#ff8162"));
                     btnUpload.setEnabled(true);
                 }else {
                     btnUpload.setBackgroundResource(R.drawable.btn_send_shape);
-                    btnUpload.setTextColor(Color.parseColor("#ff8162"));
+                    btnUpload.setTextColor(Color.parseColor("#bcbcbc"));
+                    tvCancel.setTextColor(Color.parseColor("#bcbcbc"));
                     btnUpload.setEnabled(false);
-
                 }
                 if (temp.length() > 140) {
                     Toast.makeText(context, "你输入的字数已经超过了限制！", Toast.LENGTH_SHORT).show();

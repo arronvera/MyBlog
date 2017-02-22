@@ -7,7 +7,7 @@ import java.net.URLEncoder;
 
 import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.bean.CommentRequestBean;
-import code.vera.myblog.bean.UploadRequestBean;
+import code.vera.myblog.bean.PostBean;
 import code.vera.myblog.config.NetWorkConfig;
 import rx.Observable;
 import ww.com.http.core.AjaxParams;
@@ -26,7 +26,7 @@ public class PostApi {
      * @param context
      * @return
      */
-    public static Observable<String > uploadMsg(Context context, UploadRequestBean bean) {
+    public static Observable<String > uploadMsg(Context context, PostBean bean) {
         String url = NetWorkConfig.UPLOAD_WEIB;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
@@ -51,7 +51,7 @@ public class PostApi {
      * @param context
      * @return
      */
-    public static Observable<String > updateMsg(Context context, UploadRequestBean bean) {
+    public static Observable<String > updateMsg(Context context, PostBean bean) {
         String url = NetWorkConfig.UPDATE_WEIB;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());

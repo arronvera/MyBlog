@@ -8,7 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import code.vera.myblog.api.PostApi;
 import code.vera.myblog.bean.CommentRequestBean;
-import code.vera.myblog.bean.UploadRequestBean;
+import code.vera.myblog.bean.PostBean;
 import code.vera.myblog.model.base.IModel;
 import rx.Observable;
 import rx.Subscriber;
@@ -33,7 +33,7 @@ public class PostModel implements IModel {
      * @param transformer
      * @param subscriber
      */
-    public void uploadMessage(Context context,UploadRequestBean bean, Observable.Transformer
+    public void uploadMessage(Context context, PostBean bean, Observable.Transformer
             transformer, Subscriber<String> subscriber){
         PostApi.uploadMsg(context,bean) .map(new Func1<String, String>() {
             @Override
@@ -52,7 +52,7 @@ public class PostModel implements IModel {
      * @param transformer
      * @param subscriber
      */
-    public void updateMessage(Context context,UploadRequestBean bean, Observable.Transformer
+    public void updateMessage(Context context, PostBean bean, Observable.Transformer
             transformer, Subscriber<String> subscriber){
         PostApi.updateMsg(context,bean) .map(new Func1<String, String>() {
             @Override

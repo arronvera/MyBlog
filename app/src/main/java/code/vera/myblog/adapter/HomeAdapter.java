@@ -26,7 +26,6 @@ import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
 import code.vera.myblog.view.other.CustomClickableSpan;
-import code.vera.myblog.view.other.CustomLinkMovement;
 
 //import static com.sina.weibo.sdk.openapi.legacy.AccountAPI.CAPITAL.R;
 
@@ -125,9 +124,9 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             tvTime.setText(TimeUtils.dateTransfer(timeStr));
             //内容
             final String content=bean.getText();
-            SpannableStringBuilder spannableString=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content,context,position);
+            //获取复合文本
+            SpannableStringBuilder spannableString=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content,context,position,tvContent);
             //点击at效果
-            tvContent.setMovementMethod(new CustomLinkMovement(ccsAt));
             tvContent.setText("");
             tvContent.append(spannableString);
             if (bean.getUserBean()!=null){
@@ -150,9 +149,8 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 RetweetedStatusBean statusBean=bean.getRetweetedStatusBean();
                 llAuthorInfo.setVisibility(View.VISIBLE);
                 String content_author="@"+statusBean.getUserbean().getName()+":"+bean.getText();
-                SpannableStringBuilder spannableString2=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content_author,context,position);
+                SpannableStringBuilder spannableString2=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content_author,context,position,tvAuthorText);
                 //点击at效果
-                tvAuthorText.setMovementMethod(new CustomLinkMovement(ccsAt));
                 tvAuthorText.setText("");
                 tvAuthorText.append(spannableString2);
                 if (statusBean.getPic_list()!=null&&statusBean.getPic_list().size()!=0){
@@ -249,7 +247,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
      * link监听
      */
     public interface OnItemLinkListener {
-        void onItemLinkListener(View v, int pos);
+        void onItemLinkListener(View v, int pos,String str);
     }
 
     public void setOnItemLinkListener(OnItemLinkListener onItemLinkListener) {
@@ -260,7 +258,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
      * 话题
      */
     public interface OnItemTopicListener {
-        void onItemTopicListener(View v, int pos);
+        void onItemTopicListener(View v, int pos,String str);
     }
 
     public void setOnItemTopicListener(OnItemTopicListener onItemTopicListener) {
@@ -270,7 +268,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
      * at
      */
     public interface OnItemAtListener {
-        void onItemAtListener(View v, int pos);
+        void onItemAtListener(View v, int pos,String str);
     }
 
     public void setOnItemAtListener(OnItemAtListener onItemAtListener) {

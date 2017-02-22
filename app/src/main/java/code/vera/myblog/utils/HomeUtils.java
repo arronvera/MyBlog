@@ -3,6 +3,7 @@ package code.vera.myblog.utils;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
@@ -15,7 +16,6 @@ import java.util.regex.Pattern;
 import code.vera.myblog.adapter.HomeAdapter;
 import code.vera.myblog.bean.Emoji;
 import code.vera.myblog.view.other.CustomClickableSpan;
-import ww.com.core.Debug;
 
 /**
  * Created by vera on 2017/2/20 0020.
@@ -87,13 +87,14 @@ public class HomeUtils {
      * @return
      */
     public static SpannableStringBuilder getWeiBoContent(final HomeAdapter.OnItemAtListener onItemAtListener, final HomeAdapter.OnItemTopicListener onItemTopicListener,
-                                                         final HomeAdapter.OnItemLinkListener onItemLinkListener, String source, Context context, final int position) {
+                                                         final HomeAdapter.OnItemLinkListener onItemLinkListener, String source, Context context, final int position
+                                                            ,TextView textView) {
         SpannableStringBuilder spannableString = new SpannableStringBuilder(source);
         String REGEX="(" +AT+ ")|(" +TOPIC+ ")|("+URL+")|("+EMOJI+")";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(spannableString);
         if (matcher.find()) {
-//            textView.setMovementMethod(LinkMovementMethod.getInstance());
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
             matcher.reset();
         }
         while (matcher.find()) {
@@ -104,12 +105,10 @@ public class HomeUtils {
             if (at != null) {
                 int start = matcher.start(1);
                 int end = start + at.length();
-                Debug.d("@=======start="+start+"end="+end+"at="+at);
                 CustomClickableSpan ccsAt=new CustomClickableSpan() {
                     @Override
                     public void onClick(View widget) {
-                        onItemAtListener.onItemAtListener(widget,position);
-
+                        onItemAtListener.onItemAtListener(widget,position,at);
                     }
                 };
                 spannableString.setSpan(ccsAt, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -117,11 +116,10 @@ public class HomeUtils {
             if (topic != null) {
                 int start = matcher.start(2);
                 int end = start + topic.length();
-                Debug.d("#=========start="+start+"end="+end+"topic="+ source.substring(start, end));
                 CustomClickableSpan ccsTopic=new CustomClickableSpan() {
                     @Override
                     public void onClick(View widget) {
-                        onItemTopicListener.onItemTopicListener(widget,position);
+                        onItemTopicListener.onItemTopicListener(widget,position,topic);
                     }
                 };
                 spannableString.setSpan(ccsTopic, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -132,7 +130,7 @@ public class HomeUtils {
                 CustomClickableSpan ccsLink=new CustomClickableSpan() {
                     @Override
                     public void onClick(View widget) {
-                        onItemLinkListener.onItemLinkListener(widget,position);
+                        onItemLinkListener.onItemLinkListener(widget,position,url);
                     }
                 };
                 spannableString.setSpan(ccsLink, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
