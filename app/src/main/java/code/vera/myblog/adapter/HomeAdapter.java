@@ -25,7 +25,6 @@ import code.vera.myblog.presenter.activity.PicturesActivity;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
-import code.vera.myblog.view.other.CustomClickableSpan;
 
 //import static com.sina.weibo.sdk.openapi.legacy.AccountAPI.CAPITAL.R;
 
@@ -37,10 +36,7 @@ import code.vera.myblog.view.other.CustomClickableSpan;
 public class HomeAdapter extends RvAdapter<StatusesBean>{
     private Context context;
     private NineGridImageViewAdapter<PicBean>adapter;
-    private CustomClickableSpan ccs;
-    private CustomClickableSpan ccsTopic;
-    private CustomClickableSpan ccsAt;
-
+    //监听-------------
     private OnItemRepostListener onItemRepostListener;//转发监听
     private OnItemCommentListener onItemCommentListener;//评论监听
     private OnItemLikeListener onItemLikeListener;//喜欢监听
@@ -48,7 +44,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
     private OnItemLinkListener onItemLinkListener;//链接
     private OnItemTopicListener onItemTopicListener;//话题
     private OnItemAtListener onItemAtListener;//at
-
+    private OnItemMenuListener onItemMenuListener;
 
     public HomeAdapter(Context context) {
         super(context);
@@ -93,6 +89,9 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         TextView tvLike;//喜欢
         @BindView(R.id.rl_item_like)
         RelativeLayout rlLike;
+        @BindView(R.id.iv_item_menu)
+        ImageView ivMenu;
+
 
         public HomeViewHolder(View itemView) {
             super(itemView);
@@ -124,7 +123,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             tvTime.setText(TimeUtils.dateTransfer(timeStr));
             //内容
             final String content=bean.getText();
-            //获取复合文本
+
             SpannableStringBuilder spannableString=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content,context,position,tvContent);
             //点击at效果
             tvContent.setText("");
@@ -197,6 +196,12 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 @Override
                 public void onClick(View v) {
                     onItemOriginalListener.onItemOriginalListener(v,position);
+                }
+            });
+            ivMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemMenuListener.onItemMenuListener(v,position);
                 }
             });
 
@@ -273,5 +278,11 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 
     public void setOnItemAtListener(OnItemAtListener onItemAtListener) {
         this.onItemAtListener = onItemAtListener;
+    }
+    public interface OnItemMenuListener{
+        void onItemMenuListener(View v,int pos);
+    }
+    public void setOnItemMenuListener(OnItemMenuListener onItemMenuListener){
+        this.onItemMenuListener=onItemMenuListener;
     }
 }

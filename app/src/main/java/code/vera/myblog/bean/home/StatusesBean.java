@@ -22,6 +22,7 @@ public class StatusesBean implements Serializable {
     private int textLength; //文字长度
     private int  source_allowclick;//来源是否可以点击
     private String source;//来源
+    private boolean favorited;//是否已经收藏
     //配图
     private String pic_urls;
     private List<PicBean> pic_list;//
@@ -51,6 +52,14 @@ public class StatusesBean implements Serializable {
     @Nullable
     public void setRetweetedStatusBean(RetweetedStatusBean retweetedStatusBean) {
         this.retweetedStatusBean = retweetedStatusBean;
+    }
+
+    public boolean isFavorited() {
+        return favorited;
+    }
+
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
     }
 
     public String getCreated_at() {
