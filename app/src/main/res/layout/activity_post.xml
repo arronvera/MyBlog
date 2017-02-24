@@ -6,81 +6,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="code.vera.myblog.presenter.activity.PostActivity">
-    <RelativeLayout
-        android:id="@+id/rl_top"
-        android:layout_width="match_parent"
-        android:padding="10dp"
-        android:layout_height="60dp">
-    <TextView
-        android:id="@+id/tv_cancle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:textSize="16sp"
-        android:text="取消"/>
-        <TextView
-            android:id="@+id/tv_post_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="分享圈子"
-            android:textSize="18sp"
-            android:textColor="@color/colorBlack"
-            android:layout_centerInParent="true"
-            />
-        <Button
-            android:id="@+id/btn_post"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:text="发送"
-            android:textSize="14sp"
-            android:layout_centerVertical="true"
-            android:textColor="@color/color_bcbcbc"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/btn_send_shape"
-            />
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_below="@+id/rl_top"
-        android:layout_above="@+id/rl_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorWhite">
-        <EditText
-            android:padding="5dp"
-            android:id="@+id/et_text"
-            android:hint="分享你圈子有趣的事情吧~"
-            android:gravity="top"
-            android:maxLength="140"
-            android:background="@color/colorWhite"
+        <RelativeLayout
+            android:id="@+id/rl_top"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:padding="10dp"
+            android:layout_height="60dp">
+            <TextView
+                android:id="@+id/tv_cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:text="取消"/>
+            <TextView
+                android:id="@+id/tv_post_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分享圈子"
+                android:textSize="18sp"
+                android:textColor="@color/colorBlack"
+                android:layout_centerInParent="true"
+                />
+            <Button
+                android:id="@+id/btn_post"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="发送"
+                android:textSize="14sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/color_bcbcbc"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/btn_send_shape"
+                />
+        </RelativeLayout>
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_below="@+id/rl_top"
+           android:id="@+id/rl_all_container"
+           android:layout_height="match_parent">
+           <LinearLayout
+                android:layout_above="@+id/rl_bottom"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical"
+               android:background="@color/colorWhite">
+               <EditText
+                   android:padding="5dp"
+                   android:id="@+id/et_text"
+                   android:hint="分享你圈子有趣的事情吧~"
+                   android:gravity="top"
+                   android:maxLength="140"
+                   android:background="@color/colorWhite"
+                   android:layout_width="match_parent"
+                   android:layout_height="150dp" />
 
-        <HorizontalScrollView
-            android:id="@+id/scrollPicContainer"
-            android:layout_width="match_parent" android:layout_height="80dip">
-            <!--图片展示容器-->
-            <LinearLayout
-                android:id="@+id/ll_pic_container"
-                android:layout_width="wrap_content" android:layout_height="match_parent"
-                android:gravity="center_vertical" android:orientation="horizontal">
-            </LinearLayout>
-        </HorizontalScrollView>
-    </LinearLayout>
-<LinearLayout
-    android:id="@+id/rl_bottom"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_alignParentBottom="true">
+               <HorizontalScrollView
+                   android:id="@+id/scrollPicContainer"
+                   android:layout_width="match_parent" android:layout_height="80dip">
+                   <!--图片展示容器-->
+                   <LinearLayout
+                       android:id="@+id/ll_pic_container"
+                       android:layout_width="wrap_content" android:layout_height="match_parent"
+                       android:gravity="center_vertical" android:orientation="horizontal">
+                   </LinearLayout>
+               </HorizontalScrollView>
+           </LinearLayout>
+           <LinearLayout
+               android:id="@+id/rl_bottom"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:layout_alignParentBottom="true">
 
-    <include layout="@layout/view_post_bottom" />
+               <include layout="@layout/view_post_bottom" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ll_container">
-    </LinearLayout>
-</LinearLayout>
+               <LinearLayout
+                   android:orientation="vertical"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/ll_container">
+               </LinearLayout>
+           </LinearLayout>
+
+       </RelativeLayout>
+
 </RelativeLayout>

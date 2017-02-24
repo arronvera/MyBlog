@@ -32,6 +32,7 @@ import code.vera.myblog.bean.PostBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.PostModel;
 import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.fragment.other.AtSomebodyFragment;
 import code.vera.myblog.presenter.fragment.other.EmojFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.DialogUtils;
@@ -55,8 +56,12 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private EmojFragment emojFragment;//表情
     private List<Fragment> fragments=new ArrayList<>();
     private  boolean isShowEmoj=false;//是否表情已经显示
+    private  boolean isShowFriend=false;//是否好友已经显示
+
     private static final int REQUEST_CODE = 732;
     private ArrayList<String> results = new ArrayList<>();
+    private AtSomebodyFragment atSomebodyFragment;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_post;
@@ -77,6 +82,11 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
+                if (isShowFriend){
+                    getSupportFragmentManager().beginTransaction().hide(atSomebodyFragment).commit();
+                    isShowFriend=false;
+                    return;
+                }
                 if (!TextUtils.isEmpty(view.getEditStr())){
                     //如果有内容  提示保存到草稿箱
                     DialogUtils.showDialog(this, "", "是否保存到草稿箱?", "是", new DialogInterface.OnClickListener() {
@@ -131,13 +141,15 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 }else{
                     //隐藏
                     getSupportFragmentManager().beginTransaction().remove(emojFragment).commit();
-
                     isShowEmoj=false;
                 }
                 break;
             case R.id.iv_at://at
-                view.getEt().append("@");
-                //todo
+//                view.getEt().append("@");
+                atSomebodyFragment = AtSomebodyFragment.getInstance();
+                view.setTitle("好友");
+                getSupportFragmentManager().beginTransaction().add(R.id.rl_all_container,atSomebodyFragment).commit();
+                isShowFriend=true;
                 break;
             case R.id.iv_topic://插入话题
                 view.getEt().append("##");

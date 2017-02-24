@@ -118,4 +118,11 @@ public class PostView extends BaseView {
         return etMessage;
     }
 
+    /**
+     * 显示标题
+     * @param s
+     */
+    public void setTitle(String s) {
+        tvTitle.setText(s);
+    }
 }
