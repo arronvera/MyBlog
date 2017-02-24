@@ -25,7 +25,7 @@ public class UserInfoBean implements Serializable {
     private long statuses_count;
     private long favourites_count;
     private String created_at;
-    private boolean following;
+    private boolean following;//是否关注
     private boolean allow_all_act_msg;
     private boolean geo_enabled;
     private boolean verified;
@@ -36,18 +36,6 @@ public class UserInfoBean implements Serializable {
     private int online_status;
     private int bi_followers_count;
     private String cover_image_phone;//封面
-
-    public void setFavourites_count(long favourites_count) {
-        this.favourites_count = favourites_count;
-    }
-
-    public String getCover_image_phone() {
-        return cover_image_phone;
-    }
-
-    public void setCover_image_phone(String cover_image_phone) {
-        this.cover_image_phone = cover_image_phone;
-    }
 
     public int getId() {
         return id;
