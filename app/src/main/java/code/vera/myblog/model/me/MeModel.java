@@ -43,4 +43,26 @@ public class MeModel implements IModel {
                 .compose(transformer)
                 .subscribe(subscriber);
     }
+
+    /**
+     * 获取用户信息(名字)
+     * @param screen_name
+     * @param transformer
+     * @param subscriber
+     */
+    public void getUserInfoByName(Context context,String screen_name, Observable.Transformer
+            transformer, Subscriber<UserInfoBean> subscriber){
+        HomeApi.getUserInfoByName(context,screen_name) .map(new Func1<String, UserInfoBean>() {
+            @Override
+            public  UserInfoBean call(String s) {
+                UserInfoBean userInfoBean=new UserInfoBean();
+                if (!TextUtils.isEmpty(s)){
+                    userInfoBean= JSON.parseObject(s,UserInfoBean.class);
+                }
+                return userInfoBean;
+            }
+        }).compose(RxHelper.<UserInfoBean>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
 }

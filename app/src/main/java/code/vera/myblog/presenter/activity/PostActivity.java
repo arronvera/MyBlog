@@ -184,6 +184,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
      * 转发
      */
     private void repost() {
+
+
     }
 
     /**

@@ -56,6 +56,16 @@ public class HomeApi  extends BaseApi{
         //params.addParameters("",)
         return onGet(url, params);
     }
+    public static Observable<String>getUserInfoByName(Context context,String screen_name){
+        String url = NetWorkConfig.USER_INFO;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("screen_name",screen_name);
+
+        return onGet(url, params);
+    }
+
+
 
 
 }

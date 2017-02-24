@@ -1,12 +1,8 @@
 package code.vera.myblog.presenter.activity;
 
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 
-import butterknife.BindView;
 import code.vera.myblog.R;
-import code.vera.myblog.adapter.TabCommentAdapter;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.model.CommentDetailModel;
@@ -18,12 +14,7 @@ import code.vera.myblog.view.CommentDetailView;
  */
 public class CommentDetailActivity extends PresenterActivity<CommentDetailView, CommentDetailModel> {
 
-    @BindView(R.id.tab_comment_detail)
-    TabLayout tabLayout;
-    @BindView(R.id.vp_comment_view)
-    ViewPager vpComment;
 
-    private TabCommentAdapter adapter;
     public static long id;
 
     @Override
@@ -36,25 +27,17 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
         super.onAttach();
         Intent intent = getIntent();
         StatusesBean statusesBean= (StatusesBean) intent.getSerializableExtra("status");
-        if (statusesBean!=null){
+        if (statusesBean!=null&&statusesBean.getId()!=0){
             id=statusesBean.getId();
             view.showInfo(statusesBean);
         }
         RetweetedStatusBean retweetedStatusBean= (RetweetedStatusBean) intent.getSerializableExtra("retweeted_status");
-        if (retweetedStatusBean!=null){
+        if (retweetedStatusBean!=null&&statusesBean.getId()!=0){
             id=retweetedStatusBean.getId();
             view.showInfo2(retweetedStatusBean);
         }
-        setAdapter();
+        view.setActivity(this);
+        view.setAdapter();
     }
 
-    private void setAdapter() {
-        adapter = new TabCommentAdapter(getSupportFragmentManager());
-        //给ViewPager设置适配器
-        vpComment.setAdapter(adapter);
-        //将TabLayout和ViewPager关联起来
-        tabLayout.setupWithViewPager(vpComment);
-        //给Tabs设置适配器
-        tabLayout.setTabsFromPagerAdapter(adapter);
-    }
 }
