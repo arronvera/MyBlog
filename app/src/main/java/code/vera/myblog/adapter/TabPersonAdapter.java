@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import code.vera.myblog.presenter.fragment.tab.TabPersonInfoFragment;
+import code.vera.myblog.presenter.fragment.person.TabPersonAllCircleFragment;
+import code.vera.myblog.presenter.fragment.person.TabPersonInfoFragment;
+import code.vera.myblog.presenter.fragment.person.TabPersonPhotosFragment;
 
 /**
  * Created by vera on 2017/2/24 0024.
@@ -21,8 +23,8 @@ public class TabPersonAdapter  extends FragmentPagerAdapter {
     public TabPersonAdapter(FragmentManager fm) {
         super(fm);
         fragmentList.add(new TabPersonInfoFragment());
-        fragmentList.add(new TabPersonInfoFragment());
-        fragmentList.add(new TabPersonInfoFragment());
+        fragmentList.add(new TabPersonAllCircleFragment());
+        fragmentList.add(new TabPersonPhotosFragment());
 
     }
 

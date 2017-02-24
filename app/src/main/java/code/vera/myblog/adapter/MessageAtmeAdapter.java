@@ -1,7 +1,9 @@
 package code.vera.myblog.adapter;
 
 import android.content.Context;
+import android.text.SpannableStringBuilder;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -10,6 +12,10 @@ import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentUserBean;
+import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemTopicListener;
+import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
 
@@ -18,6 +24,10 @@ import code.vera.myblog.view.CircleImageView;
  */
 
 public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
+
+    private OnItemAtListener onItemAtListener;
+    private OnItemTopicListener onItemTopicListener;
+    private OnItemLinkListener onItemLinkListener;
 
     public MessageAtmeAdapter(Context context) {
         super(context);
@@ -34,15 +44,22 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
     }
     class  MessageAtmeHolder extends RvViewHolder<CommentUserBean>{
         @BindView(R.id.crv_item_photo)
-        CircleImageView civPhoto;
+        CircleImageView civPhoto;//头像
         @BindView(R.id.tv_item_name)
-        TextView tvName;
+        TextView tvName;//名字
         @BindView(R.id.tv_item_time)
-        TextView tvTime;
+        TextView tvTime;//时间
         @BindView(R.id.tv_item_text)
-        TextView tvText;
+        TextView tvText;//内容
+        @BindView(R.id.iv_photo)
+        ImageView ivPhoto;//原作者头像
+        @BindView(R.id.tv_ori_text)
+        TextView tvOriText;//原作者内容
+        private Context context;
+
         public MessageAtmeHolder(View itemView) {
             super(itemView);
+            context=itemView.getContext();
         }
 
         @Override
@@ -51,10 +68,36 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
                         .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
                 tvName.setText(bean.getUserBean().getName());
-
+            }
+            if (bean.getStatusesBean()!=null){
+                if (bean.getStatusesBean().getUserBean()!=null){
+                    ImageLoader.getInstance().displayImage(bean.getStatusesBean().getUserBean().getProfile_image_url(), ivPhoto, BaseApplication
+                            .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
+                    ivPhoto.setVisibility(View.VISIBLE);
+                }else {
+                    ivPhoto.setVisibility(View.GONE);
+                }
+                tvOriText.setText(bean.getStatusesBean().getText());
             }
             tvTime.setText(TimeUtils.dateTransfer(bean.getCreated_at()));
-            tvText.setText(bean.getText());
+            //---------------内容
+            String content=bean.getText();
+            SpannableStringBuilder spannableString= HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content,context,position,tvText);
+            tvText.setText(spannableString);
+
+
         }
+    }
+
+    public void setOnItemLinkListener(OnItemLinkListener onItemLinkListener) {
+        this.onItemLinkListener = onItemLinkListener;
+    }
+
+    public void setOnItemTopicListener(OnItemTopicListener onItemTopicListener) {
+        this.onItemTopicListener = onItemTopicListener;
+    }
+
+    public void setOnItemAtListener(OnItemAtListener onItemAtListener) {
+        this.onItemAtListener = onItemAtListener;
     }
 }

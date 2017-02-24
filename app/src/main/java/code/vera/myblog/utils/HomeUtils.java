@@ -13,8 +13,10 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import code.vera.myblog.adapter.HomeAdapter;
 import code.vera.myblog.bean.Emoji;
+import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.view.other.CustomClickableSpan;
 
 /**
@@ -86,9 +88,9 @@ public class HomeUtils {
      * @param context
      * @return
      */
-    public static SpannableStringBuilder getWeiBoContent(final HomeAdapter.OnItemAtListener onItemAtListener, final HomeAdapter.OnItemTopicListener onItemTopicListener,
-                                                         final HomeAdapter.OnItemLinkListener onItemLinkListener, String source, Context context, final int position
-                                                            ,TextView textView) {
+    public static SpannableStringBuilder getWeiBoContent(final OnItemAtListener onItemAtListener, final OnItemTopicListener onItemTopicListener,
+                                                         final OnItemLinkListener onItemLinkListener, String source, Context context, final int position
+                                                            , TextView textView) {
         SpannableStringBuilder spannableString = new SpannableStringBuilder(source);
         String REGEX="(" +AT+ ")|(" +TOPIC+ ")|("+URL+")|("+EMOJI+")";
         Pattern pattern = Pattern.compile(REGEX);

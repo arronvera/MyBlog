@@ -1,4 +1,4 @@
-package code.vera.myblog.presenter.fragment.tab;
+package code.vera.myblog.presenter.fragment.person;
 
 import code.vera.myblog.R;
 import code.vera.myblog.model.base.VoidModel;

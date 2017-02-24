@@ -9,35 +9,6 @@ import java.io.Serializable;
 
 public class UserInfoBean implements Serializable {
 
-    /**
-     * id : 1404376560
-     * screen_name : zaku
-     * name : zaku
-     * province : 11
-     * city : 5
-     * location : 北京 朝阳区
-     * description : 人生五十年，乃如梦如幻；有生斯有死，壮士复何憾。
-     * url : http://blog.sina.com.cn/zaku
-     * profile_image_url : http://tp1.sinaimg.cn/1404376560/50/0/1
-     * domain : zaku
-     * gender : m
-     * followers_count : 1204
-     * friends_count : 447
-     * statuses_count : 2908
-     * favourites_count : 0
-     * created_at : Fri Aug 28 00:00:00 +0800 2009
-     * following : false
-     * allow_all_act_msg : false
-     * geo_enabled : true
-     * verified : false
-     * allow_all_comment : true
-     * avatar_large : http://tp1.sinaimg.cn/1404376560/180/0/1
-     * verified_reason :
-     * follow_me : false
-     * online_status : 0
-     * bi_followers_count : 215
-     */
-
     private int id;//用户UID
     private String screen_name;//用户昵称
     private String name;
@@ -50,9 +21,9 @@ public class UserInfoBean implements Serializable {
     private String domain;
     private String gender;
     private long followers_count;
-    private int friends_count;
-    private int statuses_count;
-    private int favourites_count;
+    private long friends_count;
+    private long statuses_count;
+    private long favourites_count;
     private String created_at;
     private boolean following;
     private boolean allow_all_act_msg;
@@ -64,6 +35,19 @@ public class UserInfoBean implements Serializable {
     private boolean follow_me;
     private int online_status;
     private int bi_followers_count;
+    private String cover_image_phone;//封面
+
+    public void setFavourites_count(long favourites_count) {
+        this.favourites_count = favourites_count;
+    }
+
+    public String getCover_image_phone() {
+        return cover_image_phone;
+    }
+
+    public void setCover_image_phone(String cover_image_phone) {
+        this.cover_image_phone = cover_image_phone;
+    }
 
     public int getId() {
         return id;
@@ -161,23 +145,23 @@ public class UserInfoBean implements Serializable {
         this.followers_count = followers_count;
     }
 
-    public int getFriends_count() {
+    public long getFriends_count() {
         return friends_count;
     }
 
-    public void setFriends_count(int friends_count) {
+    public void setFriends_count(long friends_count) {
         this.friends_count = friends_count;
     }
 
-    public int getStatuses_count() {
+    public long getStatuses_count() {
         return statuses_count;
     }
 
-    public void setStatuses_count(int statuses_count) {
+    public void setStatuses_count(long statuses_count) {
         this.statuses_count = statuses_count;
     }
 
-    public int getFavourites_count() {
+    public long getFavourites_count() {
         return favourites_count;
     }
 

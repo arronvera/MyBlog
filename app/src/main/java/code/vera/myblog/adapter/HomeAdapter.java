@@ -21,6 +21,12 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemCommentListener;
+import code.vera.myblog.listener.OnItemLikeListener;
+import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemRepostListener;
+import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.presenter.activity.PicturesActivity;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
@@ -208,31 +214,12 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         }
     }
 
-    /**
-     * 转发监听
-     */
-    public interface OnItemRepostListener {
-        void onItemRepostListener(View v, int pos);
-    }
-
     public void setOnItemRepostListener(OnItemRepostListener onItemActionListener) {
         this.onItemRepostListener = onItemActionListener;
-    }
-    /**
-     *评论监听
-     */
-    public interface OnItemCommentListener {
-        void onItemCommentListener(View v, int pos);
     }
 
     public void setOnItemCommentListener(OnItemCommentListener onItemCommentListener) {
         this.onItemCommentListener = onItemCommentListener;
-    }
-    /**
-     * 喜欢监听
-     */
-    public interface OnItemLikeListener {
-        void onItemLikeListener(View v, int pos);
     }
 
     public void setOnItemLikeListener(OnItemLikeListener onItemLikeListener) {
@@ -248,32 +235,14 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
     public void setOnItemOriginalListener(OnItemOriginalListener onItemOriginalListener) {
         this.onItemOriginalListener = onItemOriginalListener;
     }
-    /**
-     * link监听
-     */
-    public interface OnItemLinkListener {
-        void onItemLinkListener(View v, int pos,String str);
-    }
+
 
     public void setOnItemLinkListener(OnItemLinkListener onItemLinkListener) {
         this.onItemLinkListener = onItemLinkListener;
     }
 
-    /**
-     * 话题
-     */
-    public interface OnItemTopicListener {
-        void onItemTopicListener(View v, int pos,String str);
-    }
-
     public void setOnItemTopicListener(OnItemTopicListener onItemTopicListener) {
         this.onItemTopicListener = onItemTopicListener;
-    }
-    /**
-     * at
-     */
-    public interface OnItemAtListener {
-        void onItemAtListener(View v, int pos,String str);
     }
 
     public void setOnItemAtListener(OnItemAtListener onItemAtListener) {

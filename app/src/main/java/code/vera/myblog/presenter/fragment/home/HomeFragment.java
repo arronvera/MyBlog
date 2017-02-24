@@ -21,6 +21,12 @@ import code.vera.myblog.adapter.HomeTypeListAdpater;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
+import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemCommentListener;
+import code.vera.myblog.listener.OnItemLikeListener;
+import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemRepostListener;
+import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.home.HomeModel;
 import code.vera.myblog.presenter.activity.CommentDetailActivity;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
@@ -39,9 +45,8 @@ import ww.com.core.widget.CustomSwipeRefreshLayout;
  */
 
 public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>implements
-        HomeAdapter.OnItemCommentListener,HomeAdapter.OnItemRepostListener,
-        HomeAdapter.OnItemLikeListener,HomeAdapter.OnItemOriginalListener,
-        HomeAdapter.OnItemLinkListener,HomeAdapter.OnItemTopicListener,HomeAdapter.OnItemAtListener
+        OnItemCommentListener,OnItemRepostListener,OnItemLikeListener,HomeAdapter.OnItemOriginalListener,
+        OnItemLinkListener,OnItemTopicListener,OnItemAtListener
         ,HomeAdapter.OnItemMenuListener{
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
@@ -207,6 +212,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
 
     @Override
     public void onItemMenuListener(View v, int pos) {
-
+        //弹出菜单更多
+        view.showPopuWindow(v);
     }
 }

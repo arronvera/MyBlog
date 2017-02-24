@@ -15,6 +15,7 @@ import ww.com.core.Debug;
 
 
 /**
+ * 个人页面
  * Created by vera on 2017/2/7 0007.
  */
 
@@ -34,6 +35,9 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, MeM
         view.setAdapter();
         Intent intent=getIntent();
         userInfoBean= (UserInfoBean) intent.getSerializableExtra("user");
+        if (userInfoBean!=null){
+            view.showInfo(userInfoBean);
+        }
         user_name=intent.getStringExtra("user_name");
         if (!TextUtils.isEmpty(user_name)){
             //
@@ -42,6 +46,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, MeM
                 @Override
                 public void onNext(UserInfoBean userInfoBean) {
                     super.onNext(userInfoBean);
+                    Debug.d("userInfoBean="+userInfoBean.toString());
                     view.showInfo(userInfoBean);
                 }
             });
