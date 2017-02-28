@@ -1,6 +1,8 @@
 package code.vera.myblog.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -17,10 +19,25 @@ public class TimeUtils {
         SimpleDateFormat sdf=new SimpleDateFormat(
                 "EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
         SimpleDateFormat sdf2=new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss");
-        try{
-            return sdf2.format(sdf.parse(time));
-        }catch(Exception e){
+                "yyyy-MM-dd HH:mm:ss");//年 -月-日
+        SimpleDateFormat sdf3=new SimpleDateFormat(
+                "MM-dd HH:mm:ss");//月-日
+        SimpleDateFormat sdf4=new SimpleDateFormat(
+                "HH:mm:ss");//月-日
+        String str;
+        try {
+            Date publishDate=sdf.parse(time);
+            Date nowDate=new Date(System.currentTimeMillis());
+            if (nowDate.getYear()==publishDate.getYear()&&nowDate.getDay()==publishDate.getDay()){//同一天
+                str=sdf3.format(publishDate);
+            }else if (nowDate.getYear()==publishDate.getYear()&&nowDate.getDay()==publishDate.getDay()){//同一年
+                str=sdf3.format(publishDate);
+            }else{
+                str=sdf2.format(publishDate);
+            }
+
+            return str;
+        } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }

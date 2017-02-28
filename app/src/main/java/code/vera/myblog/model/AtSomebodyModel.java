@@ -1,5 +1,7 @@
 package code.vera.myblog.model;
 
+import android.content.Context;
+
 import code.vera.myblog.model.base.IModel;
 
 /**
@@ -9,6 +11,9 @@ import code.vera.myblog.model.base.IModel;
 public class AtSomebodyModel implements IModel {
     @Override
     public void onAttach() {
+
+    }
+    public void getFriendShip(Context context){
 
     }
 }

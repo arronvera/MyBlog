@@ -104,6 +104,9 @@ public class PostView extends BaseView {
                 tvTitle.setText("转发");
                 etMessage.setHint("转发");
                 break;
+            default:
+                tvTitle.setText("分享圈子");
+                break;
         }
     }
     public void setRepostVisible(boolean isVisible){

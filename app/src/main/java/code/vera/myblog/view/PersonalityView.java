@@ -65,8 +65,8 @@ public class PersonalityView extends BaseView {
         tvName.setText(userInfoBean.getName());
         ImageLoader.getInstance().displayImage(userInfoBean.getProfile_image_url(), civPhoto, BaseApplication
                 .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
-        ImageLoader.getInstance().displayImage(userInfoBean.getCover_image_phone(), ivBg, BaseApplication
-                .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
+//        ImageLoader.getInstance().displayImage(userInfoBean.getCover_image_phone(), ivBg, BaseApplication
+//                .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
     }
 
     public void setActivity(PersonalityActivity personalityActivity) {

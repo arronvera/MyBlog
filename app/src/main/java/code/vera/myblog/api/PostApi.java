@@ -110,4 +110,14 @@ public class PostApi {
         params.addParameters("filter_by_author","0");//	作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
         return onGet(url, params);
     }
+    public static  Observable<String > getFriendShip(Context context) {
+        String url = NetWorkConfig.GET_FRIENDSHIP;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("uid", AccessTokenKeeper.readAccessToken(context).getUid());
+        params.addParameters("count", "50");
+        params.addParameters("page","1");
+        params.addParameters("sort","0");//	排序
+        return onGet(url, params);
+    }
 }

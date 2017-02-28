@@ -11,6 +11,7 @@ import code.vera.myblog.model.message.TabMessageModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.message.tab.TabMessageToMeView;
+import ww.com.core.Debug;
 
 /**
  * 关于我
@@ -37,6 +38,7 @@ public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView
             @Override
             public void onNext(List<CommentUserBean> commentUserBeen) {
                 super.onNext(commentUserBeen);
+                Debug.d("commentUseBeen.size="+commentUserBeen.size());
                 adapter.addList(commentUserBeen);
             }
         });
