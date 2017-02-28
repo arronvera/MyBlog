@@ -1,5 +1,7 @@
 package code.vera.myblog.presenter.activity;
 
+import android.content.Intent;
+
 import code.vera.myblog.R;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.PresenterActivity;
@@ -18,5 +20,7 @@ public class TopicActivity extends PresenterActivity<TopicView,VoidModel> {
     @Override
     protected void onAttach() {
         super.onAttach();
+        Intent intent=getIntent();
+
     }
 }
