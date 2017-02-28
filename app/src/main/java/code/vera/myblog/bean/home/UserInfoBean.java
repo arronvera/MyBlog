@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 public class UserInfoBean implements Serializable {
 
-    private int id;//用户UID
+    private long id;//用户UID
     private String screen_name;//用户昵称
     private String name;
     private String province;
@@ -37,11 +37,23 @@ public class UserInfoBean implements Serializable {
     private int bi_followers_count;
     private String cover_image_phone;//封面
 
-    public int getId() {
+    public void setFavourites_count(long favourites_count) {
+        this.favourites_count = favourites_count;
+    }
+
+    public String getCover_image_phone() {
+        return cover_image_phone;
+    }
+
+    public void setCover_image_phone(String cover_image_phone) {
+        this.cover_image_phone = cover_image_phone;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

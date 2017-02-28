@@ -96,67 +96,6 @@
             app:imgGap="4dp"
             app:showStyle="fill"
             app:singleImgSize="120dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:id="@+id/rl_item_repost"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-               <LinearLayout
-                   style="@style/ItemHomeRepostLLayout">
-                   <ImageView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@mipmap/ic_like"/>
-                   <TextView
-                       android:id="@+id/tv_item_repost"
-                       android:text="转发"
-                       android:layout_marginLeft="5dp"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content" />
-               </LinearLayout>
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/rl_item_comment"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-                <LinearLayout  style="@style/ItemHomeRepostLLayout">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_comment"/>
-                    <TextView
-                        android:layout_marginLeft="5dp"
-                        android:id="@+id/tv_item_comment"
-                        android:text="评论"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/rl_item_like"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-                <LinearLayout style="@style/ItemHomeRepostLLayout">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_like"/>
-                    <TextView
-                        android:id="@+id/tv_item_like"
-                        android:text="喜欢"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </RelativeLayout>
-        </LinearLayout>
+    <include layout="@layout/layout_bottom_atitu"/>
     </LinearLayout>
 </LinearLayout>

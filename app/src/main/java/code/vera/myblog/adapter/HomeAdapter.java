@@ -24,6 +24,7 @@ import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemCommentListener;
+import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.listener.OnItemLikeListener;
 import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemRepostListener;
@@ -52,6 +53,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
     private OnItemTopicListener onItemTopicListener;//话题
     private OnItemAtListener onItemAtListener;//at
     private OnItemMenuListener onItemMenuListener;
+    private OnItemHeadPhotoListener onItemHeadPhotoListener;//头像
 
     public HomeAdapter(Context context) {
         super(context);
@@ -75,7 +77,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         @BindView(R.id.tv_item_time)
         TextView tvTime;
         @BindView(R.id.crv_item_photo)
-        CircleImageView civPhoto;
+        CircleImageView civPhoto;//头像
         @BindView(R.id.nineGridImageView)
         NineGridImageView nineGridImageView;
         @BindView(R.id.ll_item_author)
@@ -130,7 +132,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         public void onBindData(final int position, StatusesBean bean) {
             String timeStr=bean.getCreated_at();
             //来源
-            tvSource.setText( Html.fromHtml(bean.getSource()));
+            tvSource.setText("来自"+ Html.fromHtml(bean.getSource()));
             //时间
             tvTime.setText(TimeUtils.dateTransfer(timeStr));
             //内容
@@ -175,14 +177,20 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             //转发
             if (bean.getReposts_count()!=0){
               tvRepost.setText(bean.getReposts_count()+"");
+            }else {
+                tvRepost.setText("转发");
             }
             //评论
             if (bean.getComments_count()!=0){
                 tvComment.setText(bean.getComments_count()+"");
+            }else{
+                tvComment.setText("评论");
             }
             //喜欢
             if (bean.getAttitudes_count()!=0){
                 tvLike.setText(bean.getAttitudes_count()+"");
+            }else{
+                tvLike.setText("喜欢");
             }
             //-----------------------------
             //监听
@@ -214,6 +222,12 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 @Override
                 public void onClick(View v) {
                     onItemMenuListener.onItemMenuListener(v,position);
+                }
+            });
+            civPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHeadPhotoListener.onItemHeadPhotoListener(v,position);
                 }
             });
 
@@ -259,5 +273,8 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
     }
     public void setOnItemMenuListener(OnItemMenuListener onItemMenuListener){
         this.onItemMenuListener=onItemMenuListener;
+    }
+    public void setOnItemHeadPhotoListener(OnItemHeadPhotoListener onItemHeadPhotoListener){
+        this.onItemHeadPhotoListener=onItemHeadPhotoListener;
     }
 }

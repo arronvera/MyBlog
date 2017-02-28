@@ -1,10 +1,12 @@
 package code.vera.myblog.bean.home;
 
+import java.io.Serializable;
+
 /**
  * Created by vera on 2017/1/19 0019.
  */
 
-public  class UserBean {
+public  class UserBean implements Serializable {
    private long id;
     private String idstr;
     private String name;

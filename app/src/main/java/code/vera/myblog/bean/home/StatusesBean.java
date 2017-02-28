@@ -26,9 +26,14 @@ public class StatusesBean implements Serializable {
     //配图
     private String pic_urls;
     private List<PicBean> pic_list;//
-
+    @Nullable
+    private String thumbnail_pic;//缩略图片地址，没有时不返回此字段
+    @Nullable
+    private String bmiddle_pic;//中等尺寸图片地址，没有时不返回此字段
+    @Nullable
+    private String original_pic;//中等尺寸图片地址，没有时不返回此字段
     private String user;
-    private UserBean userbean;
+    private UserInfoBean userbean;
     private long reposts_count;//	转发数
     private long comments_count;//评论数
     private long attitudes_count;//表态数
@@ -39,6 +44,33 @@ public class StatusesBean implements Serializable {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    @Nullable
+    public String getThumbnail_pic() {
+        return thumbnail_pic;
+    }
+
+    public void setThumbnail_pic(@Nullable String thumbnail_pic) {
+        this.thumbnail_pic = thumbnail_pic;
+    }
+
+    @Nullable
+    public String getBmiddle_pic() {
+        return bmiddle_pic;
+    }
+
+    public void setBmiddle_pic(@Nullable String bmiddle_pic) {
+        this.bmiddle_pic = bmiddle_pic;
+    }
+
+    @Nullable
+    public String getOriginal_pic() {
+        return original_pic;
+    }
+
+    public void setOriginal_pic(@Nullable String original_pic) {
+        this.original_pic = original_pic;
     }
 
     @Nullable
@@ -166,11 +198,11 @@ public class StatusesBean implements Serializable {
 //        this.pic_urls = pic_urls;
 //    }
 
-    public UserBean getUserBean() {
-        return JSONObject.parseObject(user, UserBean.class);
+    public UserInfoBean getUserBean() {
+        return JSONObject.parseObject(user, UserInfoBean.class);
     }
 
-    public void setUserBean(UserBean user) {
+    public void setUserBean(UserInfoBean user) {
         this.userbean = user;
     }
 

@@ -23,6 +23,7 @@ import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemCommentListener;
+import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.listener.OnItemLikeListener;
 import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemRepostListener;
@@ -47,7 +48,7 @@ import ww.com.core.widget.CustomSwipeRefreshLayout;
 public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>implements
         OnItemCommentListener,OnItemRepostListener,OnItemLikeListener,HomeAdapter.OnItemOriginalListener,
         OnItemLinkListener,OnItemTopicListener,OnItemAtListener
-        ,HomeAdapter.OnItemMenuListener{
+        ,HomeAdapter.OnItemMenuListener,OnItemHeadPhotoListener{
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
     private View contentView ;
@@ -110,6 +111,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         adapter.setOnItemTopicListener(this);
         adapter.setOnItemAtListener(this);
         adapter.setOnItemMenuListener(this);
+        adapter.setOnItemHeadPhotoListener(this);
 
     }
 
@@ -214,5 +216,13 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     public void onItemMenuListener(View v, int pos) {
         //弹出菜单更多
         view.showPopuWindow(v);
+    }
+
+    @Override
+    public void onItemHeadPhotoListener(View v, int pos) {
+        //点击头头像，跳转到个人界面
+        Intent intent=new Intent(getActivity(),PersonalityActivity.class);
+        intent.putExtra("user",adapter.getItem(pos).getUserBean());
+        startActivity(intent);
     }
 }
