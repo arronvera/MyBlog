@@ -64,10 +64,12 @@
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            android:layout_below="@+id/tv_item_text"
-            android:background="@color/color_bcbcbc">
+            android:layout_below="@+id/tv_item_text">
+            <include layout="@layout/layout_line"/>
         </LinearLayout>
+        <!--原信息-->
         <RelativeLayout
+            android:id="@+id/rl_original_info"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

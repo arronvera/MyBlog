@@ -19,11 +19,11 @@ public class TimeUtils {
         SimpleDateFormat sdf=new SimpleDateFormat(
                 "EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
         SimpleDateFormat sdf2=new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss");//年 -月-日
+                "yyyy-MM-dd HH:mm");//年 -月-日
         SimpleDateFormat sdf3=new SimpleDateFormat(
-                "MM-dd HH:mm:ss");//月-日
+                "MM-dd HH:mm");//月-日
         SimpleDateFormat sdf4=new SimpleDateFormat(
-                "HH:mm:ss");//月-日
+                "HH:mm");//月-日
         String str;
         try {
             Date publishDate=sdf.parse(time);

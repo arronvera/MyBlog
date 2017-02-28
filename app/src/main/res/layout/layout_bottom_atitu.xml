@@ -52,6 +52,7 @@
             android:layout_weight="1">
             <LinearLayout style="@style/ItemHomeRepostLLayout">
                 <ImageView
+                    android:id="@+id/iv_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_like"/>

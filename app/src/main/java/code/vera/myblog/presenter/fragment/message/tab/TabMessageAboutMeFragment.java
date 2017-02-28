@@ -11,19 +11,19 @@ import code.vera.myblog.adapter.MessageAtmeAdapter;
 import code.vera.myblog.bean.CommentUserBean;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemOriginalListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.message.TabMessageModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.message.tab.TabMessageAboutMeView;
-import ww.com.core.Debug;
 
 /**
  * 关于我的评论
  * Created by vera on 2017/1/20 0020.
  */
 
-public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAboutMeView,TabMessageModel>implements OnItemLinkListener,OnItemAtListener,OnItemTopicListener {
+public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAboutMeView,TabMessageModel>implements OnItemLinkListener,OnItemAtListener,OnItemTopicListener,OnItemOriginalListener {
     private MessageAtmeAdapter adapter;
 
     @Override
@@ -42,6 +42,7 @@ public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAbout
         adapter.setOnItemLinkListener(this);
         adapter.setOnItemTopicListener(this);
         adapter.setOnItemAtListener(this);
+        adapter.setOnItemOriginalListener(this);
     }
 
     private void setAdapter() {
@@ -54,7 +55,6 @@ public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAbout
             @Override
             public void onNext(List<CommentUserBean> commentUserBeen) {
                 super.onNext(commentUserBeen);
-                Debug.d("size="+commentUserBeen.size());
                 adapter.addList(commentUserBeen);
             }
         });
@@ -73,5 +73,10 @@ public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAbout
     @Override
     public void onItemTopicListener(View v, int pos, String str) {
         //todo topic
+    }
+
+    @Override
+    public void onItemOriginalListener(View v, int pos) {
+        //todo original
     }
 }

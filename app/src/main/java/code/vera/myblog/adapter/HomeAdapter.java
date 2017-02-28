@@ -27,6 +27,7 @@ import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.listener.OnItemLikeListener;
 import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemOriginalListener;
 import code.vera.myblog.listener.OnItemRepostListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.presenter.activity.PicturesActivity;
@@ -98,6 +99,8 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         TextView tvLike;//喜欢
         @BindView(R.id.rl_item_like)
         RelativeLayout rlLike;
+        @BindView(R.id.iv_like)
+        ImageView ivLike;
         @BindView(R.id.iv_item_menu)
         ImageView ivMenu;
         @BindView(R.id.tv_source)
@@ -206,7 +209,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                     onItemCommentListener.onItemCommentListener(v, position);
                 }
             });
-            rlLike.setOnClickListener(new View.OnClickListener() {
+            ivLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onItemLikeListener.onItemLikeListener(v, position);
@@ -244,12 +247,6 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 
     public void setOnItemLikeListener(OnItemLikeListener onItemLikeListener) {
         this.onItemLikeListener = onItemLikeListener;
-    }
-    /**
-     * 原weib监听
-     */
-    public interface OnItemOriginalListener {
-        void onItemOriginalListener(View v, int pos);
     }
 
     public void setOnItemOriginalListener(OnItemOriginalListener onItemOriginalListener) {

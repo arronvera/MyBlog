@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -14,6 +15,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentUserBean;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemOriginalListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
@@ -28,6 +30,7 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
     private OnItemAtListener onItemAtListener;
     private OnItemTopicListener onItemTopicListener;
     private OnItemLinkListener onItemLinkListener;
+    private OnItemOriginalListener onItemOriginalListener;
 
     public MessageAtmeAdapter(Context context) {
         super(context);
@@ -56,6 +59,8 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
         @BindView(R.id.tv_ori_text)
         TextView tvOriText;//原作者内容
         private Context context;
+        @BindView(R.id.rl_original_info)
+        RelativeLayout rlOriginalInfo;//原信息
 
         public MessageAtmeHolder(View itemView) {
             super(itemView);
@@ -63,7 +68,7 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
         }
 
         @Override
-        public void onBindData(int position, CommentUserBean bean) {
+        public void onBindData(final int position, CommentUserBean bean) {
             if (bean.getUserBean()!=null){
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
                         .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
@@ -84,6 +89,14 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
             String content=bean.getText();
             SpannableStringBuilder spannableString= HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content,context,position,tvText);
             tvText.setText(spannableString);
+            //--------------监听
+            rlOriginalInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemOriginalListener.onItemOriginalListener(v,position);
+                }
+            });
+
 
 
         }
@@ -99,5 +112,8 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
 
     public void setOnItemAtListener(OnItemAtListener onItemAtListener) {
         this.onItemAtListener = onItemAtListener;
+    }
+    public void setOnItemOriginalListener(OnItemOriginalListener onItemOriginalListener) {
+        this.onItemOriginalListener = onItemOriginalListener;
     }
 }

@@ -1,23 +1,18 @@
 package code.vera.myblog.presenter.fragment.home;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.trello.rxlifecycle.FragmentEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.HomeAdapter;
-import code.vera.myblog.adapter.HomeTypeListAdpater;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
@@ -26,6 +21,7 @@ import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.listener.OnItemLikeListener;
 import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemOriginalListener;
 import code.vera.myblog.listener.OnItemRepostListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.home.HomeModel;
@@ -36,6 +32,7 @@ import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.home.HomeView;
+import code.vera.myblog.view.widget.LikeView;
 import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
 
@@ -46,13 +43,14 @@ import ww.com.core.widget.CustomSwipeRefreshLayout;
  */
 
 public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>implements
-        OnItemCommentListener,OnItemRepostListener,OnItemLikeListener,HomeAdapter.OnItemOriginalListener,
+        OnItemCommentListener,OnItemRepostListener,OnItemLikeListener,OnItemOriginalListener,
         OnItemLinkListener,OnItemTopicListener,OnItemAtListener
         ,HomeAdapter.OnItemMenuListener,OnItemHeadPhotoListener{
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
     private View contentView ;
     private   PopupWindow popupWindow;
+    private LikeView likeView;
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_home;
@@ -86,19 +84,20 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     }
 
     private void initPopuwindow() {
-        contentView= LayoutInflater.from(mContext).inflate(R.layout.pop_window, null);
-        ListView listView= (ListView) contentView.findViewById(R.id.lv_filter_type);
-        List<String>list=new ArrayList<>();
-        list.add("所有");
-        list.add("互相关注");
-        list.add("朋友圈");
-        list.add("特别关注");
-        listView.setAdapter(new HomeTypeListAdpater(list,getContext()));
-        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.setTouchable(true);
-        popupWindow.setOutsideTouchable(true);
-        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        likeView=new LikeView(getContext());
+//        contentView= LayoutInflater.from(mContext).inflate(R.layout.pop_window, null);
+//        ListView listView= (ListView) contentView.findViewById(R.id.lv_filter_type);
+//        List<String>list=new ArrayList<>();
+//        list.add("所有");
+//        list.add("互相关注");
+//        list.add("朋友圈");
+//        list.add("特别关注");
+//        listView.setAdapter(new HomeTypeListAdpater(list,getContext()));
+//        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+//        popupWindow.setTouchable(true);
+//        popupWindow.setOutsideTouchable(true);
+//        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+//        popupWindow.setBackgroundDrawable(new BitmapDrawable());
 
     }
 
@@ -167,7 +166,12 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     @Override
     public void onItemLikeListener(View v, int pos) {
         //喜欢
-        ToastUtil.showToast(getContext(),"喜欢");
+//        ToastUtil.showToast(getContext(),"喜欢");
+        //选中
+        ((ImageView) v).setImageResource(R.mipmap.ic_like_sel);
+        likeView.setImage(getResources().getDrawable(R.mipmap.ic_like_sel));
+        likeView.show(v);
+        //todo count+1
     }
     @OnClick(R.id.iv_filter)
     public void filter(View v){
