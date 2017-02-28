@@ -29,6 +29,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.Emoji;
 import code.vera.myblog.bean.PostBean;
+import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.PostModel;
 import code.vera.myblog.presenter.PresenterActivity;
@@ -61,7 +62,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private static final int REQUEST_CODE = 732;
     private ArrayList<String> results = new ArrayList<>();
     private AtSomebodyFragment atSomebodyFragment;
-
+    private StatusesBean statusesBean;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_post;
@@ -73,8 +74,12 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         Intent intent = getIntent();
         type = intent.getIntExtra("type", -1);
          id=intent.getStringExtra("id");
+        statusesBean= (StatusesBean) intent.getSerializableExtra("StatusesBean");
         if (type != -1) {
             view.showTitleAndHint(type);
+        }
+        if (statusesBean!=null){
+            view.showStatusesBean(statusesBean);
         }
     }
 

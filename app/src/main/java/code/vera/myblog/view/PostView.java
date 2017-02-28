@@ -9,11 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import butterknife.BindView;
+import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
+import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.view.base.BaseView;
 
@@ -36,6 +41,15 @@ public class PostView extends BaseView {
     ImageView ivRepost;
     @BindView(R.id.tv_cancle)
     TextView tvCancel;//取消
+
+    @BindView(R.id.ll_Origina_Layout)
+    LinearLayout llOri;
+    @BindView(R.id.tv_ori_content)
+    TextView tvOriContent;
+    @BindView(R.id.iv_original_photo)
+    ImageView ivOriPhoto;
+    @BindView(R.id.tv_ori_name)
+    TextView tvOriName;
 
 
     private Context context;
@@ -127,5 +141,14 @@ public class PostView extends BaseView {
      */
     public void setTitle(String s) {
         tvTitle.setText(s);
+    }
+
+    public void showStatusesBean(StatusesBean statusesBean) {
+        llOri.setVisibility(View.VISIBLE);
+        tvOriContent.setText(statusesBean.getText());
+        tvOriName.setText(statusesBean.getUserBean().getName());
+        ImageLoader.getInstance().displayImage(statusesBean.getUserBean().getProfile_image_url(), ivOriPhoto, BaseApplication
+                .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
+
     }
 }
