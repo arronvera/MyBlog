@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -19,7 +20,7 @@
             android:theme="@style/AppBaseTheme2" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppBaseTheme" >
+            android:theme="@style/AppBaseTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,11 +30,10 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppBaseTheme">
-
             <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
 
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".OAuthActivity" />
@@ -53,22 +53,27 @@
         <activity
             android:name=".presenter.activity.PostActivity"
             android:theme="@style/AppBaseTheme2" />
-        <activity android:name=".presenter.activity.CommentDetailActivity"
-            android:theme="@style/AppBaseTheme2" ></activity>
-        <activity android:name=".presenter.activity.BrowserActivity"
-            android:theme="@style/AppBaseTheme2">
-        </activity>
-        <activity android:name=".presenter.activity.PicturesActivity"
-            android:theme="@style/AppBaseTheme2"/>
+        <activity
+            android:name=".presenter.activity.CommentDetailActivity"
+            android:theme="@style/AppBaseTheme2" />
+        <activity
+            android:name=".presenter.activity.BrowserActivity"
+            android:theme="@style/AppBaseTheme2"></activity>
+        <activity
+            android:name=".presenter.activity.PicturesActivity"
+            android:theme="@style/AppBaseTheme2" />
         <activity
             android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
-            android:theme="@style/AppBaseTheme2"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppBaseTheme2" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppBaseTheme2"/>
+            android:theme="@style/AppBaseTheme2" />
+        <activity android:name=".presenter.activity.TopicActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppBaseTheme2"></activity>
     </application>
 
 </manifest>
