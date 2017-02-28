@@ -51,7 +51,12 @@
                     tools:text="这个一个time"
                     android:layout_alignTop="@+id/iv_item_time"
                     android:layout_toEndOf="@+id/iv_item_time" />
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_source"
+                        tools:text="来自微博"
+                        android:layout_marginLeft="10dp"/>
             </LinearLayout>
         </RelativeLayout>
         <TextView

@@ -33,6 +33,14 @@ public class StatusesBean implements Serializable {
     private long comments_count;//评论数
     private long attitudes_count;//表态数
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     @Nullable
     private String retweeted_status;//被转发的原微博信息字段，当该微博为转发微博时返回
     @Nullable

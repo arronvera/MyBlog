@@ -32,7 +32,7 @@ public class NetWorkConfig {
     //发出的评论列表
     public static final String COMMENT_BY_ME=BASE_URL+ "/comments/by_me.json";
     //接收到的评论列表
-    public static final String COMMENT_TO_ME=BASE_URL+ "comments/to_me.json";
+    public static final String COMMENT_TO_ME=BASE_URL+ "/comments/to_me.json";
     //获取定微博的转发微博列表
     public static final String REPOSTS_INFO=BASE_URL+  "/statuses/repost_timeline.json";
     //获取双向关注列表，即互粉列表

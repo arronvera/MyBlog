@@ -26,13 +26,15 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
     protected void onAttach() {
         super.onAttach();
         Intent intent = getIntent();
+        //
         StatusesBean statusesBean= (StatusesBean) intent.getSerializableExtra("status");
         if (statusesBean!=null&&statusesBean.getId()!=0){
             id=statusesBean.getId();
             view.showInfo(statusesBean);
         }
+        //
         RetweetedStatusBean retweetedStatusBean= (RetweetedStatusBean) intent.getSerializableExtra("retweeted_status");
-        if (retweetedStatusBean!=null&&statusesBean.getId()!=0){
+        if (retweetedStatusBean!=null&&retweetedStatusBean.getId()!=0){
             id=retweetedStatusBean.getId();
             view.showInfo2(retweetedStatusBean);
         }

@@ -27,7 +27,7 @@ public class TimeUtils {
         String str;
         try {
             Date publishDate=sdf.parse(time);
-            Date nowDate=new Date(System.currentTimeMillis());
+            Date nowDate=new Date(System.currentTimeMillis());//当前时间
             if (nowDate.getYear()==publishDate.getYear()&&nowDate.getDay()==publishDate.getDay()){//同一天
                 str=sdf3.format(publishDate);
             }else if (nowDate.getYear()==publishDate.getYear()&&nowDate.getDay()==publishDate.getDay()){//同一年

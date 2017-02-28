@@ -2,6 +2,7 @@ package code.vera.myblog.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.ImageView;
@@ -97,6 +98,8 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         RelativeLayout rlLike;
         @BindView(R.id.iv_item_menu)
         ImageView ivMenu;
+        @BindView(R.id.tv_source)
+        TextView tvSource;//来源
 
 
         public HomeViewHolder(View itemView) {
@@ -126,10 +129,12 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         @Override
         public void onBindData(final int position, StatusesBean bean) {
             String timeStr=bean.getCreated_at();
+            //来源
+            tvSource.setText( Html.fromHtml(bean.getSource()));
+            //时间
             tvTime.setText(TimeUtils.dateTransfer(timeStr));
             //内容
             final String content=bean.getText();
-
             SpannableStringBuilder spannableString=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content,context,position,tvContent);
             //点击at效果
             tvContent.setText("");
@@ -179,6 +184,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             if (bean.getAttitudes_count()!=0){
                 tvLike.setText(bean.getAttitudes_count()+"");
             }
+            //-----------------------------
             //监听
             rlRepost.setOnClickListener(new View.OnClickListener() {
                 @Override
