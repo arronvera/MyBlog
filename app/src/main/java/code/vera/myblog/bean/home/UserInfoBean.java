@@ -1,5 +1,7 @@
 package code.vera.myblog.bean.home;
 
+import android.support.annotation.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -36,6 +38,17 @@ public class UserInfoBean implements Serializable {
     private int online_status;
     private int bi_followers_count;
     private String cover_image_phone;//封面
+    @Nullable
+    private String sortLetters;//显示的数据首字母
+
+    @Nullable
+    public String getSortLetters() {
+        return sortLetters;
+    }
+
+    public void setSortLetters(@Nullable String sortLetters) {
+        this.sortLetters = sortLetters;
+    }
 
     public void setFavourites_count(long favourites_count) {
         this.favourites_count = favourites_count;
