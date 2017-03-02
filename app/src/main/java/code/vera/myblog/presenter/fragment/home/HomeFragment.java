@@ -21,6 +21,7 @@ import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.listener.OnItemLikeListener;
 import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemMenuListener;
 import code.vera.myblog.listener.OnItemOriginalListener;
 import code.vera.myblog.listener.OnItemRepostListener;
 import code.vera.myblog.listener.OnItemTopicListener;
@@ -45,7 +46,7 @@ import ww.com.core.widget.CustomSwipeRefreshLayout;
 public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>implements
         OnItemCommentListener,OnItemRepostListener,OnItemLikeListener,OnItemOriginalListener,
         OnItemLinkListener,OnItemTopicListener,OnItemAtListener
-        ,HomeAdapter.OnItemMenuListener,OnItemHeadPhotoListener{
+        ,OnItemMenuListener,OnItemHeadPhotoListener{
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
     private View contentView ;
@@ -64,18 +65,22 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         setAdater();
         getData();
         //上下拉刷新
+
         view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
             @Override
             public void onHeaderRefreshing() {
+                Debug.d("下拉刷新");
                 //下拉刷新
-                requestBean.setPage("1");
+                requestBean.page="1";//
                 getData();
             }
 
             @Override
             public void onFooterRefreshing() {
+                Debug.d("上拉加载");
                 //上拉加载
                 int nextPage=Integer.parseInt(requestBean.getPage())+1;
+                Debug.d("bean="+requestBean.toString());
                 requestBean.setPage(nextPage+"");
                 getData();
             }
@@ -130,7 +135,8 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
                 super.onNext(statusesBeen);
                 if (statusesBeen!=null){
                     if (requestBean.getPage().equals("1")){
-                        adapter.addList(statusesBeen);//清空加载进去
+                       adapter.addList(statusesBeen);//清空加载进去
+                        view.refreshFinished();//加载完成
                     }else {//往后面追加
                         adapter.appendList(statusesBeen);
                     }

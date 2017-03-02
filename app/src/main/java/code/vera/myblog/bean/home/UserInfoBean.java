@@ -21,7 +21,7 @@ public class UserInfoBean implements Serializable {
     private String url;
     private String profile_image_url;
     private String domain;
-    private String gender;
+    private String gender;//性别 性别，m：男、f：女、n：未知
     private long followers_count;
     private long friends_count;
     private long statuses_count;
@@ -30,13 +30,13 @@ public class UserInfoBean implements Serializable {
     private boolean following;//是否关注
     private boolean allow_all_act_msg;
     private boolean geo_enabled;
-    private boolean verified;
+    private boolean verified;//是否是微博认证用户，即加V用户，true：是，false：否
     private boolean allow_all_comment;
     private String avatar_large;
     private String verified_reason;
-    private boolean follow_me;
-    private int online_status;
-    private int bi_followers_count;
+    private boolean follow_me;//该用户是否关注当前登录用户，true：是，false：否
+    private int online_status;//在线状态 用户的在线状态，0：不在线、1：在线
+    private long bi_followers_count;//用户的互粉数
     private String cover_image_phone;//封面
     @Nullable
     private String sortLetters;//显示的数据首字母
@@ -262,11 +262,11 @@ public class UserInfoBean implements Serializable {
         this.online_status = online_status;
     }
 
-    public int getBi_followers_count() {
+    public long getBi_followers_count() {
         return bi_followers_count;
     }
 
-    public void setBi_followers_count(int bi_followers_count) {
+    public void setBi_followers_count(long bi_followers_count) {
         this.bi_followers_count = bi_followers_count;
     }
 

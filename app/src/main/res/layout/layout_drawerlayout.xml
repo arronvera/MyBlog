@@ -31,13 +31,18 @@
             <RelativeLayout
                 android:id="@+id/rl_close"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" >
+                android:layout_height="wrap_content" >
                 <ImageView
                     android:id="@+id/iv_menu_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_menu_close"
                     android:layout_centerInParent="true"/>
+                <code.vera.myblog.view.CircleImageView
+                    android:id="@+id/iv_main_photo"
+                    android:layout_below="@+id/iv_menu_close"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
                 </RelativeLayout>
             <code.vera.myblog.view.CircleImageView
                 android:id="@+id/civ_user_photo"

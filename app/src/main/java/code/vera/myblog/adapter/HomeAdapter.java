@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,7 @@ import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.listener.OnItemLikeListener;
 import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemMenuListener;
 import code.vera.myblog.listener.OnItemOriginalListener;
 import code.vera.myblog.listener.OnItemRepostListener;
 import code.vera.myblog.listener.OnItemTopicListener;
@@ -133,17 +135,17 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 
         @Override
         public void onBindData(final int position, StatusesBean bean) {
-            String timeStr=bean.getCreated_at();
             //来源
-            tvSource.setText("来自"+ Html.fromHtml(bean.getSource()));
+            if (!TextUtils.isEmpty(bean.getSource())&&Html.fromHtml(bean.getSource())!=null){
+                tvSource.setText("来自"+ Html.fromHtml(bean.getSource()));
+            }
             //时间
+            String timeStr=bean.getCreated_at();
             tvTime.setText(TimeUtils.dateTransfer(timeStr));
             //内容
             final String content=bean.getText();
             SpannableStringBuilder spannableString=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content,context,position,tvContent);
-            //点击at效果
-            tvContent.setText("");
-            tvContent.append(spannableString);
+            tvContent.setText(spannableString);
             if (bean.getUserBean()!=null){
                 tvName.setText(bean.getUserBean().getName());//用户名
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
@@ -165,9 +167,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 llAuthorInfo.setVisibility(View.VISIBLE);
                 String content_author="@"+statusBean.getUserbean().getName()+":"+bean.getText();
                 SpannableStringBuilder spannableString2=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content_author,context,position,tvAuthorText);
-                //点击at效果
-                tvAuthorText.setText("");
-                tvAuthorText.append(spannableString2);
+                tvAuthorText.setText(spannableString2);
                 if (statusBean.getPic_list()!=null&&statusBean.getPic_list().size()!=0){
                     oriNineGirdImageView.setImagesData(statusBean.getPic_list());
                     oriNineGirdImageView.setVisibility(View.VISIBLE);
@@ -264,9 +264,6 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
 
     public void setOnItemAtListener(OnItemAtListener onItemAtListener) {
         this.onItemAtListener = onItemAtListener;
-    }
-    public interface OnItemMenuListener{
-        void onItemMenuListener(View v,int pos);
     }
     public void setOnItemMenuListener(OnItemMenuListener onItemMenuListener){
         this.onItemMenuListener=onItemMenuListener;

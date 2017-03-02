@@ -67,6 +67,24 @@
                       android:textColor="@color/colorWhite"
                       android:textSize="20sp"
                       tools:text="vera" />
+                  <ImageView
+                      android:id="@+id/iv_identity"
+                      android:layout_width="30dp"
+                      android:layout_marginLeft="10dp"
+                      android:layout_height="30dp"
+                      android:src="@mipmap/ic_blue_vip"
+                      android:layout_alignBottom="@+id/tv_name"
+                      android:layout_below="@+id/crv_photo"
+                      android:layout_toRightOf="@+id/tv_name"/>
+                  <ImageView
+                      android:id="@+id/iv_gender"
+                      android:layout_width="30dp"
+                      android:layout_marginLeft="10dp"
+                      android:layout_height="30dp"
+                      android:src="@mipmap/ic_female"
+                      android:layout_alignBottom="@+id/tv_name"
+                      android:layout_below="@+id/crv_photo"
+                      android:layout_toRightOf="@+id/iv_identity"/>
                   <LinearLayout
                       android:id="@+id/ll_fans"
                       android:layout_width="match_parent"
@@ -83,6 +101,11 @@
                           android:textColor="@color/colorWhite"
                           android:textSize="18sp"
                           tools:text="关注：20万"/>
+                      <LinearLayout
+                          android:layout_width="1dp"
+                          android:layout_height="25dp"
+                          android:layout_marginLeft="20dp"
+                          android:background="@color/colorWhite"/>
                       <TextView
                           android:id="@+id/tv_followers"
                           android:layout_width="wrap_content"

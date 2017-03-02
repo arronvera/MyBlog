@@ -5,8 +5,8 @@ package code.vera.myblog.bean.home;
  */
 
 public class HomeRequestBean {
-    private String count="15";//单页返回的记录条数，设置为10
-    private String page="1";//	返回结果的页码，默认为1。
+    public String count="15";//单页返回的记录条数，设置为10
+    public String page="1";//	返回结果的页码，默认为1。
     private int base_app;//是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
 
     public String getCount() {
@@ -31,5 +31,14 @@ public class HomeRequestBean {
 
     public void setBase_app(int base_app) {
         this.base_app = base_app;
+    }
+
+    @Override
+    public String toString() {
+        return "HomeRequestBean{" +
+                "count='" + count + '\'' +
+                ", page='" + page + '\'' +
+                ", base_app=" + base_app +
+                '}';
     }
 }

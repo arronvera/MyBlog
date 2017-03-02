@@ -39,7 +39,10 @@ public class PersonalityView extends BaseView {
     CircleImageView civPhoto;
     @BindView(R.id.iv_bg)
     ImageView ivBg;
-
+    @BindView(R.id.iv_identity)
+    ImageView ivIdentity;//身份
+    @BindView(R.id.iv_gender)
+    ImageView ivGender;//性别
     private TabPersonAdapter tabPersonAdapter;
     private PersonalityActivity activity;
 
@@ -58,15 +61,26 @@ public class PersonalityView extends BaseView {
 
         }
 
+    /**
+     * 显示信息
+     * @param userInfoBean
+     */
     public void showInfo(UserInfoBean userInfoBean) {
-        tvFriends.setText("关注："+userInfoBean.getFriends_count());
-        tvFolloweres.setText("粉丝："+userInfoBean.getFriends_count());
-        tvIntro.setText(userInfoBean.getDescription());
-        tvName.setText(userInfoBean.getName());
+        tvFriends.setText("关注："+userInfoBean.getFriends_count());//关注
+        tvFolloweres.setText("粉丝："+userInfoBean.getFriends_count());//粉丝
+        tvIntro.setText(userInfoBean.getDescription());//介绍
+        tvName.setText(userInfoBean.getName());//名字
         ImageLoader.getInstance().displayImage(userInfoBean.getProfile_image_url(), civPhoto, BaseApplication
                 .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
-        ImageLoader.getInstance().displayImage(userInfoBean.getCover_image_phone(), ivBg, BaseApplication
-                .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
+        ImageLoader.getInstance().displayImage(userInfoBean.getCover_image_phone(), ivBg);//背景
+        if (userInfoBean.getGender().equals("m")){//男性
+            ivGender.setImageResource(R.mipmap.ic_male);
+        }else if (userInfoBean.getGender().equals("m")){//女性
+            ivGender.setImageResource(R.mipmap.ic_female);
+        }else {
+            ivGender.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     public void setActivity(PersonalityActivity personalityActivity) {

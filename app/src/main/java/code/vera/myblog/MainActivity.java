@@ -16,13 +16,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.trello.rxlifecycle.ActivityEvent;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import code.vera.myblog.adapter.MenuItemAdapter;
 import code.vera.myblog.bean.MenuItem;
-import code.vera.myblog.model.MainModel;
+import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.model.me.MeModel;
 import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.SearchActivity;
@@ -33,15 +36,16 @@ import code.vera.myblog.presenter.fragment.home.HomeFragment;
 import code.vera.myblog.presenter.fragment.me.MeFragment;
 import code.vera.myblog.presenter.fragment.message.MessageFragment;
 import code.vera.myblog.presenter.fragment.set.SetFragment;
+import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.DialogUtils;
-import code.vera.myblog.view.base.VoidView;
+import code.vera.myblog.view.MainView;
 
 import static code.vera.myblog.R.id.lv_left_menu;
 
 /**
  * 主界面
  */
-public class MainActivity extends PresenterActivity<VoidView, MainModel> implements AdapterView.OnItemClickListener, MenuFragment.FragmentDrawerListener {
+public class MainActivity extends PresenterActivity<MainView, MeModel> implements AdapterView.OnItemClickListener, MenuFragment.FragmentDrawerListener {
     @BindView(R.id.dl_left)
     DrawerLayout dlLeft;
     @BindView(lv_left_menu)
@@ -116,6 +120,15 @@ public class MainActivity extends PresenterActivity<VoidView, MainModel> impleme
         item.setPic(R.mipmap.ic_mine);
         item.setText("设置");
         menuList.add(item);
+        //获取用户
+        //
+        model.getUserInfo(this,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UserInfoBean>(mContext,false){
+            @Override
+            public void onNext(UserInfoBean userInfoBean) {
+                super.onNext(userInfoBean);
+                view.showUser(userInfoBean);
+            }
+        });
 
     }
 

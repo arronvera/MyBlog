@@ -23,6 +23,7 @@ public class PicturesView extends BaseView {
     ViewPager viewPager;
     @BindView(R.id.tv_pic_num)
     TextView tvPicNum;
+    private int currentIndex;//当前下标
 
     private PicturesVpAdapter adapter;
     @Override
@@ -31,6 +32,7 @@ public class PicturesView extends BaseView {
     }
 
     public void setAdapter(FragmentManager fm, final List<PicBean> list,int index) {
+        currentIndex=index;
         adapter=new PicturesVpAdapter(fm,list);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -42,7 +44,7 @@ public class PicturesView extends BaseView {
 
             @Override
             public void onPageSelected(int position) {
-
+                currentIndex=position;
             }
 
             @Override
@@ -50,5 +52,18 @@ public class PicturesView extends BaseView {
 
             }
         });
+        viewPager.setCurrentItem(index);//跳转到指定页
+    }
+
+    /**
+     * 获取当前下标
+     * @return
+     */
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public void setCurrentIndex(int currentIndex) {
+        this.currentIndex = currentIndex;
     }
 }
