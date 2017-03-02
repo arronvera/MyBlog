@@ -105,6 +105,7 @@ public class MainActivity extends PresenterActivity<MainView, MeModel> implement
         item.setPic(R.mipmap.ic_message);
         menuList.add(item);
         item = new MenuItem();
+        item.setPic(R.mipmap.ic_artical);
         item.setText("发现");
         menuList.add(item);
         item = new MenuItem();

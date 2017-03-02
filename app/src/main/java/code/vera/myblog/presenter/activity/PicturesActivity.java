@@ -39,7 +39,6 @@ public class PicturesActivity extends PresenterActivity<PicturesView,VoidModel> 
                 beanList.get(i).setThumbnail_pic(beanList.get(i).getThumbnail_pic().replace("thumbnail","bmiddle"));
             }
             view.setAdapter( getSupportFragmentManager(),beanList,index);
-
         }
 
     }

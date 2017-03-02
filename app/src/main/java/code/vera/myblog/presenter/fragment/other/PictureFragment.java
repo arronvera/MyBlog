@@ -10,6 +10,7 @@ import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.view.pic.PictureView;
 
 /**
+ * 图片显示
  * Created by vera on 2017/2/20 0020.
  */
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <ImageView
+            android:id="@+id/iv_menu_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_menu_close"/>
+    </RelativeLayout>
+
+    <code.vera.myblog.view.CircleImageView
+        android:id="@+id/civ_user_photo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+       android:layout_marginLeft="20dp"
+        android:layout_below="@+id/rl_close"/>
+    <ListView
+        android:layout_below="@+id/civ_user_photo"
+        android:id="@+id/lv_left_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:layout_marginTop="10dp"
+        android:layout_above="@+id/iv_sign_out" />
+    <ImageView
+        android:id="@+id/iv_sign_out"
+        android:layout_alignParentBottom="true"
+        android:layout_width="120dp"
+        android:layout_height="70dp"
+        android:src="@mipmap/ic_sign_out"/>
+
+
+</RelativeLayout>

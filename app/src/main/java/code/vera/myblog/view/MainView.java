@@ -2,7 +2,6 @@ package code.vera.myblog.view;
 
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -16,8 +15,8 @@ import code.vera.myblog.view.base.BaseView;
  */
 
 public class MainView extends BaseView {
-    @BindView(R.id.iv_main_photo)
-    ImageView ivPhoto;
+    @BindView(R.id.civ_user_photo)
+    CircleImageView civPhoto;
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
@@ -25,6 +24,6 @@ public class MainView extends BaseView {
     }
 
     public void showUser(UserInfoBean userInfoBean) {
-        ImageLoader.getInstance().displayImage(userInfoBean.getProfile_image_url(),ivPhoto);
+        ImageLoader.getInstance().displayImage(userInfoBean.getProfile_image_url(),civPhoto);
     }
 }

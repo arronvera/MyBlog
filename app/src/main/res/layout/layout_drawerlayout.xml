@@ -28,41 +28,7 @@
             android:padding="10dp"
             android:background="@mipmap/ic_menu_background"
             android:layout_gravity="start">
-            <RelativeLayout
-                android:id="@+id/rl_close"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-                <ImageView
-                    android:id="@+id/iv_menu_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_menu_close"
-                    android:layout_centerInParent="true"/>
-                <code.vera.myblog.view.CircleImageView
-                    android:id="@+id/iv_main_photo"
-                    android:layout_below="@+id/iv_menu_close"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp" />
-                </RelativeLayout>
-            <code.vera.myblog.view.CircleImageView
-                android:id="@+id/civ_user_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/rl_close"/>
-            <ListView
-                android:layout_below="@+id/civ_user_photo"
-                android:id="@+id/lv_left_menu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@null"
-                android:layout_above="@+id/iv_sign_out" />
-            <ImageView
-                android:id="@+id/iv_sign_out"
-                android:layout_alignParentBottom="true"
-                android:layout_width="120dp"
-                android:layout_height="70dp"
-                android:src="@mipmap/ic_sign_out"/>
+            <include layout="@layout/layout_left_menu"/>
         </RelativeLayout>
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>
