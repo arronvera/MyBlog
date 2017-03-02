@@ -1,6 +1,7 @@
 package code.vera.myblog.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,6 +13,8 @@ import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.util.List;
+
 import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
@@ -20,6 +23,7 @@ import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.presenter.activity.CommentDetailActivity;
+import code.vera.myblog.presenter.activity.PicturesActivity;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.base.BaseView;
 
@@ -47,6 +51,7 @@ public class CommentDetailView extends BaseView {
     private NineGridImageViewAdapter<PicBean> adapter;
     private Context context;
     private CommentDetailActivity activity;
+    private StatusesBean statusesBean;
 
     @Override
     public void onAttachView(@NonNull View view) {
@@ -58,10 +63,22 @@ public class CommentDetailView extends BaseView {
                 ImageLoader.getInstance().displayImage(s.getThumbnail_pic(), imageView, BaseApplication
                         .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
             }
+
+            @Override
+            protected void onItemImageClick(Context context, int index, List<PicBean> list) {
+                super.onItemImageClick(context, index, list);
+                //点击
+                //跳转到图片
+                Intent intent=new Intent(context, PicturesActivity.class);
+                intent.putExtra("index",index);
+                intent.putExtra("bean",statusesBean);
+                context.startActivity(intent);
+            }
         };
         nineGridImageView.setAdapter(adapter);
     }
     public void showInfo(StatusesBean statusesBean){
+        this.statusesBean=statusesBean;
         tvContent.setText(statusesBean.getText());
         tvName.setText(statusesBean.getUserBean().getName());
         tvTime.setText(TimeUtils.dateTransfer(statusesBean.getCreated_at()));
