@@ -4,26 +4,21 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <RelativeLayout
-        android:layout_width="match_parent" android:layout_height="match_parent">
-
-        <WebView
-            android:id="@+id/webview" android:layout_width="match_parent" android:layout_height="match_parent"/>
-        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
-            android:id="@+id/progress"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            app:spb_sections_count="4"
-            app:spb_color="#FF0000"
-            app:spb_speed="2.0"
-            app:spb_stroke_width="4dp"
-            app:spb_stroke_separator_length="4dp"
-            app:spb_reversed="false"
-            app:spb_mirror_mode="false"
-            app:spb_progressiveStart_activated="true"
-            app:spb_progressiveStart_speed="1.5"
-            app:spb_progressiveStop_speed="3.4"
-            android:indeterminate="true"/>
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="链接"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
+<code.vera.myblog.view.widget.WebViewWithProgress
+    android:id="@+id/progress"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</code.vera.myblog.view.widget.WebViewWithProgress>
 </LinearLayout>

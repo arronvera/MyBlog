@@ -1,7 +1,9 @@
 package code.vera.myblog.presenter.activity;
 
 import android.content.Intent;
+import android.view.View;
 
+import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
@@ -40,6 +42,24 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
         }
         view.setActivity(this);
         view.setAdapter();
+    }
+    @OnClick(R.id.tv_item_comment)
+    public void doClick(View v){
+        switch (v.getId()){
+            case R.id.tv_item_comment://评论
+
+
+
+                break;
+            case R.id.tv_item_repost://转发
+
+
+
+                break;
+            case R.id.rl_item_like:
+
+                break;
+        }
     }
 
 }

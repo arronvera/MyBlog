@@ -26,9 +26,11 @@ import code.vera.myblog.listener.OnItemOriginalListener;
 import code.vera.myblog.listener.OnItemRepostListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.home.HomeModel;
+import code.vera.myblog.presenter.activity.BrowserActivity;
 import code.vera.myblog.presenter.activity.CommentDetailActivity;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
+import code.vera.myblog.presenter.activity.TopicActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.ToastUtil;
@@ -206,15 +208,18 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     public void onItemLinkListener(View v, int pos,String str) {
         //链接
         ToastUtil.showToast(getContext(),"点击了链接"+str);
-//        Intent intent=new Intent(getActivity(),Browser.class);
-//        intent.putExtra("link",adapter.getItem(pos).getRetweetedStatusBean());
-//        startActivity(intent);
+        Intent intent=new Intent(getActivity(),BrowserActivity.class);
+        intent.putExtra("link",str);
+        startActivity(intent);
     }
 
     @Override
     public void onItemTopicListener(View v, int pos,String str) {
         //Todo
         ToastUtil.showToast(getContext(),"点击了话题"+str);
+        Intent intent=new Intent(getContext(), TopicActivity.class);
+//        intent.putExtra("topic",str)
+        startActivity(intent);
     }
 
     @Override

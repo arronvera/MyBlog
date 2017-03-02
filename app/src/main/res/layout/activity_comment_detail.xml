@@ -5,6 +5,7 @@
     android:id="@+id/activity_comment_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_efefef"
     tools:context="code.vera.myblog.presenter.activity.CommentDetailActivity">
     <RelativeLayout
         android:id="@+id/rl_top"

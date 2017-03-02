@@ -107,6 +107,8 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         ImageView ivMenu;
         @BindView(R.id.tv_source)
         TextView tvSource;//来源
+        @BindView(R.id.line)
+        LinearLayout llLine;
 
 
         public HomeViewHolder(View itemView) {
@@ -163,6 +165,8 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             }
             //微博原作者-有的才返回
             if (bean.getRetweetedStatusBean()!=null){
+                //
+                llLine.setVisibility(View.VISIBLE);
                 RetweetedStatusBean statusBean=bean.getRetweetedStatusBean();
                 llAuthorInfo.setVisibility(View.VISIBLE);
                 String content_author="@"+statusBean.getUserbean().getName()+":"+bean.getText();
