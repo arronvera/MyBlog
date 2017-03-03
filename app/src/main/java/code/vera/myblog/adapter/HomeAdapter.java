@@ -169,7 +169,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 llLine.setVisibility(View.VISIBLE);
                 RetweetedStatusBean statusBean=bean.getRetweetedStatusBean();
                 llAuthorInfo.setVisibility(View.VISIBLE);
-                String content_author="@"+statusBean.getUserbean().getName()+":"+bean.getText();
+                String content_author="@"+statusBean.getUserbean().getName()+":"+statusBean.getText();
                 SpannableStringBuilder spannableString2=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content_author,context,position,tvAuthorText);
                 tvAuthorText.setText(spannableString2);
                 if (statusBean.getPic_list()!=null&&statusBean.getPic_list().size()!=0){

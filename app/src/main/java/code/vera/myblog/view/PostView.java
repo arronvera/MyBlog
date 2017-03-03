@@ -18,8 +18,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
+import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
+import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.view.base.BaseView;
 
 /**
@@ -145,10 +147,24 @@ public class PostView extends BaseView {
 
     public void showStatusesBean(StatusesBean statusesBean) {
         llOri.setVisibility(View.VISIBLE);
-        tvOriContent.setText(statusesBean.getText());
-        tvOriName.setText(statusesBean.getUserBean().getName());
-        ImageLoader.getInstance().displayImage(statusesBean.getUserBean().getProfile_image_url(), ivOriPhoto, BaseApplication
-                .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
+        if (statusesBean!=null&&statusesBean.getRetweetedStatusBean()!=null){//有原weib
+            RetweetedStatusBean retweetedStatusBean=statusesBean.getRetweetedStatusBean();
+            tvOriContent.setText(retweetedStatusBean.getText());
+            tvOriName.setText(retweetedStatusBean.getUserbean().getName());
+            ImageLoader.getInstance().displayImage(retweetedStatusBean.getUserbean().getProfile_image_url(), ivOriPhoto, BaseApplication
+                    .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
+            String text="//@"+statusesBean.getUserBean().getName()+":"+statusesBean.getText();
+            //设置样式，但是不可以点击
+            etMessage.setText( HomeUtils.getWeiBoContent(null,null,null,text,context,0,etMessage));
+            etMessage.setSelection(0);//移动光标
+        }else if (statusesBean.getRetweetedStatusBean()==null){
+            tvOriContent.setText(statusesBean.getText());
+            tvOriName.setText(statusesBean.getUserBean().getName());
+            ImageLoader.getInstance().displayImage(statusesBean.getUserBean().getProfile_image_url(), ivOriPhoto, BaseApplication
+                    .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
+        }
+
+
 
     }
 }

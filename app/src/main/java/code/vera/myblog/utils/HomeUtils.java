@@ -8,7 +8,6 @@ import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,61 +28,7 @@ public class HomeUtils {
     private static final String EMOJI = "\\[(\\S+?)\\]";// 表情
     private static final String URL = "http://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";// url
     /**
-     * 处理话题
-     * @param comment
-     * @param content
-     * @param context
-     * @throws IOException
-     */
-    public static void handlerTopicText(CustomClickableSpan ccs,TextView comment, String content, Context context) throws IOException {
-        SpannableStringBuilder sb = new SpannableStringBuilder(content);
-        String regex = "#([^\\\\#|.]+)#";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(content);
-        while (m.find()){
-//            for (int i = 0; i <m.groupCount(); i++) {
-                sb.setSpan(ccs, m.start(), m.end(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-//            }
-        }
-        comment.setText(sb);
-    }
-    /**
-     * 处理@
-     * @param comment
-     * @param content
-     * @param context
-     * @throws IOException
-     */
-    public static void handlerAtSomeOneText(CustomClickableSpan ccs,TextView comment, String content, Context context) throws IOException {
-        SpannableStringBuilder sb = new SpannableStringBuilder(content);
-        String regex = "@[^ \\\\.^\\\\,^:^;^!^(^)^\\\\?^\\\\s^#^@^。^，^：^；^！^？^（^）]+";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(content);
-        while (m.find()){
-                sb.setSpan(ccs, m.start(), m.end(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
-        comment.setText(sb);
-    }
-    /**
-     * 处理Url
-     * @param comment
-     * @param content
-     * @param context
-     * @throws IOException
-     */
-    public static void handlerUrlText(CustomClickableSpan ccs,TextView comment, String content, Context context) throws IOException {
-        SpannableStringBuilder sb = new SpannableStringBuilder(content);
-        String regex = "/^(http?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$/";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(content);
-        while (m.find()){
-            sb.setSpan(ccs, m.start(), m.end(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
-        comment.setText(sb);
-    }
-
-    /**
-     * 设置weib样式
+     * 设置weib样式(带监听)
      * @param source
      * @param context
      * @return
@@ -110,6 +55,7 @@ public class HomeUtils {
                 CustomClickableSpan ccsAt=new CustomClickableSpan() {
                     @Override
                     public void onClick(View widget) {
+                        if (onItemAtListener!=null)
                         onItemAtListener.onItemAtListener(widget,position,at);
                     }
                 };
@@ -121,6 +67,7 @@ public class HomeUtils {
                 CustomClickableSpan ccsTopic=new CustomClickableSpan() {
                     @Override
                     public void onClick(View widget) {
+                        if (onItemTopicListener!=null)
                         onItemTopicListener.onItemTopicListener(widget,position,topic);
                     }
                 };
@@ -132,6 +79,7 @@ public class HomeUtils {
                 CustomClickableSpan ccsLink=new CustomClickableSpan() {
                     @Override
                     public void onClick(View widget) {
+                        if (onItemLinkListener!=null)
                         onItemLinkListener.onItemLinkListener(widget,position,url);
                     }
                 };

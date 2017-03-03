@@ -173,7 +173,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     @Override
     public void onItemRepostListener(View v, int pos) {
         //转发
-        ToastUtil.showToast(getContext(),"转发");
+//        ToastUtil.showToast(getContext(),"转发");
         Intent intent=new Intent(getActivity(), PostActivity.class);
         intent.putExtra("type", Constants.REPOST_TYPE);
         intent.putExtra("StatusesBean",adapter.getItem(pos));
@@ -192,7 +192,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     }
     @OnClick(R.id.iv_filter)
     public void filter(View v){
-//        showPopWindow(v);
+        showPopWindow(v);
     }
 
     private void showPopWindow(View v) {
