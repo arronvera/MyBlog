@@ -10,6 +10,7 @@ import code.vera.myblog.view.tab.TabRepostView;
  */
 
 public class TabPersonAllCircleFragment extends PresenterFragment<TabRepostView, VoidModel> {
+    static TabPersonAllCircleFragment instance;
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_tab_person_all;
@@ -18,5 +19,12 @@ public class TabPersonAllCircleFragment extends PresenterFragment<TabRepostView,
     @Override
     protected void onAttach() {
         super.onAttach();
+    }
+    public static TabPersonAllCircleFragment getInstance(){
+        if (instance==null){
+            instance=new TabPersonAllCircleFragment();
+        }
+        return instance;
+
     }
 }

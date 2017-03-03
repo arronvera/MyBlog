@@ -22,9 +22,9 @@ public class TabPersonAdapter  extends FragmentPagerAdapter {
 
     public TabPersonAdapter(FragmentManager fm) {
         super(fm);
-        fragmentList.add(new TabPersonInfoFragment());
-        fragmentList.add(new TabPersonAllCircleFragment());
-        fragmentList.add(new TabPersonPhotosFragment());
+        fragmentList.add(TabPersonInfoFragment.getInstance());
+        fragmentList.add(TabPersonAllCircleFragment.getInstance());
+        fragmentList.add(TabPersonPhotosFragment.getInstance());
 
     }
 

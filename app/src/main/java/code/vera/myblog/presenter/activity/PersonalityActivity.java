@@ -48,6 +48,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, MeM
                     super.onNext(userInfoBean);
                     Debug.d("userInfoBean="+userInfoBean.toString());
                     view.showInfo(userInfoBean);
+
                 }
             });
         }

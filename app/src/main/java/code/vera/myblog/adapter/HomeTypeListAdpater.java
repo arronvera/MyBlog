@@ -41,7 +41,6 @@ public class HomeTypeListAdpater extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView textView = null;
         ViewHolder holder;
         if (convertView==null){
             holder=new ViewHolder();

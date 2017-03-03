@@ -3,9 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_efefef"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="10dp"
     android:orientation="vertical">
     <include layout="@layout/item_refresh" />
     <ImageView
@@ -17,4 +14,11 @@
         android:layout_marginRight="25dp"
         android:layout_marginBottom="25dp"
         />
+    <!--遮罩层-->
+    <View
+        android:id="@+id/gray_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#66000000"/>
 </FrameLayout>

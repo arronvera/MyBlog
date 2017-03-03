@@ -75,7 +75,7 @@ public class PersonalityView extends BaseView {
         ImageLoader.getInstance().displayImage(userInfoBean.getCover_image_phone(), ivBg);//背景
         if (userInfoBean.getGender().equals("m")){//男性
             ivGender.setImageResource(R.mipmap.ic_male);
-        }else if (userInfoBean.getGender().equals("m")){//女性
+        }else if (userInfoBean.getGender().equals("f")){//女性
             ivGender.setImageResource(R.mipmap.ic_female);
         }else {
             ivGender.setVisibility(View.INVISIBLE);

@@ -10,6 +10,7 @@ import code.vera.myblog.view.tab.TabRepostView;
  */
 
 public class TabPersonPhotosFragment extends PresenterFragment<TabRepostView, VoidModel> {
+    private static TabPersonPhotosFragment instance;
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_tab_person_photos;
@@ -18,5 +19,12 @@ public class TabPersonPhotosFragment extends PresenterFragment<TabRepostView, Vo
     @Override
     protected void onAttach() {
         super.onAttach();
+    }
+    public static TabPersonPhotosFragment getInstance(){
+        if (instance==null){
+            instance=new TabPersonPhotosFragment();
+        }
+        return instance;
+
     }
 }

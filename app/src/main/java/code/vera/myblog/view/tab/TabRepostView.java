@@ -3,6 +3,7 @@ package code.vera.myblog.view.tab;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.view.base.BaseView;
 
 /**
@@ -13,6 +14,9 @@ public class TabRepostView extends BaseView {
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
+
+    }
+    public void showInfo(UserInfoBean userInfoBean){
 
     }
 }

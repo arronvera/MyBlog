@@ -118,7 +118,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                 @Override
                 protected void onDisplayImage(Context context, ImageView imageView, PicBean s) {
                     ImageLoader.getInstance().displayImage(s.getThumbnail_pic(), imageView, BaseApplication
-                            .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
+                            .getDisplayImageOptions(R.mipmap.ic_photo_default));
                 }
                 //点击
                 @Override
