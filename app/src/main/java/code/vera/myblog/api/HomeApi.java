@@ -33,6 +33,24 @@ public class HomeApi  extends BaseApi{
     }
 
     /**
+     * 某个用户最新发表的微博列表
+     * @param bean
+     * @param context
+     * @return
+     */
+    public static Observable<String > getUserTimeLine(HomeRequestBean bean, Context context) {
+        String url = NetWorkConfig.HOME_TIME_LING;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        Debug.d("token="+ AccessTokenKeeper.readAccessToken(context).getToken());
+//        Debug.d("uid="+ AccessTokenKeeper.readAccessToken(context).getUid());
+        params.addParameters("count",bean.getCount());
+        params.addParameters("page",bean.getPage());
+        params.addParameters("feature",bean.getFeature()+"");
+        params.addParameters("uid",bean.getUid());
+        return onGet(url, params);
+    }
+    /**
      * 获取用户uid
      * @param context
      * @return

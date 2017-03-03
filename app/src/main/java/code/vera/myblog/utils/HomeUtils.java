@@ -73,7 +73,7 @@ public class HomeUtils {
                 };
                 spannableString.setSpan(ccsTopic, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
-            if (url != null) {
+            if (url != null) {//链接
                 int start = matcher.start(3);
                 int end = start + url.length();
                 CustomClickableSpan ccsLink=new CustomClickableSpan() {
