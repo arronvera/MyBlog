@@ -76,6 +76,9 @@ public class HomeUtils {
             if (url != null) {//链接
                 int start = matcher.start(3);
                 int end = start + url.length();
+                if (url.length()<20){//短链接
+                    //todo
+                }
                 CustomClickableSpan ccsLink=new CustomClickableSpan() {
                     @Override
                     public void onClick(View widget) {

@@ -3,6 +3,9 @@ package code.vera.myblog.api;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.config.NetWorkConfig;
@@ -83,7 +86,23 @@ public class HomeApi  extends BaseApi{
         return onGet(url, params);
     }
 
-
+    /**
+     * 短链接变成长链接
+     * @param context
+     * @param url_short
+     * @return
+     */
+    public static Observable<String>shortUrlExpand(Context context,String url_short){
+        String url = NetWorkConfig.SHORT_URL_EXPAND;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        try {
+            params.addParameters("url_short", URLEncoder.encode(url_short,"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return onGet(url, params);
+    }
 
 
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import code.vera.myblog.api.HomeApi;
+import code.vera.myblog.bean.UrlBean;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.model.base.IModel;
@@ -63,5 +64,27 @@ public class HomeModel implements IModel{
                 .subscribe(subscriber);
     }
 
-
+    /**
+     * 短链接转成长链接
+     * @param context
+     * @param url_short
+     * @param transformer
+     * @param subscriber
+     */
+    public static void shortUrlExpand( Context context,String url_short,Observable.Transformer
+            transformer,  Subscriber<Boolean> subscriber){
+        HomeApi.shortUrlExpand(context,url_short) .map(new Func1<String, List<UrlBean>>() {
+            @Override
+            public List<UrlBean> call(String s) {
+                JSONObject result= JSON.parseObject(s);
+                List<UrlBean>list=null;
+                if (result!=null){
+                    list=JSON.parseArray(result.getString("urls"),UrlBean.class);
+                }
+                return list;
+            }
+        }).compose(RxHelper.<  List<UrlBean> >cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
 }
