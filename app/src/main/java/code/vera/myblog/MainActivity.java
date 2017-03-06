@@ -27,6 +27,7 @@ import code.vera.myblog.bean.MenuItem;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.model.me.MeModel;
 import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.SearchActivity;
 import code.vera.myblog.presenter.fragment.MenuFragment;
@@ -65,7 +66,7 @@ public class MainActivity extends PresenterActivity<MainView, MeModel> implement
     private boolean isExit = false;
     private long firstTime = 0;
     Fragment fragment = null;
-
+    private UserInfoBean user;//当前用户
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -122,12 +123,12 @@ public class MainActivity extends PresenterActivity<MainView, MeModel> implement
         item.setText("设置");
         menuList.add(item);
         //获取用户
-        //
         model.getUserInfo(this,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UserInfoBean>(mContext,false){
             @Override
             public void onNext(UserInfoBean userInfoBean) {
                 super.onNext(userInfoBean);
                 view.showUser(userInfoBean);
+                user=userInfoBean;
             }
         });
 
@@ -165,7 +166,7 @@ public class MainActivity extends PresenterActivity<MainView, MeModel> implement
     }
 
 
-    @OnClick({R.id.iv_sign_out, R.id.iv_menu_close})
+    @OnClick({R.id.iv_sign_out, R.id.iv_menu_close,R.id.civ_user_photo})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.iv_sign_out:
@@ -179,6 +180,11 @@ public class MainActivity extends PresenterActivity<MainView, MeModel> implement
                 break;
             case R.id.iv_menu_close://关闭菜单
                 dlLeft.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.civ_user_photo://用户头像
+                Intent intent=new Intent(this, PersonalityActivity.class);
+                intent.putExtra("user",user);
+                startActivity(intent);
                 break;
         }
     }
