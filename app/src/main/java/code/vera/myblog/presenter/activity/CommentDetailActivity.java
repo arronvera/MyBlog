@@ -58,6 +58,7 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
             case R.id.tv_item_comment://评论
                 Intent intent=new Intent(CommentDetailActivity.this,PostActivity.class);
                 intent.putExtra("type", Constants.COMMENT_TYPE);
+                startActivity(intent);
                 break;
             case R.id.tv_item_repost://转发
                 Intent intent2=new Intent(CommentDetailActivity.this,PostActivity.class);
@@ -67,6 +68,8 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
                 break;
             case R.id.rl_item_like:
                 //todo喜欢
+
+
                 break;
         }
     }
@@ -79,6 +82,7 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
                 startActivity(intent);
                 break;
             case R.id.iv_shoucang://收藏
+                //todo 收藏
 
 
                 break;

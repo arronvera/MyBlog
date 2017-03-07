@@ -65,10 +65,10 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     private   PopupWindow popupWindow;
     private LikeView likeView;
     private PopupWindow menuPopupWindow;//菜单
-    private Button btnCancel;
-    private Button btnShoucang;
-    private Button btnCopy;
-    private Button btnConcern;
+    private Button btnCancel;//取消
+    private Button btnShoucang;//收藏
+    private Button btnCopy;//复制
+    private Button btnConcern;//关注
 
     @Override
     protected int getLayoutResId() {

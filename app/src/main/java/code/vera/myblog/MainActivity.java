@@ -159,6 +159,7 @@ public class MainActivity extends PresenterActivity<MainView, MeModel> implement
                         Intent intent2=new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(intent2);
                         break;
+
                 }
                 return true;
             }

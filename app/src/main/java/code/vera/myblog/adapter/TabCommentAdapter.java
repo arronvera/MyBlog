@@ -23,8 +23,10 @@ public class TabCommentAdapter extends FragmentPagerAdapter {
 
     public TabCommentAdapter(FragmentManager fm, StatusesBean statusesBean) {
         super(fm);
-        titles = new String[]{"转发"+statusesBean.getReposts_count(),
-                "评论"+statusesBean.getComments_count(), "喜欢"+statusesBean.getAttitudes_count()};
+        if (statusesBean!=null){
+            titles = new String[]{"转发"+statusesBean.getReposts_count(),
+                    "评论"+statusesBean.getComments_count(), "喜欢"+statusesBean.getAttitudes_count()};
+        }
         fragmentList.add(new TabRepostFragment());
         fragmentList.add(new TabCommentFragment());
         fragmentList.add(new TabLikeFragment());
