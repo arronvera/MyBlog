@@ -164,7 +164,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
             case R.id.iv_at://at好友
                 getSupportFragmentManager().
                         beginTransaction().
-                        setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out)//动画
+                        setCustomAnimations(R.anim.pop_anim_in,R.anim.pop_anim_out)//动画
                         .add(R.id.rl_all_container,atSomebodyFragment).commit();
                 isShowFriend=true;
                 view.setTitle("好友");//设置标题

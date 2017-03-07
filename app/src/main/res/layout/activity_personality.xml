@@ -133,9 +133,9 @@
               android:id="@+id/tab_person"
               android:layout_width="match_parent"
               android:layout_height="40dp"
-              android:background="@color/colorWhite"
-              app:tabIndicatorColor="@color/color_ff8162"
-              app:tabSelectedTextColor="@color/colorBlack"
+              android:background="@color/color_ff8162"
+              app:tabIndicatorColor="@color/colorWhite"
+              app:tabSelectedTextColor="@color/colorWhite"
               app:tabTextColor="@color/color_bcbcbc">
 
           </android.support.design.widget.TabLayout>

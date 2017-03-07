@@ -2,7 +2,10 @@ package code.vera.myblog.view.tab;
 
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.TextView;
 
+import butterknife.BindView;
+import code.vera.myblog.R;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.view.base.BaseView;
 
@@ -16,7 +19,5 @@ public class TabRepostView extends BaseView {
         super.onAttachView(view);
 
     }
-    public void showInfo(UserInfoBean userInfoBean){
 
-    }
 }

@@ -2,6 +2,7 @@ package code.vera.myblog.presenter.fragment.home;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     private View contentView ;
     private   PopupWindow popupWindow;
     private LikeView likeView;
+    private PopupWindow menuPopupWindow;//菜单
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_home;
@@ -111,7 +113,15 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         popupWindow.setOutsideTouchable(true);
 //        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
-
+        //
+        View menu = LayoutInflater.from(getContext()).inflate(R.layout.pop_bottom, null);
+        menuPopupWindow=new PopupWindow(menu, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        menuPopupWindow.setFocusable(true);
+        // 实例化一个ColorDrawable颜色为半透明
+        ColorDrawable dw = new ColorDrawable(0xb0000000);
+        menuPopupWindow.setBackgroundDrawable(dw);
+        // 设置popWindow的显示和消失动画
+        menuPopupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
     }
 
     private void addListener() {
@@ -230,7 +240,6 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
 
     @Override
     public void onItemAtListener(View v, int pos,String str) {
-        ToastUtil.showToast(getContext(),"点击了at"+str);
         Intent intent=new Intent(getContext(), PersonalityActivity.class);
         intent.putExtra("user_name",str.substring(str.indexOf("@")+1,str.length()));
         startActivity(intent);
@@ -239,7 +248,8 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     @Override
     public void onItemMenuListener(View v, int pos) {
         //弹出菜单更多
-        view.showPopuWindow(v);
+        // 在底部显示
+        menuPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
     }
 
     @Override

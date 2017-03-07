@@ -26,4 +26,11 @@ public class Constants {
     public static final int POST_TYPE_NEW_COMMENT=1;//新建评论
     public static final int POST_TYPE_REPLY_COMMENT=2;//回复评论
     public static final int POST_TYPE_REPOST=3;//转发
+
+
+
+    public static final int TAB_REPOST=0;
+    public static final int TAB_COMMENT=1;
+    public static final int TAB_LIKE=2;
+
 }

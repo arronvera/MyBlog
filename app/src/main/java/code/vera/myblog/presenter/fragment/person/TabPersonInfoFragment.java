@@ -1,15 +1,16 @@
 package code.vera.myblog.presenter.fragment.person;
 
 import code.vera.myblog.R;
+import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
-import code.vera.myblog.view.tab.TabRepostView;
+import code.vera.myblog.view.personality.TabPersonInfoView;
 
 /**
  * Created by vera on 2017/2/24 0024.
  */
 
-public class TabPersonInfoFragment extends PresenterFragment<TabRepostView, VoidModel> {
+public class TabPersonInfoFragment extends PresenterFragment<TabPersonInfoView, VoidModel> {
     private static TabPersonInfoFragment instance;
     @Override
     protected int getLayoutResId() {
@@ -25,5 +26,9 @@ public class TabPersonInfoFragment extends PresenterFragment<TabRepostView, Void
             instance = new TabPersonInfoFragment();
         }
         return  instance;
+    }
+
+    public void setUser(UserInfoBean userInfoBean) {
+        view.showInfo(userInfoBean);
     }
 }

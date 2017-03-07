@@ -10,6 +10,10 @@ import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentUserBean;
+import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemTopicListener;
+import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
 
@@ -18,6 +22,9 @@ import code.vera.myblog.view.CircleImageView;
  */
 
 public class CommentAdapter extends RvAdapter<CommentUserBean> {
+    private OnItemAtListener onItemAtListener;
+    private OnItemTopicListener onItemTopicListener;
+    private OnItemLinkListener onItemLinkListener;
     public CommentAdapter(Context context) {
         super(context);
     }
@@ -56,8 +63,18 @@ public class CommentAdapter extends RvAdapter<CommentUserBean> {
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
                         .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
             }
-            tvContent.setText(bean.getText());
+            String text=bean.getText();//内容
+            tvContent.setText(HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,text,getContext(),0,tvContent));
             tvTime.setText(TimeUtils.dateTransfer(bean.getCreated_at()));
         }
+    }
+    public void setOnItemAtListener(OnItemAtListener onItemAtListener){
+        this.onItemAtListener=onItemAtListener;
+    }
+    public void setOnItemTopicListener(OnItemTopicListener onItemTopicListener){
+        this.onItemTopicListener=onItemTopicListener;
+    }
+    public void setOnItemLinkListener(OnItemLinkListener onItemLinkListener){
+        this.onItemLinkListener=onItemLinkListener;
     }
 }

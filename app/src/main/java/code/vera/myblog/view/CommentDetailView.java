@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,8 +24,12 @@ import code.vera.myblog.adapter.TabCommentAdapter;
 import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.presenter.activity.CommentDetailActivity;
 import code.vera.myblog.presenter.activity.PicturesActivity;
+import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.base.BaseView;
 
@@ -33,7 +39,7 @@ import code.vera.myblog.view.base.BaseView;
 
 public class CommentDetailView extends BaseView {
     @BindView(R.id.tv_content)
-    TextView tvContent;
+    TextView tvContent;//内容
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_time)
@@ -46,12 +52,17 @@ public class CommentDetailView extends BaseView {
     TabLayout tabLayout;
     @BindView(R.id.vp_comment_view)
     ViewPager vpComment;
+    @BindView(R.id.tv_source)
+    TextView tvSource;
 
     private TabCommentAdapter tabCommentAdapter;
     private NineGridImageViewAdapter<PicBean> adapter;
     private Context context;
     private CommentDetailActivity activity;
     private StatusesBean statusesBean;
+    private OnItemAtListener onItemAtListener;
+    private OnItemTopicListener onItemTopicListener;
+    private OnItemLinkListener onItemLinkListener;
 
     @Override
     public void onAttachView(@NonNull View view) {
@@ -79,7 +90,8 @@ public class CommentDetailView extends BaseView {
     }
     public void showInfo(StatusesBean statusesBean){
         this.statusesBean=statusesBean;
-        tvContent.setText(statusesBean.getText());
+        String text=statusesBean.getText();
+        tvContent.setText(HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener, onItemLinkListener,text,context,0,tvContent));
         tvName.setText(statusesBean.getUserBean().getName());
         tvTime.setText(TimeUtils.dateTransfer(statusesBean.getCreated_at()));
         ImageLoader.getInstance().displayImage(statusesBean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
@@ -91,6 +103,11 @@ public class CommentDetailView extends BaseView {
         }else {
             nineGridImageView.setVisibility(View.GONE);
         }
+        //来源
+        if (!TextUtils.isEmpty(statusesBean.getSource())&& Html.fromHtml(statusesBean.getSource())!=null){
+            tvSource.setText("来自"+ Html.fromHtml(statusesBean.getSource()));
+        }
+
     }
     public void showInfo2(RetweetedStatusBean statusesBean){
         tvContent.setText(statusesBean.getText());
@@ -107,7 +124,11 @@ public class CommentDetailView extends BaseView {
     }
 
     public void setAdapter() {
-        tabCommentAdapter = new TabCommentAdapter(activity.getSupportFragmentManager());
+        tabCommentAdapter = new TabCommentAdapter(activity.getSupportFragmentManager(),statusesBean);
+        //设置标题
+//        tabLayout.getTabAt(Constants.TAB_COMMENT).setText("评论"+statusesBean.getComments_count());
+//        tabLayout.getTabAt(Constants.TAB_REPOST).setText("转发"+statusesBean.getReposts_count());
+//        tabLayout.getTabAt(Constants.TAB_LIKE).setText("喜欢"+statusesBean.getAttitudes_count());
         //给ViewPager设置适配器
         vpComment.setAdapter(tabCommentAdapter);
         //将TabLayout和ViewPager关联起来
@@ -119,4 +140,15 @@ public class CommentDetailView extends BaseView {
     public void setActivity(CommentDetailActivity commentDetailActivity) {
         activity=commentDetailActivity;
     }
+    public void setOnItemAtListener(OnItemAtListener onItemAtListener){
+        this.onItemAtListener=onItemAtListener;
+    }
+    public void setOnItemTopicListener(OnItemTopicListener onItemTopicListener){
+        this.onItemTopicListener=onItemTopicListener;
+    }
+    public void setOnItemLinkListener(OnItemLinkListener onItemLinkListener){
+        this.onItemLinkListener=onItemLinkListener;
+    }
+
+
 }

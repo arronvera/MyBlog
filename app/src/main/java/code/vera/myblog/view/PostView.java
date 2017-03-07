@@ -30,7 +30,7 @@ import code.vera.myblog.view.base.BaseView;
 
 public class PostView extends BaseView {
     @BindView(R.id.et_text)
-    EditText etMessage;
+    EditText etMessage;//内容
     @BindView(R.id.tv_text_num)
     TextView tvNum;
     @BindView(R.id.btn_post)

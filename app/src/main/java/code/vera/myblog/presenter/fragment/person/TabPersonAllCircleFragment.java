@@ -1,6 +1,7 @@
 package code.vera.myblog.presenter.fragment.person;
 
 import code.vera.myblog.R;
+import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.view.tab.TabRepostView;
@@ -25,6 +26,10 @@ public class TabPersonAllCircleFragment extends PresenterFragment<TabRepostView,
             instance=new TabPersonAllCircleFragment();
         }
         return instance;
+
+    }
+
+    public void setUser(UserInfoBean userInfoBean) {
 
     }
 }
