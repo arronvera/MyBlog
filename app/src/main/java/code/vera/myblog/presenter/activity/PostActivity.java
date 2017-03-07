@@ -40,7 +40,6 @@ import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.utils.EmojiUtil;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.PostView;
-import ww.com.core.Debug;
 
 
 /**
@@ -90,6 +89,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 if (isShowFriend){
                     getSupportFragmentManager().beginTransaction().hide(atSomebodyFragment).commit();
                     isShowFriend=false;
+                    view.setTitle("分享圈子");
+                    view.setSendBtnVisible(true);
                     return;
                 }
                 if (!TextUtils.isEmpty(view.getEditStr())){
@@ -149,12 +150,16 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                     isShowEmoj=false;
                 }
                 break;
-            case R.id.iv_at://at
+            case R.id.iv_at://at好友
 //                view.getEt().append("@");
                 atSomebodyFragment = AtSomebodyFragment.getInstance();
-                view.setTitle("好友");
-                getSupportFragmentManager().beginTransaction().add(R.id.rl_all_container,atSomebodyFragment).commit();
+                getSupportFragmentManager().
+                        beginTransaction().
+                        setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out)//动画
+                        .add(R.id.rl_all_container,atSomebodyFragment).commit();
                 isShowFriend=true;
+                view.setTitle("好友");//设置标题
+                view.setSendBtnVisible(false);//发送按钮不可见
                 break;
             case R.id.iv_topic://插入话题
                 view.getEt().append("##");
@@ -280,7 +285,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                     @Override
                     protected void onEvent(BaseResultEvent baseResultEvent) throws Exception {
                     //图片选择结果
-                        Debug.d("结果:"+   baseResultEvent.toString());
                     }
                 }).openGallery();
     }

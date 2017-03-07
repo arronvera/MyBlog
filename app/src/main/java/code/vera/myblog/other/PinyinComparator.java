@@ -2,14 +2,14 @@ package code.vera.myblog.other;
 
 import java.util.Comparator;
 
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.SortBean;
 
 /**
  * 比较器
  */
-public class PinyinComparator implements Comparator<UserInfoBean> {
+public class PinyinComparator implements Comparator<SortBean> {
 
-	public int compare(UserInfoBean o1, UserInfoBean o2) {
+	public int compare(SortBean o1, SortBean o2) {
 		if (o1.getSortLetters().equals("@")
 				|| o2.getSortLetters().equals("#")) {
 			return -1;

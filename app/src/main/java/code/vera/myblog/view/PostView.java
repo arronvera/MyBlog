@@ -34,7 +34,7 @@ public class PostView extends BaseView {
     @BindView(R.id.tv_text_num)
     TextView tvNum;
     @BindView(R.id.btn_post)
-    Button btnUpload;
+    Button btnUpload;//发送
     @BindView(R.id.tv_post_title)
     TextView tvTitle;//标题
     @BindView(R.id.iv_choose_pic)
@@ -164,7 +164,17 @@ public class PostView extends BaseView {
                     .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
         }
 
+    }
 
-
+    /**
+     * 设置发送按钮是否可见
+     * @param visible
+     */
+    public void setSendBtnVisible(boolean visible){
+        if (visible){
+            btnUpload.setVisibility(View.VISIBLE);
+        }else{
+            btnUpload.setVisibility(View.INVISIBLE);
+        }
     }
 }
