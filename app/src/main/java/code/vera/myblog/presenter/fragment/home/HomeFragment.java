@@ -287,7 +287,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         //弹出菜单更多
         // 在底部显示
         menuPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
-        backgroundAlpaha(getActivity(),0.5f);
+//        backgroundAlpaha(getActivity(),0.5f);
     }
     /**
      * 设置添加屏幕的背景透明度

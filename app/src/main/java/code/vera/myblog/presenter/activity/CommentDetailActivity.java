@@ -52,7 +52,7 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
         view.setOnItemTopicListener(this);
         view.setOnItemLinkListener(this);
     }
-    @OnClick(R.id.tv_item_comment)
+    @OnClick({R.id.tv_item_comment,R.id.tv_item_repost,R.id.rl_item_like})
     public void doClick(View v){
         switch (v.getId()){
             case R.id.tv_item_comment://评论
