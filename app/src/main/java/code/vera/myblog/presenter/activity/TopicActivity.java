@@ -21,6 +21,11 @@ public class TopicActivity extends PresenterActivity<TopicView,VoidModel> {
     protected void onAttach() {
         super.onAttach();
         Intent intent=getIntent();
+        String topic=intent.getStringExtra("topic");
+        getTopic(topic);
+    }
+
+    private void getTopic(String topic) {
 
     }
 }

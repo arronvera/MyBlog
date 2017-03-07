@@ -1,5 +1,6 @@
 package code.vera.myblog.presenter.fragment.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -7,6 +8,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -62,6 +65,11 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     private   PopupWindow popupWindow;
     private LikeView likeView;
     private PopupWindow menuPopupWindow;//菜单
+    private Button btnCancel;
+    private Button btnShoucang;
+    private Button btnCopy;
+    private Button btnConcern;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_home;
@@ -113,7 +121,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         popupWindow.setOutsideTouchable(true);
 //        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        //
+        //------------------菜单
         View menu = LayoutInflater.from(getContext()).inflate(R.layout.pop_bottom, null);
         menuPopupWindow=new PopupWindow(menu, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         menuPopupWindow.setFocusable(true);
@@ -122,6 +130,36 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         menuPopupWindow.setBackgroundDrawable(dw);
         // 设置popWindow的显示和消失动画
         menuPopupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+        btnCancel= (Button) menu.findViewById(R.id.btn_cancel);
+        btnConcern= (Button) menu.findViewById(R.id.btn_concern);
+        btnCopy= (Button) menu.findViewById(R.id.btn_copy);
+        btnShoucang= (Button) menu.findViewById(R.id.btn_shoucang);
+        btnCancel.setOnClickListener(new View.OnClickListener() {//取消
+            @Override
+            public void onClick(View v) {
+                if (menuPopupWindow.isShowing()){
+                    menuPopupWindow.dismiss();
+                }
+            }
+        });
+        btnConcern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo 关注
+            }
+        });
+        btnShoucang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo 收藏
+            }
+        });
+        btnCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo 复制
+            }
+        });
     }
 
     private void addListener() {
@@ -231,10 +269,9 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
 
     @Override
     public void onItemTopicListener(View v, int pos,String str) {
-        //Todo
-        ToastUtil.showToast(getContext(),"点击了话题"+str);
+//        ToastUtil.showToast(getContext(),"点击了话题"+str);
         Intent intent=new Intent(getContext(), TopicActivity.class);
-//        intent.putExtra("topic",str)
+        intent.putExtra("topic",str.substring(1,str.length()-1));
         startActivity(intent);
     }
 
@@ -250,8 +287,18 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         //弹出菜单更多
         // 在底部显示
         menuPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
+        backgroundAlpaha(getActivity(),0.5f);
     }
-
+    /**
+     * 设置添加屏幕的背景透明度
+     * **/
+    public void backgroundAlpaha(Activity context, float bgAlpha) {
+        WindowManager.LayoutParams lp = context.getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        context.getWindow()
+                .addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        context.getWindow().setAttributes(lp);
+    }
     @Override
     public void onItemHeadPhotoListener(View v, int pos) {
         //点击头头像，跳转到个人界面

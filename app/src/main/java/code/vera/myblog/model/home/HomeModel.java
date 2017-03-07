@@ -68,11 +68,9 @@ public class HomeModel implements IModel{
      * 短链接转成长链接
      * @param context
      * @param url_short
-     * @param transformer
      * @param subscriber
      */
-    public static void shortUrlExpand( Context context,String url_short,Observable.Transformer
-            transformer,  Subscriber<Boolean> subscriber){
+    public static void shortUrlExpand( Context context,String url_short,  Subscriber<List<UrlBean> > subscriber){
         HomeApi.shortUrlExpand(context,url_short) .map(new Func1<String, List<UrlBean>>() {
             @Override
             public List<UrlBean> call(String s) {
@@ -84,7 +82,6 @@ public class HomeModel implements IModel{
                 return list;
             }
         }).compose(RxHelper.<  List<UrlBean> >cutMain())
-                .compose(transformer)
                 .subscribe(subscriber);
     }
 }
