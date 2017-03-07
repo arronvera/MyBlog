@@ -1,11 +1,13 @@
 package code.vera.myblog.bean;
 
+import java.io.Serializable;
+
 /**
  * 排序的实体类
  * Created by vera on 2017/3/1 0001.
  */
 
-public class SortBean {
+public class SortBean implements Serializable{
     /**
      * 显示的数据
      */

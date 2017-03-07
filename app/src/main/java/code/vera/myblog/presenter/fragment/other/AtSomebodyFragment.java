@@ -1,5 +1,6 @@
 package code.vera.myblog.presenter.fragment.other;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.adapter.SortFriendAdapter;
 import code.vera.myblog.bean.SortBean;
 import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.callback.FragmentCallBack;
 import code.vera.myblog.model.AtSomebodyModel;
 import code.vera.myblog.other.CharacterParser;
 import code.vera.myblog.other.PinyinComparator;
@@ -34,6 +36,8 @@ public class AtSomebodyFragment extends PresenterFragment<AtSomebodyView,AtSomeb
     private PinyinComparator pinyinComparator;//拼音
     @BindView(R.id.lv_friends)
     ListView lvFreiends;
+    private FragmentCallBack fragmentCallBack;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_at_somebody;
@@ -51,9 +55,10 @@ public class AtSomebodyFragment extends PresenterFragment<AtSomebodyView,AtSomeb
         lvFreiends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //
-                adapter.getItem(position);
-                //// TODO: 2017/3/7 0007 给activty传值
+                ////  给activty传值
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("sort_bean" ,adapter.getItem(position));
+                fragmentCallBack.callbackFriend(bundle);
             }
         });
     }
@@ -106,5 +111,8 @@ public class AtSomebodyFragment extends PresenterFragment<AtSomebodyView,AtSomeb
         }
         return mSortList;
 
+    }
+    public void setFragmentCallBack(FragmentCallBack callBack){
+        this.fragmentCallBack=callBack;
     }
 }

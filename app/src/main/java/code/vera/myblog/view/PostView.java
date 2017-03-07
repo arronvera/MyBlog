@@ -138,6 +138,14 @@ public class PostView extends BaseView {
     }
 
     /**
+     * 追加
+     * @param str
+     */
+    public void addStr(String str){
+        etMessage.append(str);
+    }
+
+    /**
      * 显示标题
      * @param s
      */

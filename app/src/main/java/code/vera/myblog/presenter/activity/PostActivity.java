@@ -3,6 +3,7 @@ package code.vera.myblog.presenter.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -29,7 +30,9 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.Emoji;
 import code.vera.myblog.bean.PostBean;
+import code.vera.myblog.bean.SortBean;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.callback.FragmentCallBack;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.PostModel;
 import code.vera.myblog.presenter.PresenterActivity;
@@ -45,7 +48,7 @@ import code.vera.myblog.view.PostView;
 /**
  * 发布
  */
-public class PostActivity extends PresenterActivity<PostView, PostModel> implements EmojFragment.OnEmojiClickListener {
+public class PostActivity extends PresenterActivity<PostView, PostModel> implements EmojFragment.OnEmojiClickListener,FragmentCallBack {
     public static final int TAKE_PICTURE=0025;
     public static final int   CHOOSE_PICTURE=0026;
     private PostBean postBean;
@@ -53,14 +56,14 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private String id;//id
     private int type;
     private String picPath;
-    private EmojFragment emojFragment;//表情
     private List<Fragment> fragments=new ArrayList<>();
     private  boolean isShowEmoj=false;//是否表情已经显示
     private  boolean isShowFriend=false;//是否好友已经显示
-
     private static final int REQUEST_CODE = 732;
+
     private ArrayList<String> results = new ArrayList<>();
-    private AtSomebodyFragment atSomebodyFragment;
+    private EmojFragment emojFragment;//表情
+    private AtSomebodyFragment atSomebodyFragment;//好友
     private StatusesBean statusesBean;
     @Override
     protected int getLayoutResId() {
@@ -80,6 +83,14 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         if (statusesBean!=null){
             view.showStatusesBean(statusesBean);
         }
+
+        atSomebodyFragment = AtSomebodyFragment.getInstance();
+        addListener();
+    }
+
+    private void addListener() {
+        //
+        atSomebodyFragment.setFragmentCallBack(this);
     }
 
     @OnClick({R.id.tv_cancle, R.id.btn_post,R.id.iv_choose_pic,R.id.iv_emotion,R.id.iv_at,R.id.iv_topic})
@@ -87,7 +98,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         switch (v.getId()) {
             case R.id.tv_cancle://取消
                 if (isShowFriend){
-                    getSupportFragmentManager().beginTransaction().hide(atSomebodyFragment).commit();
+                    hideFriendFragment();
                     isShowFriend=false;
                     view.setTitle("分享圈子");
                     view.setSendBtnVisible(true);
@@ -151,8 +162,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 }
                 break;
             case R.id.iv_at://at好友
-//                view.getEt().append("@");
-                atSomebodyFragment = AtSomebodyFragment.getInstance();
                 getSupportFragmentManager().
                         beginTransaction().
                         setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out)//动画
@@ -168,6 +177,10 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 //todo
                 break;
         }
+    }
+
+    public void hideFriendFragment() {
+        getSupportFragmentManager().beginTransaction().hide(atSomebodyFragment).commit();
     }
 
     private void showChosePicDialog() {
@@ -351,4 +364,16 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         }
     }
 
+    @Override
+    public void callbackFriend(Bundle arg) {
+        //好友回调
+        getSupportFragmentManager().beginTransaction().hide(atSomebodyFragment).commit();
+        SortBean sortBean= (SortBean) arg.getSerializable("sort_bean");
+        view.setTitle("分享圈子");
+        view.setSendBtnVisible(true);
+        //添加字符
+        if (sortBean!=null){
+            view.addStr("@"+sortBean.getName()+" ");
+        }
+    }
 }
