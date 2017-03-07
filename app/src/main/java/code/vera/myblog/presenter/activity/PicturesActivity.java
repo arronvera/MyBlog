@@ -1,6 +1,8 @@
 package code.vera.myblog.presenter.activity;
 
 import android.content.Intent;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 import java.util.List;
 
@@ -48,5 +50,18 @@ public class PicturesActivity extends PresenterActivity<PicturesView,VoidModel> 
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction()==MotionEvent.ACTION_DOWN){
+            //按下
+            finish();
+        }
+        return super.onTouchEvent(event);
+    }
 }
