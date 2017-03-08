@@ -99,9 +99,18 @@
                             tools:text="内容..........."/>
                     </LinearLayout>
                 </LinearLayout>
-
            </LinearLayout>
+        <!--查看位置-->
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看位置"
+            android:layout_margin="5dp"
+            android:layout_above="@+id/ll_line"/>
         <LinearLayout
+            android:id="@+id/ll_line"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_above="@+id/hsv_photo"
