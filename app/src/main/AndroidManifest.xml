@@ -55,9 +55,11 @@
             android:theme="@style/AppBaseTheme" />
         <activity
             android:name=".presenter.activity.PostActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppBaseTheme2" />
         <activity
             android:name=".presenter.activity.CommentDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppBaseTheme2" />
         <activity
             android:name=".presenter.activity.BrowserActivity"

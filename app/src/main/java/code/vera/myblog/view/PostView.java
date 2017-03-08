@@ -66,6 +66,10 @@ public class PostView extends BaseView {
     private CharSequence temp;
     private int editStart;
     private int editEnd;
+    private View galleryView;
+    private ImageView ivItemGallery;
+    private ImageView ivItemDelete;
+
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
@@ -98,7 +102,17 @@ public class PostView extends BaseView {
             }
         };
         etMessage.addTextChangedListener(textWatcher);
+        initGallery();
     }
+
+    private void initGallery() {
+         galleryView = LayoutInflater.from(context).inflate(R.layout.item_gallery, llGallery, false);
+         ivItemGallery = (ImageView) galleryView
+                .findViewById(R.id.iv_item_gallery);//图片
+         ivItemDelete = (ImageView) galleryView.findViewById(R.id.iv_delete);//删除
+
+    }
+
     public String getEditStr(){
         return etMessage.getText().toString();
     }
@@ -119,14 +133,6 @@ public class PostView extends BaseView {
             default:
                 tvTitle.setText("分享圈子");
                 break;
-        }
-    }
-    public void setRepostVisible(boolean isVisible){
-        if (isVisible){
-            ivRepost.setVisibility(View.VISIBLE);
-        }else {
-            ivRepost.setVisibility(View.GONE);
-
         }
     }
     public EditText getEt(){
@@ -175,13 +181,17 @@ public class PostView extends BaseView {
      */
     public void showPhotos(List<MediaBean> mediaBeanList) {
         for (int i=0;i<mediaBeanList.size();i++){
-            View view = LayoutInflater.from(context).inflate(R.layout.item_gallery, llGallery, false);
-            ImageView ivItemGallery = (ImageView) view
-                    .findViewById(R.id.iv_item_gallery);
             Bitmap bitmap= BitmapFactory.decodeFile(mediaBeanList.get(i).getOriginalPath());
             ivItemGallery.setImageBitmap(bitmap);
-            llGallery.addView(view);
+            llGallery.addView(galleryView);
+//            llGallery.setTag(i);
         }
+    }
+
+    public void showPhoto(String picPath) {
+        Bitmap bitmap= BitmapFactory.decodeFile(picPath);
+        ivItemGallery.setImageBitmap(bitmap);
+        llGallery.addView(galleryView);
     }
 
 //    /**

@@ -23,6 +23,7 @@ import java.util.List;
 
 import butterknife.OnClick;
 import cn.finalteam.rxgalleryfinal.RxGalleryFinal;
+import cn.finalteam.rxgalleryfinal.bean.MediaBean;
 import cn.finalteam.rxgalleryfinal.imageloader.ImageLoaderType;
 import cn.finalteam.rxgalleryfinal.rxbus.RxBusResultSubscriber;
 import cn.finalteam.rxgalleryfinal.rxbus.event.ImageMultipleResultEvent;
@@ -64,6 +65,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private EmojFragment emojFragment;//表情
     private AtSomebodyFragment atSomebodyFragment;//好友
     private StatusesBean statusesBean;
+    private List<MediaBean> pictureList=new ArrayList<>();
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_post;
@@ -87,7 +89,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     }
 
     private void addListener() {
-        //
         atSomebodyFragment.setFragmentCallBack(this);
     }
 
@@ -102,12 +103,12 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
 //                    view.setSendBtnVisible(true);
                     return;
                 }
-                if (!TextUtils.isEmpty(view.getEditStr())){
+                if ((!TextUtils.isEmpty(view.getEditStr()))||(pictureList.size()!=0)){
                     //如果有内容  提示保存到草稿箱
                     DialogUtils.showDialog(this, "", "是否保存到草稿箱?", "是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //todo 保存到草稿箱
+                          saveMessage();
                         }
                     }, "否", new DialogInterface.OnClickListener() {
                         @Override
@@ -125,22 +126,21 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                     return;
                 }
                 switch (type){
-                    case Constants.COMMENT_TYPE:
+                    case Constants.COMMENT_TYPE://评论
                         comment();
                         break;
-                    case Constants.REPOST_TYPE:
+                    case Constants.REPOST_TYPE://转发
                         repost();
                         break;
                     default://发布新的
                         postBean = new PostBean();
                         postBean.setStatus(msg);
                         postBean.setPostStatus(Constants.POST_STATUS_NEW);
-                        if (TextUtils.isEmpty(postBean.getPic())) {
+                        if (pictureList!=null&&pictureList.size()!=0) {//带图片
+                            upLoad();
+                        } else {
                             //仅发文字
                             upDate();
-                        } else {
-                            //带图片
-                            upLoad();
                         }
                         break;
                 }
@@ -177,6 +177,14 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 //todo
                 break;
         }
+    }
+
+    /**
+     * 保存到草稿箱
+     */
+    private void saveMessage() {
+        //todo 保存到草稿箱
+
     }
 
     public void hideFriendFragment() {
@@ -294,21 +302,49 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         RxGalleryFinal.with(this)
                 .image()
                 .multiple()
+                .crop()
                 .maxSize(9)
                 .imageLoader(ImageLoaderType.GLIDE)
                 .subscribe(new RxBusResultSubscriber<ImageMultipleResultEvent>() {
                     @Override
                     protected void onEvent(ImageMultipleResultEvent resultEvent) throws Exception {
-                        view.showPhotos(resultEvent.getResult());
-//                        Debug.d("已选择" + resultEvent.getResult().size() +"张图片");
-                        Toast.makeText(getBaseContext(), "已选择" + resultEvent.getResult().size() +"张图片", Toast.LENGTH_SHORT).show();
+                        if (pictureList==null||pictureList.size()==0){//如果集合为空
+                            pictureList.addAll(resultEvent.getResult());
+                            view.showPhotos(resultEvent.getResult());//显示
+                        }else if (pictureList.size()<9){//如果集合不为空并且图片数量小于9
+                            int re=9-pictureList.size();//剩余可以添加的图片数量
+                            if (resultEvent.getResult().size()<=re){//如果添加的图片小于可以添加的数量，则全部添加
+                                pictureList.addAll(resultEvent.getResult());
+                                view.showPhotos(resultEvent.getResult());
+                            }else{//否则
+                                List<MediaBean>reList=new ArrayList<>();
+                                for (int i=0;i<re;i++){
+                                    pictureList.add(resultEvent.getResult().get(i));
+                                    reList.add(resultEvent.getResult().get(i));
+                                }
+                                view.showPhotos(reList);//显示
+                                ToastUtil.showToast(getApplicationContext(),"最多选择9张照片");
+                            }
+                        }else{//集合图片数量等于9
+                            //不做任何处理
+                            ToastUtil.showToast(getApplicationContext(),"最多选择9张照片");
+                        }
                     }
                 }).openGallery();
+        ToastUtil.showToast(getApplicationContext(),"你一共选择了"+pictureList.size()+"张图片");
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==TAKE_PICTURE&&resultCode==RESULT_OK){
+            if (pictureList!=null&&pictureList.size()<9){
+                MediaBean mediaBean=new MediaBean();
+                mediaBean.setOriginalPath(picPath);
+                pictureList.add(mediaBean);
+                view.showPhoto(picPath);
+            }
+        }
     }
 
     @Override
