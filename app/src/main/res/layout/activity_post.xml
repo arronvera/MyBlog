@@ -6,40 +6,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="code.vera.myblog.presenter.activity.PostActivity">
-        <RelativeLayout
-            android:id="@+id/rl_top"
-            android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="60dp">
-            <TextView
-                android:id="@+id/tv_cancle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textSize="16sp"
-                android:text="取消"/>
-            <TextView
-                android:id="@+id/tv_post_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="分享圈子"
-                android:textSize="18sp"
-                android:textColor="@color/colorBlack"
-                android:layout_centerInParent="true"
-                />
-            <Button
-                android:id="@+id/btn_post"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:text="发送"
-                android:textSize="14sp"
-                android:layout_centerVertical="true"
-                android:textColor="@color/color_bcbcbc"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/btn_send_shape"
-                />
-        </RelativeLayout>
-       <RelativeLayout
+    <!--标题栏-->
+    <RelativeLayout
+        style="@style/TopRelativeLayout"
+        android:id="@+id/rl_top"
+        android:background="@color/colorAccent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:id="@+id/tv_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhite"
+            android:text="取消"/>
+        <TextView
+            android:id="@+id/tv_post_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分享圈子"
+            android:textSize="18sp"
+            android:textColor="@color/colorWhite"
+            android:layout_centerInParent="true"
+            />
+        <!--<Button-->
+        <!--android:id="@+id/btn_post"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:text="发送"-->
+        <!--android:textSize="14sp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:textColor="@color/color_bcbcbc"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:background="@drawable/btn_send_shape"-->
+        <!--/>-->
+    </RelativeLayout>
+
+    <RelativeLayout
            android:layout_width="match_parent"
            android:layout_below="@+id/rl_top"
            android:id="@+id/rl_all_container"
@@ -60,6 +64,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:minHeight="100dp"/>
+               <!--原分享内容-->
                 <LinearLayout
                     android:id="@+id/ll_Origina_Layout"
                     android:visibility="gone"
@@ -95,26 +100,37 @@
                     </LinearLayout>
                 </LinearLayout>
 
-               <HorizontalScrollView
-                   android:id="@+id/scrollPicContainer"
-                   android:layout_width="match_parent" android:layout_height="80dip">
-                   <!--图片展示容器-->
-                   <LinearLayout
-                       android:id="@+id/ll_pic_container"
-                       android:layout_width="wrap_content" android:layout_height="match_parent"
-                       android:gravity="center_vertical" android:orientation="horizontal">
-                   </LinearLayout>
-               </HorizontalScrollView>
            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/hsv_photo"
+            android:background="@color/colorAccent"
+            android:layout_marginBottom="10dp">
+        </LinearLayout>
+        <HorizontalScrollView
+            android:id="@+id/hsv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="10dp"
+            android:layout_above="@+id/rl_bottom">
+            <LinearLayout
+                android:id="@+id/ll_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </HorizontalScrollView>
            <LinearLayout
                android:id="@+id/rl_bottom"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:orientation="vertical"
                android:layout_alignParentBottom="true">
-
+               <!--底部菜单-->
                <include layout="@layout/view_post_bottom" />
-
+                <!--表情-->
                <LinearLayout
                    android:orientation="vertical"
                    android:layout_width="match_parent"
@@ -124,5 +140,6 @@
            </LinearLayout>
 
        </RelativeLayout>
+
 
 </RelativeLayout>

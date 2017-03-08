@@ -9,17 +9,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import code.vera.myblog.bean.Emoji;
-import code.vera.myblog.bean.UrlBean;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemTopicListener;
-import code.vera.myblog.model.home.HomeModel;
-import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.other.CustomClickableSpan;
 import ww.com.core.Debug;
 
@@ -81,15 +77,16 @@ public class HomeUtils {
             if (url != null) {//链接
                 int start = matcher.start(3);
                 int end = start + url.length();
-                if (url.length()<20){//短链接
-                    HomeModel.shortUrlExpand(context,url,new CustomSubscriber<List<UrlBean>>(context,false){
-                        @Override
-                        public void onNext(List<UrlBean> urlBeen) {
-                            super.onNext(urlBeen);
-                            Debug.d("转换的长链接"+urlBeen.get(0).getUrl_long());
-                        }
-                    });
-                }
+                Debug.d("url="+url);
+//                if (url.length()<20){//短链接
+//                    HomeModel.shortUrlExpand(context,url,new CustomSubscriber<List<UrlBean>>(context,false){
+//                        @Override
+//                        public void onNext(List<UrlBean> urlBeen) {
+//                            super.onNext(urlBeen);
+//                            Debug.d("转换的长链接url"+urlBeen.get(0).getUrl_long());
+//                        }
+//                    });
+//                }
                 CustomClickableSpan ccsLink=new CustomClickableSpan() {
                     @Override
                     public void onClick(View widget) {
@@ -98,6 +95,7 @@ public class HomeUtils {
                     }
                 };
                 spannableString.setSpan(ccsLink, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                spannableString.replace(start,end,"查看链接");
             }
             if (emoji != null) {//表情
                 int start = matcher.start(4);

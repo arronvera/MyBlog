@@ -1,12 +1,14 @@
 package code.vera.myblog.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +17,10 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.util.List;
+
 import butterknife.BindView;
+import cn.finalteam.rxgalleryfinal.bean.MediaBean;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
@@ -33,8 +38,8 @@ public class PostView extends BaseView {
     EditText etMessage;//内容
     @BindView(R.id.tv_text_num)
     TextView tvNum;
-    @BindView(R.id.btn_post)
-    Button btnUpload;//发送
+//    @BindView(R.id.iv_repost)
+//    Button btnUpload;//发送
     @BindView(R.id.tv_post_title)
     TextView tvTitle;//标题
     @BindView(R.id.iv_choose_pic)
@@ -52,6 +57,8 @@ public class PostView extends BaseView {
     ImageView ivOriPhoto;
     @BindView(R.id.tv_ori_name)
     TextView tvOriName;
+    @BindView(R.id.ll_gallery)
+    LinearLayout llGallery;//选择的图片
 
 
     private Context context;
@@ -79,17 +86,6 @@ public class PostView extends BaseView {
                 editStart = etMessage.getSelectionStart();
                 editEnd = etMessage.getSelectionEnd();
                 tvNum.setText(temp.length()+"");
-                if (temp.length()>0){
-                    btnUpload.setBackgroundResource(R.drawable.btn_send_shape_2);
-                    btnUpload.setTextColor(Color.parseColor("#ff8162"));
-                    tvCancel.setTextColor(Color.parseColor("#ff8162"));
-                    btnUpload.setEnabled(true);
-                }else {
-                    btnUpload.setBackgroundResource(R.drawable.btn_send_shape);
-                    btnUpload.setTextColor(Color.parseColor("#bcbcbc"));
-                    tvCancel.setTextColor(Color.parseColor("#bcbcbc"));
-                    btnUpload.setEnabled(false);
-                }
                 if (temp.length() > 140) {
                     Toast.makeText(context, "你输入的字数已经超过了限制！", Toast.LENGTH_SHORT).show();
                     //改变颜色
@@ -175,14 +171,28 @@ public class PostView extends BaseView {
     }
 
     /**
-     * 设置发送按钮是否可见
-     * @param visible
+     * 显示选择的图片
      */
-    public void setSendBtnVisible(boolean visible){
-        if (visible){
-            btnUpload.setVisibility(View.VISIBLE);
-        }else{
-            btnUpload.setVisibility(View.INVISIBLE);
+    public void showPhotos(List<MediaBean> mediaBeanList) {
+        for (int i=0;i<mediaBeanList.size();i++){
+            View view = LayoutInflater.from(context).inflate(R.layout.item_gallery, llGallery, false);
+            ImageView ivItemGallery = (ImageView) view
+                    .findViewById(R.id.iv_item_gallery);
+            Bitmap bitmap= BitmapFactory.decodeFile(mediaBeanList.get(i).getOriginalPath());
+            ivItemGallery.setImageBitmap(bitmap);
+            llGallery.addView(view);
         }
     }
+
+//    /**
+//     * 设置发送按钮是否可见
+//     * @param visible
+//     */
+//    public void setSendBtnVisible(boolean visible){
+//        if (visible){
+//            ivRepost.setVisibility(View.VISIBLE);
+//        }else{
+//            ivRepost.setVisibility(View.INVISIBLE);
+//        }
+//    }
 }

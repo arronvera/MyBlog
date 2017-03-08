@@ -27,6 +27,7 @@ import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemClickListener;
 import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.listener.OnItemLikeListener;
@@ -43,7 +44,6 @@ import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.TopicActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
-import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.home.HomeView;
 import code.vera.myblog.view.widget.LikeView;
 import ww.com.core.Debug;
@@ -58,7 +58,7 @@ import ww.com.core.widget.CustomSwipeRefreshLayout;
 public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>implements
         OnItemCommentListener,OnItemRepostListener,OnItemLikeListener,OnItemOriginalListener,
         OnItemLinkListener,OnItemTopicListener,OnItemAtListener
-        ,OnItemMenuListener,OnItemHeadPhotoListener{
+        ,OnItemMenuListener,OnItemHeadPhotoListener,OnItemClickListener{
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
     private View contentView ;
@@ -172,6 +172,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         adapter.setOnItemAtListener(this);
         adapter.setOnItemMenuListener(this);
         adapter.setOnItemHeadPhotoListener(this);
+        adapter.setOnItemClickListener(this);
 
     }
 
@@ -208,7 +209,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         if (adapter.getItem(pos).getComments_count()==0){//如果没有评论数，直接跳到发布评论
             Intent intent=new Intent(getActivity(), PostActivity.class);
             intent.putExtra("type", Constants.COMMENT_TYPE);
-            intent.putExtra("id",adapter.getItem(pos).getId()+"");
+            intent.putExtra("StatusesBean",adapter.getItem(pos));
             startActivity(intent);
         }else {//跳转到评论详情
             Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
@@ -261,7 +262,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     @Override
     public void onItemLinkListener(View v, int pos,String str) {
         //链接
-        ToastUtil.showToast(getContext(),"点击了链接"+str);
+//        ToastUtil.showToast(getContext(),"点击了链接"+str);
         Intent intent=new Intent(getActivity(),BrowserActivity.class);
         intent.putExtra("link",str);
         startActivity(intent);
@@ -304,6 +305,14 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         //点击头头像，跳转到个人界面
         Intent intent=new Intent(getActivity(),PersonalityActivity.class);
         intent.putExtra("user",adapter.getItem(pos).getUserBean());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClickListener(View v, int pos) {
+        //点击单个Item
+        Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
+        intent.putExtra("status",adapter.getItem(pos));
         startActivity(intent);
     }
 }

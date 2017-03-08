@@ -25,7 +25,7 @@ import butterknife.OnClick;
 import cn.finalteam.rxgalleryfinal.RxGalleryFinal;
 import cn.finalteam.rxgalleryfinal.imageloader.ImageLoaderType;
 import cn.finalteam.rxgalleryfinal.rxbus.RxBusResultSubscriber;
-import cn.finalteam.rxgalleryfinal.rxbus.event.BaseResultEvent;
+import cn.finalteam.rxgalleryfinal.rxbus.event.ImageMultipleResultEvent;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.Emoji;
@@ -53,7 +53,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public static final int   CHOOSE_PICTURE=0026;
     private PostBean postBean;
     private CommentRequestBean commentRequestBean;
-    private String id;//id
     private int type;
     private String picPath;
     private List<Fragment> fragments=new ArrayList<>();
@@ -75,7 +74,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         super.onAttach();
         Intent intent = getIntent();
         type = intent.getIntExtra("type", -1);
-         id=intent.getStringExtra("id");
         statusesBean= (StatusesBean) intent.getSerializableExtra("StatusesBean");
         if (type != -1) {
             view.showTitleAndHint(type);
@@ -93,7 +91,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         atSomebodyFragment.setFragmentCallBack(this);
     }
 
-    @OnClick({R.id.tv_cancle, R.id.btn_post,R.id.iv_choose_pic,R.id.iv_emotion,R.id.iv_at,R.id.iv_topic})
+    @OnClick({R.id.tv_cancle, R.id.iv_repost,R.id.iv_choose_pic,R.id.iv_emotion,R.id.iv_at,R.id.iv_topic})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
@@ -101,7 +99,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                     hideFriendFragment();
                     isShowFriend=false;
                     view.setTitle("分享圈子");
-                    view.setSendBtnVisible(true);
+//                    view.setSendBtnVisible(true);
                     return;
                 }
                 if (!TextUtils.isEmpty(view.getEditStr())){
@@ -121,7 +119,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                     finish();
                 }
                 break;
-            case R.id.btn_post://发送
+            case R.id.iv_repost://发送
                 String msg=view.getEditStr();
                 if (TextUtils.isEmpty(msg)){
                     return;
@@ -162,13 +160,15 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 }
                 break;
             case R.id.iv_at://at好友
-                getSupportFragmentManager().
-                        beginTransaction().
-                        setCustomAnimations(R.anim.pop_anim_in,R.anim.pop_anim_out)//动画
-                        .add(R.id.rl_all_container,atSomebodyFragment).commit();
-                isShowFriend=true;
-                view.setTitle("好友");//设置标题
-                view.setSendBtnVisible(false);//发送按钮不可见
+                if (!isShowFriend){
+                    getSupportFragmentManager().
+                            beginTransaction().
+                            setCustomAnimations(R.anim.pop_anim_in,R.anim.pop_anim_out)//动画
+                            .add(R.id.rl_all_container,atSomebodyFragment).commit();
+                    isShowFriend=true;
+                    view.setTitle("好友");//设置标题
+//                    view.setSendBtnVisible(false);//发送按钮不可见
+                }
                 break;
             case R.id.iv_topic://插入话题
                 view.getEt().append("##");
@@ -185,7 +185,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
 
     private void showChosePicDialog() {
         new AlertDialog.Builder(this)
-                .setTitle("选择来源")
                 .setItems(new String[]{"拍照", "图库"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -195,7 +194,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                                 takePic();
                                 break;
                             case 1://图库
-                                //打开系统图库程序，选择图片
+                                //打开图库程序，选择图片
                                 choosePic();
                                 break;
                         }
@@ -216,6 +215,9 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
      */
     private void comment() {
         commentRequestBean=new CommentRequestBean();
+        commentRequestBean.setId(statusesBean.getId());
+        commentRequestBean.setComment(view.getEditStr());
+//        commentRequestBean.setComment_ori();
         model.commentMessage(this, commentRequestBean, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
             @Override
             public void onNext(String s) {
@@ -294,10 +296,12 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 .multiple()
                 .maxSize(9)
                 .imageLoader(ImageLoaderType.GLIDE)
-                .subscribe(new RxBusResultSubscriber<BaseResultEvent>() {
+                .subscribe(new RxBusResultSubscriber<ImageMultipleResultEvent>() {
                     @Override
-                    protected void onEvent(BaseResultEvent baseResultEvent) throws Exception {
-                    //图片选择结果
+                    protected void onEvent(ImageMultipleResultEvent resultEvent) throws Exception {
+                        view.showPhotos(resultEvent.getResult());
+//                        Debug.d("已选择" + resultEvent.getResult().size() +"张图片");
+                        Toast.makeText(getBaseContext(), "已选择" + resultEvent.getResult().size() +"张图片", Toast.LENGTH_SHORT).show();
                     }
                 }).openGallery();
     }
@@ -370,7 +374,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         getSupportFragmentManager().beginTransaction().hide(atSomebodyFragment).commit();
         SortBean sortBean= (SortBean) arg.getSerializable("sort_bean");
         view.setTitle("分享圈子");
-        view.setSendBtnVisible(true);
+//        view.setSendBtnVisible(true);
         //添加字符
         if (sortBean!=null){
             view.addStr("@"+sortBean.getName()+" ");

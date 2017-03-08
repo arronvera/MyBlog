@@ -8,19 +8,18 @@
     android:orientation="vertical"
     android:background="@color/color_efefef"
     tools:context="code.vera.myblog.presenter.activity.CommentDetailActivity">
-    <RelativeLayout
-        android:id="@+id/rl_top"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:background="@color/colorWhite"
-        android:layout_height="60dp">
-        <TextView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="个人详情"
-            android:textColor="@color/colorAccent" />
-    </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_top"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--style="@style/TopRelativeLayout">-->
+        <!--<TextView-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="个人详情"-->
+            <!--android:textColor="@color/colorWhite" />-->
+    <!--</RelativeLayout>-->
 
     <android.support.design.widget.CoordinatorLayout
       android:layout_width="match_parent"

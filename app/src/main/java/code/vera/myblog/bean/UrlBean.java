@@ -17,7 +17,7 @@ public class UrlBean {
     private String url_short;//短链接
     private String url_long;//长链接
     private int type;//链接的类型，0：普通网页、1：视频、2：音乐、3：活动、5、投票
-    private boolean result;//	短链的可用状态，true：可用、false：不可用。
+    private String  result;//	短链的可用状态，true：可用、false：不可用。
 
     public String getUrl_short() {
         return url_short;
@@ -43,11 +43,11 @@ public class UrlBean {
         this.type = type;
     }
 
-    public boolean getResult() {
+    public String getResult() {
         return result;
     }
 
-    public void setResult(boolean result) {
+    public void setResult(String result) {
         this.result = result;
     }
 }

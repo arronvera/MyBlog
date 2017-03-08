@@ -24,6 +24,7 @@ import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemClickListener;
 import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.listener.OnItemLikeListener;
@@ -57,6 +58,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
     private OnItemAtListener onItemAtListener;//at
     private OnItemMenuListener onItemMenuListener;
     private OnItemHeadPhotoListener onItemHeadPhotoListener;//头像
+    private OnItemClickListener onItemClickListener;
 
     public HomeAdapter(Context context) {
         super(context);
@@ -109,7 +111,8 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
         TextView tvSource;//来源
         @BindView(R.id.line)
         LinearLayout llLine;
-
+        @BindView(R.id.ll_item_view)
+        LinearLayout llItem;//整个itemview
 
         public HomeViewHolder(View itemView) {
             super(itemView);
@@ -237,6 +240,12 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                     onItemHeadPhotoListener.onItemHeadPhotoListener(v,position);
                 }
             });
+            llItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClickListener(v,position);
+                }
+            });
 
         }
     }
@@ -274,5 +283,8 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
     }
     public void setOnItemHeadPhotoListener(OnItemHeadPhotoListener onItemHeadPhotoListener){
         this.onItemHeadPhotoListener=onItemHeadPhotoListener;
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener=onItemClickListener;
     }
 }
