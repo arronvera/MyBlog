@@ -1,20 +1,35 @@
 package code.vera.myblog.bean;
 
+import com.j256.ormlite.field.DatabaseField;
+
 /**
  * 上传请求实体类
  * Created by vera on 2017/2/9 0009.
  */
 
 public class PostBean {
+    @DatabaseField(generatedId = true)
+    private int id;//主键
+
+    @DatabaseField(columnName = "status")
     private String status;
+    @DatabaseField(columnName = "visible")
     private int visible;//微博的可见性，0：所有人能看，1：仅自己可见，2：密友可见，3：指定分组可见，默认为0。
+    @DatabaseField(columnName = "list_id")
     private String list_id;
+    @DatabaseField(columnName = "pic")
     private String pic;
+    @DatabaseField(columnName = "lat")
     private float lat;
+    @DatabaseField(columnName = "lon")
     private float lon;
+    @DatabaseField(columnName = "annotations")
     private String annotations;
+    @DatabaseField(columnName = "rip")
     private String rip;//真实ip
+    @DatabaseField(columnName = "postStatus")
     private int postStatus;//状态(0-新建,1-失败,2-草稿,,3-正在发送,4-等待发送)
+    @DatabaseField(columnName = "postType")
     private int postType;//类型(0-新建,1-新建评论,2-回复评论,,3-转发)
 
     public int getPostStatus() {

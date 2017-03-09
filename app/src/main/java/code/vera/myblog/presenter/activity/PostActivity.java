@@ -35,6 +35,7 @@ import code.vera.myblog.bean.SortBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.callback.FragmentCallBack;
 import code.vera.myblog.config.Constants;
+import code.vera.myblog.db.PostDao;
 import code.vera.myblog.model.PostModel;
 import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.presenter.fragment.other.AtSomebodyFragment;
@@ -66,6 +67,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private AtSomebodyFragment atSomebodyFragment;//好友
     private StatusesBean statusesBean;
     private List<MediaBean> pictureList=new ArrayList<>();
+    //数据库
+    PostDao postDao;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_post;
@@ -83,8 +86,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         if (statusesBean!=null){
             view.showStatusesBean(statusesBean);
         }
-
         atSomebodyFragment = AtSomebodyFragment.getInstance();
+        postDao=new PostDao(getApplicationContext());
         addListener();
     }
 
@@ -184,7 +187,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
      */
     private void saveMessage() {
         //todo 保存到草稿箱
-
+        postDao.add(postBean);
     }
 
     public void hideFriendFragment() {
