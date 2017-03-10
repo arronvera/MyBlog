@@ -59,13 +59,11 @@
                       android:layout_marginLeft="20dp"
                       android:layout_marginTop="80dp"/>
                   <TextView
+                      style="@style/TextWhiteStyle"
                       android:id="@+id/tv_name"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
                       android:layout_below="@+id/crv_photo"
                       android:layout_marginLeft="20dp"
                       android:textColor="@color/colorWhite"
-                      android:textSize="20sp"
                       tools:text="vera" />
                   <ImageView
                       android:id="@+id/iv_identity"
@@ -87,7 +85,7 @@
                       android:layout_toRightOf="@+id/iv_identity"/>
                   <LinearLayout
                       android:id="@+id/ll_fans"
-                      android:layout_width="match_parent"
+                      android:layout_width="wrap_content"
                       android:layout_height="50dp"
                       android:gravity="center_vertical"
                       android:layout_below="@+id/tv_name"
@@ -95,11 +93,8 @@
                       android:layout_marginRight="20dp"
                       android:orientation="horizontal">
                       <TextView
+                          style="@style/TextWhiteStyle"
                           android:id="@+id/tv_friends"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:textColor="@color/colorWhite"
-                          android:textSize="18sp"
                           tools:text="关注：20万"/>
                       <LinearLayout
                           android:layout_width="1dp"
@@ -108,23 +103,23 @@
                           android:background="@color/colorWhite"/>
                       <TextView
                           android:id="@+id/tv_followers"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:textColor="@color/colorWhite"
+                          style="@style/TextWhiteStyle"
                           android:layout_marginLeft="20dp"
-                          android:textSize="18sp"
                           tools:text="粉丝：20万"/>
                   </LinearLayout>
                   <TextView
+                      style="@style/TextWhiteStyle"
                       android:id="@+id/tv_intro"
                       android:layout_below="@+id/ll_fans"
-                      android:layout_width="wrap_content"
                       android:layout_marginLeft="20dp"
-                      android:textSize="16sp"
-                      android:textColor="@color/colorWhite"
-                      android:layout_height="wrap_content"
                       android:layout_marginBottom="20dp"
                       tools:text="这是介绍"/>
+                  <TextView  style="@style/TextWhiteStyle"
+                      android:id="@+id/tv_concern"
+                      android:layout_alignParentRight="true"
+                      android:layout_marginTop="160dp"
+                      android:layout_marginRight="20dp"
+                      android:text="关注"/>
               </RelativeLayout>
           </LinearLayout>
 

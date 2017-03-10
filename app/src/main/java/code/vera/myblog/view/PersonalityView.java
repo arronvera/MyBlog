@@ -43,6 +43,9 @@ public class PersonalityView extends BaseView {
     ImageView ivIdentity;//身份
     @BindView(R.id.iv_gender)
     ImageView ivGender;//性别
+    @BindView(R.id.tv_concern)
+    TextView tvConcern;//关注
+
     private TabPersonAdapter tabPersonAdapter;
     private PersonalityActivity activity;
 

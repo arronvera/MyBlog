@@ -2,12 +2,14 @@ package code.vera.myblog.presenter.activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.trello.rxlifecycle.ActivityEvent;
 
+import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.UserInfoBean;
-import code.vera.myblog.model.me.MeModel;
+import code.vera.myblog.model.PersonalityModel;
 import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.presenter.fragment.person.TabPersonAllCircleFragment;
 import code.vera.myblog.presenter.fragment.person.TabPersonInfoFragment;
@@ -22,7 +24,7 @@ import ww.com.core.Debug;
  * Created by vera on 2017/2/7 0007.
  */
 
-public class PersonalityActivity  extends PresenterActivity<PersonalityView, MeModel> {
+public class PersonalityActivity  extends PresenterActivity<PersonalityView, PersonalityModel> {
     private UserInfoBean userInfoBean;
     private String user_name;
 
@@ -57,6 +59,22 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, MeM
 
                 }
             });
+        }
+    }
+    @OnClick(R.id.tv_concern)
+    public void doClick(View v){
+        switch (v.getId()){
+            case R.id.tv_concern://关注
+                model.createFriendShip(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UserInfoBean>(mContext,false){
+                    @Override
+                    public void onNext(UserInfoBean userInfoBean) {
+                        super.onNext(userInfoBean);
+                        // TODO: 2017/3/10 0010
+                    }
+                });
+
+
+                break;
         }
     }
 }

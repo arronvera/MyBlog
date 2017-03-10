@@ -37,8 +37,13 @@ public class NetWorkConfig {
     public static final String COMMENT_TO_ME=BASE_URL+ "/comments/to_me.json";
     //获取定微博的转发微博列表
     public static final String REPOSTS_INFO=BASE_URL+  "/statuses/repost_timeline.json";
+
+
     //获取双向关注列表，即互粉列表
     public static final String GET_FRIENDSHIP=BASE_URL+"/friendships/friends/bilateral.json";
+    //关注一个用户
+    public static final String CREATE_FRIENDSHIP=BASE_URL+"/friendships/friends/create.json";
+
     //短链接还原成原始的长链接
     public static final String SHORT_URL_EXPAND=BASE_URL+"/short_url/expand.json";
 
