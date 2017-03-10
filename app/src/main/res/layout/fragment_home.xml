@@ -2,9 +2,22 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_efefef"
     android:orientation="vertical">
     <include layout="@layout/item_refresh" />
+    <!--<com.linroid.filtermenu.library.FilterMenuLayout-->
+        <!--android:id="@+id/filter_menu"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:elevation="8dp"-->
+        <!--custom:fm_expandedRadius="96dp"-->
+        <!--custom:fm_collapsedRadius="24dp"-->
+        <!--custom:fm_centerBottom="50dp"-->
+        <!--custom:fm_centerRight="50dp"-->
+        <!--custom:fm_primaryColor="#ff37aa4a"-->
+        <!--custom:fm_primaryDarkColor="#ff20622b">-->
+    <!--</com.linroid.filtermenu.library.FilterMenuLayout>-->
     <ImageView
         android:id="@+id/iv_filter"
         android:layout_width="40dp"

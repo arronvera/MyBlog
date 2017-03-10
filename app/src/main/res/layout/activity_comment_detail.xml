@@ -7,129 +7,147 @@
     android:layout_height="match_parent"
     android:background="@color/color_efefef"
     tools:context="code.vera.myblog.presenter.activity.CommentDetailActivity">
-    <RelativeLayout
-        android:id="@+id/rl_top"
-         android:layout_width="match_parent"
-            android:gravity="center"
-         android:background="@color/colorWhite"
-    android:layout_height="50dp">
-    <TextView
-    android:layout_gravity="center"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="互动详情"
-    android:textColor="@color/colorAccent" />
-    </RelativeLayout>
 
-   <android.support.design.widget.CoordinatorLayout
-       android:layout_width="match_parent"
-       android:layout_below="@+id/rl_top"
-       android:layout_height="match_parent">
-       <android.support.design.widget.AppBarLayout
-           android:background="@color/colorWhite"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_top">
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="vertical"
-               app:layout_scrollFlags="scroll">
-               <RelativeLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:padding="5dp">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite">
 
-                   <code.vera.myblog.view.CircleImageView
-                       android:id="@+id/crv_photo"
-                       android:layout_width="40dp"
-                       android:layout_height="40dp"
-                       android:layout_marginRight="10dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll">
 
-                   <TextView
-                       android:id="@+id/tv_name"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_toRightOf="@+id/crv_photo"
-                       tools:text="vera" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
 
-                   <LinearLayout
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:layout_below="@+id/tv_name"
-                       android:layout_marginTop="10dp"
-                       android:layout_toRightOf="@+id/crv_photo"
-                       android:orientation="horizontal">
-                       <TextView
-                           android:id="@+id/tv_time"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_alignTop="@+id/iv_item_time"
-                           android:layout_marginLeft="10dp"
-                           android:layout_toEndOf="@+id/iv_item_time"
-                           tools:text="这个一个time" />
-                       <TextView
-                           android:id="@+id/tv_source"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_alignTop="@+id/iv_item_time"
-                           android:layout_marginLeft="10dp"
-                           android:layout_toEndOf="@+id/iv_item_time"
-                           tools:text="来源" />
-                   </LinearLayout>
-                   <ImageView
-                       android:id="@+id/iv_shoucang"
-                       android:layout_alignParentRight="true"
-                       android:layout_width="wrap_content"
-                       android:layout_marginRight="10dp"
-                       android:layout_height="wrap_content"
-                       android:src="@mipmap/ic_shoucang"/>
-               </RelativeLayout>
+                    <code.vera.myblog.view.CircleImageView
+                        android:id="@+id/crv_photo"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="10dp" />
 
-               <TextView
-                   android:id="@+id/tv_content"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="10dp"
-                   android:layout_marginRight="10dp"
-                   android:layout_marginTop="10dp"
-                   tools:text="这个一个text" />
-               <com.jaeger.ninegridimageview.NineGridImageView
-                   android:id="@+id/nineGridImageView"
-                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                   android:layout_height="wrap_content"
-                   android:layout_margin="16dp"
-                   android:layout_width="match_parent"
-                   app:imgGap="4dp"
-                   app:showStyle="fill"
-                   app:singleImgSize="120dp"/>
-           </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/crv_photo"
+                        tools:text="vera" />
 
-           <android.support.design.widget.TabLayout
-               android:id="@+id/tab_comment_detail"
-               android:layout_width="match_parent"
-               android:layout_height="40dp"
-               android:background="@color/colorWhite"
-               app:tabIndicatorColor="@color/color_ff8162"
-               app:tabSelectedTextColor="@color/colorBlack"
-               app:tabTextColor="@color/color_bcbcbc">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_name"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/crv_photo"
+                        android:orientation="horizontal">
 
-           </android.support.design.widget.TabLayout>
-       </android.support.design.widget.AppBarLayout>
-       <!--可滑动的布局内容-->
-       <android.support.v4.view.ViewPager
-           android:id="@+id/vp_comment_view"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="1dp"
-           app:layout_behavior="@string/appbar_scrolling_view_behavior"
-           android:background="@color/colorWhite" />
-   </android.support.design.widget.CoordinatorLayout>
+                        <TextView
+                            android:id="@+id/tv_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/iv_item_time"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toEndOf="@+id/iv_item_time"
+                            tools:text="这个一个time" />
+
+                        <TextView
+                            android:id="@+id/tv_source"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/iv_item_time"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toEndOf="@+id/iv_item_time"
+                            tools:text="来源" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_shoucang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/ic_shoucang" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    tools:text="这个一个text" />
+
+                <com.jaeger.ninegridimageview.NineGridImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/nineGridImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    app:imgGap="4dp"
+                    app:showStyle="fill"
+                    app:singleImgSize="120dp" />
+            </LinearLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_comment_detail"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/colorWhite"
+                app:tabIndicatorColor="@color/color_ff8162"
+                app:tabSelectedTextColor="@color/colorBlack"
+                app:tabTextColor="@color/color_bcbcbc">
+
+            </android.support.design.widget.TabLayout>
+        </android.support.design.widget.AppBarLayout>
+        <!--可滑动的布局内容-->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_comment_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@color/colorWhite"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </android.support.design.widget.CoordinatorLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/colorWhite"
-        android:layout_alignParentBottom="true">
-        <include layout="@layout/layout_bottom_atitu"/>
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite">
+
+        <include layout="@layout/layout_bottom_atitu" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorWhite"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="互动详情"
+            android:textColor="@color/colorAccent" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/btn_add"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 </RelativeLayout>
