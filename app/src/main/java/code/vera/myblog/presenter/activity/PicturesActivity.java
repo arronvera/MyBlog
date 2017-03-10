@@ -1,8 +1,8 @@
 package code.vera.myblog.presenter.activity;
 
 import android.content.Intent;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
+import android.graphics.Bitmap;
+import android.view.View;
 
 import java.util.List;
 
@@ -12,6 +12,9 @@ import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.fragment.other.PictureFragment;
+import code.vera.myblog.utils.PictureUtils;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.pic.PicturesView;
 
 /**
@@ -20,6 +23,8 @@ import code.vera.myblog.view.pic.PicturesView;
  */
 
 public class PicturesActivity extends PresenterActivity<PicturesView,VoidModel> {
+    private List<PicBean>beanList;
+    private int index;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_pictures;
@@ -32,7 +37,7 @@ public class PicturesActivity extends PresenterActivity<PicturesView,VoidModel> 
         int index=intent.getIntExtra("index",-1);//选中的下标
         StatusesBean statusesBean= (StatusesBean) intent.getSerializableExtra("bean");
         if (statusesBean!=null&&index!=-1){
-            List<PicBean>beanList=statusesBean.getPic_list();
+           beanList=statusesBean.getPic_list();
             if (statusesBean.getRetweetedStatusBean()!=null&&index!=-1){//原
                 beanList=statusesBean.getRetweetedStatusBean().getPic_list();
             }
@@ -44,24 +49,22 @@ public class PicturesActivity extends PresenterActivity<PicturesView,VoidModel> 
         }
 
     }
-    @OnClick(R.id.tv_big_pic)
-    public void DowLoadBigPic(){
-        //todo 下载大图
+    @OnClick({R.id.tv_back,R.id.tv_save_pic})
+    public void doClick(View v){
+       switch (v.getId()){
+           case R.id.tv_back:
+              finish();
+               break;
+           case R.id.tv_save_pic:
+               PictureFragment currentFragment= (PictureFragment) view.getCurrentFragment();
+               Bitmap bitmap=currentFragment.getCurrentBitmap();
+               if (bitmap==null){
+                   ToastUtil.showToast(this,"图片正在加载中哦~不能保存");
+               }else{
+                   PictureUtils.savePic(bitmap,getApplicationContext());
+               }
+               break;
+       }
 
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return super.onKeyDown(keyCode, event);
-
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction()==MotionEvent.ACTION_DOWN){
-            //按下
-            finish();
-        }
-        return super.onTouchEvent(event);
     }
 }

@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -20,12 +19,15 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * Created by vera on 2017/2/20 0020.
  */
 
-public class PictureView extends BaseView {    @BindView(R.id.photoview)
-    PhotoView photoView;
-    DisplayImageOptions options;
-    private PhotoViewAttacher photoViewAttacher;
+public class PictureView extends BaseView {
+    @BindView(R.id.photoview)
+     PhotoView photoView;//图片
     @BindView(R.id.iv_progress)
     ImageView ivProgress;//进度条
+
+    private PhotoViewAttacher photoViewAttacher;
+    private Bitmap loadBitmap;//加载图片
+
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
@@ -37,8 +39,6 @@ public class PictureView extends BaseView {    @BindView(R.id.photoview)
      * @param url
      */
     public void showPic(String url){
-//        ImageLoader.getInstance().displayImage(url, photoView, BaseApplication
-//                .getDisplayImageOptions(R.mipmap.ic_user_default));
         ImageLoader.getInstance().displayImage(url, photoView, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -55,8 +55,10 @@ public class PictureView extends BaseView {    @BindView(R.id.photoview)
 
             @Override
             public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                //加载完成
                 ivProgress.setVisibility(View.GONE);
                 photoView.setImageBitmap(bitmap);
+                loadBitmap=bitmap;
             }
 
             @Override
@@ -65,5 +67,13 @@ public class PictureView extends BaseView {    @BindView(R.id.photoview)
 
             }
         });
+    }
+
+    /**
+     * 获取加载的图片
+     * @return
+     */
+    public Bitmap getLoadBitmap() {
+        return loadBitmap;
     }
 }

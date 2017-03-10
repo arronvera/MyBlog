@@ -1,6 +1,7 @@
 package code.vera.myblog.view.pic;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -65,5 +66,8 @@ public class PicturesView extends BaseView {
 
     public void setCurrentIndex(int currentIndex) {
         this.currentIndex = currentIndex;
+    }
+    public Fragment getCurrentFragment(){
+        return adapter.getItem(currentIndex);
     }
 }
