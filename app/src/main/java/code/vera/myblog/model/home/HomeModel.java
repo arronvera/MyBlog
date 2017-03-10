@@ -16,6 +16,7 @@ import code.vera.myblog.model.base.IModel;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
+import ww.com.core.Debug;
 import ww.com.http.rx.RxHelper;
 
 /**
@@ -74,6 +75,7 @@ public class HomeModel implements IModel{
         HomeApi.shortUrlExpand(context,url_short) .map(new Func1<String, List<UrlBean>>() {
             @Override
             public List<UrlBean> call(String s) {
+                Debug.d(s);
                 JSONObject result= JSON.parseObject(s);
                 List<UrlBean>list=null;
                 if (result!=null){
