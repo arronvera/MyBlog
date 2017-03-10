@@ -68,6 +68,10 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     //photoview
     //    compile 'com.github.chrisbanes.photoview:library:1.2.4'
+    //数据库
     compile files('libs/ormlite-android-5.0.jar')
     compile files('libs/ormlite-core-5.0.jar')
+
+    //特效textview sdk >= 15
+    compile 'hanks.xyz:htextview-library:0.1.5'
 }
