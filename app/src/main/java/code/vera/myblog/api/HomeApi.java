@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.config.NetWorkConfig;
+import code.vera.myblog.utils.IpUtils;
 import rx.Observable;
 import ww.com.core.Debug;
 import ww.com.http.core.AjaxParams;
@@ -114,7 +115,8 @@ public class HomeApi  extends BaseApi{
         String url = NetWorkConfig.CREATE_FRIENDSHIP;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
-            params.addParameters("uid", uid);
+        params.addParameters("uid", uid);
+        params.addParameters("rip", IpUtils.getHostIp());
         return onGet(url, params);
     }
 }
