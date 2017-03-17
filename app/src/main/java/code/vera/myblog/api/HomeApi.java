@@ -104,8 +104,14 @@ public class HomeApi  extends BaseApi{
         return onGet(url, params);
     }
 
+    /**
+     * 关注
+     * @param context
+     * @param uid
+     * @return
+     */
     public static Observable<String>createFriendShip(Context context,String uid){
-        String url = NetWorkConfig.SHORT_URL_EXPAND;
+        String url = NetWorkConfig.CREATE_FRIENDSHIP;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
             params.addParameters("uid", uid);

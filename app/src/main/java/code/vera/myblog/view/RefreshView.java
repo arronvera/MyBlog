@@ -55,6 +55,7 @@ public class RefreshView extends BaseView {
         if (csrLayout != null)
             csrLayout.setRefreshView(crv);
         if (csrLayout != null)
+            csrLayout.setFooterRefreshAble(true);
             csrLayout.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout
                     .OnSwipeRefreshLayoutListener() {
                 @Override

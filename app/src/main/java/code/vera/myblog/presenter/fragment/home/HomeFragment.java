@@ -1,9 +1,12 @@
 package code.vera.myblog.presenter.fragment.home;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +47,7 @@ import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.TopicActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.home.HomeView;
 import code.vera.myblog.view.widget.LikeView;
 import ww.com.core.Debug;
@@ -69,6 +73,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     private Button btnShoucang;//收藏
     private Button btnCopy;//复制
     private Button btnConcern;//关注
+    private int index;//当前item
 
     @Override
     protected int getLayoutResId() {
@@ -145,7 +150,19 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         btnConcern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo 关注
+                if (btnConcern.getText().toString().equals("关注")){
+                    model.createFriendShip(getContext(),adapter.getItem(index).getId()+"",bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+                        @Override
+                        public void onNext(String s) {
+                            super.onNext(s);
+                            if (!TextUtils.isEmpty(s)){
+                                ToastUtil.showToast(getContext(),"关注成功~");
+                            }
+                        }
+                    });
+                }else {
+                    //todo 取消关注
+                }
             }
         });
         btnShoucang.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +174,11 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         btnCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo 复制
+                //复制到粘贴板
+                ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setText(adapter.getItem(index).getText());
+                ToastUtil.showToast(getContext(),"复制成功");
+                menuPopupWindow.dismiss();
             }
         });
     }
@@ -173,6 +194,13 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         adapter.setOnItemMenuListener(this);
         adapter.setOnItemHeadPhotoListener(this);
         adapter.setOnItemClickListener(this);
+        menuPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                // popupWindow隐藏时恢复屏幕正常透明度
+                backgroundAlpaha(getActivity(),1.0f);
+            }
+        });
 
     }
 
@@ -285,10 +313,16 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
 
     @Override
     public void onItemMenuListener(View v, int pos) {
-        //弹出菜单更多
-        // 在底部显示
+        //弹出菜单更多,在底部显示
+        index=pos;
+        boolean isFollow=adapter.getItem(pos).getUserBean().isFollow_me();
+        if (isFollow){
+            btnConcern.setText("取消关注");
+        }else{
+            btnConcern.setText("关注");
+        }
         menuPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
-//        backgroundAlpaha(getActivity(),0.5f);
+        backgroundAlpaha(getActivity(),0.5f);
     }
     /**
      * 设置添加屏幕的背景透明度

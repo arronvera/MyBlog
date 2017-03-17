@@ -86,4 +86,21 @@ public class HomeModel implements IModel{
         }).compose(RxHelper.<  List<UrlBean> >cutMain())
                 .subscribe(subscriber);
     }
+    public void createFriendShip( Context context,String uid,Observable.Transformer
+            transformer,  Subscriber<String> subscriber){
+        HomeApi.createFriendShip(context,uid) .map(new Func1<String, String>() {
+            @Override
+            public  String call(String s) {
+                JSONObject result=JSON.parseObject(s);
+                String id=null;
+                if (result!=null){
+                     id=result.getString("id");
+                }
+                return id;
+            }
+        }).compose(RxHelper.<String>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+
 }
