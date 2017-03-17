@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cunoraz.gifview.library.GifView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -25,8 +24,6 @@ public class PictureView extends BaseView {
      PhotoView photoView;//图片
     @BindView(R.id.iv_progress)
     ImageView ivProgress;//进度条
-    @BindView(R.id.gifview)
-    GifView gifView;//动图
     private PhotoViewAttacher photoViewAttacher;
     private Bitmap loadBitmap;//加载图片
 
