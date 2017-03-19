@@ -95,7 +95,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         atSomebodyFragment.setFragmentCallBack(this);
     }
 
-    @OnClick({R.id.tv_cancle, R.id.iv_repost,R.id.iv_choose_pic,R.id.iv_emotion,R.id.iv_at,R.id.iv_topic})
+    @OnClick({R.id.tv_cancle, R.id.iv_repost,R.id.iv_choose_pic,R.id.iv_emotion,R.id.iv_at,R.id.iv_topic,R.id.tv_location})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
@@ -178,6 +178,11 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 //移动光标到中间
                 view.getEt().setSelection(view.getEditStr().indexOf("#")+1);
                 //todo
+                break;
+            case R.id.tv_location:
+                //// TODO: 2017/3/19 跳转到定位
+
+
                 break;
         }
     }
