@@ -73,6 +73,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     private Button btnShoucang;//收藏
     private Button btnCopy;//复制
     private Button btnConcern;//关注
+
     private int index;//当前item
 
     @Override

@@ -15,6 +15,10 @@
             android:layout_height="match_parent">
             <!--toolbar-->
             <include layout="@layout/layout_toolbar" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_e3e4e5"></LinearLayout>
            <RelativeLayout
                android:id="@+id/fl_content"
                android:layout_width="match_parent"

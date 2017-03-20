@@ -8,7 +8,6 @@ import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.view.user.UsersFollowsView;
 
 public class UsersFollowsActivity extends PresenterActivity<UsersFollowsView, UsersFollowsModel> {
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_users_follows;
@@ -17,6 +16,10 @@ public class UsersFollowsActivity extends PresenterActivity<UsersFollowsView, Us
     @Override
     public void onAttach(View viRoot) {
         super.onAttach(viRoot);
+        initView();
+    }
+
+    private void initView() {
 
     }
 }

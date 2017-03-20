@@ -12,7 +12,6 @@ import code.vera.myblog.view.RefreshView;
  */
 
 public class HomeView extends RefreshView {
-
     private Context context;
     @Override
     public void onAttachView(@NonNull View view) {
@@ -24,6 +23,7 @@ public class HomeView extends RefreshView {
     public void setAdapter(RvAdapter adapter) {
         super.setAdapter(adapter);
         this.adapter=adapter;
+
     }
 
 }

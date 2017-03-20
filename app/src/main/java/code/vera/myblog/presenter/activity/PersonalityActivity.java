@@ -77,9 +77,11 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
 
                 break;
             case R.id.tv_followers://粉丝
-
+                Intent intent=new Intent(this,UsersFollowsActivity.class);
+                startActivity(intent);
 
                 break;
         }
     }
+
 }
