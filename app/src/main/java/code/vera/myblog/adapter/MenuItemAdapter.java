@@ -96,6 +96,11 @@ public class MenuItemAdapter extends BaseAdapter {
 
 
     }
+
+    /**
+     * 设置未读消息数
+     * @param unreadBean
+     */
     public void setUnreadBean(UnReadBean unreadBean){
         this.unreadBean=unreadBean;
         notifyDataSetChanged();

@@ -4,10 +4,16 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import code.vera.myblog.api.HomeApi;
 import code.vera.myblog.api.UserApi;
 import code.vera.myblog.bean.UnReadBean;
+import code.vera.myblog.bean.home.HomeRequestBean;
+import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.model.base.IModel;
 import rx.Observable;
@@ -67,6 +73,14 @@ public class UserModel implements IModel {
                 .compose(transformer)
                 .subscribe(subscriber);
     }
+
+    /**
+     * 获取未读消息数
+     * @param context
+     * @param uid
+     * @param transformer
+     * @param subscriber
+     */
     public void getUnreadCount(Context context,String uid, Observable.Transformer
             transformer, Subscriber<UnReadBean> subscriber){
         UserApi.getUnreadCount(context,uid) .map(new Func1<String, UnReadBean>() {
@@ -79,6 +93,29 @@ public class UserModel implements IModel {
                 return unReadBean;
             }
         }).compose(RxHelper.<UnReadBean>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+    /**
+     * 获取某个用户最新发表的微博列表
+     * @param context
+     * @param bean
+     * @param transformer
+     * @param subscriber
+     */
+    public void getUserTimeLine(Context context, HomeRequestBean bean, Observable.Transformer
+            transformer, Subscriber< List<StatusesBean>> subscriber){
+        UserApi.getUserTimeLine(context,bean) .map(new Func1<String, List<StatusesBean>>() {
+            @Override
+            public   List<StatusesBean> call(String s) {
+                List<StatusesBean>beanList=new ArrayList<>();
+                JSONObject result= JSON.parseObject(s);
+                if (result!=null){
+                    beanList= JSON.parseArray(result.getString("statuses"),StatusesBean.class);
+                }
+                return beanList;
+            }
+        }).compose(RxHelper.< List<StatusesBean>>cutMain())
                 .compose(transformer)
                 .subscribe(subscriber);
     }

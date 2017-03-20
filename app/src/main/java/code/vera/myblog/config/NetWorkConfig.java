@@ -49,5 +49,8 @@ public class NetWorkConfig {
 
     //未读数量
     public static final String UNREAD_COUNT="https://rm.api.weibo.com/2/remind/unread_count.json";
+    //对未读消息进行清零
+    public static final String CLEAR_UNREAD_COUNT="https://rm.api.weibo.com/2/remind/set_count.json";
+
 
 }

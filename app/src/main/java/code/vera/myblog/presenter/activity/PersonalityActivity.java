@@ -11,7 +11,6 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.model.PersonalityModel;
 import code.vera.myblog.presenter.PresenterActivity;
-import code.vera.myblog.presenter.fragment.person.TabPersonAllCircleFragment;
 import code.vera.myblog.presenter.fragment.person.TabPersonInfoFragment;
 import code.vera.myblog.presenter.fragment.person.TabPersonPhotosFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
@@ -54,7 +53,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
                     Debug.d("userInfoBean="+userInfoBean.toString());
                     view.showInfo(userInfoBean);
                     TabPersonInfoFragment.getInstance().setUser(userInfoBean);
-                    TabPersonAllCircleFragment.getInstance().setUser(userInfoBean);
+//                    TabPersonAllCircleFragment.getInstance().setUser(userInfoBean);
                     TabPersonPhotosFragment.getInstance().setUser(userInfoBean);
 
                 }
