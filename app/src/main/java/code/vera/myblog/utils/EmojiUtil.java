@@ -159,8 +159,8 @@ public class EmojiUtil {
      */
     public static void handlerEmojiText(TextView comment, String content, Context context) throws IOException {
         SpannableStringBuilder sb = new SpannableStringBuilder(content);
-        String regex = "\\[(\\S+?)\\]";
-        Pattern p = Pattern.compile(regex);
+        String regex = "\\[(\\S+?)\\]";//正则表达式
+        Pattern p = Pattern.compile(regex);//匹配
         Matcher m = p.matcher(content);
         Iterator<Emoji> iterator;
         Emoji emoji = null;
@@ -172,8 +172,7 @@ public class EmojiUtil {
                 if (tempText.equals(emoji.getValue())) {
                     //转换为Span并设置Span的大小
                     sb.setSpan(new ImageSpan(context, decodeSampledBitmapFromResource(context.getResources(), emoji.getDrawable()
-                                    , dip2px(context, 18), dip2px(context, 18))),
-                            m.start(), m.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    , dip2px(context, 18), dip2px(context, 18))), m.start(), m.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     break;
                 }
             }

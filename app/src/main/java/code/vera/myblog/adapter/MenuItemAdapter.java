@@ -12,6 +12,7 @@ import java.util.List;
 
 import code.vera.myblog.R;
 import code.vera.myblog.bean.MenuItem;
+import code.vera.myblog.db.PostDao;
 
 /**
  * Created by vera on 2017/1/23 0023.
@@ -20,10 +21,12 @@ import code.vera.myblog.bean.MenuItem;
 public class MenuItemAdapter extends BaseAdapter {
     private List<MenuItem> items;
     private Context context;
+    private PostDao postDao;
 
     public MenuItemAdapter(List<MenuItem> items, Context context) {
         this.items = items;
         this.context = context;
+        postDao=PostDao.getInstance(context);
     }
 
     @Override
@@ -49,6 +52,7 @@ public class MenuItemAdapter extends BaseAdapter {
             holder=new ViewHolder();
             holder.tv= (TextView) convertView.findViewById(R.id.tv);
             holder.iv= (ImageView) convertView.findViewById(R.id.iv);
+            holder.tvNum= (TextView) convertView.findViewById(R.id.tv_num);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
@@ -58,10 +62,19 @@ public class MenuItemAdapter extends BaseAdapter {
         if (item.getPic()!=0){
             holder.iv.setImageResource(item.getPic());
         }
+//        if (position==4){//草稿
+//            if (postDao.getAll()!=null&&postDao.getAll().size()!=0){
+//                holder.tvNum.setVisibility(View.VISIBLE);
+//                holder.tvNum.setText(postDao.getAll().size());
+//            }
+//
+//        }
         return convertView;
     }
     class ViewHolder{
         TextView tv;
         ImageView iv;
+        TextView tvNum;
+
     }
 }

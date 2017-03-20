@@ -2,15 +2,23 @@ package code.vera.myblog.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import butterknife.BindView;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.PostBean;
+import code.vera.myblog.config.Constants;
+import code.vera.myblog.listener.OnItemDeleteClickListener;
+import code.vera.myblog.listener.OnItemSendListener;
 
 /**
  * Created by vera on 2017/2/22 0022.
  */
 
 public class DraftAdapter extends RvAdapter<PostBean> {
+    private OnItemDeleteClickListener onItemDeleteClickListener;
+    private OnItemSendListener onItemSendListener;
     public DraftAdapter(Context context) {
         super(context);
     }
@@ -25,14 +33,58 @@ public class DraftAdapter extends RvAdapter<PostBean> {
         return new DraftViewHolder(view);
     }
 
-    private class DraftViewHolder extends RvViewHolder<PostBean> {
+     class DraftViewHolder extends RvViewHolder<PostBean> {
+        @BindView(R.id.tv_draft_type)
+        TextView tvType;
+        @BindView(R.id.tv_draft_content)
+        TextView tvContent;//内容
+        @BindView(R.id.iv_delete)
+        ImageView ivDelete;//删除
+        @BindView(R.id.iv_send)
+        ImageView ivSend;//发送
+
         public DraftViewHolder(View view) {
             super(view);
         }
 
         @Override
-        public void onBindData(int position, PostBean bean) {
-
+        public void onBindData(final int position, PostBean bean) {
+            switch (bean.getPostStatus()){
+                case Constants.COMMENT_TYPE:
+                    tvType.setText("评论");
+                    break;
+                case Constants.POST_TYPE_REPOST:
+                    tvType.setText("转发");
+                    break;
+                default:
+                    tvType.setText("新分享");
+                    break;
+            }
+            tvContent.setText(bean.getStatus());
+            ivDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemDeleteClickListener!=null){
+                        onItemDeleteClickListener.onItemDeleteClickListener(view,position);
+                    }
+                }
+            });
+            ivSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemSendListener!=null){
+                        onItemSendListener.onItemSendListener(view,position);
+                    }
+                }
+            });
         }
+    }
+
+    public void setOnItemDeleteClickListener(OnItemDeleteClickListener onItemDeleteClickListener) {
+        this.onItemDeleteClickListener = onItemDeleteClickListener;
+    }
+
+    public void setOnItemSendListener(OnItemSendListener onItemSendListener) {
+        this.onItemSendListener = onItemSendListener;
     }
 }

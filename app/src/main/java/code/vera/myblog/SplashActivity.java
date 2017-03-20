@@ -65,10 +65,12 @@ public class SplashActivity extends PresenterActivity<VoidView,VoidModel> {
         if (!TextUtils.isEmpty(token)){
          Intent intent=new Intent(this,MainActivity.class);
             startActivity(intent);
+            finish();
         }else{
             Debug.d("未登陆---");
             Intent intent=new Intent(this,LoginActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }

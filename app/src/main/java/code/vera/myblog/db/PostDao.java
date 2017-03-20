@@ -2,10 +2,6 @@ package code.vera.myblog.db;
 
 import android.content.Context;
 
-import com.j256.ormlite.dao.Dao;
-
-import java.sql.SQLException;
-
 import code.vera.myblog.bean.PostBean;
 
 /**
@@ -14,38 +10,20 @@ import code.vera.myblog.bean.PostBean;
  * Created by vera on 2017/3/9 0009.
  */
 
-public class PostDao {
-    private Context context;
-    private Dao<PostBean, Integer> postBeanIntegerDao;
-    private DatabaseHelper helper;
+public class PostDao extends BaseDao<PostBean> {
+    public static PostDao instance;
 
-    public PostDao(Context context)
-    {
-        this.context = context;
-        try
-        {
-            helper = DatabaseHelper.getHelper(context);
-            postBeanIntegerDao = helper.getDao(PostBean.class);
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
+    public PostDao(Context context) {
+        super(context, PostBean.class);
     }
 
-    /**
-     * 增加一个草稿
-     * @param bean
-     */
-    public void add(PostBean bean)
-    {
-        try
-        {
-            postBeanIntegerDao.create(bean);
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
+    public static PostDao getInstance(Context context) {
+        if (instance == null) {
+            synchronized (PostDao.class) {
+                if (instance == null)
+                    instance = new PostDao(context);
+            }
         }
-
+        return instance;
     }
-
 }

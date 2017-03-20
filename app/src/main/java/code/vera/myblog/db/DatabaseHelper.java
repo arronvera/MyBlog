@@ -95,6 +95,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             dao = null;
         }
     }
-
+    public static DatabaseHelper getInstance() {
+        if (instance == null) {
+            throw new NullPointerException("No init");
+        }
+        return instance;
+    }
 
 }

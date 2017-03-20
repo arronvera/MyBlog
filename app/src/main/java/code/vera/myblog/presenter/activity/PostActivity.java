@@ -45,28 +45,29 @@ import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.utils.EmojiUtil;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.PostView;
+import ww.com.core.Debug;
 
 
 /**
  * 发布
  */
-public class PostActivity extends PresenterActivity<PostView, PostModel> implements EmojFragment.OnEmojiClickListener,FragmentCallBack {
+public class PostActivity extends PresenterActivity<PostView, PostModel> implements
+        EmojFragment.OnEmojiClickListener,FragmentCallBack {
     public static final int TAKE_PICTURE=0025;
     public static final int   CHOOSE_PICTURE=0026;
-    private PostBean postBean;
-    private CommentRequestBean commentRequestBean;
+    private static final int REQUEST_CODE = 732;
     private int type;
     private String picPath;
-    private List<Fragment> fragments=new ArrayList<>();
     private  boolean isShowEmoj=false;//是否表情已经显示
     private  boolean isShowFriend=false;//是否好友已经显示
-    private static final int REQUEST_CODE = 732;
-
-    private ArrayList<String> results = new ArrayList<>();
     private EmojFragment emojFragment;//表情
     private AtSomebodyFragment atSomebodyFragment;//好友
     private StatusesBean statusesBean;
+    private PostBean postBean;
+    private CommentRequestBean commentRequestBean;
     private List<MediaBean> pictureList=new ArrayList<>();
+    private ArrayList<String> results = new ArrayList<>();
+    private List<Fragment> fragments=new ArrayList<>();
     //数据库
     PostDao postDao;
     @Override
@@ -87,7 +88,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
             view.showStatusesBean(statusesBean);
         }
         atSomebodyFragment = AtSomebodyFragment.getInstance();
-        postDao=new PostDao(getApplicationContext());
+        postDao=PostDao.getInstance(this);
         addListener();
     }
 
@@ -108,10 +109,16 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 }
                 if ((!TextUtils.isEmpty(view.getEditStr()))||(pictureList.size()!=0)){
                     //如果有内容  提示保存到草稿箱
+                    postBean=new PostBean();
+                    postBean.setStatus(view.getEditStr());
+                    postBean.setPostStatus(type);
+
                     DialogUtils.showDialog(this, "", "是否保存到草稿箱?", "是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                           saveMessage();
+                            ToastUtil.showToast(getApplicationContext(),"保存成功");
+                            finish();
                         }
                     }, "否", new DialogInterface.OnClickListener() {
                         @Override
@@ -125,6 +132,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 break;
             case R.id.iv_repost://发送
                 String msg=view.getEditStr();
+                Debug.d("msg="+msg);
                 if (TextUtils.isEmpty(msg)){
                     return;
                 }
@@ -191,7 +199,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
      * 保存到草稿箱
      */
     private void saveMessage() {
-        //todo 保存到草稿箱
         postDao.add(postBean);
     }
 

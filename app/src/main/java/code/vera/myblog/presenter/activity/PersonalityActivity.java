@@ -61,7 +61,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
             });
         }
     }
-    @OnClick(R.id.tv_concern)
+    @OnClick({R.id.tv_concern,R.id.tv_friends,R.id.tv_followers})
     public void doClick(View v){
         switch (v.getId()){
             case R.id.tv_concern://关注
@@ -72,6 +72,11 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
                         // TODO: 2017/3/10 0010
                     }
                 });
+                break;
+            case R.id.tv_friends://关注
+
+                break;
+            case R.id.tv_followers://粉丝
 
 
                 break;

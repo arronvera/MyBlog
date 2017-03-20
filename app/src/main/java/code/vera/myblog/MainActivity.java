@@ -31,10 +31,10 @@ import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.SearchActivity;
 import code.vera.myblog.presenter.fragment.MenuFragment;
+import code.vera.myblog.presenter.fragment.collection.CollectionFragment;
 import code.vera.myblog.presenter.fragment.draft.DraftFragment;
 import code.vera.myblog.presenter.fragment.find.FindFragment;
 import code.vera.myblog.presenter.fragment.home.HomeFragment;
-import code.vera.myblog.presenter.fragment.me.MeFragment;
 import code.vera.myblog.presenter.fragment.message.MessageFragment;
 import code.vera.myblog.presenter.fragment.set.SetFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
@@ -46,7 +46,8 @@ import static code.vera.myblog.R.id.lv_left_menu;
 /**
  * 主界面
  */
-public class MainActivity extends PresenterActivity<MainView, MeModel> implements AdapterView.OnItemClickListener, MenuFragment.FragmentDrawerListener {
+public class MainActivity extends PresenterActivity<MainView, MeModel>
+        implements AdapterView.OnItemClickListener, MenuFragment.FragmentDrawerListener {
     @BindView(R.id.dl_left)
     DrawerLayout dlLeft;
     @BindView(lv_left_menu)
@@ -110,7 +111,7 @@ public class MainActivity extends PresenterActivity<MainView, MeModel> implement
         item.setText("发现");
         menuList.add(item);
         item = new MenuItem();
-        item.setText("我");
+        item.setText("收藏");
         item.setPic(R.mipmap.ic_mine);
         menuList.add(item);
         //草稿箱
@@ -229,7 +230,7 @@ public class MainActivity extends PresenterActivity<MainView, MeModel> implement
 
                 break;
             case 3:
-                fragment = new MeFragment();
+                fragment = new CollectionFragment();
                 ivTitle.setImageResource(R.mipmap.ic_me);
 
                 break;
@@ -268,7 +269,7 @@ public class MainActivity extends PresenterActivity<MainView, MeModel> implement
                     firstTime = secondTime;//更新firstTime
                     return true;
                 } else {//两次按键小于2秒时，退出应用
-                    System.exit(0);
+                  finish();
                 }
             }
         }

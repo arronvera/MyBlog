@@ -63,7 +63,7 @@
             android:theme="@style/AppBaseTheme2" />
         <activity
             android:name=".presenter.activity.BrowserActivity"
-            android:theme="@style/AppBaseTheme2"></activity>
+            android:theme="@style/AppBaseTheme2" />
         <activity
             android:name=".presenter.activity.PicturesActivity"
             android:theme="@style/AppBaseTheme2" />
@@ -76,9 +76,11 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppBaseTheme2" />
-        <activity android:name=".presenter.activity.TopicActivity"
+        <activity
+            android:name=".presenter.activity.TopicActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppBaseTheme2"></activity>
+            android:theme="@style/AppBaseTheme2" />
+        <activity android:name=".presenter.activity.UsersFollowsActivity"></activity>
     </application>
 
 </manifest>

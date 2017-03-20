@@ -87,4 +87,5 @@ public class BaseApplication extends Application {
                 .showImageOnFail(onFail).build();
         return builder;
     }
+
 }
