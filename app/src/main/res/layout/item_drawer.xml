@@ -17,14 +17,22 @@
         android:textColor="@color/colorWhite"
         android:textSize="16sp"
         android:id="@+id/tv"/>
-    <TextView
-        android:id="@+id/tv_num"
+    <RelativeLayout
+        android:id="@+id/rl_number"
+        android:layout_width="50px"
         android:visibility="invisible"
-        android:text="2"
+        android:layout_height="50px"
         android:layout_toRightOf="@+id/tv"
-        android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorWhite" />
+        android:background="@drawable/textview_circle_shape"
+        android:layout_marginLeft="20dp">
+        <TextView
+            android:id="@+id/tv_num"
+            android:text="0"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent" />
+    </RelativeLayout>
+
 
 </RelativeLayout>

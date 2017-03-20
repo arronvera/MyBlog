@@ -24,8 +24,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import code.vera.myblog.adapter.MenuItemAdapter;
 import code.vera.myblog.bean.MenuItem;
+import code.vera.myblog.bean.UnReadBean;
 import code.vera.myblog.bean.home.UserInfoBean;
-import code.vera.myblog.model.me.MeModel;
+import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
@@ -46,7 +47,7 @@ import static code.vera.myblog.R.id.lv_left_menu;
 /**
  * 主界面
  */
-public class MainActivity extends PresenterActivity<MainView, MeModel>
+public class MainActivity extends PresenterActivity<MainView, UserModel>
         implements AdapterView.OnItemClickListener, MenuFragment.FragmentDrawerListener {
     @BindView(R.id.dl_left)
     DrawerLayout dlLeft;
@@ -130,6 +131,16 @@ public class MainActivity extends PresenterActivity<MainView, MeModel>
                 super.onNext(userInfoBean);
                 view.showUser(userInfoBean);
                 user=userInfoBean;
+                //获取未读信息
+                model.getUnreadCount(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UnReadBean>(mContext,false){
+                    @Override
+                    public void onNext(UnReadBean unReadBean) {
+                        super.onNext(unReadBean);
+                        if (unReadBean!=null){
+                            adapter.setUnreadBean(unReadBean);
+                        }
+                    }
+                });
             }
         });
 

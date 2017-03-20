@@ -47,4 +47,7 @@ public class NetWorkConfig {
     //短链接还原成原始的长链接
     public static final String SHORT_URL_EXPAND=BASE_URL+"/short_url/expand.json";
 
+    //未读数量
+    public static final String UNREAD_COUNT="https://rm.api.weibo.com/2/remind/unread_count.json";
+
 }

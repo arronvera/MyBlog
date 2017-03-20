@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import code.vera.myblog.R;
 import code.vera.myblog.bean.MenuItem;
+import code.vera.myblog.bean.UnReadBean;
 import code.vera.myblog.db.PostDao;
 
 /**
@@ -22,6 +24,8 @@ public class MenuItemAdapter extends BaseAdapter {
     private List<MenuItem> items;
     private Context context;
     private PostDao postDao;
+    private UnReadBean unreadBean;
+
 
     public MenuItemAdapter(List<MenuItem> items, Context context) {
         this.items = items;
@@ -53,6 +57,7 @@ public class MenuItemAdapter extends BaseAdapter {
             holder.tv= (TextView) convertView.findViewById(R.id.tv);
             holder.iv= (ImageView) convertView.findViewById(R.id.iv);
             holder.tvNum= (TextView) convertView.findViewById(R.id.tv_num);
+            holder.rlNumber= (RelativeLayout) convertView.findViewById(R.id.rl_number);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
@@ -62,19 +67,37 @@ public class MenuItemAdapter extends BaseAdapter {
         if (item.getPic()!=0){
             holder.iv.setImageResource(item.getPic());
         }
-//        if (position==4){//草稿
-//            if (postDao.getAll()!=null&&postDao.getAll().size()!=0){
-//                holder.tvNum.setVisibility(View.VISIBLE);
-//                holder.tvNum.setText(postDao.getAll().size());
-//            }
-//
-//        }
+        //显示未读信息
+        if (unreadBean!=null){
+            switch (position){
+                case 0:
+                    if (unreadBean.getStatus()!=0){
+                        holder.rlNumber.setVisibility(View.VISIBLE);
+                        holder.tvNum.setText(unreadBean.getStatus()+"");
+                    }
+                    break;
+                case 1:
+                    holder.tvNum.setText(unreadBean.getStatus()+"");
+                    break;
+            }
+        }
+        if (postDao.getAll()!=null&&postDao.getAll().size()!=0&&position==4){//草稿
+            holder.rlNumber.setVisibility(View.VISIBLE);
+            holder.tvNum.setText(postDao.getAll().size()+"");
+        }
+
         return convertView;
     }
     class ViewHolder{
         TextView tv;
         ImageView iv;
         TextView tvNum;
+        RelativeLayout rlNumber;
 
+
+    }
+    public void setUnreadBean(UnReadBean unreadBean){
+        this.unreadBean=unreadBean;
+        notifyDataSetChanged();
     }
 }
