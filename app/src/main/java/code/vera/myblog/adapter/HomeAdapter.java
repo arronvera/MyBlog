@@ -202,30 +202,33 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             }else{
                 tvLike.setText("喜欢");
             }
-            //-----------------------------
-            //监听
+            //-----------------------------监听-----------------------
             rlRepost.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemRepostListener.onItemRepostListener(v, position);
+                    if (onItemRepostListener!=null)
+                        onItemRepostListener.onItemRepostListener(v, position);
                 }
             });
             rlComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemCommentListener.onItemCommentListener(v, position);
+                    if (onItemCommentListener!=null)
+                        onItemCommentListener.onItemCommentListener(v, position);
                 }
             });
             rlLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemLikeListener.onItemLikeListener(v, ivLike,position);
+                    if (onItemLikeListener!=null)
+                        onItemLikeListener.onItemLikeListener(v, ivLike,position);
                 }
             });
             llAuthorInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemOriginalListener.onItemOriginalListener(v,position);
+                    if (onItemOriginalListener!=null)
+                        onItemOriginalListener.onItemOriginalListener(v,position);
                 }
             });
             ivMenu.setOnClickListener(new View.OnClickListener() {
@@ -238,12 +241,14 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             civPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemHeadPhotoListener.onItemHeadPhotoListener(v,position);
+                    if (onItemHeadPhotoListener!=null)
+                        onItemHeadPhotoListener.onItemHeadPhotoListener(v,position);
                 }
             });
             llItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (onItemClickListener!=null)
                     onItemClickListener.onItemClickListener(v,position);
                 }
             });

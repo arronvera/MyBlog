@@ -54,13 +54,14 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
         if (!TextUtils.isEmpty(user_name)){
             model.getUserInfoByName(getApplicationContext(),user_name,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UserInfoBean>(mContext,true){
                 @Override
-                public void onNext(UserInfoBean userInfoBean) {
-                    super.onNext(userInfoBean);
-                    Debug.d("userInfoBean="+userInfoBean.toString());
-                    view.showInfo(userInfoBean);
-                    TabPersonInfoFragment.getInstance().setUid(userInfoBean.getId());
+                public void onNext(UserInfoBean user) {
+                    super.onNext(user);
+                    Debug.d("user="+user.toString());
+                   userInfoBean=user;
+                    view.showInfo(user);
+                    TabPersonInfoFragment.getInstance().setUid(user.getId());
 //                    TabPersonAllCircleFragment.getInstance().setUser(userInfoBean);
-                    TabPersonPhotosFragment.getInstance().setUser(userInfoBean);
+                    TabPersonPhotosFragment.getInstance().setUser(user);
                 }
             });
             bundle.putString("name",user_name);
@@ -84,9 +85,9 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
 
                 break;
             case R.id.tv_followers://粉丝
-                Intent intent=new Intent(this,UsersFollowsActivity.class);
-                startActivity(intent);
-
+                Bundle bundle=new Bundle();
+                bundle.putLong("id",userInfoBean.getId());
+               UsersFollowsActivity.start(this,bundle);
                 break;
         }
     }

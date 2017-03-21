@@ -1,6 +1,5 @@
 package code.vera.myblog.presenter.fragment.home;
 
-import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -48,6 +46,7 @@ import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.TopicActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.utils.ScreenUtils;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.home.HomeView;
 import code.vera.myblog.view.widget.LikeView;
@@ -132,7 +131,6 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         View menu = LayoutInflater.from(getContext()).inflate(R.layout.pop_bottom, null);
         menuPopupWindow=new PopupWindow(menu, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         menuPopupWindow.setFocusable(true);
-        // 实例化一个ColorDrawable颜色为半透明
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         menuPopupWindow.setBackgroundDrawable(dw);
         // 设置popWindow的显示和消失动画
@@ -200,7 +198,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
             @Override
             public void onDismiss() {
                 // popupWindow隐藏时恢复屏幕正常透明度
-                backgroundAlpaha(getActivity(),1.0f);
+                ScreenUtils.backgroundAlpaha(getActivity(),1.0f);
             }
         });
 
@@ -327,18 +325,9 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
             btnConcern.setText("关注");
         }
         menuPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
-        backgroundAlpaha(getActivity(),0.5f);
+        ScreenUtils.backgroundAlpaha(getActivity(),0.5f);
     }
-    /**
-     * 设置添加屏幕的背景透明度
-     * **/
-    public void backgroundAlpaha(Activity context, float bgAlpha) {
-        WindowManager.LayoutParams lp = context.getWindow().getAttributes();
-        lp.alpha = bgAlpha;
-        context.getWindow()
-                .addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        context.getWindow().setAttributes(lp);
-    }
+
     @Override
     public void onItemHeadPhotoListener(View v, int pos) {
         //点击头头像，跳转到个人界面

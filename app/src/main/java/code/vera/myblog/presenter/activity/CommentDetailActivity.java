@@ -68,7 +68,7 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
         view.setOnItemLinkListener(this);
     }
 
-    @OnClick({R.id.tv_item_comment, R.id.tv_item_repost, R.id.rl_item_like})
+    @OnClick({R.id.tv_item_comment, R.id.tv_item_repost, R.id.rl_item_like,R.id.iv_back})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_item_comment://评论
@@ -85,6 +85,9 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
                 break;
             case R.id.rl_item_like://喜欢
                 view.showLikeView();
+                break;
+            case R.id.iv_back:
+                finish();
                 break;
         }
     }

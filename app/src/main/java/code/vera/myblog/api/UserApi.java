@@ -31,4 +31,12 @@ public class UserApi  {
         params.addParameters("feature",bean.getFeature()+"");
         return onGet(url, params);
     }
+    public static Observable<String> getUserFollowers(Context context,String uid,String screem_name){
+        String url = NetWorkConfig.GET_FOLLOWERES;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("uid",uid);
+        params.addParameters("screem_name",screem_name);
+        return onGet(url, params);
+    }
 }

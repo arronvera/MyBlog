@@ -99,7 +99,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         atSomebodyFragment.setFragmentCallBack(this);
     }
 
-    @OnClick({R.id.tv_cancle, R.id.iv_repost, R.id.iv_choose_pic, R.id.iv_emotion, R.id.iv_at, R.id.iv_topic, R.id.tv_location})
+    @OnClick({R.id.tv_cancle, R.id.iv_repost, R.id.iv_choose_pic, R.id.iv_emotion, R.id.iv_at, R.id.iv_topic, R.id.tv_location,R.id.et_text})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
@@ -190,9 +190,14 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 break;
             case R.id.tv_location:
                 //// TODO: 2017/3/19 跳转到定位
-
-
                 break;
+            case R.id.et_text:
+                if (isShowEmoj){
+                    getSupportFragmentManager().beginTransaction().remove(emojFragment).commit();
+                    isShowEmoj=false;
+                }
+                break;
+
         }
     }
 
@@ -330,6 +335,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 .subscribe(new RxBusResultSubscriber<ImageMultipleResultEvent>() {
                     @Override
                     protected void onEvent(ImageMultipleResultEvent resultEvent) throws Exception {
+                        Debug.d("pic.size="+resultEvent.getResult().size());
                         if (pictureList == null || pictureList.size() == 0) {//如果集合为空
                             pictureList.addAll(resultEvent.getResult());
                             view.showPhotos(resultEvent.getResult());//显示

@@ -32,7 +32,7 @@ public class BaseApplication extends Application {
         //请求打印
         OkHttpRequest.setLogging(true);
         //设置debug的标签
-        Debug.setTag("myblog");
+        Debug.setTag("<<<<");
         initImageLoader(getApplicationContext());
     }
     public static BaseApplication getInstance() {

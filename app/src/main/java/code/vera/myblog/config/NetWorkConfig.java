@@ -43,6 +43,9 @@ public class NetWorkConfig {
     public static final String GET_FRIENDSHIP=BASE_URL+"/friendships/friends/bilateral.json";
     //关注一个用户
     public static final String CREATE_FRIENDSHIP=BASE_URL+"/friendships/friends/create.json";
+    //获取粉丝列表
+    public static final String GET_FOLLOWERES=BASE_URL+"/friendships/followers.json";
+
 
     //短链接还原成原始的长链接
     public static final String SHORT_URL_EXPAND=BASE_URL+"/short_url/expand.json";

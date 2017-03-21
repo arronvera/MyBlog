@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <code.vera.myblog.view.CircleImageView
+            android:id="@+id/civ_item_user_photo"
+            android:layout_width="60dp"
+            android:layout_centerVertical="true"
+            android:layout_height="60dp" />
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/civ_item_user_photo"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="vera"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:textColor="@color/colorBlack" />
+            <TextView
+                android:id="@+id/tv_item_latest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="....."
+                android:singleLine="true"
+                android:textSize="16sp"
+                android:textColor="@color/color_bcbcbc" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
