@@ -163,4 +163,11 @@
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">18sp</item>
     </style>
+    <style name="ItemSetLLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:padding">10dp</item>
+
+    </style>
 </resources>

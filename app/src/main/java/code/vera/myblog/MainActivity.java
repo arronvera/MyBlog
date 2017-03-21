@@ -1,7 +1,6 @@
 package code.vera.myblog;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,7 +38,6 @@ import code.vera.myblog.presenter.fragment.home.HomeFragment;
 import code.vera.myblog.presenter.fragment.message.MessageFragment;
 import code.vera.myblog.presenter.fragment.set.SetFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
-import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.view.MainView;
 
 import static code.vera.myblog.R.id.lv_left_menu;
@@ -179,18 +177,18 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     }
 
 
-    @OnClick({R.id.iv_sign_out, R.id.iv_menu_close,R.id.civ_user_photo})
+    @OnClick({ R.id.iv_menu_close,R.id.civ_user_photo})
     public void doClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_sign_out:
-                //退出登录
-                DialogUtils.showDialog(this, "", "你是否确定注销登陆？", "确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        logOut();
-                    }
-                }, "取消", null);
-                break;
+//            case R.id.iv_sign_out:
+//                //退出登录
+//                DialogUtils.showDialog(this, "", "你是否确定注销登陆？", "确定", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        logOut();
+//                    }
+//                }, "取消", null);
+//                break;
             case R.id.iv_menu_close://关闭菜单
                 dlLeft.closeDrawer(GravityCompat.START);
                 break;
@@ -202,15 +200,6 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         }
     }
 
-    /**
-     * 退出登录
-     */
-    private void logOut() {
-        //清空token
-        AccessTokenKeeper.clear(this);
-        //跳转并且清空zhan栈
-        Intent intent = new Intent(this,LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);     startActivity(intent);
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
