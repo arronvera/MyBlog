@@ -92,7 +92,8 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
             //--------------监听
             rlOriginalInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+             public void onClick(View v) {
+                    if (onItemOriginalListener!=null)
                     onItemOriginalListener.onItemOriginalListener(v,position);
                 }
             });

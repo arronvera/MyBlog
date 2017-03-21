@@ -32,6 +32,7 @@ import code.vera.myblog.presenter.activity.PicturesActivity;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.base.BaseView;
+import code.vera.myblog.view.widget.LikeView;
 
 /**
  * Created by vera on 2017/2/9 0009.
@@ -54,7 +55,9 @@ public class CommentDetailView extends BaseView {
     ViewPager vpComment;
     @BindView(R.id.tv_source)
     TextView tvSource;
-
+    @BindView(R.id.iv_like)
+    ImageView ivLike;//喜欢
+    private LikeView likeView;
     private TabCommentAdapter tabCommentAdapter;
     private NineGridImageViewAdapter<PicBean> adapter;
     private Context context;
@@ -68,6 +71,8 @@ public class CommentDetailView extends BaseView {
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
         context=view.getContext();
+        likeView=new LikeView(context);
+
         adapter=new NineGridImageViewAdapter<PicBean>() {
             @Override
             protected void onDisplayImage(Context context, ImageView imageView, PicBean s) {
@@ -87,6 +92,7 @@ public class CommentDetailView extends BaseView {
             }
         };
         nineGridImageView.setAdapter(adapter);
+
     }
     public void showInfo(StatusesBean statusesBean){
         this.statusesBean=statusesBean;
@@ -151,4 +157,9 @@ public class CommentDetailView extends BaseView {
     }
 
 
+  public void showLikeView() {
+        ivLike.setImageResource(R.mipmap.ic_like_sel);
+        likeView.setImage(context.getResources().getDrawable(R.mipmap.ic_like_sel));
+        likeView.show(ivLike);
+    }
 }

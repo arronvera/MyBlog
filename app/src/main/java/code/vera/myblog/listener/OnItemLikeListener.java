@@ -1,6 +1,7 @@
 package code.vera.myblog.listener;
 
 import android.view.View;
+import android.widget.ImageView;
 
 /**
  * 喜欢监听
@@ -8,5 +9,5 @@ import android.view.View;
  */
 
 public interface OnItemLikeListener {
-    void onItemLikeListener(View v, int pos);
+    void onItemLikeListener(View v, ImageView imageView, int pos);
 }

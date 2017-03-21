@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -237,13 +238,16 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         Debug.d("count="+adapter.getItem(pos).getComments_count());
         if (adapter.getItem(pos).getComments_count()==0){//如果没有评论数，直接跳到发布评论
             Intent intent=new Intent(getActivity(), PostActivity.class);
-            intent.putExtra("type", Constants.COMMENT_TYPE);
+            intent.putExtra("type", Constants.POST_TYPE_COMMENT);
             intent.putExtra("StatusesBean",adapter.getItem(pos));
             startActivity(intent);
         }else {//跳转到评论详情
-            Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
-            intent.putExtra("status",adapter.getItem(pos));
-            startActivity(intent);
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("status",adapter.getItem(pos));
+            CommentDetailActivity.start(getContext(),bundle);
+//            Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
+//            intent.putExtra("status",adapter.getItem(pos));
+//            startActivity(intent);
         }
 
     }
@@ -253,19 +257,19 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         //转发
 //        ToastUtil.showToast(getContext(),"转发");
         Intent intent=new Intent(getActivity(), PostActivity.class);
-        intent.putExtra("type", Constants.REPOST_TYPE);
+        intent.putExtra("type", Constants.POST_TYPE_REPOST);
         intent.putExtra("StatusesBean",adapter.getItem(pos));
         startActivity(intent);
     }
 
     @Override
-    public void onItemLikeListener(View v, int pos) {
+    public void onItemLikeListener(View v,ImageView imageView, int pos) {
         //喜欢
 //        ToastUtil.showToast(getContext(),"喜欢");
         //选中
-        ((ImageView) v).setImageResource(R.mipmap.ic_like_sel);
+        imageView.setImageResource(R.mipmap.ic_like_sel);
         likeView.setImage(getResources().getDrawable(R.mipmap.ic_like_sel));
-        likeView.show(v);
+        likeView.show(imageView);
         //todo count+1
     }
     @OnClick(R.id.iv_filter)
@@ -346,8 +350,8 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     @Override
     public void onItemClickListener(View v, int pos) {
         //点击单个Item
-        Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
-        intent.putExtra("status",adapter.getItem(pos));
-        startActivity(intent);
+//        Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
+//        intent.putExtra("status",adapter.getItem(pos));
+//        startActivity(intent);
     }
 }

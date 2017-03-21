@@ -50,7 +50,7 @@ public class DraftAdapter extends RvAdapter<PostBean> {
         @Override
         public void onBindData(final int position, PostBean bean) {
             switch (bean.getPostStatus()){
-                case Constants.COMMENT_TYPE:
+                case Constants.POST_TYPE_COMMENT:
                     tvType.setText("评论");
                     break;
                 case Constants.POST_TYPE_REPOST:

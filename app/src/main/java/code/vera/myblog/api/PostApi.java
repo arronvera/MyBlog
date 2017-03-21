@@ -2,9 +2,10 @@ package code.vera.myblog.api;
 
 import android.content.Context;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.io.File;
+import java.util.List;
 
+import cn.finalteam.rxgalleryfinal.bean.MediaBean;
 import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.PostBean;
@@ -24,22 +25,29 @@ public class PostApi {
     /**
      *上传发布带图片
      * @param context
+     * @param pictureList
      * @return
      */
-    public static Observable<String > uploadMsg(Context context, PostBean bean) {
+    public static Observable<String > uploadMsg(Context context, PostBean bean, List<MediaBean> pictureList) {
         String url = NetWorkConfig.UPLOAD_WEIB;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
-        try {
-            params.addParameters("status", URLEncoder.encode(bean.getStatus(),"utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            params.addParameters("status", URLEncoder.encode(bean.getStatus(),"utf-8"));
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+        params.addParameters("status", bean.getStatus());
         //微博的可见性，0：所有人能看，1：仅自己可见，2：密友可见，3：指定分组可见，默认为0。
         params.addParameters("visible", bean.getVisible()+"");
 //        params.addParameters("list_id", bean.get+"");
         //要上传的图片，仅支持JPEG、GIF、PNG格式，图片大小小于5M。
-        params.addParameters("pic", bean.getPic()+"");
+//        params.addParameters("pic", bean.getPic()+"");
+        if (pictureList!=null){
+            for (int i=0;i<pictureList.size();i++){
+                params.addParametersJPG("pic",new File(pictureList.get(i).getOriginalPath()));
+            }
+        }
         params.addParameters("lat", bean.getLat()+"");
         params.addParameters("long", bean.getLon()+"");
         params.addParameters("annotations", bean.getAnnotations());
@@ -55,11 +63,13 @@ public class PostApi {
         String url = NetWorkConfig.UPDATE_WEIB;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
-        try {
-            params.addParameters("status", URLEncoder.encode(bean.getStatus(),"utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            params.addParameters("status", URLEncoder.encode(bean.getStatus(),"utf-8"));
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+        params.addParameters("status", bean.getStatus());
+
         //微博的可见性，0：所有人能看，1：仅自己可见，2：密友可见，3：指定分组可见，默认为0。
         params.addParameters("visible", bean.getVisible()+"");
 //        params.addParameters("list_id", bean.getList_id()+"");
@@ -80,11 +90,12 @@ public class PostApi {
         String url = NetWorkConfig.COMMENT_INFO;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
-        try {
-            params.addParameters("comment", URLEncoder.encode(bean.getComment(),"utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            params.addParameters("comment", URLEncoder.encode(bean.getComment(),"utf-8"));
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+        params.addParameters("comment", bean.getComment());
         params.addParameters("id", bean.getId()+"");
         params.addParameters("comment_ori", bean.getComment_ori()+"");
         params.addParameters("rip", bean.getRip());

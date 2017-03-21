@@ -1,5 +1,7 @@
 package code.vera.myblog.presenter.fragment.message.tab;
 
+import android.view.View;
+
 import com.trello.rxlifecycle.FragmentEvent;
 
 import java.util.List;
@@ -7,6 +9,10 @@ import java.util.List;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.MessageAtmeAdapter;
 import code.vera.myblog.bean.CommentUserBean;
+import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemOriginalListener;
+import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.message.TabMessageModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
@@ -18,7 +24,8 @@ import ww.com.core.Debug;
  * Created by vera on 2017/1/20 0020.
  */
 
-public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView,TabMessageModel> {
+public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView,TabMessageModel>
+        implements OnItemLinkListener,OnItemAtListener,OnItemTopicListener,OnItemOriginalListener {
     private MessageAtmeAdapter adapter;
 
     @Override
@@ -31,8 +38,14 @@ public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView
         super.onAttach();
         setAdapter();
         getMessageToMe();
+        addListener();
     }
-
+    private void addListener() {
+        adapter.setOnItemLinkListener(this);
+        adapter.setOnItemTopicListener(this);
+        adapter.setOnItemAtListener(this);
+        adapter.setOnItemOriginalListener(this);
+    }
     private void getMessageToMe() {
         model.getCommentToMe(1,getContext(),bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<CommentUserBean>>(mContext,true){
             @Override
@@ -47,5 +60,25 @@ public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView
     private void setAdapter() {
         adapter=new MessageAtmeAdapter(getContext());
         view.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemAtListener(View v, int pos, String str) {
+
+    }
+
+    @Override
+    public void onItemLinkListener(View v, int pos, String str) {
+
+    }
+
+    @Override
+    public void onItemOriginalListener(View v, int pos) {
+
+    }
+
+    @Override
+    public void onItemTopicListener(View v, int pos, String str) {
+
     }
 }

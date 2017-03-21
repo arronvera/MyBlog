@@ -122,11 +122,11 @@ public class PostView extends BaseView {
      */
     public void showTitleAndHint(int type) {
         switch (type){
-            case Constants.COMMENT_TYPE:
+            case Constants.POST_TYPE_COMMENT:
                 tvTitle.setText("发评论");
                 etMessage.setHint("写评论");
                 break;
-            case Constants.REPOST_TYPE:
+            case Constants.POST_TYPE_REPOST:
                 tvTitle.setText("转发");
                 etMessage.setHint("转发");
                 break;

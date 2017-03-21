@@ -1,5 +1,6 @@
 package code.vera.myblog.presenter.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -51,22 +52,26 @@ import ww.com.core.Debug;
  * 发布
  */
 public class PostActivity extends PresenterActivity<PostView, PostModel> implements
-        EmojFragment.OnEmojiClickListener,FragmentCallBack {
-    public static final int TAKE_PICTURE=0025;
-    public static final int   CHOOSE_PICTURE=0026;
+        EmojFragment.OnEmojiClickListener, FragmentCallBack {
+    public static final int TAKE_PICTURE = 0025;
+    public static final int CHOOSE_PICTURE = 0026;
     private static final int REQUEST_CODE = 732;
+    public static final String PARAM_STATUS_BEAN = "StatusesBean";
+    public static final String PARAM_POST_TYPE = "type";
+
     private int type;
     private String picPath;
-    private  boolean isShowEmoj=false;//是否表情已经显示
-    private  boolean isShowFriend=false;//是否好友已经显示
+    private boolean isShowEmoj = false;//是否表情已经显示
+    private boolean isShowFriend = false;//是否好友已经显示
     private EmojFragment emojFragment;//表情
     private AtSomebodyFragment atSomebodyFragment;//好友
     private StatusesBean statusesBean;
     private PostBean postBean;
     private CommentRequestBean commentRequestBean;
-    private List<MediaBean> pictureList=new ArrayList<>();
+    private List<MediaBean> pictureList = new ArrayList<>();
     //数据库
     PostDao postDao;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_post;
@@ -77,15 +82,16 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         super.onAttach();
         Intent intent = getIntent();
         type = intent.getIntExtra("type", -1);
-        statusesBean= (StatusesBean) intent.getSerializableExtra("StatusesBean");
+        statusesBean = (StatusesBean) intent.getSerializableExtra("StatusesBean");
         if (type != -1) {
             view.showTitleAndHint(type);
+            Debug.d("type==============" + type);
         }
-        if (statusesBean!=null){
+        if (statusesBean != null) {
             view.showStatusesBean(statusesBean);
         }
         atSomebodyFragment = AtSomebodyFragment.getInstance();
-        postDao=PostDao.getInstance(this);
+        postDao = PostDao.getInstance(this);
         addListener();
     }
 
@@ -93,28 +99,27 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         atSomebodyFragment.setFragmentCallBack(this);
     }
 
-    @OnClick({R.id.tv_cancle, R.id.iv_repost,R.id.iv_choose_pic,R.id.iv_emotion,R.id.iv_at,R.id.iv_topic,R.id.tv_location})
+    @OnClick({R.id.tv_cancle, R.id.iv_repost, R.id.iv_choose_pic, R.id.iv_emotion, R.id.iv_at, R.id.iv_topic, R.id.tv_location})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
-                if (isShowFriend){
+                if (isShowFriend) {
                     hideFriendFragment();
-                    isShowFriend=false;
+                    isShowFriend = false;
                     view.setTitle("分享圈子");
 //                    view.setSendBtnVisible(true);
                     return;
                 }
-                if ((!TextUtils.isEmpty(view.getEditStr()))||(pictureList.size()!=0)){
+                if ((!TextUtils.isEmpty(view.getEditStr())) || (pictureList.size() != 0)) {
                     //如果有内容  提示保存到草稿箱
-                    postBean=new PostBean();
+                    postBean = new PostBean();
                     postBean.setStatus(view.getEditStr());
                     postBean.setPostStatus(type);
-
                     DialogUtils.showDialog(this, "", "是否保存到草稿箱?", "是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                          saveMessage();
-                            ToastUtil.showToast(getApplicationContext(),"保存成功");
+                            saveMessage();
+                            ToastUtil.showToast(getApplicationContext(), "保存成功");
                             finish();
                         }
                     }, "否", new DialogInterface.OnClickListener() {
@@ -123,28 +128,28 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                             finish();
                         }
                     });
-                }else {
+                } else {
                     finish();
                 }
                 break;
             case R.id.iv_repost://发送
-                String msg=view.getEditStr();
-                Debug.d("msg="+msg);
-                if (TextUtils.isEmpty(msg)){
+                String msg = view.getEditStr();
+                Debug.d("msg=" + msg);
+                if (TextUtils.isEmpty(msg)) {
                     return;
                 }
-                switch (type){
-                    case Constants.COMMENT_TYPE://评论
+                switch (type) {
+                    case Constants.POST_TYPE_COMMENT://评论
                         comment();
                         break;
-                    case Constants.REPOST_TYPE://转发
+                    case Constants.POST_TYPE_REPOST://转发
                         repost();
                         break;
                     default://发布新的
                         postBean = new PostBean();
                         postBean.setStatus(msg);
                         postBean.setPostStatus(Constants.POST_STATUS_NEW);
-                        if (pictureList!=null&&pictureList.size()!=0) {//带图片
+                        if (pictureList != null && pictureList.size() != 0) {//带图片
                             upLoad();
                         } else {
                             //仅发文字
@@ -157,23 +162,23 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 showChosePicDialog();
                 break;
             case R.id.iv_emotion://表情
-                if (!isShowEmoj){
+                if (!isShowEmoj) {
                     emojFragment = EmojFragment.Instance();
-                    getSupportFragmentManager().beginTransaction().add(R.id.ll_container,emojFragment).commit();
-                    isShowEmoj=true;
-                }else{
+                    getSupportFragmentManager().beginTransaction().add(R.id.ll_container, emojFragment).commit();
+                    isShowEmoj = true;
+                } else {
                     //隐藏
                     getSupportFragmentManager().beginTransaction().remove(emojFragment).commit();
-                    isShowEmoj=false;
+                    isShowEmoj = false;
                 }
                 break;
             case R.id.iv_at://at好友
-                if (!isShowFriend){
+                if (!isShowFriend) {
                     getSupportFragmentManager().
                             beginTransaction().
-                            setCustomAnimations(R.anim.pop_anim_in,R.anim.pop_anim_out)//动画
-                            .add(R.id.rl_all_container,atSomebodyFragment).commit();
-                    isShowFriend=true;
+                            setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out)//动画
+                            .add(R.id.rl_all_container, atSomebodyFragment).commit();
+                    isShowFriend = true;
                     view.setTitle("好友");//设置标题
 //                    view.setSendBtnVisible(false);//发送按钮不可见
                 }
@@ -181,7 +186,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
             case R.id.iv_topic://插入话题
                 view.getEt().append("##");
                 //移动光标到中间
-                view.getEt().setSelection(view.getEditStr().indexOf("#")+1);
+                view.getEt().setSelection(view.getEditStr().indexOf("#") + 1);
                 break;
             case R.id.tv_location:
                 //// TODO: 2017/3/19 跳转到定位
@@ -218,7 +223,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                                 break;
                         }
                     }
-                }) .show();
+                }).show();
     }
 
     /**
@@ -233,15 +238,14 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
      * 评论
      */
     private void comment() {
-        commentRequestBean=new CommentRequestBean();
+        commentRequestBean = new CommentRequestBean();
         commentRequestBean.setId(statusesBean.getId());
         commentRequestBean.setComment(view.getEditStr());
-//        commentRequestBean.setComment_ori();
         model.commentMessage(this, commentRequestBean, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
             @Override
             public void onNext(String s) {
                 super.onNext(s);
-                if (TextUtils.isEmpty(s)) {
+                if (!TextUtils.isEmpty(s)) {
                     ToastUtil.showToast(PostActivity.this, "评论成功");
                     finish();
                 } else {
@@ -252,7 +256,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     }
 
     private void upLoad() {
-        model.uploadMessage(this, postBean, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
+        model.uploadMessage(this, postBean,pictureList, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
             @Override
             public void onNext(String s) {
                 super.onNext(s);
@@ -307,9 +311,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
      * 选择图片
      */
     private void choosePic() {
-//        Intent openAlbumIntent = new Intent(Intent.ACTION_PICK);
-//        openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-//        startActivityForResult(openAlbumIntent, PostActivity.CHOOSE_PICTURE);
         RxGalleryFinal.with(this)
                 .image()
                 .multiple()
@@ -319,38 +320,38 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 .subscribe(new RxBusResultSubscriber<ImageMultipleResultEvent>() {
                     @Override
                     protected void onEvent(ImageMultipleResultEvent resultEvent) throws Exception {
-                        if (pictureList==null||pictureList.size()==0){//如果集合为空
+                        if (pictureList == null || pictureList.size() == 0) {//如果集合为空
                             pictureList.addAll(resultEvent.getResult());
                             view.showPhotos(resultEvent.getResult());//显示
-                        }else if (pictureList.size()<9){//如果集合不为空并且图片数量小于9
-                            int re=9-pictureList.size();//剩余可以添加的图片数量
-                            if (resultEvent.getResult().size()<=re){//如果添加的图片小于可以添加的数量，则全部添加
+                        } else if (pictureList.size() < 9) {//如果集合不为空并且图片数量小于9
+                            int re = 9 - pictureList.size();//剩余可以添加的图片数量
+                            if (resultEvent.getResult().size() <= re) {//如果添加的图片小于可以添加的数量，则全部添加
                                 pictureList.addAll(resultEvent.getResult());
                                 view.showPhotos(resultEvent.getResult());
-                            }else{//否则
-                                List<MediaBean>reList=new ArrayList<>();
-                                for (int i=0;i<re;i++){
+                            } else {//否则
+                                List<MediaBean> reList = new ArrayList<>();
+                                for (int i = 0; i < re; i++) {
                                     pictureList.add(resultEvent.getResult().get(i));
                                     reList.add(resultEvent.getResult().get(i));
                                 }
                                 view.showPhotos(reList);//显示
-                                ToastUtil.showToast(getApplicationContext(),"最多选择9张照片");
+                                ToastUtil.showToast(getApplicationContext(), "最多选择9张照片");
                             }
-                        }else{//集合图片数量等于9
+                        } else {//集合图片数量等于9
                             //不做任何处理
-                            ToastUtil.showToast(getApplicationContext(),"最多选择9张照片");
+                            ToastUtil.showToast(getApplicationContext(), "最多选择9张照片");
                         }
                     }
                 }).openGallery();
-        ToastUtil.showToast(getApplicationContext(),"你一共选择了"+pictureList.size()+"张图片");
+        ToastUtil.showToast(getApplicationContext(), "你一共选择了" + pictureList.size() + "张图片");
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==TAKE_PICTURE&&resultCode==RESULT_OK){
-            if (pictureList!=null&&pictureList.size()<9){
-                MediaBean mediaBean=new MediaBean();
+        if (requestCode == TAKE_PICTURE && resultCode == RESULT_OK) {
+            if (pictureList != null && pictureList.size() < 9) {
+                MediaBean mediaBean = new MediaBean();
                 mediaBean.setOriginalPath(picPath);
                 pictureList.add(mediaBean);
                 view.showPhoto(picPath);
@@ -419,12 +420,19 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public void callbackFriend(Bundle arg) {
         //好友回调
         getSupportFragmentManager().beginTransaction().hide(atSomebodyFragment).commit();
-        SortBean sortBean= (SortBean) arg.getSerializable("sort_bean");
+        SortBean sortBean = (SortBean) arg.getSerializable("sort_bean");
         view.setTitle("分享圈子");
 //        view.setSendBtnVisible(true);
         //添加字符
-        if (sortBean!=null){
-            view.addStr("@"+sortBean.getName()+" ");
+        if (sortBean != null) {
+            view.addStr("@" + sortBean.getName() + " ");
         }
+    }
+
+    public static void start(Context context, Bundle bundle) {
+        Intent intent = new Intent(context, PostActivity.class);
+        intent.putExtra(PARAM_POST_TYPE, Constants.POST_TYPE_COMMENT);
+        intent.putExtra(PARAM_STATUS_BEAN, bundle.getSerializable(PARAM_STATUS_BEAN));
+        context.startActivity(intent);
     }
 }

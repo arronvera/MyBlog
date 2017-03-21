@@ -216,10 +216,10 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
                     onItemCommentListener.onItemCommentListener(v, position);
                 }
             });
-            ivLike.setOnClickListener(new View.OnClickListener() {
+            rlLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemLikeListener.onItemLikeListener(v, position);
+                    onItemLikeListener.onItemLikeListener(v, ivLike,position);
                 }
             });
             llAuthorInfo.setOnClickListener(new View.OnClickListener() {

@@ -6,6 +6,9 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.List;
+
+import cn.finalteam.rxgalleryfinal.bean.MediaBean;
 import code.vera.myblog.api.PostApi;
 import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.PostBean;
@@ -30,12 +33,13 @@ public class PostModel implements IModel {
      * 发布文字带图片
      * @param context
      * @param bean
+     * @param pictureList
      * @param transformer
      * @param subscriber
      */
-    public void uploadMessage(Context context, PostBean bean, Observable.Transformer
+    public void uploadMessage(Context context, PostBean bean, List<MediaBean> pictureList, Observable.Transformer
             transformer, Subscriber<String> subscriber){
-        PostApi.uploadMsg(context,bean) .map(new Func1<String, String>() {
+        PostApi.uploadMsg(context,bean,pictureList) .map(new Func1<String, String>() {
             @Override
             public  String call(String s) {
                 Debug.d(s);

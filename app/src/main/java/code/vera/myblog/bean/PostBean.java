@@ -10,15 +10,14 @@ import com.j256.ormlite.field.DatabaseField;
 public class PostBean {
     @DatabaseField(generatedId = true)
     private int id;//主键
-
     @DatabaseField(columnName = "status")
     private String status;
     @DatabaseField(columnName = "visible")
     private int visible;//微博的可见性，0：所有人能看，1：仅自己可见，2：密友可见，3：指定分组可见，默认为0。
     @DatabaseField(columnName = "list_id")
     private String list_id;
-    @DatabaseField(columnName = "pic")
-    private String pic;
+//    @DatabaseField(columnName = "picList")
+//    private ArrayList<MediaBean> picList;
     @DatabaseField(columnName = "lat")
     private float lat;
     @DatabaseField(columnName = "lon")
@@ -72,13 +71,21 @@ public class PostBean {
         this.status = status;
     }
 
-    public String getPic() {
-        return pic;
+    public int getId() {
+        return id;
     }
 
-    public void setPic(String pic) {
-        this.pic = pic;
+    public void setId(int id) {
+        this.id = id;
     }
+
+//    public ArrayList<MediaBean> getPicList() {
+//        return picList;
+//    }
+//
+//    public void setPicList(ArrayList<MediaBean> picList) {
+//        this.picList = picList;
+//    }
 
     public float getLat() {
         return lat;

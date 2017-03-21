@@ -11,8 +11,6 @@ public class Constants {
             "email,direct_messages_read,direct_messages_write,"
                     + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
                     + "follow_app_official_microblog," + "invitation_write";
-    public static final int COMMENT_TYPE=1;
-    public static final int REPOST_TYPE=2;
 
     //--------------发送状态status-------------------(0-新建,1-失败,2-草稿,,3-正在发送,4-等待发送)
     public static final int POST_STATUS_NEW=0;//新建
@@ -23,9 +21,8 @@ public class Constants {
 
     //--------------发送类型type-------------------(0-新建信息,1-新建评论,2-回复评论,,3-转发)
     public static final int POST_TYPE_NEW=0;//新建信息
-    public static final int POST_TYPE_NEW_COMMENT=1;//新建评论
-    public static final int POST_TYPE_REPLY_COMMENT=2;//回复评论
-    public static final int POST_TYPE_REPOST=3;//转发
+    public static final int POST_TYPE_COMMENT=1;//新建评论
+    public static final int POST_TYPE_REPOST=2;//转发
 
 
 

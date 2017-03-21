@@ -23,7 +23,8 @@ import code.vera.myblog.view.message.tab.TabMessageAboutMeView;
  * Created by vera on 2017/1/20 0020.
  */
 
-public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAboutMeView,TabMessageModel>implements OnItemLinkListener,OnItemAtListener,OnItemTopicListener,OnItemOriginalListener {
+public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAboutMeView,TabMessageModel>
+        implements OnItemLinkListener,OnItemAtListener,OnItemTopicListener,OnItemOriginalListener {
     private MessageAtmeAdapter adapter;
 
     @Override
