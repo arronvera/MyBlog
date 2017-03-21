@@ -1,6 +1,7 @@
 package code.vera.myblog.presenter.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -37,14 +38,17 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
     protected void onAttach() {
         super.onAttach();
         view.setActivity(this);
-        view.setAdapter();
         Intent intent=getIntent();
+        Bundle bundle=new Bundle();
+
         userInfoBean= (UserInfoBean) intent.getSerializableExtra("user");
         if (userInfoBean!=null){
             view.showInfo(userInfoBean);
             if (AccessTokenKeeper.readAccessToken(getApplicationContext()).getUid().equals(userInfoBean.getId()+"")){
                 view.setConcernVisible(false);
             }
+            bundle.putString("id",userInfoBean.getId()+"");
+            bundle.putString("name",userInfoBean.getName());
         }
         user_name=intent.getStringExtra("user_name");
         if (!TextUtils.isEmpty(user_name)){
@@ -59,7 +63,10 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
                     TabPersonPhotosFragment.getInstance().setUser(userInfoBean);
                 }
             });
+            bundle.putString("name",user_name);
         }
+        view.setAdapter();
+
     }
     @OnClick({R.id.tv_concern,R.id.tv_friends,R.id.tv_followers})
     public void doClick(View v){

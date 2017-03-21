@@ -143,7 +143,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                         comment();
                         break;
                     case Constants.POST_TYPE_REPOST://转发
-                        repost();
+                        repost(msg);
                         break;
                     default://发布新的
                         postBean = new PostBean();
@@ -229,9 +229,19 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     /**
      * 转发
      */
-    private void repost() {
-
-
+    private void repost(String msg) {
+        model.repostMessage(this,statusesBean.getId()+"",msg,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                if (!TextUtils.isEmpty(s)){
+                    showToast("转发成功");
+                    finish();
+                }else {
+                    showToast("转发失败");
+                }
+            }
+        });
     }
 
     /**

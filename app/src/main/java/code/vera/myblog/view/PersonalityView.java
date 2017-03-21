@@ -61,7 +61,6 @@ public class PersonalityView extends BaseView {
         tabLayout.setupWithViewPager(vpPerson);
         //给Tabs设置适配器
         tabLayout.setTabsFromPagerAdapter(tabPersonAdapter);
-
         }
 
     /**

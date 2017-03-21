@@ -131,4 +131,21 @@ public class PostApi {
         params.addParameters("sort","0");//	排序
         return onGet(url, params);
     }
+
+    /**
+     * 转发
+     * @param context
+     * @param id
+     * @param status
+     * @return
+     */
+    public static  Observable<String > repost(Context context,String id,String status) {
+        String url = NetWorkConfig.REPOST_WEIB;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("id", id);
+        params.addParameters("status", status);
+        params.addParameters("is_comment","0");//是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
+        return onPost(url, params);
+    }
 }

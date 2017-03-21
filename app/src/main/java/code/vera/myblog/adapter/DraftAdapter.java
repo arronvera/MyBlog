@@ -73,7 +73,7 @@ public class DraftAdapter extends RvAdapter<PostBean> {
                 @Override
                 public void onClick(View view) {
                     if (onItemSendListener!=null){
-                        onItemSendListener.onItemSendListener(view,position);
+                        onItemSendListener.onItemSendListener(view,position,getItem(position));
                     }
                 }
             });

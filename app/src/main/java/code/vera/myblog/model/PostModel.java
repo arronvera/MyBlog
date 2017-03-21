@@ -102,4 +102,30 @@ public class PostModel implements IModel {
                 .compose(transformer)
                 .subscribe(subscriber);
     }
+    /**
+     * 转发
+     * @param context
+     * @param id
+     * @param transformer
+     * @param subscriber
+     */
+    public void repostMessage(Context context, String id,String status, Observable.Transformer
+            transformer, Subscriber<String> subscriber){
+        PostApi.repost(context,id,status) .map(new Func1<String, String>() {
+            @Override
+            public  String call(String s) {
+                JSONObject result= JSON.parseObject(s);
+                if (result!=null){
+                    if (TextUtils.isEmpty(result.getString("error"))){
+                        long id=result.getLong("id");
+                        return id+"";
+                    }else
+                        return null;
+                }
+                return null;
+            }
+        }).compose(RxHelper.<String>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
 }
