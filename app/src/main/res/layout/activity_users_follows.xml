@@ -6,7 +6,7 @@
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorWhite"
+        android:background="@color/colorAccent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
         <ImageView
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/title_my_friend"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorWhite" />
 
         <LinearLayout
             android:layout_width="match_parent"

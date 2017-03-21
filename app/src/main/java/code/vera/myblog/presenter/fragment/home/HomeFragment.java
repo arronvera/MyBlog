@@ -75,6 +75,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     private Button btnConcern;//关注
 
     private int index;//当前item
+    private boolean isFollow;
 
     @Override
     protected int getLayoutResId() {
@@ -150,18 +151,27 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         btnConcern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btnConcern.getText().toString().equals("关注")){
+                if (isFollow){
+                    // 取消关注
+                    model.destroyFriendShip(getContext(),adapter.getItem(index).getId()+"",bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+                        @Override
+                        public void onNext(String s) {
+                            super.onNext(s);
+                            if (!TextUtils.isEmpty(s)){
+                                ToastUtil.showToast(getContext(),getString(R.string.cancel_concern_success));
+                            }
+                        }
+                    });
+                }else{
                     model.createFriendShip(getContext(),adapter.getItem(index).getId()+"",bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
                         @Override
                         public void onNext(String s) {
                             super.onNext(s);
                             if (!TextUtils.isEmpty(s)){
-                                ToastUtil.showToast(getContext(),"关注成功~");
+                                ToastUtil.showToast(getContext(),getString(R.string.concern_success));
                             }
                         }
                     });
-                }else {
-                    //todo 取消关注
                 }
             }
         });
@@ -318,11 +328,12 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
     public void onItemMenuListener(View v, int pos) {
         //弹出菜单更多,在底部显示
         index=pos;
-        boolean isFollow=adapter.getItem(pos).getUserBean().isFollow_me();
+       isFollow=adapter.getItem(pos).getUserBean().isFollowing();
+        Debug.d("isFollow="+isFollow);
         if (isFollow){
-            btnConcern.setText("取消关注");
+            btnConcern.setText(getString(R.string.cancel_concern));
         }else{
-            btnConcern.setText("关注");
+            btnConcern.setText(getString(R.string.concern));
         }
         menuPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
         ScreenUtils.backgroundAlpaha(getActivity(),0.5f);

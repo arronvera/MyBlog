@@ -6,4 +6,10 @@
     <string name="search">搜索</string>
     <string name="edit">编辑</string>
     <string name="title_my_friend">我的好友</string>
+    <string name="cancel_concern">取消关注</string>
+    <string name="concern">关注</string>
+    <string name="concern_success">关注成功</string>
+    <string name="cancel_concern_success">取消关注成功</string>
+    <string name="topic_no_share">未找到当前话题</string>
+
 </resources>

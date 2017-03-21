@@ -1,22 +1,50 @@
 package code.vera.myblog.presenter.fragment.find;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.trello.rxlifecycle.FragmentEvent;
 
-import com.trello.rxlifecycle.components.support.RxFragment;
+import java.util.List;
 
 import code.vera.myblog.R;
+import code.vera.myblog.adapter.HomeAdapter;
+import code.vera.myblog.bean.home.HomeRequestBean;
+import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.model.find.FindModel;
+import code.vera.myblog.presenter.base.PresenterFragment;
+import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.view.find.FindView;
 
 /**
  * Created by vera on 2017/1/20 0020.
  */
 
-public class FindFragment extends RxFragment {
+public class FindFragment extends PresenterFragment<FindView,FindModel> {
+    private HomeAdapter adapter;
+    private HomeRequestBean requestBean;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_find, container, false);
-        return view;
+    protected int getLayoutResId() {
+        return R.layout.fragment_find;
+    }
+
+    @Override
+    protected void onAttach() {
+        super.onAttach();
+        requestBean=new HomeRequestBean();
+        setAdapter();
+        getTimeLine();
+    }
+
+    private void getTimeLine() {
+        model.getPublic(requestBean,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<StatusesBean>>(mContext,true){
+            @Override
+            public void onNext(List<StatusesBean> statusesBeen) {
+                super.onNext(statusesBeen);
+                adapter.addList(statusesBeen);
+            }
+        });
+    }
+
+    private void setAdapter() {
+        adapter=new HomeAdapter(mContext);
+        view.setAdapter(adapter);
     }
 }

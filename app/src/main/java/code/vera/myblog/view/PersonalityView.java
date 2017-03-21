@@ -82,11 +82,10 @@ public class PersonalityView extends BaseView {
         }else {
             ivGender.setVisibility(View.INVISIBLE);
         }
-        if (userInfoBean.isFollowing()){
+        if (userInfoBean.isFollow_me()){
             tvConcern.setText("取消关注");
         }else {
             tvConcern.setText("关注");
-
         }
 
     }

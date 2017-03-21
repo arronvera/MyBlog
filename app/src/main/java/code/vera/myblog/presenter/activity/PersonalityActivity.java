@@ -11,11 +11,13 @@ import butterknife.OnClick;
 import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.PersonalityModel;
 import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.presenter.fragment.person.TabPersonInfoFragment;
 import code.vera.myblog.presenter.fragment.person.TabPersonPhotosFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.PersonalityView;
 import ww.com.core.Debug;
 
@@ -72,22 +74,43 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
     @OnClick({R.id.tv_concern,R.id.tv_friends,R.id.tv_followers})
     public void doClick(View v){
         switch (v.getId()){
-            case R.id.tv_concern://关注
-                model.createFriendShip(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UserInfoBean>(mContext,false){
-                    @Override
-                    public void onNext(UserInfoBean userInfoBean) {
-                        super.onNext(userInfoBean);
-                        // TODO: 2017/3/10 0010
-                    }
-                });
-                break;
-            case R.id.tv_friends://关注
+            case R.id.tv_concern:
+                if (userInfoBean.isFollowing()){//取消关注
+                    model.destroyFriendShip(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+                        @Override
+                        public void onNext(String s) {
+                            super.onNext(s);
+                            if (!TextUtils.isEmpty(s)){
+                                ToastUtil.showToast(getApplicationContext(),getString(R.string.concern_success));
+                                //todo 更新view
+                            }
+                        }
+                    });
+                }else{//关注
+                    model.createFriendShip(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+                        @Override
+                        public void onNext(String s) {
+                            super.onNext(s);
+                            if (!TextUtils.isEmpty(s)){
+                                ToastUtil.showToast(getApplicationContext(),getString(R.string.concern_success));
+                                //todo 更新view
+                            }
+                        }
+                    });
+                }
 
                 break;
-            case R.id.tv_followers://粉丝
+            case R.id.tv_friends://关注
                 Bundle bundle=new Bundle();
                 bundle.putLong("id",userInfoBean.getId());
-               UsersFollowsActivity.start(this,bundle);
+                bundle.putInt("type", Constants.TYPE_CONCERN);
+                UsersFollowsActivity.start(this,bundle);
+                break;
+            case R.id.tv_followers://粉丝
+                 bundle=new Bundle();
+                bundle.putLong("id",userInfoBean.getId());
+                bundle.putInt("type", Constants.TYPE_FOLLOWERES);
+                UsersFollowsActivity.start(this,bundle);
                 break;
         }
     }

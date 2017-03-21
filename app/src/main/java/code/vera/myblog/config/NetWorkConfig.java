@@ -9,6 +9,8 @@ public class NetWorkConfig {
     public static final String BASE_URL="https://api.weibo.com/2";
     //获取当前登录用户及其所关注（授权）用户的最新微博
     public static final String HOME_TIME_LING=BASE_URL+"/statuses/home_timeline.json";
+    //获取公共列表
+    public static final String PUBLIC_TIME_LING=BASE_URL+"/statuses/public_timeline.json";
     //获取某个用户最新发表的微博列表
     public static final String USER_TIME_LING=BASE_URL+"/statuses/user_timeline.json";
     //获取uid
@@ -17,7 +19,8 @@ public class NetWorkConfig {
     public static final String USER_INFO=BASE_URL+"/users/show.json";
     //搜索用户时的联想搜索建议
     public static final String SEARCH_USER=BASE_URL+"/search/suggestions/users.json";
-
+    //话题下的所有信息
+    public static final String SEARCH_GET_TOPICS=BASE_URL+"/search/topics.json";
     //转发一条微博
     public static final String REPOST_WEIB=BASE_URL+"/statuses/repost.json";
     //发布上传（带图片）
@@ -43,9 +46,13 @@ public class NetWorkConfig {
     public static final String GET_FRIENDSHIP=BASE_URL+"/friendships/friends/bilateral.json";
     //关注一个用户
     public static final String CREATE_FRIENDSHIP=BASE_URL+"/friendships/friends/create.json";
+    //取消关注一个用户
+    public static final String DESTROY_FRIENDSHIP=BASE_URL+"/friendships/friends/destroy.json";
+
     //获取粉丝列表
     public static final String GET_FOLLOWERES=BASE_URL+"/friendships/followers.json";
-
+    //获取关注列表
+    public static final String GET_CONCERNES=BASE_URL+"/friendships/friends.json";
 
     //短链接还原成原始的长链接
     public static final String SHORT_URL_EXPAND=BASE_URL+"/short_url/expand.json";

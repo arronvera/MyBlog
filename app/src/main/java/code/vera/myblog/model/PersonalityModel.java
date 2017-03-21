@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import code.vera.myblog.api.HomeApi;
 import code.vera.myblog.bean.home.UserInfoBean;
@@ -52,18 +53,42 @@ public class PersonalityModel implements IModel {
      * @param transformer
      * @param subscriber
      */
-    public void createFriendShip(Context context, String uid, Observable.Transformer
-            transformer, Subscriber<UserInfoBean> subscriber){
-        HomeApi.createFriendShip(context,uid) .map(new Func1<String, UserInfoBean>() {
+    public void createFriendShip( Context context,String uid,Observable.Transformer
+            transformer,  Subscriber<String> subscriber){
+        HomeApi.createFriendShip(context,uid) .map(new Func1<String, String>() {
             @Override
-            public  UserInfoBean call(String s) {
-                UserInfoBean userInfoBean=new UserInfoBean();
-                if (!TextUtils.isEmpty(s)){
-                    userInfoBean= JSON.parseObject(s,UserInfoBean.class);
+            public  String call(String s) {
+                JSONObject result=JSON.parseObject(s);
+                String id=null;
+                if (result!=null){
+                    id=result.getString("id");
                 }
-                return userInfoBean;
+                return id;
             }
-        }).compose(RxHelper.<UserInfoBean>cutMain())
+        }).compose(RxHelper.<String>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+    /**
+     * 取消关注
+     * @param context
+     * @param uid
+     * @param transformer
+     * @param subscriber
+     */
+    public void destroyFriendShip( Context context,String uid,Observable.Transformer
+            transformer,  Subscriber<String> subscriber){
+        HomeApi.destroyFriendShip(context,uid) .map(new Func1<String, String>() {
+            @Override
+            public  String call(String s) {
+                JSONObject result=JSON.parseObject(s);
+                String id=null;
+                if (result!=null){
+                    id=result.getString("id");
+                }
+                return id;
+            }
+        }).compose(RxHelper.<String>cutMain())
                 .compose(transformer)
                 .subscribe(subscriber);
     }

@@ -19,15 +19,13 @@ public class Constants {
     public static final int POST_STATUS_SENDING=3;//正在发送
     public static final int POST_STATUS_WAITING=4;//等待发送
 
-    //--------------发送类型type-------------------(0-新建信息,1-新建评论,2-回复评论,,3-转发)
+    //--------------发送类型type-------------------(0-新建信息,1-新建评论,,2-转发)
     public static final int POST_TYPE_NEW=0;//新建信息
     public static final int POST_TYPE_COMMENT=1;//新建评论
     public static final int POST_TYPE_REPOST=2;//转发
 
-
-
-    public static final int TAB_REPOST=0;
-    public static final int TAB_COMMENT=1;
-    public static final int TAB_LIKE=2;
+    //--------------关注和粉丝-------------------
+    public static final int TYPE_CONCERN=1001;//关注
+    public static final int TYPE_FOLLOWERES=1002;//粉丝
 
 }

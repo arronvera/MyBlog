@@ -1,4 +1,4 @@
-package code.vera.myblog.view.other;
+package code.vera.myblog.view.find;
 
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -7,10 +7,10 @@ import code.vera.myblog.adapter.RvAdapter;
 import code.vera.myblog.view.RefreshView;
 
 /**
- * Created by vera on 2017/2/28 0028.
+ * Created by vera on 2017/3/21 0021.
  */
 
-public class TopicView extends RefreshView {
+public class FindView extends RefreshView {
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);

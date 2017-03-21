@@ -119,4 +119,33 @@ public class HomeApi  extends BaseApi{
         params.addParameters("rip", IpUtils.getHostIp());
         return onGet(url, params);
     }
+
+    /**
+     * 取消关注
+     * @param context
+     * @param uid
+     * @return
+     */
+    public static Observable<String>destroyFriendShip(Context context,String uid){
+        String url = NetWorkConfig.DESTROY_FRIENDSHIP;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("uid", uid);
+        params.addParameters("rip", IpUtils.getHostIp());
+        return onGet(url, params);
+    }
+    /**
+     * 获取某一话题下的分享信息
+     * @param q
+     * @param context
+     * @return
+     */
+    public static Observable<String > getTopicStatus(String q, Context context) {
+        String url = NetWorkConfig.SEARCH_GET_TOPICS;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("q",q);
+        return onGet(url, params);
+    }
+
 }

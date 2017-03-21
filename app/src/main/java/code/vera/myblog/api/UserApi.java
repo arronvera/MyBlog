@@ -39,4 +39,12 @@ public class UserApi  {
         params.addParameters("screem_name",screem_name);
         return onGet(url, params);
     }
+    public static Observable<String> getUserConcernes(Context context,String uid,String screem_name){
+        String url = NetWorkConfig.GET_CONCERNES;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("uid",uid);
+        params.addParameters("screem_name",screem_name);
+        return onGet(url, params);
+    }
 }

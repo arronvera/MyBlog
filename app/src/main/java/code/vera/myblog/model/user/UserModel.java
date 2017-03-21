@@ -144,4 +144,28 @@ public class UserModel implements IModel {
                 .compose(transformer)
                 .subscribe(subscriber);
     }
+    /**
+     * 获取某个关注列表
+     * @param context
+     * @param uid
+     * @param name
+     * @param transformer
+     * @param subscriber
+     */
+    public void getUserConcernes(Context context, String uid,String name, Observable.Transformer
+            transformer, Subscriber< List<UserInfoBean>> subscriber){
+        UserApi.getUserConcernes(context,uid,name) .map(new Func1<String, List<UserInfoBean>>() {
+            @Override
+            public   List<UserInfoBean> call(String s) {
+                List<UserInfoBean>beanList=new ArrayList<>();
+                JSONObject result= JSON.parseObject(s);
+                if (result!=null){
+                    beanList= JSON.parseArray(result.getString("users"),UserInfoBean.class);
+                }
+                return beanList;
+            }
+        }).compose(RxHelper.< List<UserInfoBean>>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
 }
