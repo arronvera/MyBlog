@@ -7,6 +7,7 @@ import android.view.View;
 import com.trello.rxlifecycle.ActivityEvent;
 
 import butterknife.OnClick;
+import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.model.PersonalityModel;
@@ -41,21 +42,21 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
         userInfoBean= (UserInfoBean) intent.getSerializableExtra("user");
         if (userInfoBean!=null){
             view.showInfo(userInfoBean);
+            if (AccessTokenKeeper.readAccessToken(getApplicationContext()).getUid().equals(userInfoBean.getId()+"")){
+                view.setConcernVisible(false);
+            }
         }
         user_name=intent.getStringExtra("user_name");
         if (!TextUtils.isEmpty(user_name)){
-            //
-            Debug.d("user_name="+user_name);
             model.getUserInfoByName(getApplicationContext(),user_name,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UserInfoBean>(mContext,true){
                 @Override
                 public void onNext(UserInfoBean userInfoBean) {
                     super.onNext(userInfoBean);
                     Debug.d("userInfoBean="+userInfoBean.toString());
                     view.showInfo(userInfoBean);
-                    TabPersonInfoFragment.getInstance().setUser(userInfoBean);
+                    TabPersonInfoFragment.getInstance().setUid(userInfoBean.getId());
 //                    TabPersonAllCircleFragment.getInstance().setUser(userInfoBean);
                     TabPersonPhotosFragment.getInstance().setUser(userInfoBean);
-
                 }
             });
         }

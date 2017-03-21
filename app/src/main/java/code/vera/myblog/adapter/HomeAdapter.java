@@ -231,6 +231,7 @@ public class HomeAdapter extends RvAdapter<StatusesBean>{
             ivMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (onItemClickListener!=null)
                     onItemMenuListener.onItemMenuListener(v,position);
                 }
             });

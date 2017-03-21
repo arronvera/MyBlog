@@ -95,4 +95,12 @@ public class PersonalityView extends BaseView {
     public void setActivity(PersonalityActivity personalityActivity) {
         activity=personalityActivity;
     }
+
+    public void setConcernVisible(boolean b) {
+        if (b){
+            tvConcern.setVisibility(View.VISIBLE);
+        }else {
+            tvConcern.setVisibility(View.INVISIBLE);
+        }
+    }
 }

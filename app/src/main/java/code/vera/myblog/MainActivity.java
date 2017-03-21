@@ -125,7 +125,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         item.setText("设置");
         menuList.add(item);
         //获取用户
-        model.getUserInfo(this,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UserInfoBean>(mContext,false){
+        model.getUserInfo(this,"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UserInfoBean>(mContext,false){
             @Override
             public void onNext(UserInfoBean userInfoBean) {
                 super.onNext(userInfoBean);
@@ -208,10 +208,8 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     private void logOut() {
         //清空token
         AccessTokenKeeper.clear(this);
-        //跳转
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+        //跳转并且清空zhan栈
+        Intent intent = new Intent(this,LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);     startActivity(intent);
     }
 
     @Override

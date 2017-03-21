@@ -30,14 +30,14 @@ public class UserModel implements IModel {
     public void onAttach() {
     }
     /**
-     * 获取用户信息
+     * 获取用户信息(uid)
      * @param context
      * @param transformer
      * @param subscriber
      */
-    public void getUserInfo(Context context, Observable.Transformer
+    public void getUserInfo(Context context,String uid, Observable.Transformer
             transformer, Subscriber<UserInfoBean> subscriber){
-        HomeApi.getUserInfo(context,"") .map(new Func1<String, UserInfoBean>() {
+        HomeApi.getUserInfo(context,uid) .map(new Func1<String, UserInfoBean>() {
             @Override
             public  UserInfoBean call(String s) {
                 UserInfoBean userInfoBean=new UserInfoBean();

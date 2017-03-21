@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -66,8 +65,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private PostBean postBean;
     private CommentRequestBean commentRequestBean;
     private List<MediaBean> pictureList=new ArrayList<>();
-    private ArrayList<String> results = new ArrayList<>();
-    private List<Fragment> fragments=new ArrayList<>();
     //数据库
     PostDao postDao;
     @Override
@@ -185,7 +182,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 view.getEt().append("##");
                 //移动光标到中间
                 view.getEt().setSelection(view.getEditStr().indexOf("#")+1);
-                //todo
                 break;
             case R.id.tv_location:
                 //// TODO: 2017/3/19 跳转到定位
