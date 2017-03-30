@@ -5,57 +5,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
-
-    <LinearLayout style="@style/ItemPersonLLayout">
-        <TextView style="@style/ItemPersonTextView"
-            android:text="昵称："/>
-        <TextView style="@style/ItemPersonTextView"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/tv_name"
-            tools:text="vera"/>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout style="@style/ItemPersonLLayout">
+            <TextView style="@style/ItemPersonTextView"
+                android:text="昵称："/>
+            <TextView style="@style/ItemPersonTextView"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_name"
+                tools:text="vera"/>
+        </LinearLayout>
+        <include layout="@layout/layout_line"/>
+        <LinearLayout style="@style/ItemPersonLLayout">
+            <TextView style="@style/ItemPersonTextView"
+                android:text="性别："/>
+            <TextView style="@style/ItemPersonTextView"
+                android:id="@+id/tv_gender"
+                android:layout_marginLeft="10dp"
+                tools:text="女"/>
+        </LinearLayout>
+        <include layout="@layout/layout_line"/>
+        <LinearLayout style="@style/ItemPersonLLayout">
+            <TextView style="@style/ItemPersonTextView"
+                android:text="所在地："/>
+            <TextView style="@style/ItemPersonTextView"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_location"
+                tools:text="四川成都"/>
+        </LinearLayout>
+        <include layout="@layout/layout_line"/>
+        <LinearLayout style="@style/ItemPersonLLayout">
+            <TextView style="@style/ItemPersonTextView"
+                android:text="简介："/>
+            <TextView style="@style/ItemPersonTextView"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_introduce"
+                tools:text="我哦呜哦哦"/>
+        </LinearLayout>
+        <include layout="@layout/layout_line"/>
+        <LinearLayout style="@style/ItemPersonLLayout">
+            <TextView style="@style/ItemPersonTextView"
+                android:text="地址："/>
+            <TextView style="@style/ItemPersonTextView"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_url"
+                tools:text="我哦呜哦哦"/>
+        </LinearLayout>
+        <include layout="@layout/layout_line"/>
+        <LinearLayout style="@style/ItemPersonLLayout">
+            <TextView style="@style/ItemPersonTextView"
+                android:text="在线状态："/>
+            <TextView style="@style/ItemPersonTextView"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_state"
+                tools:text="我哦呜哦哦"/>
+        </LinearLayout>
+        <include layout="@layout/layout_line"/>
+        <LinearLayout style="@style/ItemPersonLLayout">
+            <TextView style="@style/ItemPersonTextView"
+                android:text="创建时间："/>
+            <TextView style="@style/ItemPersonTextView"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_create"
+                tools:text="2017-7-7"/>
+        </LinearLayout>
     </LinearLayout>
-
-    <include layout="@layout/layout_line"/>
-    <LinearLayout style="@style/ItemPersonLLayout">
-        <TextView style="@style/ItemPersonTextView"
-            android:text="性别："/>
-        <TextView style="@style/ItemPersonTextView"
-            android:id="@+id/tv_gender"
-            android:layout_marginLeft="10dp"
-            tools:text="女"/>
-    </LinearLayout>
-    <include layout="@layout/layout_line"/>
-    <LinearLayout style="@style/ItemPersonLLayout">
-        <TextView style="@style/ItemPersonTextView"
-            android:text="所在地："/>
-        <TextView style="@style/ItemPersonTextView"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/tv_location"
-            tools:text="四川成都"/>
-    </LinearLayout>
-    <include layout="@layout/layout_line"/>
-    <LinearLayout style="@style/ItemPersonLLayout">
-        <TextView style="@style/ItemPersonTextView"
-            android:text="简介："/>
-        <TextView style="@style/ItemPersonTextView"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/tv_introduce"
-            tools:text="我哦呜哦哦"/>
-    </LinearLayout>
-    <LinearLayout style="@style/ItemPersonLLayout">
-        <TextView style="@style/ItemPersonTextView"
-            android:text="地址："/>
-        <TextView style="@style/ItemPersonTextView"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/tv_url"
-            tools:text="我哦呜哦哦"/>
-    </LinearLayout>
-    <LinearLayout style="@style/ItemPersonLLayout">
-        <TextView style="@style/ItemPersonTextView"
-            android:text="在线状态："/>
-        <TextView style="@style/ItemPersonTextView"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/tv_state"
-            tools:text="我哦呜哦哦"/>
-    </LinearLayout>
+</ScrollView>
 </LinearLayout>

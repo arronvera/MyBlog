@@ -1,5 +1,6 @@
 package code.vera.myblog.presenter.activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,11 +16,12 @@ import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.PersonalityModel;
 import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.presenter.fragment.person.TabPersonInfoFragment;
-import code.vera.myblog.presenter.fragment.person.TabPersonPhotosFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.PersonalityView;
 import ww.com.core.Debug;
+
+import static code.vera.myblog.presenter.activity.BigPhotoActivity.PARAM_PHOTO;
 
 
 /**
@@ -30,6 +32,7 @@ import ww.com.core.Debug;
 public class PersonalityActivity  extends PresenterActivity<PersonalityView, PersonalityModel> {
     private UserInfoBean userInfoBean;
     private String user_name;
+    public static final String HEAD_PHOTO_SHARE="photopic";
 
     @Override
     protected int getLayoutResId() {
@@ -63,7 +66,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
                     view.showInfo(user);
                     TabPersonInfoFragment.getInstance().setUid(user.getId());
 //                    TabPersonAllCircleFragment.getInstance().setUser(userInfoBean);
-                    TabPersonPhotosFragment.getInstance().setUser(user);
+//                    TabPersonPhotosFragment.getInstance().setUser(user);
                 }
             });
             bundle.putString("name",user_name);
@@ -71,7 +74,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
         view.setAdapter();
 
     }
-    @OnClick({R.id.tv_concern,R.id.tv_friends,R.id.tv_followers})
+    @OnClick({R.id.tv_concern,R.id.tv_friends,R.id.tv_followers,R.id.iv_bg,R.id.crv_photo})
     public void doClick(View v){
         switch (v.getId()){
             case R.id.tv_concern:
@@ -111,6 +114,16 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
                 bundle.putLong("id",userInfoBean.getId());
                 bundle.putInt("type", Constants.TYPE_FOLLOWERES);
                 UsersFollowsActivity.start(this,bundle);
+                break;
+            case R.id.iv_bg://封面
+                Intent intent=new Intent(this,BigPhotoActivity.class);
+                intent.putExtra(PARAM_PHOTO,userInfoBean.getCover_image_phone());
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this,view.getCoverImgView(),HEAD_PHOTO_SHARE).toBundle());
+                break;
+            case R.id.crv_photo://头像
+                Intent intent2=new Intent(this,BigPhotoActivity.class);
+                intent2.putExtra(PARAM_PHOTO,userInfoBean.getAvatar_hd());
+                startActivity(intent2, ActivityOptions.makeSceneTransitionAnimation(this,view.getPhotoView(),HEAD_PHOTO_SHARE).toBundle());
                 break;
         }
     }

@@ -31,8 +31,10 @@ public class UserInfoBean implements Serializable {
     private boolean allow_all_act_msg;
     private boolean geo_enabled;
     private boolean verified;//是否是微博认证用户，即加V用户，true：是，false：否
+    private int verified_type;
     private boolean allow_all_comment;
     private String avatar_large;
+    private String avatar_hd;//高清
     private String verified_reason;
     private boolean follow_me;//该用户是否关注当前登录用户，true：是，false：否
     private int online_status;//在线状态 用户的在线状态，0：不在线、1：在线
@@ -52,6 +54,22 @@ public class UserInfoBean implements Serializable {
 
     public void setFavourites_count(long favourites_count) {
         this.favourites_count = favourites_count;
+    }
+
+    public int getVerified_type() {
+        return verified_type;
+    }
+
+    public void setVerified_type(int verified_type) {
+        this.verified_type = verified_type;
+    }
+
+    public String getAvatar_hd() {
+        return avatar_hd;
+    }
+
+    public void setAvatar_hd(String avatar_hd) {
+        this.avatar_hd = avatar_hd;
     }
 
     public String getCover_image_phone() {

@@ -7,6 +7,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.base.BaseView;
 
 /**
@@ -26,6 +27,9 @@ public class TabPersonInfoView extends BaseView {
     TextView tvUrl;
     @BindView(R.id.tv_state)
     TextView tvState;
+    @BindView(R.id.tv_create)
+    TextView tvCreate;
+
 
 
     @Override
@@ -49,5 +53,6 @@ public class TabPersonInfoView extends BaseView {
         }else  if (userInfoBean.getOnline_status()==1){
             tvState.setText("在线");
         }
+        tvCreate.setText(TimeUtils.dateTransfer(userInfoBean.getCreated_at()));
     }
 }

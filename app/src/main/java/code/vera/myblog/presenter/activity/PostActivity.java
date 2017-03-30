@@ -438,7 +438,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         getSupportFragmentManager().beginTransaction().hide(atSomebodyFragment).commit();
         SortBean sortBean = (SortBean) arg.getSerializable("sort_bean");
         view.setTitle("分享圈子");
-//        view.setSendBtnVisible(true);
         //添加字符
         if (sortBean != null) {
             view.addStr("@" + sortBean.getName() + " ");

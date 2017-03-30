@@ -76,6 +76,7 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
 
     private int index;//当前item
     private boolean isFollow;
+    private boolean isCollection;//是否收藏
 
     @Override
     protected int getLayoutResId() {
@@ -90,7 +91,6 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         setAdater();
         getData();
         //上下拉刷新
-
         view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
             @Override
             public void onHeaderRefreshing() {
@@ -178,7 +178,11 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         btnShoucang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo 收藏
+                if (isCollection){
+
+                }else {
+                    //todo 收藏
+                }
             }
         });
         btnCopy.setOnClickListener(new View.OnClickListener() {
@@ -329,11 +333,16 @@ public class HomeFragment  extends PresenterFragment<HomeView, HomeModel>impleme
         //弹出菜单更多,在底部显示
         index=pos;
        isFollow=adapter.getItem(pos).getUserBean().isFollowing();
-        Debug.d("isFollow="+isFollow);
+        isCollection=adapter.getItem(pos).isFavorited();
         if (isFollow){
             btnConcern.setText(getString(R.string.cancel_concern));
         }else{
             btnConcern.setText(getString(R.string.concern));
+        }
+        if (isCollection){
+            btnConcern.setText(getString(R.string.cancel_collection));
+        }else {
+            btnConcern.setText(getString(R.string.collection));
         }
         menuPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
         ScreenUtils.backgroundAlpaha(getActivity(),0.5f);

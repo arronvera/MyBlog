@@ -80,10 +80,13 @@
             android:name=".presenter.activity.TopicActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppBaseTheme2" />
-        <activity android:name=".presenter.activity.UsersFollowsActivity"
+        <activity
+            android:name=".presenter.activity.UsersFollowsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppBaseTheme2"
-            ></activity>
+            android:theme="@style/AppBaseTheme2" />
+        <activity android:name=".presenter.activity.BigPhotoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppBaseTheme2"></activity>
     </application>
 
 </manifest>

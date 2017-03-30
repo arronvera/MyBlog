@@ -1,5 +1,8 @@
 package code.vera.myblog.presenter.activity;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.trello.rxlifecycle.ActivityEvent;
 
 import java.io.UnsupportedEncodingException;
@@ -18,6 +21,9 @@ import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.SearchView;
 import ww.com.core.Debug;
 
+/**
+ * 搜索
+ */
 public class SearchActivity extends PresenterActivity<SearchView, SearchModel> {
     private SearchUserAdapter adapter;
     private List<UserInfoBean> userInfoBeanList;
@@ -71,5 +77,8 @@ public class SearchActivity extends PresenterActivity<SearchView, SearchModel> {
     public void doClick(){//搜索
         getData();
     }
-
+    public static void start(Context context) {
+        Intent intent = new Intent(context, SearchActivity.class);
+        context.startActivity(intent);
+    }
 }

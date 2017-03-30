@@ -1,18 +1,21 @@
 package code.vera.myblog;
 
-import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.trello.rxlifecycle.ActivityEvent;
@@ -25,6 +28,7 @@ import code.vera.myblog.adapter.MenuItemAdapter;
 import code.vera.myblog.bean.MenuItem;
 import code.vera.myblog.bean.UnReadBean;
 import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
@@ -38,15 +42,17 @@ import code.vera.myblog.presenter.fragment.home.HomeFragment;
 import code.vera.myblog.presenter.fragment.message.MessageFragment;
 import code.vera.myblog.presenter.fragment.set.SetFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.view.CircleImageView;
 import code.vera.myblog.view.MainView;
 
 import static code.vera.myblog.R.id.lv_left_menu;
+import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 
 /**
  * 主界面
  */
 public class MainActivity extends PresenterActivity<MainView, UserModel>
-        implements AdapterView.OnItemClickListener, MenuFragment.FragmentDrawerListener {
+        implements AdapterView.OnItemClickListener, MenuFragment.FragmentDrawerListener,Toolbar.OnMenuItemClickListener{
     @BindView(R.id.dl_left)
     DrawerLayout dlLeft;
     @BindView(lv_left_menu)
@@ -55,18 +61,22 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     Toolbar toolbar;
     @BindView(R.id.iv_title)
     ImageView ivTitle;
-
+    @BindView(R.id.civ_user_photo)
+    CircleImageView civHeadPhoto;
+    @BindView(R.id.tv_user_name)
+    TextView tvUserName;
     private ActionBarDrawerToggle drawerToggle;
-    private Activity activity;
     //使用集合来储存侧滑菜单的菜单项
     private ArrayList<MenuItem> menuList;
     //使用ArrayAdapter来对ListView的内容进行填充
     private MenuItemAdapter adapter;
     private FragmentManager fragmentManager;
-    private boolean isExit = false;
     private long firstTime = 0;
     Fragment fragment = null;
     private UserInfoBean user;//当前用户
+    public static final String PARAM_SHARE_TRANSITION_HEAD="head";
+    public static final String PARAM_SHARE_TRANSITION_NAME="name";
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -84,6 +94,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     }
 
     private void addListener() {
+        toolbar.setOnMenuItemClickListener(this);
         lvMenu.setOnItemClickListener(this);
     }
 
@@ -148,54 +159,32 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         //设置toolbar菜单
         toolbar.inflateMenu(R.menu.toolbar_menu);
         //开关
-        drawerToggle = new ActionBarDrawerToggle(activity, dlLeft, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerToggle = new ActionBarDrawerToggle(this, dlLeft, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerToggle.syncState();
         dlLeft.setDrawerListener(drawerToggle);
         fragmentManager = getSupportFragmentManager();
-        //menu监听
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(android.view.MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_edit://发布
-//                        Toast.makeText(MainActivity.this, "点击了编辑", Toast.LENGTH_SHORT).show();
-                        //跳转
-                        Intent intent=new Intent(MainActivity.this, PostActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.action_search://搜索
-//                        Toast.makeText(MainActivity.this, "点击了搜索", Toast.LENGTH_SHORT).show();
-                        //跳转
-                        Intent intent2=new Intent(MainActivity.this, SearchActivity.class);
-                        startActivity(intent2);
-                        break;
-
-                }
-                return true;
-            }
-        });
+        //5.0过渡动画
+        civHeadPhoto.setTransitionName(PARAM_SHARE_TRANSITION_HEAD);
+        tvUserName.setTransitionName(PARAM_SHARE_TRANSITION_NAME);
+        postponeEnterTransition();
+        startPostponedEnterTransition();
     }
 
 
     @OnClick({ R.id.iv_menu_close,R.id.civ_user_photo})
     public void doClick(View v) {
         switch (v.getId()) {
-//            case R.id.iv_sign_out:
-//                //退出登录
-//                DialogUtils.showDialog(this, "", "你是否确定注销登陆？", "确定", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        logOut();
-//                    }
-//                }, "取消", null);
-//                break;
             case R.id.iv_menu_close://关闭菜单
                 dlLeft.closeDrawer(GravityCompat.START);
                 break;
             case R.id.civ_user_photo://用户头像
                 Intent intent=new Intent(this, PersonalityActivity.class);
                 intent.putExtra("user",user);
-                startActivity(intent);
+//                startActivity(intent);
+                Pair<View, String> p = new Pair<View, String>(civHeadPhoto, PARAM_SHARE_TRANSITION_HEAD);//haderIv是头像控件
+                Pair<View, String> p1 = new Pair<View, String>(tvUserName, PARAM_SHARE_TRANSITION_NAME);//nameTv是名字控件
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,
+                                p, p1).toBundle());
                 break;
         }
     }
@@ -220,12 +209,10 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
             case 1:
                 fragment = new MessageFragment();
                 ivTitle.setImageResource(R.mipmap.ic_title_message);
-
                 break;
             case 2:
                 fragment = new FindFragment();
                 ivTitle.setImageResource(R.mipmap.ic_title_find);
-
                 break;
             case 3:
                 fragment = new CollectionFragment();
@@ -240,13 +227,11 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
             case 5://设置
                 fragment=new SetFragment();
                 ivTitle.setImageResource(R.mipmap.ic_set);
-
                 break;
         }
         fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
         dlLeft.closeDrawer(GravityCompat.START);
         lvMenu.setItemChecked(position, true);
-
     }
 
     @Override
@@ -272,6 +257,20 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
 
+    @Override
+    public boolean onMenuItemClick(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit://发布
+                Bundle bundle=new Bundle();
+                bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_NEW);
+                PostActivity.start(this,bundle);
+                break;
+            case R.id.action_search://搜索
+                SearchActivity.start(this);
+                break;
+        }
+        return false;
     }
 }

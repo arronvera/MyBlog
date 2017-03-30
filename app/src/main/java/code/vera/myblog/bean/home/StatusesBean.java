@@ -142,22 +142,6 @@ public class StatusesBean implements Serializable {
         this.id = id;
     }
 
-//    public String getMid() {
-//        return mid;
-//    }
-//
-//    public void setMid(String mid) {
-//        this.mid = mid;
-//    }
-
-//    public String getIdstr() {
-//        return idstr;
-//    }
-//
-//    public void setIdstr(String idstr) {
-//        this.idstr = idstr;
-//    }
-
     public String getText() {
         return text;
     }
@@ -166,38 +150,6 @@ public class StatusesBean implements Serializable {
         this.text = text;
     }
 
-//    public int getTextLength() {
-//        return textLength;
-//    }
-//
-//    public void setTextLength(int textLength) {
-//        this.textLength = textLength;
-//    }
-//
-//    public int getSource_allowclick() {
-//        return source_allowclick;
-//    }
-//
-//    public void setSource_allowclick(int source_allowclick) {
-//        this.source_allowclick = source_allowclick;
-//    }
-//
-//    public String getSource() {
-//        return source;
-//    }
-//
-//    public void setSource(String source) {
-//        this.source = source;
-//    }
-//
-//    public List<PicBean> getPic_urls() {
-//        return pic_urls;
-//    }
-//
-//    public void setPic_urls(List<PicBean> pic_urls) {
-//        this.pic_urls = pic_urls;
-//    }
-
     public UserInfoBean getUserBean() {
         return JSONObject.parseObject(user, UserInfoBean.class);
     }
@@ -205,30 +157,6 @@ public class StatusesBean implements Serializable {
     public void setUserBean(UserInfoBean user) {
         this.userbean = user;
     }
-
-//    public int getReposts_count() {
-//        return reposts_count;
-//    }
-//
-//    public void setReposts_count(int reposts_count) {
-//        this.reposts_count = reposts_count;
-//    }
-//
-//    public int getComments_count() {
-//        return comments_count;
-//    }
-//
-//    public void setComments_count(int comments_count) {
-//        this.comments_count = comments_count;
-//    }
-//
-//    public int getAttitudes_count() {
-//        return attitudes_count;
-//    }
-//
-//    public void setAttitudes_count(int attitudes_count) {
-//        this.attitudes_count = attitudes_count;
-//    }
 
     public long getComments_count() {
         return comments_count;

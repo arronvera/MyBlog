@@ -45,6 +45,8 @@ public class PersonalityView extends BaseView {
     ImageView ivGender;//性别
     @BindView(R.id.tv_concern)
     TextView tvConcern;//关注
+    @BindView(R.id.tv_vertify_reason)
+    TextView tvIdentityReason;//认证理由
 
     private TabPersonAdapter tabPersonAdapter;
     private PersonalityActivity activity;
@@ -69,8 +71,8 @@ public class PersonalityView extends BaseView {
      */
     public void showInfo(UserInfoBean userInfoBean) {
         tvFriends.setText("关注："+userInfoBean.getFriends_count());//关注
-        tvFolloweres.setText("粉丝："+userInfoBean.getFriends_count());//粉丝
-        tvIntro.setText(userInfoBean.getDescription());//介绍
+        tvFolloweres.setText("粉丝："+userInfoBean.getFollowers_count());//粉丝
+        tvIntro.setText("简介："+userInfoBean.getDescription());//介绍
         tvName.setText(userInfoBean.getName());//名字
         ImageLoader.getInstance().displayImage(userInfoBean.getProfile_image_url(), civPhoto, BaseApplication
                 .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
@@ -87,6 +89,14 @@ public class PersonalityView extends BaseView {
         }else {
             tvConcern.setText("关注");
         }
+        if (userInfoBean.isVerified()){//认证
+           ivIdentity.setVisibility(View.VISIBLE);
+            tvIdentityReason.setVisibility(View.VISIBLE);
+            tvIdentityReason.setText("认证理由："+userInfoBean.getVerified_reason());
+        }else {
+            ivIdentity.setVisibility(View.INVISIBLE);
+            tvIdentityReason.setVisibility(View.GONE);
+        }
 
     }
 
@@ -100,5 +110,11 @@ public class PersonalityView extends BaseView {
         }else {
             tvConcern.setVisibility(View.INVISIBLE);
         }
+    }
+    public CircleImageView getPhotoView(){
+        return civPhoto;
+    }
+    public ImageView getCoverImgView(){
+        return ivBg;
     }
 }

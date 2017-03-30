@@ -109,8 +109,16 @@
                   </LinearLayout>
                   <TextView
                       style="@style/TextWhiteStyle"
-                      android:id="@+id/tv_intro"
+                      android:visibility="gone"
+                      android:id="@+id/tv_vertify_reason"
                       android:layout_below="@+id/ll_fans"
+                      android:layout_marginLeft="20dp"
+                      android:layout_marginBottom="10dp"
+                      tools:text="认证理由"/>
+                  <TextView
+                      style="@style/TextWhiteStyle"
+                      android:id="@+id/tv_intro"
+                      android:layout_below="@+id/tv_vertify_reason"
                       android:layout_marginLeft="20dp"
                       android:layout_marginBottom="20dp"
                       tools:text="这是介绍"/>

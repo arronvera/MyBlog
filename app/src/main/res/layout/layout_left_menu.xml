@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
     <RelativeLayout
         android:id="@+id/rl_close"
         android:layout_width="match_parent"
@@ -22,8 +23,17 @@
         android:layout_height="70dp"
        android:layout_marginLeft="20dp"
         android:layout_below="@+id/rl_close"/>
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/colorWhite"
+        android:layout_marginLeft="20dp"
+        tools:text="vera"
+        android:layout_below="@+id/civ_user_photo"/>
     <ListView
-        android:layout_below="@+id/civ_user_photo"
+        android:layout_below="@+id/tv_user_name"
         android:id="@+id/lv_left_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.0"
     defaultConfig {
         applicationId "code.vera.myblog"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -76,11 +76,13 @@ dependencies {
     //数据库
     compile files('libs/ormlite-android-5.0.jar')
     compile files('libs/ormlite-core-5.0.jar')
-
     //特效textview sdk >= 15
     compile 'hanks.xyz:htextview-library:0.1.5'
     //gif
     compile 'com.github.Cutta:GifView:1.1'
     //菜单
     compile 'com.yalantis:contextmenu:1.0.7'
+
+    //cardView
+    compile 'com.android.support:cardview-v7:23.4.0'
 }
