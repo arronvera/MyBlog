@@ -15,22 +15,13 @@ import code.vera.myblog.view.base.BaseView;
  */
 
 public class TabRepostView extends BaseView {
-    @BindView(R.id.rv_photo)
-    RecyclerView rvPhoto;
+
 
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
-        initView();
+
 
     }
 
-    private void initView() {
-        rvPhoto.setHasFixedSize(true);
-        rvPhoto.setLayoutManager(new StaggeredGridLayoutManager(3,  StaggeredGridLayoutManager.VERTICAL));
-    }
-
-    public void setAdapter(RvAdapter adapter) {
-        rvPhoto.setAdapter(adapter);
-    }
 }
