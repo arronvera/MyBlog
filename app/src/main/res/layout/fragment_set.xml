@@ -25,6 +25,7 @@
                     android:layout_height="30dp" />
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/rl_clear_cache"
                 android:layout_marginTop="2dp"
                 style="@style/ItemSetLLayout">
                 <TextView

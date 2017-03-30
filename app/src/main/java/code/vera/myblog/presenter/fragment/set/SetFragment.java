@@ -28,7 +28,7 @@ public class SetFragment extends PresenterFragment<SetView,VoidModel> {
     protected void onAttach() {
         super.onAttach();
     }
-    @OnClick({R.id.rl_exit})
+    @OnClick({R.id.rl_exit,R.id.rl_clear_cache})
     public void doClick(View v){
         switch (v.getId()){
             case R.id.rl_exit:
@@ -39,7 +39,19 @@ public class SetFragment extends PresenterFragment<SetView,VoidModel> {
                     }
                 }, "取消", null);
                 break;
+            case R.id.rl_clear_cache:
+                DialogUtils.showDialog(mContext, "", "你是否确定清楚缓存？", "确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        clearCache();
+                    }
+                }, "取消", null);
+                break;
         }
+    }
+
+    private void clearCache() {
+        //todo
     }
 
     /**
