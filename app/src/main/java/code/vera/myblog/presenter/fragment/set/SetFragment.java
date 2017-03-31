@@ -52,6 +52,7 @@ public class SetFragment extends PresenterFragment<SetView,VoidModel> {
 
     private void clearCache() {
         //todo
+
     }
 
     /**

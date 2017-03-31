@@ -40,6 +40,7 @@ import code.vera.myblog.presenter.fragment.home.HomeFragment;
 import code.vera.myblog.presenter.fragment.message.MessageFragment;
 import code.vera.myblog.presenter.fragment.set.SetFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.utils.SaveUtils;
 import code.vera.myblog.view.CircleImageView;
 import code.vera.myblog.view.MainView;
 
@@ -136,6 +137,10 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
             @Override
             public void onNext(UserInfoBean userInfoBean) {
                 super.onNext(userInfoBean);
+                if (userInfoBean!=null){
+                    //存储
+                    SaveUtils.saveUser(userInfoBean,MainActivity.this);
+                }
                 view.showUser(userInfoBean);
                 user=userInfoBean;
                 //获取未读信息

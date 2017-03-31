@@ -23,6 +23,7 @@ import butterknife.BindView;
 import cn.finalteam.rxgalleryfinal.bean.MediaBean;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
+import code.vera.myblog.bean.PostBean;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
@@ -194,5 +195,9 @@ public class PostView extends BaseView {
         Bitmap bitmap= BitmapFactory.decodeFile(picPath);
         ivItemGallery.setImageBitmap(bitmap);
         llGallery.addView(galleryView);
+    }
+
+    public void showPostBean(PostBean postBean) {
+        //todo
     }
 }

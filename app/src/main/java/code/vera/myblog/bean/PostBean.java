@@ -2,12 +2,14 @@ package code.vera.myblog.bean;
 
 import com.j256.ormlite.field.DatabaseField;
 
+import java.io.Serializable;
+
 /**
  * 上传请求实体类
  * Created by vera on 2017/2/9 0009.
  */
 
-public class PostBean {
+public class PostBean implements Serializable {
     @DatabaseField(generatedId = true)
     private int id;//主键
     @DatabaseField(columnName = "status")

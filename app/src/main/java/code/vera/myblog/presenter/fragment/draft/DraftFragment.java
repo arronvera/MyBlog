@@ -1,6 +1,7 @@
 package code.vera.myblog.presenter.fragment.draft;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -17,11 +18,16 @@ import code.vera.myblog.db.PostDao;
 import code.vera.myblog.listener.OnItemDeleteClickListener;
 import code.vera.myblog.listener.OnItemSendListener;
 import code.vera.myblog.model.PostModel;
+import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.view.draft.DraftView;
 import ww.com.core.Debug;
+
+import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_BEAN;
+import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
+import static com.baidu.location.h.a.i;
 
 /**
  * 草稿箱
@@ -90,8 +96,11 @@ public class DraftFragment extends PresenterFragment<DraftView, PostModel>
     public void onItemSendListener(View view, int pos, final PostBean postBean) {
         int type=postBean.getPostType();
         switch (type) {
-            case Constants.POST_TYPE_NEW:
-                //todo
+            case Constants.POST_TYPE_NEW://分享
+                Bundle bundle=new Bundle();
+                bundle.putInt(PARAM_POST_TYPE,Constants.POST_TYPE_NEW);
+                bundle.putSerializable(PARAM_POST_BEAN,postBeanList.get(i));
+                PostActivity.start(mContext,bundle);
                 break;
             case Constants.POST_TYPE_COMMENT://评论
                 CommentRequestBean requestBean=new CommentRequestBean();

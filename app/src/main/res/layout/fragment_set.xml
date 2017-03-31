@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_f2f2f2">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -53,6 +54,17 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="14sp"
                     android:layout_centerVertical="true"
+                    android:text="@string/problems"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                style="@style/ItemSetLLayout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
                     android:text="@string/about_author"/>
             </RelativeLayout>
             <RelativeLayout
@@ -78,6 +90,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
+            <ImageView
+                android:layout_marginTop="20dp"
+                android:background="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_set_pro"/>
         </LinearLayout>
     </ScrollView>
 

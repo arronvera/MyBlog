@@ -58,6 +58,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private static final int REQUEST_CODE = 732;
     public static final String PARAM_STATUS_BEAN = "StatusesBean";
     public static final String PARAM_POST_TYPE = "type";
+    public static final String PARAM_POST_BEAN = "postbean";
 
     private int type;
     private String picPath;
@@ -81,14 +82,18 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     protected void onAttach() {
         super.onAttach();
         Intent intent = getIntent();
-        type = intent.getIntExtra("type", -1);
-        statusesBean = (StatusesBean) intent.getSerializableExtra("StatusesBean");
+        type = intent.getIntExtra(PARAM_POST_TYPE, -1);
+        statusesBean = (StatusesBean) intent.getSerializableExtra(PARAM_STATUS_BEAN);
         if (type != -1) {
             view.showTitleAndHint(type);
             Debug.d("type==============" + type);
         }
         if (statusesBean != null) {
             view.showStatusesBean(statusesBean);
+        }
+        postBean= (PostBean) intent.getSerializableExtra(PARAM_POST_BEAN);
+        if (postBean!=null){
+            view.showPostBean(postBean);
         }
         atSomebodyFragment = AtSomebodyFragment.getInstance();
         postDao = PostDao.getInstance(this);
@@ -446,6 +451,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         Intent intent = new Intent(context, PostActivity.class);
         intent.putExtra(PARAM_POST_TYPE, bundle.getInt(PARAM_POST_TYPE));
         intent.putExtra(PARAM_STATUS_BEAN, bundle.getSerializable(PARAM_STATUS_BEAN));
+        intent.putExtra(PARAM_POST_BEAN,bundle.getSerializable(PARAM_POST_BEAN));
         context.startActivity(intent);
     }
 }
