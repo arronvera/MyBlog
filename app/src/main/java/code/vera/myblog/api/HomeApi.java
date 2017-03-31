@@ -35,7 +35,20 @@ public class HomeApi  extends BaseApi{
         params.addParameters("page",bean.getPage());
         return onGet(url, params);
     }
-
+    /**
+     * 获取双向关注用户的最新微博
+     * @param bean
+     * @param context
+     * @return
+     */
+    public static Observable<String > getBilateralTimeLine(HomeRequestBean bean, Context context) {
+        String url = NetWorkConfig.BILATERAL_TIME_LING;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("count",bean.getCount());
+        params.addParameters("page",bean.getPage());
+        return onGet(url, params);
+    }
     /**
      * 某个用户最新发表的微博列表
      * @param bean

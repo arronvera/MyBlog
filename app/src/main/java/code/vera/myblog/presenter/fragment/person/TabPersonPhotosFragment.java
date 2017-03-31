@@ -13,13 +13,13 @@ import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
-import code.vera.myblog.view.tab.TabRepostView;
+import code.vera.myblog.view.personality.TabPersonPhotosView;
 
 /**
  * Created by vera on 2017/2/24 0024.
  */
 
-public class TabPersonPhotosFragment extends PresenterFragment<TabRepostView, UserModel> {
+public class TabPersonPhotosFragment extends PresenterFragment<TabPersonPhotosView, UserModel> {
     private static TabPersonPhotosFragment instance;
     private SimpleRecyclerCardAdapter adapter;
     private List<PicBean>pics;

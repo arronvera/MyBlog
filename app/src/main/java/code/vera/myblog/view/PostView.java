@@ -28,6 +28,7 @@ import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.view.base.BaseView;
+import ww.com.core.Debug;
 
 /**
  * Created by vera on 2017/2/9 0009.
@@ -107,8 +108,7 @@ public class PostView extends BaseView {
 
     private void initGallery() {
          galleryView = LayoutInflater.from(context).inflate(R.layout.item_gallery, llGallery, false);
-         ivItemGallery = (ImageView) galleryView
-                .findViewById(R.id.iv_item_gallery);//图片
+         ivItemGallery = (ImageView) galleryView.findViewById(R.id.iv_item_gallery);//图片
          ivItemDelete = (ImageView) galleryView.findViewById(R.id.iv_delete);//删除
 
     }
@@ -132,6 +132,7 @@ public class PostView extends BaseView {
                 break;
             default:
                 tvTitle.setText("分享圈子");
+                etMessage.setHint("分享你周围的圈子");
                 break;
         }
     }
@@ -180,6 +181,7 @@ public class PostView extends BaseView {
      * 显示选择的图片
      */
     public void showPhotos(List<MediaBean> mediaBeanList) {
+        Debug.d("media="+mediaBeanList.size());
         for (int i=0;i<mediaBeanList.size();i++){
             Bitmap bitmap= BitmapFactory.decodeFile(mediaBeanList.get(i).getOriginalPath());
             ivItemGallery.setImageBitmap(bitmap);
@@ -193,16 +195,4 @@ public class PostView extends BaseView {
         ivItemGallery.setImageBitmap(bitmap);
         llGallery.addView(galleryView);
     }
-
-//    /**
-//     * 设置发送按钮是否可见
-//     * @param visible
-//     */
-//    public void setSendBtnVisible(boolean visible){
-//        if (visible){
-//            ivRepost.setVisibility(View.VISIBLE);
-//        }else{
-//            ivRepost.setVisibility(View.INVISIBLE);
-//        }
-//    }
 }

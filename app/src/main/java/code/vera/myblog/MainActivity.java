@@ -1,6 +1,5 @@
 package code.vera.myblog;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -163,11 +161,6 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         drawerToggle.syncState();
         dlLeft.setDrawerListener(drawerToggle);
         fragmentManager = getSupportFragmentManager();
-        //5.0过渡动画
-        civHeadPhoto.setTransitionName(PARAM_SHARE_TRANSITION_HEAD);
-        tvUserName.setTransitionName(PARAM_SHARE_TRANSITION_NAME);
-        postponeEnterTransition();
-        startPostponedEnterTransition();
     }
 
 
@@ -180,11 +173,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
             case R.id.civ_user_photo://用户头像
                 Intent intent=new Intent(this, PersonalityActivity.class);
                 intent.putExtra("user",user);
-//                startActivity(intent);
-                Pair<View, String> p = new Pair<View, String>(civHeadPhoto, PARAM_SHARE_TRANSITION_HEAD);//haderIv是头像控件
-                Pair<View, String> p1 = new Pair<View, String>(tvUserName, PARAM_SHARE_TRANSITION_NAME);//nameTv是名字控件
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,
-                                p, p1).toBundle());
+                startActivity(intent);
                 break;
         }
     }

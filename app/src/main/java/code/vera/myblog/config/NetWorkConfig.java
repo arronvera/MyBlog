@@ -9,6 +9,8 @@ public class NetWorkConfig {
     public static final String BASE_URL="https://api.weibo.com/2";
     //获取当前登录用户及其所关注（授权）用户的最新微博
     public static final String HOME_TIME_LING=BASE_URL+"/statuses/home_timeline.json";
+    //获取双向关注的分享列表
+    public static final String BILATERAL_TIME_LING=BASE_URL+"/statuses/bilateral_timeline.json";
     //获取公共列表
     public static final String PUBLIC_TIME_LING=BASE_URL+"/statuses/public_timeline.json";
     //获取某个用户最新发表的微博列表

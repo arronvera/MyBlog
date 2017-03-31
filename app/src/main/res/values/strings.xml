@@ -18,5 +18,6 @@
     <string name="about_app">关于圈艺</string>
     <string name="cancel_collection">取消收藏</string>
     <string name="collection">收藏</string>
+    <string name="title_location">我在这里</string>
 
 </resources>

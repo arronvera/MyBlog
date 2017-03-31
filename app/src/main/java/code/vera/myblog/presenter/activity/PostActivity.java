@@ -188,8 +188,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 //移动光标到中间
                 view.getEt().setSelection(view.getEditStr().indexOf("#") + 1);
                 break;
-            case R.id.tv_location:
-                //// TODO: 2017/3/19 跳转到定位
+            case R.id.tv_location://定位
+                LocationActivity.start(this);
                 break;
             case R.id.et_text:
                 if (isShowEmoj){
@@ -219,11 +219,9 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0://拍照
-                                //打开系统拍照程序，选择拍照图片
                                 takePic();
                                 break;
                             case 1://图库
-                                //打开图库程序，选择图片
                                 choosePic();
                                 break;
                         }
@@ -446,7 +444,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
 
     public static void start(Context context, Bundle bundle) {
         Intent intent = new Intent(context, PostActivity.class);
-        intent.putExtra(PARAM_POST_TYPE, Constants.POST_TYPE_COMMENT);
+        intent.putExtra(PARAM_POST_TYPE, bundle.getInt(PARAM_POST_TYPE));
         intent.putExtra(PARAM_STATUS_BEAN, bundle.getSerializable(PARAM_STATUS_BEAN));
         context.startActivity(intent);
     }

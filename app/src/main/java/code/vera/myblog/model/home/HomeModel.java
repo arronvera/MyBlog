@@ -48,6 +48,28 @@ public class HomeModel implements IModel{
                 .compose(transformer)
                 .subscribe(subscriber);
     }
+    /**
+     * 获取双向关注用户的最新微博
+     */
+    public void getBilateralTimeLine(HomeRequestBean bean, Context context,Observable.Transformer
+            transformer,  Subscriber<List<StatusesBean>> subscriber){
+        HomeApi.getBilateralTimeLine(bean,context)
+                .map(new Func1<String, List<StatusesBean>>() {
+                    @Override
+                    public  List<StatusesBean> call(String s) {
+                        List<StatusesBean>beanList=new ArrayList<>();
+                        JSONObject result= JSON.parseObject(s);
+                        if (result!=null){
+                            beanList= JSON.parseArray(result.getString("statuses"),StatusesBean.class);
+                        }
+                        return beanList;
+                    }
+                }).compose(RxHelper.<List<StatusesBean>>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+
+
     public void getUid( Context context,Observable.Transformer
             transformer,  Subscriber<Boolean> subscriber){
         HomeApi.getUid(context) .map(new Func1<String, String>() {
