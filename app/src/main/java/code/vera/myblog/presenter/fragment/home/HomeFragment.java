@@ -51,6 +51,9 @@ import code.vera.myblog.view.widget.LikeView;
 import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
 
+import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
+import static code.vera.myblog.presenter.activity.PostActivity.PARAM_STATUS_BEAN;
+
 
 /**
  * 首页
@@ -251,10 +254,14 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     public void onItemRepostListener(View v, int pos) {
         //转发
 //        ToastUtil.showToast(getContext(),"转发");
-        Intent intent = new Intent(getActivity(), PostActivity.class);
-        intent.putExtra("type", Constants.POST_TYPE_REPOST);
-        intent.putExtra("StatusesBean", adapter.getItem(pos));
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), PostActivity.class);
+//        intent.putExtra("type", Constants.POST_TYPE_REPOST);
+//        intent.putExtra("StatusesBean", adapter.getItem(pos));
+//        startActivity(intent);
+        Bundle bundle=new Bundle();
+        bundle.putInt(PARAM_POST_TYPE,Constants.POST_TYPE_REPOST);
+        bundle.putSerializable(PARAM_STATUS_BEAN,adapter.getItem(pos));
+        PostActivity.start(mContext,bundle);
     }
 
     @Override

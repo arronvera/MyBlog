@@ -72,6 +72,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private List<MediaBean> pictureList = new ArrayList<>();
     //数据库
     PostDao postDao;
+    private String address;
+    public static final int ACTION_LOCATION=25;
 
     @Override
     protected int getLayoutResId() {
@@ -194,7 +196,9 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 view.getEt().setSelection(view.getEditStr().indexOf("#") + 1);
                 break;
             case R.id.tv_location://定位
-                LocationActivity.start(this);
+                Bundle bundle = new Bundle();
+                bundle.putString(LocationActivity.PARAM_ADDRESS, address);
+                LocationActivity.startActivityForResult(this,bundle,ACTION_LOCATION);
                 break;
             case R.id.et_text:
                 if (isShowEmoj){
@@ -376,6 +380,14 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 view.showPhoto(picPath);
             }
         }
+        if (requestCode == ACTION_LOCATION) {
+            if (data != null) {
+                address = data.getStringExtra(LocationActivity.PARAM_ADDRESS);
+                if (!TextUtils.isEmpty(address)){
+                    view.showAddress(address);
+                }
+            }
+        }
     }
 
     @Override
@@ -446,7 +458,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
             view.addStr("@" + sortBean.getName() + " ");
         }
     }
-
     public static void start(Context context, Bundle bundle) {
         Intent intent = new Intent(context, PostActivity.class);
         intent.putExtra(PARAM_POST_TYPE, bundle.getInt(PARAM_POST_TYPE));

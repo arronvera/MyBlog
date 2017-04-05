@@ -61,6 +61,9 @@ public class PostView extends BaseView {
     TextView tvOriName;
     @BindView(R.id.ll_gallery)
     LinearLayout llGallery;//选择的图片
+    @BindView(R.id.tv_location)
+    TextView tvLocation;
+
 
 
     private Context context;
@@ -199,5 +202,9 @@ public class PostView extends BaseView {
 
     public void showPostBean(PostBean postBean) {
         //todo
+    }
+
+    public void showAddress(String address) {
+        tvLocation.setText(address);
     }
 }

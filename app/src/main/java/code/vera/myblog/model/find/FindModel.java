@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import code.vera.myblog.api.FindApi;
+import code.vera.myblog.api.HomeApi;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.model.base.IModel;
@@ -47,4 +48,52 @@ public class FindModel implements IModel {
                 .compose(transformer)
                 .subscribe(subscriber);
     }
+    /**
+     * 关注
+     * @param context
+     * @param uid
+     * @param transformer
+     * @param subscriber
+     */
+    public void createFriendShip( Context context,String uid,Observable.Transformer
+            transformer,  Subscriber<String> subscriber){
+        HomeApi.createFriendShip(context,uid) .map(new Func1<String, String>() {
+            @Override
+            public  String call(String s) {
+                JSONObject result=JSON.parseObject(s);
+                String id=null;
+                if (result!=null){
+                    id=result.getString("id");
+                }
+                return id;
+            }
+        }).compose(RxHelper.<String>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+
+    /**
+     * 取消关注
+     * @param context
+     * @param uid
+     * @param transformer
+     * @param subscriber
+     */
+    public void destroyFriendShip( Context context,String uid,Observable.Transformer
+            transformer,  Subscriber<String> subscriber){
+        HomeApi.destroyFriendShip(context,uid) .map(new Func1<String, String>() {
+            @Override
+            public  String call(String s) {
+                JSONObject result=JSON.parseObject(s);
+                String id=null;
+                if (result!=null){
+                    id=result.getString("id");
+                }
+                return id;
+            }
+        }).compose(RxHelper.<String>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+
 }

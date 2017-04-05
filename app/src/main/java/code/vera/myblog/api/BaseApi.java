@@ -20,11 +20,13 @@ public class BaseApi {
                 .compose(RxHelper.<ResponseBody>cutMain())
                 .map(new StringFunc());
     }
+
     public static final Observable<ResponseBody> get(String url, AjaxParams params) {
         params = params.setBaseUrl(url)
                 .setRequestMethod(RequestMethod.GET);
         return OkHttpRequest.newObservable(params);
     }
+
     //post请求
     public static Observable<String> onPost(String url, AjaxParams params) {
 

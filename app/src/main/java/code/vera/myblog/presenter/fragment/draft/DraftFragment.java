@@ -27,7 +27,6 @@ import ww.com.core.Debug;
 
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_BEAN;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
-import static com.baidu.location.h.a.i;
 
 /**
  * 草稿箱
@@ -99,7 +98,7 @@ public class DraftFragment extends PresenterFragment<DraftView, PostModel>
             case Constants.POST_TYPE_NEW://分享
                 Bundle bundle=new Bundle();
                 bundle.putInt(PARAM_POST_TYPE,Constants.POST_TYPE_NEW);
-                bundle.putSerializable(PARAM_POST_BEAN,postBeanList.get(i));
+                bundle.putSerializable(PARAM_POST_BEAN,postBeanList.get(pos));
                 PostActivity.start(mContext,bundle);
                 break;
             case Constants.POST_TYPE_COMMENT://评论
