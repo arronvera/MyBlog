@@ -41,7 +41,7 @@ public class HomeUtils {
     public static SpannableStringBuilder getWeiBoContent(final OnItemAtListener onItemAtListener, final OnItemTopicListener onItemTopicListener,
                                                          final OnItemLinkListener onItemLinkListener, String source, Context context, final int position
                                                             , TextView textView) {
-        SpannableStringBuilder spannableString = new SpannableStringBuilder(source);
+        final SpannableStringBuilder spannableString = new SpannableStringBuilder(source);
         String REGEX="(" +AT+ ")|(" +TOPIC+ ")|("+URL+")|("+EMOJI+")";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(spannableString);
@@ -79,28 +79,40 @@ public class HomeUtils {
                 spannableString.setSpan(ccsTopic, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             if (url != null) {//链接
-                int start = matcher.start(3);
-                int end = start + url.length();
+                final int start = matcher.start(3);
+                final int end = start + url.length();
                 Debug.d("url="+url);
+
                 if (url.length()<20){//短链接
                     HomeModel.shortUrlExpand(context,url,new CustomSubscriber<List<UrlBean>>(context,false){
                         @Override
                         public void onNext(List<UrlBean> urlBeen) {
                             super.onNext(urlBeen);
                             Debug.d("转换的长链接url"+urlBeen.get(0).getUrl_long());
+                            final int type=urlBeen.get(0).getType();
+                            CustomClickableSpan ccsLink=new CustomClickableSpan() {
+                                @Override
+                                public void onClick(View widget) {
+                                    if (onItemLinkListener!=null){
+                                        onItemLinkListener.onItemLinkListener(widget,position,url,type);
+                                    }
+                                }
+                            };
+                            spannableString.setSpan(ccsLink, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         }
                     });
-                }
-                CustomClickableSpan ccsLink=new CustomClickableSpan() {
-                    @Override
-                    public void onClick(View widget) {
-                        if (onItemLinkListener!=null){
-                                onItemLinkListener.onItemLinkListener(widget,position,url);
+                }else{
+                    CustomClickableSpan ccsLink=new CustomClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+                            if (onItemLinkListener!=null){
+                                onItemLinkListener.onItemLinkListener(widget,position,url,0);
+                            }
                         }
+                    };
+                    spannableString.setSpan(ccsLink, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
 
-                    }
-                };
-                spannableString.setSpan(ccsLink, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 //                if (url.length()<20){
 //                    spannableString.replace(start,end,"跳转链接");
 //                }

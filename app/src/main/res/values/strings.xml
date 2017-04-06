@@ -22,5 +22,8 @@
     <string name="cancel_collection">取消收藏</string>
     <string name="collection">收藏</string>
     <string name="title_location">我在这里</string>
+    <string name="text_public">公开</string>
+    <string name="text_friends">好友可见</string>
+    <string name="text_myself">仅自己可见</string>
 
 </resources>

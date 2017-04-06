@@ -100,14 +100,40 @@
                     </LinearLayout>
                 </LinearLayout>
            </LinearLayout>
-        <!--查看位置-->
-        <TextView
-            android:id="@+id/tv_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="查看位置"
-            android:layout_margin="5dp"
-            android:layout_above="@+id/ll_line"/>
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_above="@+id/ll_line"
+           android:padding="5dp"
+           android:gravity="center_vertical">
+           <!--查看位置-->
+           <TextView
+               android:id="@+id/tv_location"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="查看位置"
+               android:ellipsize="end"
+               android:maxEms="12"
+               android:textColor="@color/text_hint"
+               android:singleLine="true"/>
+           <ImageView
+               android:layout_centerVertical="true"
+               android:layout_toRightOf="@+id/tv_location"
+               android:visibility="invisible"
+               android:id="@+id/iv_close_location"
+               android:layout_width="15dp"
+               android:layout_height="15dp"
+               android:src="@mipmap/ic_close"/>
+           <!--公开-->
+           <TextView
+               android:id="@+id/tv_public"
+               android:textColor="@color/colorAccent"
+               android:layout_centerVertical="true"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/text_public"
+               android:layout_alignParentRight="true"/>
+       </RelativeLayout>
         <LinearLayout
             android:id="@+id/ll_line"
             android:orientation="horizontal"

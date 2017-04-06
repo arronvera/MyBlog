@@ -69,7 +69,6 @@ public class PostApi {
 //            e.printStackTrace();
 //        }
         params.addParameters("status", bean.getStatus());
-
         //微博的可见性，0：所有人能看，1：仅自己可见，2：密友可见，3：指定分组可见，默认为0。
         params.addParameters("visible", bean.getVisible()+"");
 //        params.addParameters("list_id", bean.getList_id()+"");
@@ -123,6 +122,16 @@ public class PostApi {
     }
     public static  Observable<String > getFriendShip(Context context) {
         String url = NetWorkConfig.GET_FRIENDSHIP;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("uid", AccessTokenKeeper.readAccessToken(context).getUid());
+        params.addParameters("count", "50");
+        params.addParameters("page","1");
+        params.addParameters("sort","0");//	排序
+        return onGet(url, params);
+    }
+    public static  Observable<String > getConcerns(Context context) {
+        String url = NetWorkConfig.GET_CONCERNES;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
         params.addParameters("uid", AccessTokenKeeper.readAccessToken(context).getUid());

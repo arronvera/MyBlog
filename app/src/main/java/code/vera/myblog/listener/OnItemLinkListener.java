@@ -8,5 +8,5 @@ import android.view.View;
  */
 
 public interface OnItemLinkListener {
-    void onItemLinkListener(View v, int pos, String str);
+    void onItemLinkListener(View v, int pos, String str,int type);
 }

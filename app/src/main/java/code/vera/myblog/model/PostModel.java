@@ -58,7 +58,7 @@ public class PostModel implements IModel {
      */
     public void updateMessage(Context context, PostBean bean, Observable.Transformer
             transformer, Subscriber<String> subscriber){
-        PostApi.updateMsg(context,bean) .map(new Func1<String, String>() {
+            PostApi.updateMsg(context,bean) .map(new Func1<String, String>() {
             @Override
             public  String call(String s) {
                 JSONObject result= JSON.parseObject(s);

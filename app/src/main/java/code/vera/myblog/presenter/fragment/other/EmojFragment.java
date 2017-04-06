@@ -82,7 +82,7 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
         recentManager = RecentEmojiManager.make(activity);
         emojiList = EmojiUtil.getEmojiList();
 
-        //todo 表情添加
+        //表情添加
         antiEmojiList=new ArrayList<>();
         carttonEmojiList=new ArrayList<>();
 

@@ -6,6 +6,6 @@ import android.os.Bundle;
  * Created by vera on 2017/3/7 0007.
  */
 
-public interface FragmentCallBack {
+public interface FriendFragmentCallBack {
      void callbackFriend(Bundle arg);
 }

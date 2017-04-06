@@ -28,4 +28,12 @@ public class Constants {
     public static final int TYPE_CONCERN=1001;//关注
     public static final int TYPE_FOLLOWERES=1002;//粉丝
 
+    //--------------可见-------------------
+    public static final int VISIBLE_ALL=0;//公开
+    public static final int VISIBLE_FRIENDS=1;//朋友圈
+    public static final int VISIBLE_SELF=2;//自己
+    //--------------链接的类型，0：普通网页、1：视频、2：音乐、3：活动、5、投票-------------------
+    public static final int LINK_TYPE_WEBSITE=0;//公开
+    public static final int LINK_TYPE_VIDEO=1;//朋友圈
+    public static final int LINK_TYPE_MUSIC=2;//自己
 }

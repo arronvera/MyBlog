@@ -16,14 +16,13 @@ import code.vera.myblog.R;
 import code.vera.myblog.adapter.SortFriendAdapter;
 import code.vera.myblog.bean.SortBean;
 import code.vera.myblog.bean.home.UserInfoBean;
-import code.vera.myblog.callback.FragmentCallBack;
+import code.vera.myblog.callback.FriendFragmentCallBack;
 import code.vera.myblog.model.AtSomebodyModel;
 import code.vera.myblog.other.CharacterParser;
 import code.vera.myblog.other.PinyinComparator;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.other.AtSomebodyView;
-import ww.com.core.Debug;
 
 /**
  * @好友
@@ -36,7 +35,7 @@ public class AtSomebodyFragment extends PresenterFragment<AtSomebodyView,AtSomeb
     private PinyinComparator pinyinComparator;//拼音
     @BindView(R.id.lv_friends)
     ListView lvFreiends;
-    private FragmentCallBack fragmentCallBack;
+    private FriendFragmentCallBack fragmentCallBack;
 
     @Override
     protected int getLayoutResId() {
@@ -69,10 +68,9 @@ public class AtSomebodyFragment extends PresenterFragment<AtSomebodyView,AtSomeb
         pinyinComparator = new PinyinComparator();
     }
     private void getFriends() {
-    model.getFriendShip(getContext(),bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<UserInfoBean>>(mContext,true){
+    model.getConcerns(getContext(),bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<UserInfoBean>>(mContext,true){
         @Override
         public void onNext(List<UserInfoBean> userInfoBeen) {
-            Debug.d("size="+userInfoBeen.size());
             super.onNext(userInfoBeen);
             //排序
             List<SortBean> SourceDateList=filledData(userInfoBeen);
@@ -81,13 +79,7 @@ public class AtSomebodyFragment extends PresenterFragment<AtSomebodyView,AtSomeb
             view.setAdapter(adapter);
         }
     });
-
     }
-    public static AtSomebodyFragment getInstance() {
-        AtSomebodyFragment instance = new AtSomebodyFragment();
-        return instance;
-    }
-
     /**
      * 填充数据，获取拼音首字母
      * @param userInfoBeen
@@ -112,7 +104,7 @@ public class AtSomebodyFragment extends PresenterFragment<AtSomebodyView,AtSomeb
         return mSortList;
 
     }
-    public void setFragmentCallBack(FragmentCallBack callBack){
+    public void setFragmentCallBack(FriendFragmentCallBack callBack){
         this.fragmentCallBack=callBack;
     }
 }

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +41,6 @@ public class PostView extends BaseView {
     EditText etMessage;//内容
     @BindView(R.id.tv_text_num)
     TextView tvNum;
-//    @BindView(R.id.iv_repost)
-//    Button btnUpload;//发送
     @BindView(R.id.tv_post_title)
     TextView tvTitle;//标题
     @BindView(R.id.iv_choose_pic)
@@ -63,6 +62,12 @@ public class PostView extends BaseView {
     LinearLayout llGallery;//选择的图片
     @BindView(R.id.tv_location)
     TextView tvLocation;
+    @BindView(R.id.iv_close_location)
+    ImageView ivCloseLocation;
+
+    @BindView(R.id.tv_public)
+    TextView tvAuthority;
+
 
 
 
@@ -107,14 +112,12 @@ public class PostView extends BaseView {
             }
         };
         etMessage.addTextChangedListener(textWatcher);
-        initGallery();
     }
 
     private void initGallery() {
          galleryView = LayoutInflater.from(context).inflate(R.layout.item_gallery, llGallery, false);
          ivItemGallery = (ImageView) galleryView.findViewById(R.id.iv_item_gallery);//图片
          ivItemDelete = (ImageView) galleryView.findViewById(R.id.iv_delete);//删除
-
     }
 
     public String getEditStr(){
@@ -185,12 +188,14 @@ public class PostView extends BaseView {
      * 显示选择的图片
      */
     public void showPhotos(List<MediaBean> mediaBeanList) {
+        llGallery.setOrientation(LinearLayout.HORIZONTAL);
         Debug.d("media="+mediaBeanList.size());
         for (int i=0;i<mediaBeanList.size();i++){
+            initGallery();
             Bitmap bitmap= BitmapFactory.decodeFile(mediaBeanList.get(i).getOriginalPath());
             ivItemGallery.setImageBitmap(bitmap);
             llGallery.addView(galleryView);
-//            llGallery.setTag(i);
+            llGallery.setTag(i);
         }
     }
 
@@ -205,6 +210,29 @@ public class PostView extends BaseView {
     }
 
     public void showAddress(String address) {
-        tvLocation.setText(address);
+        if (!TextUtils.isEmpty(address)){
+            tvLocation.setText(address);
+            tvLocation.setTextColor(Color.parseColor("#ff8162"));
+            ivCloseLocation.setVisibility(View.VISIBLE);
+        }else {
+            tvLocation.setText("查看位置");
+            tvLocation.setTextColor(Color.parseColor("#909090"));
+            ivCloseLocation.setVisibility(View.INVISIBLE);
+
+        }
+    }
+
+    public void setVisible(int visible) {
+        switch (visible){
+            case Constants.VISIBLE_ALL:
+                tvAuthority.setText("公开");
+                break;
+            case Constants.VISIBLE_FRIENDS:
+                tvAuthority.setText("好友可见");
+                break;
+            case Constants.VISIBLE_SELF:
+                tvAuthority.setText("自己可见");
+                break;
+        }
     }
 }

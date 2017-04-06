@@ -97,7 +97,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
             @Override
             public void onHeaderRefreshing() {
-                Debug.d("下拉刷新");
+//                Debug.d("下拉刷新");
                 //下拉刷新
                 requestBean.page = "1";//
                 getData();
@@ -105,7 +105,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
             @Override
             public void onFooterRefreshing() {
-                Debug.d("上拉加载");
+//                Debug.d("上拉加载");
                 //上拉加载
                 int nextPage = Integer.parseInt(requestBean.getPage()) + 1;
                 Debug.d("bean=" + requestBean.toString());
@@ -178,6 +178,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
                 } else {
                     //todo 收藏
+
                 }
             }
         });
@@ -324,11 +325,28 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     }
 
     @Override
-    public void onItemLinkListener(View v, int pos, String str) {
+    public void onItemLinkListener(View v, int pos, String str,int type) {
         //链接
-        Intent intent = new Intent(getActivity(), BrowserActivity.class);
-        intent.putExtra("link", str);
-        startActivity(intent);
+        switch (type){
+            case Constants.LINK_TYPE_WEBSITE:
+                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("link", str);
+                startActivity(intent);
+                break;
+            case Constants.LINK_TYPE_MUSIC:
+                //todo 音乐
+                break;
+            case Constants.LINK_TYPE_VIDEO:
+                //todo 电影
+
+                break;
+            default:
+                 intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("link", str);
+                startActivity(intent);
+                break;
+        }
+
     }
 
     @Override

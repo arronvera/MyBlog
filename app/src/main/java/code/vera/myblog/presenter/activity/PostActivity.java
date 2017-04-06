@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -33,12 +34,14 @@ import code.vera.myblog.bean.Emoji;
 import code.vera.myblog.bean.PostBean;
 import code.vera.myblog.bean.SortBean;
 import code.vera.myblog.bean.home.StatusesBean;
-import code.vera.myblog.callback.FragmentCallBack;
+import code.vera.myblog.callback.AuthorityFragmentCallBack;
+import code.vera.myblog.callback.FriendFragmentCallBack;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.db.PostDao;
 import code.vera.myblog.model.PostModel;
 import code.vera.myblog.presenter.PresenterActivity;
 import code.vera.myblog.presenter.fragment.other.AtSomebodyFragment;
+import code.vera.myblog.presenter.fragment.other.AuthorityFragment;
 import code.vera.myblog.presenter.fragment.other.EmojFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.DialogUtils;
@@ -52,29 +55,34 @@ import ww.com.core.Debug;
  * 发布
  */
 public class PostActivity extends PresenterActivity<PostView, PostModel> implements
-        EmojFragment.OnEmojiClickListener, FragmentCallBack {
+        EmojFragment.OnEmojiClickListener, FriendFragmentCallBack,AuthorityFragmentCallBack {
     public static final int TAKE_PICTURE = 0025;
-    public static final int CHOOSE_PICTURE = 0026;
-    private static final int REQUEST_CODE = 732;
     public static final String PARAM_STATUS_BEAN = "StatusesBean";
     public static final String PARAM_POST_TYPE = "type";
     public static final String PARAM_POST_BEAN = "postbean";
-
     private int type;
     private String picPath;
     private boolean isShowEmoj = false;//是否表情已经显示
     private boolean isShowFriend = false;//是否好友已经显示
+    private boolean isAddFriendFragment=false;
+    private FragmentManager fragmentManager;
     private EmojFragment emojFragment;//表情
     private AtSomebodyFragment atSomebodyFragment;//好友
+    private AuthorityFragment authorityFragment;//权限
     private StatusesBean statusesBean;
     private PostBean postBean;
     private CommentRequestBean commentRequestBean;
     private List<MediaBean> pictureList = new ArrayList<>();
     //数据库
     PostDao postDao;
+    //地址相关
     private String address;
     public static final int ACTION_LOCATION=25;
-
+    private double lat;
+    private double lon;
+    private boolean isShowAuthority;
+    private boolean isAddAuthorityFragment=false;
+    private int visible;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_post;
@@ -97,24 +105,43 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         if (postBean!=null){
             view.showPostBean(postBean);
         }
-        atSomebodyFragment = AtSomebodyFragment.getInstance();
-        postDao = PostDao.getInstance(this);
+        initData();
         addListener();
+    }
+
+    private void initData() {
+        if (atSomebodyFragment==null){
+            atSomebodyFragment =new AtSomebodyFragment();
+        }
+        postDao = PostDao.getInstance(this);
+        fragmentManager=getSupportFragmentManager();
+        if (authorityFragment==null){
+            authorityFragment=new AuthorityFragment();
+        }
     }
 
     private void addListener() {
         atSomebodyFragment.setFragmentCallBack(this);
+        authorityFragment.setFragmentCallBack(this);
     }
 
-    @OnClick({R.id.tv_cancle, R.id.iv_repost, R.id.iv_choose_pic, R.id.iv_emotion, R.id.iv_at, R.id.iv_topic, R.id.tv_location,R.id.et_text})
+    @OnClick({R.id.tv_cancle, R.id.iv_repost, R.id.iv_choose_pic,
+            R.id.iv_emotion, R.id.iv_at, R.id.iv_topic, R.id.tv_location,
+            R.id.et_text,R.id.iv_close_location,R.id.tv_public})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
                 if (isShowFriend) {
-                    hideFriendFragment();
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out).hide(atSomebodyFragment).commit();
+//                    hideFriendFragment();
                     isShowFriend = false;
                     view.setTitle("分享圈子");
-//                    view.setSendBtnVisible(true);
+                    return;
+                }
+                if (isShowAuthority) {
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out).hide(authorityFragment).commit();
+                    isShowAuthority = false;
+                    view.setTitle("分享圈子");
                     return;
                 }
                 if ((!TextUtils.isEmpty(view.getEditStr())) || (pictureList.size() != 0)) {
@@ -122,12 +149,17 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                     postBean = new PostBean();
                     postBean.setStatus(view.getEditStr());
                     postBean.setPostStatus(type);
+                    postBean.setLat(lat);
+                    postBean.setLon(lon);
                     DialogUtils.showDialog(this, "", "是否保存到草稿箱?", "是", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            saveMessage();
-                            ToastUtil.showToast(getApplicationContext(), "保存成功");
-                            finish();
+                            if (saveMessage()){
+                                ToastUtil.showToast(getApplicationContext(), "保存成功");
+                                finish();
+                            }else {
+                                ToastUtil.showToast(getApplicationContext(), "保存失败");
+                            }
                         }
                     }, "否", new DialogInterface.OnClickListener() {
                         @Override
@@ -156,6 +188,9 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                         postBean = new PostBean();
                         postBean.setStatus(msg);
                         postBean.setPostStatus(Constants.POST_STATUS_NEW);
+                        postBean.setLat(lat);
+                        postBean.setLon(lon);
+                        postBean.setVisible(visible);
                         if (pictureList != null && pictureList.size() != 0) {//带图片
                             upLoad();
                         } else {
@@ -171,23 +206,26 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
             case R.id.iv_emotion://表情
                 if (!isShowEmoj) {
                     emojFragment = EmojFragment.Instance();
-                    getSupportFragmentManager().beginTransaction().add(R.id.ll_container, emojFragment).commit();
+                    fragmentManager.beginTransaction().add(R.id.ll_container, emojFragment).commit();
                     isShowEmoj = true;
                 } else {
                     //隐藏
-                    getSupportFragmentManager().beginTransaction().remove(emojFragment).commit();
+                    fragmentManager.beginTransaction().remove(emojFragment).commit();
                     isShowEmoj = false;
                 }
                 break;
             case R.id.iv_at://at好友
                 if (!isShowFriend) {
-                    getSupportFragmentManager().
-                            beginTransaction().
-                            setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out)//动画
-                            .add(R.id.rl_all_container, atSomebodyFragment).commit();
+                    if (!isAddFriendFragment){
+                        fragmentManager.beginTransaction().
+                                setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out)//动画
+                                .add(R.id.rl_all_container, atSomebodyFragment).commit();
+                        isAddFriendFragment=true;
+                    }else{
+                        fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out).show(atSomebodyFragment);
+                    }
                     isShowFriend = true;
                     view.setTitle("好友");//设置标题
-//                    view.setSendBtnVisible(false);//发送按钮不可见
                 }
                 break;
             case R.id.iv_topic://插入话题
@@ -198,13 +236,31 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
             case R.id.tv_location://定位
                 Bundle bundle = new Bundle();
                 bundle.putString(LocationActivity.PARAM_ADDRESS, address);
+                bundle.putDouble(LocationActivity.PARAM_LATITUDE, lat);
+                bundle.putDouble(LocationActivity.PARAM_LONGTITUDE, lon);
                 LocationActivity.startActivityForResult(this,bundle,ACTION_LOCATION);
                 break;
             case R.id.et_text:
                 if (isShowEmoj){
-                    getSupportFragmentManager().beginTransaction().remove(emojFragment).commit();
+                    fragmentManager.beginTransaction().remove(emojFragment).commit();
                     isShowEmoj=false;
                 }
+                break;
+            case R.id.iv_close_location://清除定位
+                address="";
+                lat=0;
+                lon=0;
+                view.showAddress(address);
+                break;
+            case R.id.tv_public://公共
+                if (!isAddAuthorityFragment){
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out).add(R.id.rl_all_container, authorityFragment).commit();
+                    isAddAuthorityFragment=true;
+                }else {
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out).show(authorityFragment).commit();
+                }
+                isShowAuthority=true;
+                view.setTitle("选择分享范围");
                 break;
 
         }
@@ -213,14 +269,10 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     /**
      * 保存到草稿箱
      */
-    private void saveMessage() {
-        postDao.add(postBean);
+    private boolean saveMessage() {
+        boolean isSuccesss=postDao.add(postBean);
+        return isSuccesss;
     }
-
-    public void hideFriendFragment() {
-        getSupportFragmentManager().beginTransaction().hide(atSomebodyFragment).commit();
-    }
-
     private void showChosePicDialog() {
         new AlertDialog.Builder(this)
                 .setItems(new String[]{"拍照", "图库"}, new DialogInterface.OnClickListener() {
@@ -306,8 +358,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
             }
         });
     }
-
-
     /**
      * 拍照
      */
@@ -342,7 +392,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 .subscribe(new RxBusResultSubscriber<ImageMultipleResultEvent>() {
                     @Override
                     protected void onEvent(ImageMultipleResultEvent resultEvent) throws Exception {
-                        Debug.d("pic.size="+resultEvent.getResult().size());
+//                        Debug.d("pic.size="+resultEvent.getResult().size());
+//                        view.showPhotos(resultEvent.getResult());
                         if (pictureList == null || pictureList.size() == 0) {//如果集合为空
                             pictureList.addAll(resultEvent.getResult());
                             view.showPhotos(resultEvent.getResult());//显示
@@ -365,6 +416,12 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                             ToastUtil.showToast(getApplicationContext(), "最多选择9张照片");
                         }
                     }
+
+                    @Override
+                    public void onCompleted() {
+                        super.onCompleted();
+
+                    }
                 }).openGallery();
         ToastUtil.showToast(getApplicationContext(), "你一共选择了" + pictureList.size() + "张图片");
     }
@@ -383,6 +440,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         if (requestCode == ACTION_LOCATION) {
             if (data != null) {
                 address = data.getStringExtra(LocationActivity.PARAM_ADDRESS);
+                lat=data.getDoubleExtra(LocationActivity.PARAM_LATITUDE,0);
+                lon=data.getDoubleExtra(LocationActivity.PARAM_LONGTITUDE,0);
                 if (!TextUtils.isEmpty(address)){
                     view.showAddress(address);
                 }
@@ -450,13 +509,16 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     @Override
     public void callbackFriend(Bundle arg) {
         //好友回调
-        getSupportFragmentManager().beginTransaction().hide(atSomebodyFragment).commit();
-        SortBean sortBean = (SortBean) arg.getSerializable("sort_bean");
-        view.setTitle("分享圈子");
-        //添加字符
-        if (sortBean != null) {
-            view.addStr("@" + sortBean.getName() + " ");
+        if (arg!=null){
+            fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out).hide(atSomebodyFragment).commit();
+            SortBean sortBean = (SortBean) arg.getSerializable("sort_bean");
+            view.setTitle("分享圈子");
+            //添加字符
+            if (sortBean != null) {
+                view.addStr("@" + sortBean.getName() + " ");
+            }
         }
+
     }
     public static void start(Context context, Bundle bundle) {
         Intent intent = new Intent(context, PostActivity.class);
@@ -464,5 +526,16 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         intent.putExtra(PARAM_STATUS_BEAN, bundle.getSerializable(PARAM_STATUS_BEAN));
         intent.putExtra(PARAM_POST_BEAN,bundle.getSerializable(PARAM_POST_BEAN));
         context.startActivity(intent);
+    }
+
+    @Override
+    public void callbackAuthority(Bundle arg) {
+        if (arg!=null){
+            fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out)
+                    .hide(authorityFragment).commit();
+            visible = arg.getInt("visible",0);
+            view.setTitle("分享圈子");
+            view.setVisible(visible);
+        }
     }
 }

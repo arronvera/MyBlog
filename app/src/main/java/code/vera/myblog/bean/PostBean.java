@@ -21,9 +21,9 @@ public class PostBean implements Serializable {
 //    @DatabaseField(columnName = "picList")
 //    private ArrayList<MediaBean> picList;
     @DatabaseField(columnName = "lat")
-    private float lat;
+    private double lat;
     @DatabaseField(columnName = "lon")
-    private float lon;
+    private double lon;
     @DatabaseField(columnName = "annotations")
     private String annotations;
     @DatabaseField(columnName = "rip")
@@ -89,19 +89,19 @@ public class PostBean implements Serializable {
 //        this.picList = picList;
 //    }
 
-    public float getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public float getLon() {
+    public double getLon() {
         return lon;
     }
 
-    public void setLon(float lon) {
+    public void setLon(double lon) {
         this.lon = lon;
     }
 
