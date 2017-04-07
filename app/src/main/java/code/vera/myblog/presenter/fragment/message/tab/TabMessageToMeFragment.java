@@ -68,17 +68,17 @@ public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView
     }
 
     @Override
-    public void onItemLinkListener(View v, int pos, String str) {
-
-    }
-
-    @Override
     public void onItemOriginalListener(View v, int pos) {
 
     }
 
     @Override
     public void onItemTopicListener(View v, int pos, String str) {
+
+    }
+
+    @Override
+    public void onItemLinkListener(View v, int pos, String str, int type) {
 
     }
 }

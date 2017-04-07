@@ -120,17 +120,17 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
         //todo 话题
     }
 
-    @Override
-    public void onItemLinkListener(View v, int pos, String str) {
-        //链接
-        Intent intent = new Intent(this, BrowserActivity.class);
-        intent.putExtra("link", str);
-        startActivity(intent);
-    }
-
     public static void start(Context context, Bundle bundle) {
         Intent intent = new Intent(context, CommentDetailActivity.class);
         intent.putExtra("status", bundle.getSerializable("status"));
         context.startActivity(intent);
+    }
+
+    @Override
+    public void onItemLinkListener(View v, int pos, String str, int type) {
+        //链接
+        Intent intent = new Intent(this, BrowserActivity.class);
+        intent.putExtra("link", str);
+        startActivity(intent);
     }
 }

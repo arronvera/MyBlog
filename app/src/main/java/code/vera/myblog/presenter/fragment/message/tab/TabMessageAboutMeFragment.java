@@ -66,10 +66,6 @@ public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAbout
         //todo at
     }
 
-    @Override
-    public void onItemLinkListener(View v, int pos, String str) {
-        //todo link
-    }
 
     @Override
     public void onItemTopicListener(View v, int pos, String str) {
@@ -79,5 +75,10 @@ public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAbout
     @Override
     public void onItemOriginalListener(View v, int pos) {
         //todo original
+    }
+
+    @Override
+    public void onItemLinkListener(View v, int pos, String str, int type) {
+
     }
 }

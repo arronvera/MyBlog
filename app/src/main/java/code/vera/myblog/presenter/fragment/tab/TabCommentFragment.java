@@ -75,15 +75,15 @@ implements OnItemLinkListener,OnItemTopicListener,OnItemAtListener{
     }
 
     @Override
-    public void onItemLinkListener(View v, int pos, String str) {
+    public void onItemTopicListener(View v, int pos, String str) {
+        //todo 话题
+    }
+
+    @Override
+    public void onItemLinkListener(View v, int pos, String str, int type) {
         //链接
         Intent intent=new Intent(getActivity(),BrowserActivity.class);
         intent.putExtra("link",str);
         startActivity(intent);
-    }
-
-    @Override
-    public void onItemTopicListener(View v, int pos, String str) {
-        //todo 话题
     }
 }

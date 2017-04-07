@@ -1,5 +1,6 @@
 package code.vera.myblog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -71,7 +72,7 @@ public class LoginActivity extends PresenterActivity<LoginView, LoginModel> {
                 Debug.d("token="+ readAccessToken(getApplicationContext()).getToken());
                 Debug.d("time="+ readAccessToken(getApplicationContext()).getExpiresTime());
                 //保存
-                ToastUtil.showToast(LoginActivity.this,"登陆成功~");
+                ToastUtil.showToast(mContext,"登陆成功~");
                 AccessTokenKeeper.writeAccessToken(getApplicationContext(), accessToken);
                 start();
             }else{
@@ -83,15 +84,20 @@ public class LoginActivity extends PresenterActivity<LoginView, LoginModel> {
         @Override
         public void onWeiboException(WeiboException e) {
             Debug.d("e="+e.getMessage());
-            ToastUtil.showToast(LoginActivity.this,e.getMessage());
+            ToastUtil.showToast(mContext,e.getMessage());
         }
 
         @Override
         public void onCancel() {
             Debug.d("cancel");
 
-            ToastUtil.showToast(LoginActivity.this,"取消");
+            ToastUtil.showToast(mContext,"取消");
         }
+    }
+    public static void start(Context context){
+        Intent intent=new Intent(context,LoginActivity.class);
+        context.startActivity(intent);
+
     }
 
 }

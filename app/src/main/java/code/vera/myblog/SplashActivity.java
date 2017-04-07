@@ -1,6 +1,5 @@
 package code.vera.myblog;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
 
@@ -16,9 +15,9 @@ import ww.com.core.Debug;
 /**
  * 欢迎界面
  */
-public class SplashActivity extends PresenterActivity<VoidView,VoidModel> {
+public class SplashActivity extends PresenterActivity<VoidView, VoidModel> {
     @BindView(R.id.logo_text)
-     HTextView textView;
+    HTextView textView;
     private Handler handler;
 
     @Override
@@ -54,22 +53,23 @@ public class SplashActivity extends PresenterActivity<VoidView,VoidModel> {
         }, 2600);
 
 
-
     }
 
     /**
      * 是否登陆
      */
     private void isLogin() {
-        String token=AccessTokenKeeper.readAccessToken(getApplicationContext()).getToken();
-        if (!TextUtils.isEmpty(token)){
-         Intent intent=new Intent(this,MainActivity.class);
-            startActivity(intent);
+        String token = AccessTokenKeeper.readAccessToken(getApplicationContext()).getToken();
+        if (!TextUtils.isEmpty(token)) {
+//            Intent intent = new Intent(this, MainActivity.class);
+//            startActivity(intent);
+            LoginActivity.start(mContext);
             finish();
-        }else{
+        } else {
             Debug.d("未登陆---");
-            Intent intent=new Intent(this,LoginActivity.class);
-            startActivity(intent);
+//            Intent intent=new Intent(this,LoginActivity.class);
+//            startActivity(intent);
+            LoginActivity.start(mContext);
             finish();
         }
     }
