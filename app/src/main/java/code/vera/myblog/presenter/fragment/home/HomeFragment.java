@@ -338,7 +338,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 break;
             case Constants.LINK_TYPE_VIDEO:
                 //todo 电影
-
+                
                 break;
             default:
                  intent = new Intent(getActivity(), BrowserActivity.class);
