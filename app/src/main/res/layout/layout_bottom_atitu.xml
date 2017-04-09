@@ -18,7 +18,7 @@
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@mipmap/ic_item_repost"/>
+                    android:src="@mipmap/ic_paperplane"/>
                 <TextView
                     android:id="@+id/tv_item_repost"
                     android:text="转发"
@@ -41,7 +41,7 @@
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:src="@mipmap/ic_comment"/>
+                    android:src="@mipmap/ic_bubble"/>
                 <TextView
                     android:layout_marginLeft="5dp"
                     android:id="@+id/tv_item_comment"
@@ -66,7 +66,7 @@
                     android:id="@+id/iv_like"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:src="@mipmap/ic_like"/>
+                    android:src="@mipmap/ic_heart"/>
                 <TextView
                     android:id="@+id/tv_item_like"
                     android:text="喜欢"

@@ -107,8 +107,15 @@
            android:padding="5dp"
            android:gravity="center_vertical">
            <!--查看位置-->
+           <ImageView
+               android:id="@+id/iv_location"
+               android:layout_width="15dp"
+               android:layout_height="15dp"
+               android:src="@mipmap/ic_location"/>
            <TextView
+               android:layout_toRightOf="@+id/iv_location"
                android:id="@+id/tv_location"
+               android:layout_marginLeft="3dp"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="查看位置"
@@ -125,6 +132,13 @@
                android:layout_height="15dp"
                android:src="@mipmap/ic_close"/>
            <!--公开-->
+           <ImageView
+               android:src="@mipmap/ic_eye"
+               android:layout_width="15dp"
+               android:layout_marginRight="3dp"
+               android:layout_centerVertical="true"
+               android:layout_toLeftOf="@+id/tv_public"
+               android:layout_height="15dp" />
            <TextView
                android:id="@+id/tv_public"
                android:textColor="@color/colorAccent"
