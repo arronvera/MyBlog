@@ -1,7 +1,9 @@
 package code.vera.myblog;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -46,6 +48,7 @@ import code.vera.myblog.view.CircleImageView;
 import code.vera.myblog.view.MainView;
 
 import static code.vera.myblog.R.id.lv_left_menu;
+import static code.vera.myblog.presenter.activity.PostActivity.ACTION_SAVE_DRAFT;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 
 /**
@@ -74,6 +77,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     private long firstTime = 0;
     Fragment fragment = null;
     private UserInfoBean user;//当前用户
+    private RefreshBroadCastReceiver broadcastReceiver;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -82,6 +86,8 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     @Override
     protected void onAttach() {
         super.onAttach();
+        broadcastReceiver=new RefreshBroadCastReceiver();
+        broadcastReceiver.registRecevier();
         initView();
         initData();
         setAdapter();
@@ -267,5 +273,25 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     public static void start(Context context){
         Intent intent=new Intent(context,MainActivity.class);
         context.startActivity(intent);
+    }
+    class RefreshBroadCastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            adapter.notifyDataSetChanged();
+        }
+        public void registRecevier() {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(ACTION_SAVE_DRAFT);
+            mContext.registerReceiver(this, filter);
+        }
+        public void unRgistRecevier() {
+            mContext.unregisterReceiver(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        broadcastReceiver.unRgistRecevier();
     }
 }

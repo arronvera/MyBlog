@@ -60,6 +60,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public static final String PARAM_STATUS_BEAN = "StatusesBean";
     public static final String PARAM_POST_TYPE = "type";
     public static final String PARAM_POST_BEAN = "postbean";
+    public static final String ACTION_SAVE_DRAFT = "action.save.draft";
+
     private int type;
     private String picPath;
     private boolean isShowEmoj = false;//是否表情已经显示
@@ -158,6 +160,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (saveMessage()){
+                                //发送广播
+                                sendBroadcast(new Intent(ACTION_SAVE_DRAFT));
                                 ToastUtil.showToast(getApplicationContext(), "保存成功");
                                 finish();
                             }else {

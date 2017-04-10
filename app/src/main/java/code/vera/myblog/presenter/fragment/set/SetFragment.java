@@ -4,17 +4,24 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 
-import com.nostra13.universalimageloader.cache.disc.DiscCacheAware;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.utils.StorageUtils;
+
+import java.io.File;
 
 import butterknife.OnClick;
 import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.LoginActivity;
 import code.vera.myblog.R;
+import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.manager.DataCleanManager;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.utils.DialogUtils;
+import code.vera.myblog.utils.FileUtils;
+import code.vera.myblog.utils.SaveUtils;
 import code.vera.myblog.view.other.SetView;
+
+import static code.vera.myblog.utils.FileUtils.SIZETYPE_MB;
 
 /**
  * 设置
@@ -22,6 +29,7 @@ import code.vera.myblog.view.other.SetView;
  */
 
 public class SetFragment extends PresenterFragment<SetView,VoidModel> {
+    private UserInfoBean userInfoBean;
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_set;
@@ -31,13 +39,18 @@ public class SetFragment extends PresenterFragment<SetView,VoidModel> {
     protected void onAttach() {
         super.onAttach();
         initData();
+        userInfoBean=SaveUtils.getUser(mContext);
+        view.showUser(userInfoBean);
     }
 
     private void initData() {
-        DiscCacheAware discCacheAware=ImageLoader.getInstance().getDiscCache();
+        File cacheDir = StorageUtils.getCacheDirectory(mContext);
+        Double size=FileUtils.getFileOrFilesSize(cacheDir.getAbsolutePath(),SIZETYPE_MB);
+        view.setCache(size);
+
     }
 
-    @OnClick({R.id.rl_exit,R.id.rl_clear_cache})
+    @OnClick({R.id.rl_exit,R.id.rl_clear_cache,R.id.rl_problems,R.id.rl_author})
     public void doClick(View v){
         switch (v.getId()){
             case R.id.rl_exit:
@@ -56,12 +69,18 @@ public class SetFragment extends PresenterFragment<SetView,VoidModel> {
                     }
                 }, "取消", null);
                 break;
+            case R.id.rl_problems:
+                //todo
+                break;
+            case R.id.rl_author:
+                //todo
+                break;
         }
     }
 
     private void clearCache() {
-        //todo
-
+        DataCleanManager.cleanCustomCache( StorageUtils.getCacheDirectory(mContext).getAbsolutePath());
+        initData();
     }
 
     /**

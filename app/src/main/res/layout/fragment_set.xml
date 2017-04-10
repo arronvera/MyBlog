@@ -21,6 +21,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/manager_user"/>
                 <ImageView
+                    android:id="@+id/iv_photo"
                     android:layout_alignParentRight="true"
                     android:layout_width="30dp"
                     android:layout_height="30dp" />
@@ -37,6 +38,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/clear_catch"/>
                 <TextView
+                    android:id="@+id/tv_cache"
                     android:text="0M"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -46,6 +48,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_problems"
                 android:layout_marginTop="20dp"
                 style="@style/ItemSetLLayout">
                 <TextView
@@ -57,6 +60,7 @@
                     android:text="@string/problems"/>
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/rl_author"
                 android:layout_marginTop="20dp"
                 style="@style/ItemSetLLayout">
                 <TextView
