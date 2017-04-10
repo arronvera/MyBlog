@@ -24,6 +24,7 @@ public class TabPersonPhotosFragment extends PresenterFragment<TabPersonPhotosVi
     private SimpleRecyclerCardAdapter adapter;
     private List<PicBean>pics;
     private HomeRequestBean homeRequestBean;
+    private String uid;
 
     @Override
     protected int getLayoutResId() {
@@ -42,7 +43,7 @@ public class TabPersonPhotosFragment extends PresenterFragment<TabPersonPhotosVi
     private void initData() {
         pics=new ArrayList<>();
         homeRequestBean=new HomeRequestBean();
-        //todo uid
+        homeRequestBean.setUid(uid);
     }
 
     private void getPics() {
@@ -73,5 +74,9 @@ public class TabPersonPhotosFragment extends PresenterFragment<TabPersonPhotosVi
             instance=new TabPersonPhotosFragment();
         }
         return instance;
+    }
+
+    public void setUid(long id) {
+       uid=id+"";
     }
 }

@@ -49,5 +49,6 @@ public class TabPersonInfoFragment extends PresenterFragment<TabPersonInfoView, 
 
     public void setUid(long id) {
         uid=id+"";
+        Debug.d("uid="+uid);
     }
 }

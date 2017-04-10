@@ -31,7 +31,7 @@
             android:layout_width="90dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="最近"
+            android:text="@string/str_recent"
             android:textColor="#9E9E9E"
             android:background="@drawable/selector_face_text"/>
         <TextView
@@ -39,7 +39,7 @@
             android:layout_width="92dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="默认"
+            android:text="@string/str_default"
             android:textColor="#9E9E9E"
             android:background="@drawable/selector_face_text"/>
         <TextView
@@ -47,7 +47,7 @@
             android:layout_width="92dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="魔法"
+            android:text="@string/str_bear"
             android:textColor="#9E9E9E"
             android:background="@drawable/selector_face_text"/>
         <TextView

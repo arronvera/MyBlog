@@ -1,7 +1,6 @@
 package code.vera.myblog.presenter.fragment.other;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,14 +31,6 @@ import code.vera.myblog.view.widget.EmojiIndicatorView;
  */
 
 public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
-
-
-    public static EmojFragment Instance() {
-        EmojFragment instance = new EmojFragment();
-        Bundle bundle = new Bundle();
-        instance.setArguments(bundle);
-        return instance;
-    }
     @BindView(R.id.face_viewPager)
     ViewPager faceViewPager;
     @BindView(R.id.face_indicator)
@@ -58,7 +49,7 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
     ArrayList<Emoji> antiEmojiList;
     ArrayList<Emoji> carttonEmojiList;
 
-    private int columns = 7;
+    private int columns = 7;//7列
     private int rows = 3;
 
     private OnEmojiClickListener listener;
@@ -81,11 +72,9 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
         }
         recentManager = RecentEmojiManager.make(activity);
         emojiList = EmojiUtil.getEmojiList();
-
         //表情添加
         antiEmojiList=new ArrayList<>();
         carttonEmojiList=new ArrayList<>();
-
         try {
             if (recentManager.getCollection(RecentEmojiManager.PREFERENCE_NAME) != null) {
                 recentlyEmojiList = (ArrayList<Emoji>) recentManager.getCollection(RecentEmojiManager.PREFERENCE_NAME);
@@ -153,7 +142,7 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
                 faceCartoonTv.setSelected(false);
                 faceAntiTv.setSelected(false);
                 break;
-            case R.id.face_recent:
+            case R.id.face_recent://最近
                 if (faceIndicator.getVisibility() == View.VISIBLE) {
                     faceIndicator.setVisibility(View.GONE);
                 }

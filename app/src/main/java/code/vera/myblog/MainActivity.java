@@ -1,5 +1,6 @@
 package code.vera.myblog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -73,9 +74,6 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     private long firstTime = 0;
     Fragment fragment = null;
     private UserInfoBean user;//当前用户
-    public static final String PARAM_SHARE_TRANSITION_HEAD="head";
-    public static final String PARAM_SHARE_TRANSITION_NAME="name";
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -98,9 +96,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     }
 
     private void setAdapter() {
-        //初始化adapter
         adapter = new MenuItemAdapter(menuList, this);
-        //为侧边菜单填充上内容
         lvMenu.setAdapter(adapter);
     }
 
@@ -267,5 +263,9 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
                 break;
         }
         return false;
+    }
+    public static void start(Context context){
+        Intent intent=new Intent(context,MainActivity.class);
+        context.startActivity(intent);
     }
 }

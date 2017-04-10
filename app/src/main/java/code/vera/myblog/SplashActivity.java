@@ -51,8 +51,6 @@ public class SplashActivity extends PresenterActivity<VoidView, VoidModel> {
                 isLogin();
             }
         }, 2600);
-
-
     }
 
     /**
@@ -61,14 +59,10 @@ public class SplashActivity extends PresenterActivity<VoidView, VoidModel> {
     private void isLogin() {
         String token = AccessTokenKeeper.readAccessToken(getApplicationContext()).getToken();
         if (!TextUtils.isEmpty(token)) {
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
-            LoginActivity.start(mContext);
+            MainActivity.start(mContext);
             finish();
         } else {
             Debug.d("未登陆---");
-//            Intent intent=new Intent(this,LoginActivity.class);
-//            startActivity(intent);
             LoginActivity.start(mContext);
             finish();
         }

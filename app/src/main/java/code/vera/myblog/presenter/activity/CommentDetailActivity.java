@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
-
 import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
@@ -28,8 +26,6 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
 
     public static long id;
     private StatusesBean statusesBean;
-    private ContextMenuDialogFragment mMenuDialogFragment;
-
 
 
     @Override
@@ -102,8 +98,7 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
                 break;
             case R.id.iv_shoucang://收藏
                 //todo 收藏
-
-
+                view.showCollectionView();
                 break;
         }
     }

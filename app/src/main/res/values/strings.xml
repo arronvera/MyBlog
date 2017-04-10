@@ -10,6 +10,8 @@
     <string name="concern">关注</string>
     <string name="concern_success">关注成功</string>
     <string name="cancel_concern_success">取消关注成功</string>
+    <string name="wrong_api">请检查网络状况</string>
+
     <string name="topic_no_share">未找到当前话题</string>
     <string name="exit_log_out">退出当前账号</string>
     <string name="manager_user">账号管理</string>
@@ -25,5 +27,8 @@
     <string name="text_public">公开</string>
     <string name="text_friends">好友可见</string>
     <string name="text_myself">仅自己可见</string>
+    <string name="str_recent">最近</string>
+    <string name="str_default">默认</string>
+    <string name="str_bear">小熊</string>
 
 </resources>

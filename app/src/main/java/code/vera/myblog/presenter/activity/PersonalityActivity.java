@@ -15,7 +15,9 @@ import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.PersonalityModel;
 import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.fragment.person.TabPersonAllCircleFragment;
 import code.vera.myblog.presenter.fragment.person.TabPersonInfoFragment;
+import code.vera.myblog.presenter.fragment.person.TabPersonPhotosFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.PersonalityView;
@@ -49,6 +51,9 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
         userInfoBean= (UserInfoBean) intent.getSerializableExtra("user");
         if (userInfoBean!=null){
             view.showInfo(userInfoBean);
+            TabPersonInfoFragment.getInstance().setUid(userInfoBean.getId());
+            TabPersonAllCircleFragment.getInstance().setUid(userInfoBean.getId());
+            TabPersonPhotosFragment.getInstance().setUid(userInfoBean.getId());
             if (AccessTokenKeeper.readAccessToken(getApplicationContext()).getUid().equals(userInfoBean.getId()+"")){
                 view.setConcernVisible(false);
             }
@@ -64,9 +69,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
                     Debug.d("user="+user.toString());
                    userInfoBean=user;
                     view.showInfo(user);
-                    TabPersonInfoFragment.getInstance().setUid(user.getId());
-//                    TabPersonAllCircleFragment.getInstance().setUser(userInfoBean);
-//                    TabPersonPhotosFragment.getInstance().setUser(user);
+
                 }
             });
             bundle.putString("name",user_name);

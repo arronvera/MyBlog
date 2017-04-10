@@ -4,6 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 
+import com.nostra13.universalimageloader.cache.disc.DiscCacheAware;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import butterknife.OnClick;
 import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.LoginActivity;
@@ -23,11 +26,17 @@ public class SetFragment extends PresenterFragment<SetView,VoidModel> {
     protected int getLayoutResId() {
         return R.layout.fragment_set;
     }
-
     @Override
+
     protected void onAttach() {
         super.onAttach();
+        initData();
     }
+
+    private void initData() {
+        DiscCacheAware discCacheAware=ImageLoader.getInstance().getDiscCache();
+    }
+
     @OnClick({R.id.rl_exit,R.id.rl_clear_cache})
     public void doClick(View v){
         switch (v.getId()){
@@ -40,7 +49,7 @@ public class SetFragment extends PresenterFragment<SetView,VoidModel> {
                 }, "取消", null);
                 break;
             case R.id.rl_clear_cache:
-                DialogUtils.showDialog(mContext, "", "你是否确定清楚缓存？", "确定", new DialogInterface.OnClickListener() {
+                DialogUtils.showDialog(mContext, "", "你是否确定清除缓存？", "确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         clearCache();

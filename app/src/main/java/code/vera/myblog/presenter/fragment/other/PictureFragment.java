@@ -1,5 +1,9 @@
 package code.vera.myblog.presenter.fragment.other;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +12,12 @@ import android.text.TextUtils;
 import code.vera.myblog.R;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
+import code.vera.myblog.utils.PictureUtils;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.pic.PictureView;
+import ww.com.core.Debug;
+
+import static code.vera.myblog.presenter.activity.PicturesActivity.ACTION_SAVE_PIC;
 
 /**
  * 图片显示
@@ -17,6 +26,7 @@ import code.vera.myblog.view.pic.PictureView;
 
 public class PictureFragment  extends PresenterFragment<PictureView,VoidModel>  {
     private String url;
+    private PictureSaveBroadCastReceiver broadCastReceiver;
 
     @Override
     protected int getLayoutResId() {
@@ -34,12 +44,39 @@ public class PictureFragment  extends PresenterFragment<PictureView,VoidModel>  
     @Override
     protected void onAttach() {
         super.onAttach();
+        broadCastReceiver=new PictureSaveBroadCastReceiver();
+        broadCastReceiver.registRecevier();
         url = getArguments().getString("url");
         if (!TextUtils.isEmpty(url)) {
             view.showPic(url);
         }
     }
-    public Bitmap getCurrentBitmap(){
-        return view.getLoadBitmap();
+    class PictureSaveBroadCastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Debug.d("接收---");
+                Bitmap bitmap=view.getLoadBitmap();
+                if (bitmap==null){
+                    Debug.d("图片为空");
+                   ToastUtil.showToast(mContext,"图片正在加载中哦~不能保存");
+               }else{
+                    Debug.d("图片不为空");
+                   PictureUtils.savePic(bitmap,mContext);
+               }
+        }
+        public void registRecevier() {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(ACTION_SAVE_PIC);
+            mContext.registerReceiver(this, filter);
+        }
+        public void unRgistRecevier() {
+            mContext.unregisterReceiver(this);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        broadCastReceiver.unRgistRecevier();
     }
 }

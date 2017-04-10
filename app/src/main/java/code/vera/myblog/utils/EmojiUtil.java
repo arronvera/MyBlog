@@ -21,9 +21,10 @@ import code.vera.myblog.bean.Emoji;
 
 public class EmojiUtil {
     private static ArrayList<Emoji> emojiList;
+    private static ArrayList<Emoji> antiEmojiList;
 
     /**
-     * 获取表情集合
+     * 获取默认表情集合
      * @return
      */
     public static ArrayList<Emoji> getEmojiList() {
@@ -32,7 +33,16 @@ public class EmojiUtil {
         }
         return emojiList;
     }
-
+    /**
+     * 获取小熊表情集合
+     * @return
+     */
+    public static ArrayList<Emoji> getAntiEmojiList() {
+        if (antiEmojiList == null) {
+            antiEmojiList = generateEmojis();
+        }
+        return antiEmojiList;
+    }
     /**
      * 生成表情对象集合
      * @return
@@ -76,8 +86,6 @@ public class EmojiUtil {
             R.drawable.d_shuai,
             R.drawable.d_weiqu,
             R.drawable.d_tu,
-
-
     };
 
     public static final String[] EmojiTextArray = {

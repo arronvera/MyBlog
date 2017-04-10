@@ -97,7 +97,6 @@ public class LoginActivity extends PresenterActivity<LoginView, LoginModel> {
     public static void start(Context context){
         Intent intent=new Intent(context,LoginActivity.class);
         context.startActivity(intent);
-
     }
 
 }

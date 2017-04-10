@@ -2,6 +2,7 @@ package code.vera.myblog.presenter.fragment.find;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.trello.rxlifecycle.FragmentEvent;
 
@@ -11,7 +12,10 @@ import code.vera.myblog.R;
 import code.vera.myblog.adapter.FindAdapter;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemConcernListener;
+import code.vera.myblog.listener.OnItemLikeListener;
+import code.vera.myblog.listener.OnItemRepostListener;
 import code.vera.myblog.model.find.FindModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
@@ -22,7 +26,9 @@ import code.vera.myblog.view.find.FindView;
  * Created by vera on 2017/1/20 0020.
  */
 
-public class FindFragment extends PresenterFragment<FindView,FindModel>implements OnItemConcernListener {
+public class FindFragment extends PresenterFragment<FindView,FindModel>
+        implements OnItemConcernListener,OnItemRepostListener,OnItemCommentListener
+        ,OnItemLikeListener{
     private FindAdapter adapter;
     private HomeRequestBean requestBean;
     @Override
@@ -36,6 +42,13 @@ public class FindFragment extends PresenterFragment<FindView,FindModel>implement
         requestBean=new HomeRequestBean();
         setAdapter();
         getTimeLine();
+        addListener();
+    }
+
+    private void addListener() {
+        adapter.setOnItemConcernListener(this);
+        adapter.setOnItemCommentListener(this);
+        adapter.setOnItemRepostListener(this);
     }
 
     private void getTimeLine() {
@@ -68,5 +81,20 @@ public class FindFragment extends PresenterFragment<FindView,FindModel>implement
                 }
             }
         });
+    }
+
+    @Override
+    public void onItemCommentListener(View v, int pos) {
+
+    }
+
+    @Override
+    public void onItemRepostListener(View v, int pos) {
+
+    }
+
+    @Override
+    public void onItemLikeListener(View v, ImageView imageView, int pos) {
+
     }
 }

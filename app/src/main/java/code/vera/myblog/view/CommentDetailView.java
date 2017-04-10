@@ -57,6 +57,8 @@ public class CommentDetailView extends BaseView {
     TextView tvSource;
     @BindView(R.id.iv_like)
     ImageView ivLike;//喜欢
+    @BindView(R.id.iv_shoucang)
+    ImageView ivCollection;//收藏
     private LikeView likeView;
     private TabCommentAdapter tabCommentAdapter;
     private NineGridImageViewAdapter<PicBean> adapter;
@@ -158,8 +160,14 @@ public class CommentDetailView extends BaseView {
 
 
   public void showLikeView() {
-        ivLike.setImageResource(R.mipmap.ic_like_sel);
-        likeView.setImage(context.getResources().getDrawable(R.mipmap.ic_like_sel));
+        ivLike.setImageResource(R.mipmap.ic_heart_sel);
+        likeView.setImage(context.getResources().getDrawable(R.mipmap.ic_heart_sel));
         likeView.show(ivLike);
+    }
+
+    public void showCollectionView() {
+        ivCollection.setImageResource(R.mipmap.ic_shoucang_sel);
+        likeView.setImage(context.getResources().getDrawable(R.mipmap.ic_shoucang_sel));
+        likeView.show(ivCollection);
     }
 }

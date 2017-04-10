@@ -118,6 +118,9 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         if (authorityFragment==null){
             authorityFragment=new AuthorityFragment();
         }
+        if (emojFragment==null){
+            emojFragment=new EmojFragment();
+        }
     }
 
     private void addListener() {
@@ -205,7 +208,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 break;
             case R.id.iv_emotion://表情
                 if (!isShowEmoj) {
-                    emojFragment = EmojFragment.Instance();
                     fragmentManager.beginTransaction().add(R.id.ll_container, emojFragment).commit();
                     isShowEmoj = true;
                 } else {

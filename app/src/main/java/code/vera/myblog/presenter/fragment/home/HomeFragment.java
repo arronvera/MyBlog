@@ -66,20 +66,18 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         , OnItemMenuListener, OnItemHeadPhotoListener, OnItemClickListener {
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
-    private View contentView;
-    private PopupWindow popupWindow;
     private LikeView likeView;
     private PopupWindow menuPopupWindow;//菜单
     private Button btnCancel;//取消
     private Button btnShoucang;//收藏
     private Button btnCopy;//复制
     private Button btnConcern;//关注
+    private Button btnShare;//分享
 
     private int index;//当前item
     private boolean isFollow;
     private boolean isCollection;//是否收藏
     private AlertDialog.Builder cateDialog;//弹出框
-    private Button btnShare;
 
     @Override
     protected int getLayoutResId() {
@@ -97,7 +95,6 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
             @Override
             public void onHeaderRefreshing() {
-//                Debug.d("下拉刷新");
                 //下拉刷新
                 requestBean.page = "1";//
                 getData();
@@ -105,7 +102,6 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
             @Override
             public void onFooterRefreshing() {
-//                Debug.d("上拉加载");
                 //上拉加载
                 int nextPage = Integer.parseInt(requestBean.getPage()) + 1;
                 Debug.d("bean=" + requestBean.toString());
@@ -155,6 +151,8 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                             super.onNext(s);
                             if (!TextUtils.isEmpty(s)) {
                                 ToastUtil.showToast(getContext(), getString(R.string.cancel_concern_success));
+                            }else {
+                                ToastUtil.showToast(getContext(), getString(R.string.wrong_api));
                             }
                         }
                     });
@@ -272,8 +270,8 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     public void onItemLikeListener(View v, ImageView imageView, int pos) {
         //喜欢
         //选中
-        imageView.setImageResource(R.mipmap.ic_like_sel);
-        likeView.setImage(getResources().getDrawable(R.mipmap.ic_like_sel));
+        imageView.setImageResource(R.mipmap.ic_heart_sel);
+        likeView.setImage(getResources().getDrawable(R.mipmap.ic_heart_sel));
         likeView.show(imageView);
         //todo count+1
     }
@@ -394,8 +392,8 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     @Override
     public void onItemClickListener(View v, int pos) {
         //点击单个Item
-//        Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
-//        intent.putExtra("status",adapter.getItem(pos));
-//        startActivity(intent);
+        Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
+        intent.putExtra("status",adapter.getItem(pos));
+        startActivity(intent);
     }
 }

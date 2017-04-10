@@ -1,5 +1,6 @@
 package code.vera.myblog.presenter.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
@@ -39,6 +40,10 @@ public class BigPhotoActivity extends PresenterActivity<BigPhotoView, VoidModel>
                 finish();
                 break;
         }
+    }
+    public static void start(Context context){
+        Intent intent=new Intent(context,PersonalityActivity.class);
+        context.startActivity(intent);
     }
 
 }

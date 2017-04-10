@@ -33,6 +33,7 @@ implements OnItemMenuListener{
     private HomeRequestBean homeRequestBean;
     private HomeAdapter adapter;
     private PopupWindow menuPopupWindow;
+    private String uid;
 
     @Override
     protected int getLayoutResId() {
@@ -43,6 +44,7 @@ implements OnItemMenuListener{
     protected void onAttach() {
         super.onAttach();
         homeRequestBean=new HomeRequestBean();
+        homeRequestBean.setUid(uid);
         initView();
         setAdapter();
         addListener();
@@ -99,4 +101,7 @@ implements OnItemMenuListener{
         return instance;
     }
 
+    public void setUid(long id) {
+      uid=id+"";
+    }
 }
