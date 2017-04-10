@@ -23,10 +23,8 @@ import code.vera.myblog.view.CommentDetailView;
 public class CommentDetailActivity extends PresenterActivity<CommentDetailView, CommentDetailModel>
         implements OnItemAtListener, OnItemTopicListener, OnItemLinkListener {
 
-
     public static long id;
     private StatusesBean statusesBean;
-
 
     @Override
     protected int getLayoutResId() {
