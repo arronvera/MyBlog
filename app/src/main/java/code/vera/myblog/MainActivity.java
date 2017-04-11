@@ -50,6 +50,7 @@ import code.vera.myblog.view.MainView;
 import static code.vera.myblog.R.id.lv_left_menu;
 import static code.vera.myblog.presenter.activity.PostActivity.ACTION_SAVE_DRAFT;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
+import static code.vera.myblog.presenter.fragment.draft.DraftFragment.ACTION_DELETE_DRAFT;
 
 /**
  * 主界面
@@ -284,6 +285,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         public void registRecevier() {
             IntentFilter filter = new IntentFilter();
             filter.addAction(ACTION_SAVE_DRAFT);
+            filter.addAction(ACTION_DELETE_DRAFT);
             mContext.registerReceiver(this, filter);
         }
         public void unRgistRecevier() {

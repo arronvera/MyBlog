@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyBlog</string>
+    <string name="app_name">圈艺微博客户端</string>
     <string name="ok">确定</string>
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>

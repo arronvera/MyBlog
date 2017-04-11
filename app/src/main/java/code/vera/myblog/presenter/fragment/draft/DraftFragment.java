@@ -1,6 +1,7 @@
 package code.vera.myblog.presenter.fragment.draft;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -38,6 +39,7 @@ public class DraftFragment extends PresenterFragment<DraftView, PostModel>
     private PostDao postDao;
     private DraftAdapter adapter;
     private List<PostBean> postBeanList;
+    public static final String ACTION_DELETE_DRAFT = "action.delete.draft";
 
     @Override
     protected int getLayoutResId() {
@@ -86,6 +88,8 @@ public class DraftFragment extends PresenterFragment<DraftView, PostModel>
                 getDraft();
                 //更新
                 adapter.notifyDataSetChanged();
+                //通知广播进行更新
+                mContext.sendBroadcast(new Intent(ACTION_DELETE_DRAFT));
             }
         }, "否", null);
 
@@ -94,6 +98,7 @@ public class DraftFragment extends PresenterFragment<DraftView, PostModel>
     @Override
     public void onItemSendListener(View view, int pos, final PostBean postBean) {
         int type=postBean.getPostType();
+        Debug.d("type="+type);
         switch (type) {
             case Constants.POST_TYPE_NEW://分享
                 Bundle bundle=new Bundle();
