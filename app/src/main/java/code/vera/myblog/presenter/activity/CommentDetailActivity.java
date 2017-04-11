@@ -62,16 +62,17 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
         view.setOnItemLinkListener(this);
     }
 
-    @OnClick({R.id.tv_item_comment, R.id.tv_item_repost, R.id.rl_item_like,R.id.iv_back})
+    @OnClick({R.id.rl_item_comment, R.id.rl_item_repost,
+            R.id.rl_item_like,R.id.iv_back})
     public void doClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_item_comment://评论
+            case R.id.rl_item_comment://评论
                 Bundle bundle = new Bundle();
                 bundle.putInt(PostActivity.PARAM_POST_TYPE, Constants.POST_TYPE_COMMENT);
                 bundle.putSerializable(PostActivity.PARAM_STATUS_BEAN, statusesBean);
                 PostActivity.start(this, bundle);
                 break;
-            case R.id.tv_item_repost://转发
+            case R.id.rl_item_repost://转发
                 bundle = new Bundle();
                 bundle.putInt(PostActivity.PARAM_POST_TYPE, Constants.POST_TYPE_REPOST);
                 bundle.putSerializable(PostActivity.PARAM_STATUS_BEAN, statusesBean);

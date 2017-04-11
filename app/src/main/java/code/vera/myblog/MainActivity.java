@@ -127,15 +127,16 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         menuList.add(item);
         item = new MenuItem();
         item.setText("收藏");
-        item.setPic(R.mipmap.ic_mine);
+        item.setPic(R.mipmap.ic_diamond);
         menuList.add(item);
         //草稿箱
         item = new MenuItem();
         item.setText("草稿箱");
+        item.setPic(R.mipmap.ic_menu_draft);
         menuList.add(item);
         //设置
         item = new MenuItem();
-        item.setPic(R.mipmap.ic_mine);
+        item.setPic(R.mipmap.ic_menu_set);
         item.setText("设置");
         menuList.add(item);
         //获取用户
