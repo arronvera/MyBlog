@@ -4,14 +4,20 @@
     android:id="@+id/activity_splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/colorWhite"
     tools:context="code.vera.myblog.SplashActivity">
+    <ImageView
+        android:layout_width="70dp"
+        android:src="@mipmap/ic_logo"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="70dp" />
     <com.hanks.htextview.HTextView
         android:id="@+id/logo_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="22sp"
         android:gravity="center"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorPrimary"
         android:layout_centerInParent="true"/>
 </RelativeLayout>

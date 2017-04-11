@@ -28,7 +28,7 @@ public class SplashActivity extends PresenterActivity<VoidView, VoidModel> {
     @Override
     protected void onAttach() {
         super.onAttach();
-        textView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        textView.setBackgroundColor(getResources().getColor(R.color.colorWhite));
         textView.postDelayed(new Runnable() {
             @Override
             public void run() {
