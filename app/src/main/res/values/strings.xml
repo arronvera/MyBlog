@@ -16,9 +16,13 @@
     <string name="exit_log_out">退出当前账号</string>
     <string name="manager_user">账号管理</string>
     <string name="clear_catch">清理缓存</string>
+    <string name="vison">检查更新</string>
+
     <string name="about_author">关于作者</string>
     <string name="about_app">关于圈艺</string>
     <string name="problems">常见问题</string>
+    <string name="net_toast">网络环境检测提示</string>
+
     <string name="share">分享</string>
 
     <string name="cancel_collection">取消收藏</string>

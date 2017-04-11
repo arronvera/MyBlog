@@ -17,6 +17,8 @@ import code.vera.myblog.view.base.BaseView;
 public class MainView extends BaseView {
     @BindView(R.id.civ_user_photo)
     CircleImageView civPhoto;
+
+
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);

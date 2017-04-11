@@ -19,6 +19,7 @@ import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.utils.FileUtils;
 import code.vera.myblog.utils.SaveUtils;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.other.SetView;
 
 import static code.vera.myblog.utils.FileUtils.SIZETYPE_MB;
@@ -50,7 +51,7 @@ public class SetFragment extends PresenterFragment<SetView,VoidModel> {
 
     }
 
-    @OnClick({R.id.rl_exit,R.id.rl_clear_cache,R.id.rl_problems,R.id.rl_author})
+    @OnClick({R.id.rl_exit,R.id.rl_clear_cache,R.id.rl_problems,R.id.rl_author,R.id.rl_check_vision})
     public void doClick(View v){
         switch (v.getId()){
             case R.id.rl_exit:
@@ -74,6 +75,9 @@ public class SetFragment extends PresenterFragment<SetView,VoidModel> {
                 break;
             case R.id.rl_author:
                 //todo
+                break;
+            case R.id.rl_check_vision://检查更新
+                ToastUtil.showToast(mContext,"当前版本已经是最新版本了哦~");
                 break;
         }
     }

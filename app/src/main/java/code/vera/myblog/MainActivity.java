@@ -55,7 +55,9 @@ import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
  * 主界面
  */
 public class MainActivity extends PresenterActivity<MainView, UserModel>
-        implements AdapterView.OnItemClickListener, MenuFragment.FragmentDrawerListener,Toolbar.OnMenuItemClickListener{
+        implements AdapterView.OnItemClickListener,
+        MenuFragment.FragmentDrawerListener,
+        Toolbar.OnMenuItemClickListener{
     @BindView(R.id.dl_left)
     DrawerLayout dlLeft;
     @BindView(lv_left_menu)
@@ -86,6 +88,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     @Override
     protected void onAttach() {
         super.onAttach();
+        //注册广播
         broadcastReceiver=new RefreshBroadCastReceiver();
         broadcastReceiver.registRecevier();
         initView();
@@ -157,7 +160,6 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
                 });
             }
         });
-
     }
 
     private void initView() {
