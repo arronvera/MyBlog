@@ -45,11 +45,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_alignParentRight="true">
                 <ImageView
+                    android:id="@+id/iv_heart"
                     android:layout_marginRight="10dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="18dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_like"/>
+                    android:layout_height="20dp"
+                    android:src="@mipmap/ic_heart"/>
                 <TextView
                     android:id="@+id/item_comment_user_num"
                     android:layout_width="wrap_content"

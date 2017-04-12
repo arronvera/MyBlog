@@ -8,11 +8,26 @@
     android:padding="10dp"
     android:layout_marginTop="5dp"
     android:background="@drawable/item_message_shape">
-    <TextView
-        android:id="@+id/tv_draft_type"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="新微博"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/ic_tag"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tv_draft_type"
+            android:textSize="16sp"
+            android:textColor="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="新微博"/>
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tv_draft_content"
         android:layout_width="wrap_content"
@@ -24,17 +39,17 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/iv_delete"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_toLeftOf="@+id/iv_send"
             android:layout_marginRight="20dp"
-            android:src="@mipmap/ic_delete_dark"/>
+            android:src="@mipmap/ic_trash"/>
         <ImageView
             android:id="@+id/iv_send"
             android:layout_alignParentRight="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/ic_action_send_now_light"/>
+            android:src="@mipmap/ic_paperplane"/>
     </RelativeLayout>
 </LinearLayout>

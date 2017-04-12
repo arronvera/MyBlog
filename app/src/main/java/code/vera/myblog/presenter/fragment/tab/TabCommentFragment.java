@@ -2,6 +2,7 @@ package code.vera.myblog.presenter.fragment.tab;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.trello.rxlifecycle.FragmentEvent;
 
@@ -11,6 +12,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.adapter.CommentAdapter;
 import code.vera.myblog.bean.CommentUserBean;
 import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemLikeListener;
 import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.tab.TabCommentDetailModel;
@@ -28,7 +30,7 @@ import ww.com.core.Debug;
  */
 
 public class TabCommentFragment  extends PresenterFragment<TabCommentView, TabCommentDetailModel>
-implements OnItemLinkListener,OnItemTopicListener,OnItemAtListener{
+implements OnItemLinkListener,OnItemTopicListener,OnItemAtListener,OnItemLikeListener{
     private CommentAdapter adapter;
     @Override
     protected int getLayoutResId() {
@@ -47,6 +49,7 @@ implements OnItemLinkListener,OnItemTopicListener,OnItemAtListener{
         adapter.setOnItemAtListener(this);
         adapter.setOnItemTopicListener(this);
         adapter.setOnItemLinkListener(this);
+        adapter.setOnItemLikeListener(this);
 
 
     }
@@ -85,5 +88,11 @@ implements OnItemLinkListener,OnItemTopicListener,OnItemAtListener{
         Intent intent=new Intent(getActivity(),BrowserActivity.class);
         intent.putExtra("link",str);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemLikeListener(View v, ImageView imageView, int pos) {
+        view.setLikeView(imageView);
+        //todo 数字加1
     }
 }
