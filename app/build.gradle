@@ -98,4 +98,5 @@ dependencies {
     compile files('libs/baidumapapi_cloud_v4_2_1.jar')
     compile files('libs/Amap_2DMap_V4.2.0_20170120.jar')
     compile files('libs/Android_Map3D_SDK_V5.0.0_20170309.jar')
+
 }
