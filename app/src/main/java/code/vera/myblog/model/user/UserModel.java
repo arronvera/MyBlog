@@ -9,8 +9,10 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import code.vera.myblog.api.CollectionApi;
 import code.vera.myblog.api.HomeApi;
 import code.vera.myblog.api.UserApi;
+import code.vera.myblog.bean.CollectionBean;
 import code.vera.myblog.bean.UnReadBean;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
@@ -165,6 +167,22 @@ public class UserModel implements IModel {
                 return beanList;
             }
         }).compose(RxHelper.< List<UserInfoBean>>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+    public void getFavorites(int count,int page,Context context, Observable.Transformer
+            transformer, Subscriber<List<CollectionBean>> subscriber){
+        CollectionApi.getFavorites(count,page,context).map(new Func1<String, List<CollectionBean>>() {
+            @Override
+            public List<CollectionBean> call(String s) {
+                JSONObject object= JSON.parseObject(s);
+                if (object!=null){
+                    List<CollectionBean>collectionBeanList= JSON.parseArray(object.getString("favorites"),CollectionBean.class);
+                    return collectionBeanList;
+                }
+                return null;
+            }
+        }).compose(RxHelper.<List<CollectionBean>>cutMain())
                 .compose(transformer)
                 .subscribe(subscriber);
     }

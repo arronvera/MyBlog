@@ -3,7 +3,10 @@ package code.vera.myblog.presenter.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+
+import com.trello.rxlifecycle.ActivityEvent;
 
 import butterknife.OnClick;
 import code.vera.myblog.R;
@@ -15,6 +18,8 @@ import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.CommentDetailModel;
 import code.vera.myblog.presenter.base.PresenterActivity;
+import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.CommentDetailView;
 
 /**
@@ -25,7 +30,7 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
 
     public static long id;
     private StatusesBean statusesBean;
-
+    public static final  String BUNDLE_PARAM_STATUS="status";
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_comment_detail;
@@ -96,8 +101,17 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
                 startActivity(intent);
                 break;
             case R.id.iv_shoucang://收藏
-                //todo 收藏
-                view.showCollectionView();
+                model.createFavorites(id+"",mContext,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,false){
+                    @Override
+                    public void onNext(String s) {
+                        super.onNext(s);
+                        if (!TextUtils.isEmpty(s)){
+                            view.showCollectionView();
+                        }else {
+                            ToastUtil.showToast(mContext,getString(R.string.wront_net));
+                        }
+                    }
+                });
                 break;
         }
     }
@@ -116,7 +130,7 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
 
     public static void start(Context context, Bundle bundle) {
         Intent intent = new Intent(context, CommentDetailActivity.class);
-        intent.putExtra("status", bundle.getSerializable("status"));
+        intent.putExtra(BUNDLE_PARAM_STATUS, bundle.getSerializable(BUNDLE_PARAM_STATUS));
         context.startActivity(intent);
     }
 

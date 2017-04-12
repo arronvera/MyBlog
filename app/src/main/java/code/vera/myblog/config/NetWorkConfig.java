@@ -64,5 +64,10 @@ public class NetWorkConfig {
     //对未读消息进行清零
     public static final String CLEAR_UNREAD_COUNT="https://rm.api.weibo.com/2/remind/set_count.json";
 
-
+    //收藏
+    public static final String CREATE_FAVORITES=BASE_URL+"/favorites/create.json";
+    //取消收藏
+    public static final String DESTROY_FAVORITES=BASE_URL+"/favorites/destroy.json";
+    //收藏列表
+    public static final String FAVORITES_LIST=BASE_URL+"/favorites.json";
 }

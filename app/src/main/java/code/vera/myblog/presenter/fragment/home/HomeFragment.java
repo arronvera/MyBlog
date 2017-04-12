@@ -47,10 +47,11 @@ import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.ScreenUtils;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.home.HomeView;
-import code.vera.myblog.view.widget.LikeView;
 import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
 
+import static code.vera.myblog.presenter.activity.CommentDetailActivity.BUNDLE_PARAM_STATUS;
+import static code.vera.myblog.presenter.activity.PersonalityActivity.BUNDLER_PARAM_USER;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_STATUS_BEAN;
 
@@ -66,7 +67,6 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         , OnItemMenuListener, OnItemHeadPhotoListener, OnItemClickListener {
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
-    private LikeView likeView;
     private PopupWindow menuPopupWindow;//菜单
     private Button btnCancel;//取消
     private Button btnShoucang;//收藏
@@ -78,6 +78,8 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     private boolean isFollow;
     private boolean isCollection;//是否收藏
     private AlertDialog.Builder cateDialog;//弹出框
+    public static final String ACTION_CLEAR_UNREAD = "action.clearunread";
+
 
     @Override
     protected int getLayoutResId() {
@@ -91,29 +93,10 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         initData();
         setAdater();
         getData();
-        //上下拉刷新
-        view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
-            @Override
-            public void onHeaderRefreshing() {
-                //下拉刷新
-                requestBean.page = "1";//
-                getData();
-            }
-
-            @Override
-            public void onFooterRefreshing() {
-                //上拉加载
-                int nextPage = Integer.parseInt(requestBean.getPage()) + 1;
-                Debug.d("bean=" + requestBean.toString());
-                requestBean.setPage(nextPage + "");
-                getData();
-            }
-        });
         addListener();
     }
 
     private void initData() {
-        likeView = new LikeView(mContext);
         View menu = LayoutInflater.from(getContext()).inflate(R.layout.pop_bottom, null);
         menuPopupWindow = new PopupWindow(menu, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         menuPopupWindow.setFocusable(true);
@@ -151,6 +134,8 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                             super.onNext(s);
                             if (!TextUtils.isEmpty(s)) {
                                 ToastUtil.showToast(getContext(), getString(R.string.cancel_concern_success));
+                                adapter.getItem(index).setFavorited(false);
+                                adapter.notifyItemChanged(index);
                             }else {
                                 ToastUtil.showToast(getContext(), getString(R.string.wrong_api));
                             }
@@ -163,6 +148,8 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                             super.onNext(s);
                             if (!TextUtils.isEmpty(s)) {
                                 ToastUtil.showToast(getContext(), getString(R.string.concern_success));
+                                adapter.getItem(index).setFavorited(true);
+                                adapter.notifyItemChanged(index);
                             }
                         }
                     });
@@ -172,11 +159,31 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         btnShoucang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String weibId=adapter.getItem(index).getId()+"";
                 if (isCollection) {
-
+                    model.destroyFavorites(weibId,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+                        @Override
+                        public void onNext(String s) {
+                            super.onNext(s);
+                            if (!TextUtils.isEmpty(s)){
+                                ToastUtil.showToast(mContext,"取消收藏成功");
+                                menuPopupWindow.dismiss();
+                                //todo 取消收藏 更新
+                            }
+                        }
+                    });
                 } else {
-                    //todo 收藏
-
+                    model.createFavorites(weibId,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+                        @Override
+                        public void onNext(String s) {
+                            super.onNext(s);
+                            if (!TextUtils.isEmpty(s)){
+                                ToastUtil.showToast(mContext,"收藏成功");
+                                menuPopupWindow.dismiss();
+                                //todo 收藏 更新
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -194,6 +201,24 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     }
 
     private void addListener() {
+        view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
+            @Override
+            public void onHeaderRefreshing() {
+                //下拉刷新
+                requestBean.page = "1";//
+                getData();
+            }
+
+            @Override
+            public void onFooterRefreshing() {
+                //上拉加载
+                int nextPage = Integer.parseInt(requestBean.getPage()) + 1;
+                Debug.d("bean=" + requestBean.toString());
+                requestBean.setPage(nextPage + "");
+                getData();
+            }
+        });
+
         adapter.setOnItemCommentListener(this);
         adapter.setOnItemRepostListener(this);
         adapter.setOnItemLikeListener(this);
@@ -224,7 +249,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
      * 获取数据
      */
     private void getData() {
-        model.getHomeTimeLine(requestBean, getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, true) {
+        model.getHomeTimeLine(requestBean, getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, false) {
             @Override
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
@@ -238,20 +263,28 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 }
             }
         });
+        model.clearUnread(mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,false){
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                mContext.sendBroadcast(new Intent(ACTION_CLEAR_UNREAD));
+            }
+        });
     }
 
     @Override
     public void onItemCommentListener(View v, int pos) {
         //评论
-        Debug.d("count=" + adapter.getItem(pos).getComments_count());
-        if (adapter.getItem(pos).getComments_count() == 0) {//如果没有评论数，直接跳到发布评论
-            Intent intent = new Intent(getActivity(), PostActivity.class);
-            intent.putExtra("type", Constants.POST_TYPE_COMMENT);
-            intent.putExtra("StatusesBean", adapter.getItem(pos));
-            startActivity(intent);
+        StatusesBean statusesBean=adapter.getItem(pos);
+        Debug.d("count=" + statusesBean.getComments_count());
+        if (statusesBean.getComments_count() == 0) {//如果没有评论数，直接跳到发布评论
+            Bundle bundle=new Bundle();
+            bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_COMMENT);
+            bundle.putSerializable(PARAM_STATUS_BEAN,statusesBean);
+            PostActivity.start(mContext,bundle);
         } else {//跳转到评论详情
             Bundle bundle = new Bundle();
-            bundle.putSerializable("status", adapter.getItem(pos));
+            bundle.putSerializable(BUNDLE_PARAM_STATUS,statusesBean);
             CommentDetailActivity.start(getContext(), bundle);
         }
 
@@ -269,16 +302,11 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     @Override
     public void onItemLikeListener(View v, ImageView imageView, int pos) {
         //喜欢
-        //选中
-        imageView.setImageResource(R.mipmap.ic_heart_sel);
-        likeView.setImage(getResources().getDrawable(R.mipmap.ic_heart_sel));
-        likeView.show(imageView);
-        //todo count+1
+        view.setLikeView(imageView);
     }
 
     @OnClick(R.id.iv_filter)
     public void filter() {
-
         cateDialog.setSingleChoiceItems(new String[]{"我关注的", "双向关注"}, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -299,7 +327,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     获取双向关注
      */
     private void getDoubleData() {
-        model.getBilateralTimeLine(requestBean, getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, true) {
+        model.getBilateralTimeLine(requestBean, getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, false) {
             @Override
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
@@ -384,16 +412,16 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     @Override
     public void onItemHeadPhotoListener(View v, int pos) {
         //点击头头像，跳转到个人界面
-        Intent intent = new Intent(getActivity(), PersonalityActivity.class);
-        intent.putExtra("user", adapter.getItem(pos).getUserBean());
-        startActivity(intent);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable(BUNDLER_PARAM_USER,adapter.getItem(pos).getUserBean());
+        PersonalityActivity.start(mContext,bundle);
     }
 
     @Override
     public void onItemClickListener(View v, int pos) {
         //点击单个Item
-        Intent intent=new Intent(getActivity(), CommentDetailActivity.class);
-        intent.putExtra("status",adapter.getItem(pos));
-        startActivity(intent);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable(BUNDLE_PARAM_STATUS,adapter.getItem(pos));
+        CommentDetailActivity.start(mContext,bundle);
     }
 }

@@ -156,5 +156,71 @@ public class HomeModel implements IModel{
                 .compose(transformer)
                 .subscribe(subscriber);
     }
+    /**
+     * 对未读进行清零
+     * @param context
+     * @param transformer
+     * @param subscriber
+     */
+    public void clearUnread( Context context,Observable.Transformer
+            transformer,  Subscriber<String> subscriber){
+        HomeApi.clearUnread(context) .map(new Func1<String, String>() {
+            @Override
+            public  String call(String s) {
+                JSONObject result=JSON.parseObject(s);
+                String id=null;
+                if (result!=null){
+                    id=result.getString("id");
+                }
+                return id;
+            }
+        }).compose(RxHelper.<String>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
 
+    /**
+     * 收藏
+    * @param context
+    * @param transformer
+    * @param subscriber
+    */
+    public void createFavorites( String weiboId,Context context,Observable.Transformer
+            transformer,  Subscriber<String> subscriber){
+        HomeApi.createFavorites(weiboId,context) .map(new Func1<String, String>() {
+            @Override
+            public  String call(String s) {
+                JSONObject result=JSON.parseObject(s);
+                if (result.getString("error")!=null){
+                    return null;
+                }
+                String time=result.getString("favorited_time");
+                return time;
+            }
+        }).compose(RxHelper.<String>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+    /**
+     * 取消收藏
+     * @param context
+     * @param transformer
+     * @param subscriber
+     */
+    public void destroyFavorites( String weiboId,Context context,Observable.Transformer
+            transformer,  Subscriber<String> subscriber){
+        HomeApi.destroyFavorites(weiboId,context) .map(new Func1<String, String>() {
+            @Override
+            public  String call(String s) {
+                JSONObject result=JSON.parseObject(s);
+                if (result.getString("error")!=null){
+                    return null;
+                }
+                String time=result.getString("favorited_time");
+                return time;
+            }
+        }).compose(RxHelper.<String>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
 }

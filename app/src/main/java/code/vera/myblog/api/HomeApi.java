@@ -160,5 +160,40 @@ public class HomeApi  extends BaseApi{
         params.addParameters("q",q);
         return onGet(url, params);
     }
-
+    /**
+     * 清空未读
+     * @param q
+     * @param context
+     * @return
+     */
+    public static Observable<String > clearUnread(Context context) {
+        String url = NetWorkConfig.CLEAR_UNREAD_COUNT;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        return onGet(url, params);
+    }
+    /**
+     * 收藏
+     * @param context
+     * @return
+     */
+    public static Observable<String > createFavorites(String wiboId,Context context) {
+        String url = NetWorkConfig.CREATE_FAVORITES;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("id", wiboId);
+        return onPost(url, params);
+    }
+    /**
+     * 取消收藏
+     * @param context
+     * @return
+     */
+    public static Observable<String > destroyFavorites(String wiboId,Context context) {
+        String url = NetWorkConfig.DESTROY_FAVORITES;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("id", wiboId);
+        return onPost(url, params);
+    }
 }

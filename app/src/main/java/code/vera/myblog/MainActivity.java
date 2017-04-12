@@ -22,10 +22,12 @@ import android.widget.Toast;
 import com.trello.rxlifecycle.ActivityEvent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import code.vera.myblog.adapter.MenuItemAdapter;
+import code.vera.myblog.bean.CollectionBean;
 import code.vera.myblog.bean.MenuItem;
 import code.vera.myblog.bean.UnReadBean;
 import code.vera.myblog.bean.home.UserInfoBean;
@@ -51,6 +53,7 @@ import static code.vera.myblog.R.id.lv_left_menu;
 import static code.vera.myblog.presenter.activity.PostActivity.ACTION_SAVE_DRAFT;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 import static code.vera.myblog.presenter.fragment.draft.DraftFragment.ACTION_DELETE_DRAFT;
+import static code.vera.myblog.presenter.fragment.home.HomeFragment.ACTION_CLEAR_UNREAD;
 
 /**
  * 主界面
@@ -160,6 +163,17 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
                         }
                     }
                 });
+                //获取收藏个数
+                model.getFavorites(50,1,mContext,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<List<CollectionBean>>(mContext,false){
+                    @Override
+                    public void onNext(List<CollectionBean> collectionBeen) {
+                        super.onNext(collectionBeen);
+                        if (collectionBeen!=null&&collectionBeen.size()!=0){
+                            adapter.setFaviroteNum(collectionBeen.size());
+                        }
+                    }
+                });
+
             }
         });
     }
@@ -287,6 +301,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
             IntentFilter filter = new IntentFilter();
             filter.addAction(ACTION_SAVE_DRAFT);
             filter.addAction(ACTION_DELETE_DRAFT);
+            filter.addAction(ACTION_CLEAR_UNREAD);//清空未读
             mContext.registerReceiver(this, filter);
         }
         public void unRgistRecevier() {

@@ -1,6 +1,7 @@
 package code.vera.myblog.presenter.activity;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -35,6 +36,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
     private UserInfoBean userInfoBean;
     private String user_name;
     public static final String HEAD_PHOTO_SHARE="photopic";
+    public static final String BUNDLER_PARAM_USER="user";
 
     @Override
     protected int getLayoutResId() {
@@ -129,6 +131,11 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
                 startActivity(intent2, ActivityOptions.makeSceneTransitionAnimation(this,view.getPhotoView(),HEAD_PHOTO_SHARE).toBundle());
                 break;
         }
+    }
+    public static void start(Context context,Bundle bundle){
+        Intent intent=new Intent(context,PersonalityActivity.class);
+        intent.putExtra(BUNDLER_PARAM_USER, bundle.getSerializable(BUNDLER_PARAM_USER));
+        context.startActivity(intent);
     }
 
 }

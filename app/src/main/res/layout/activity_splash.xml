@@ -7,17 +7,29 @@
     android:background="@color/colorWhite"
     tools:context="code.vera.myblog.SplashActivity">
     <ImageView
+        android:id="@+id/iv_logo"
         android:layout_width="70dp"
         android:src="@mipmap/ic_logo"
         android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
         android:layout_height="70dp" />
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:text="@string/app_name"
+        android:layout_marginTop="30dp"
+        android:textSize="32sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@+id/iv_logo"
+        android:layout_height="wrap_content" />
     <com.hanks.htextview.HTextView
+        android:layout_below="@+id/tv_title"
         android:id="@+id/logo_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="150dp"
         android:textSize="22sp"
+        android:layout_marginTop="80dp"
         android:gravity="center"
-        android:textColor="@color/colorPrimary"
-        android:layout_centerInParent="true"/>
+        android:textColor="@color/colorPrimary"/>
 </RelativeLayout>
