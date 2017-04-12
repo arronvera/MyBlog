@@ -4,7 +4,7 @@ import android.content.Intent;
 
 import code.vera.myblog.R;
 import code.vera.myblog.model.base.VoidModel;
-import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.view.other.BrowserView;
 
 /**

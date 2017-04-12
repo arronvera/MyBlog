@@ -1,4 +1,4 @@
-package code.vera.myblog.presenter;
+package code.vera.myblog.presenter.base;
 
 import android.view.View;
 

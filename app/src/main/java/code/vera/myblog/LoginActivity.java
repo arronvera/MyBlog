@@ -11,7 +11,7 @@ import com.sina.weibo.sdk.exception.WeiboException;
 import java.text.SimpleDateFormat;
 
 import code.vera.myblog.model.base.VoidModel;
-import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.LoginView;
 import ww.com.core.Debug;

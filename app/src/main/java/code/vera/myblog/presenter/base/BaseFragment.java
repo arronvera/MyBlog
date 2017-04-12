@@ -13,8 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import butterknife.ButterKnife;
-import code.vera.myblog.presenter.BaseActivity;
-import code.vera.myblog.presenter.PresenterActivity;
 import ww.com.core.ScreenUtil;
 
 /**

@@ -31,7 +31,7 @@ import code.vera.myblog.bean.UnReadBean;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.user.UserModel;
-import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.fragment.MenuFragment;

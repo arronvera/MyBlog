@@ -14,7 +14,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.PersonalityModel;
-import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.fragment.person.TabPersonAllCircleFragment;
 import code.vera.myblog.presenter.fragment.person.TabPersonInfoFragment;
 import code.vera.myblog.presenter.fragment.person.TabPersonPhotosFragment;

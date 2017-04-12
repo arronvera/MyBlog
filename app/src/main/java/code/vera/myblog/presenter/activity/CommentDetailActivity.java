@@ -14,7 +14,7 @@ import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.CommentDetailModel;
-import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.view.CommentDetailView;
 
 /**

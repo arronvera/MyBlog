@@ -8,7 +8,7 @@ import com.hanks.htextview.HTextViewType;
 
 import butterknife.BindView;
 import code.vera.myblog.model.base.VoidModel;
-import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.view.base.VoidView;
 import ww.com.core.Debug;
 

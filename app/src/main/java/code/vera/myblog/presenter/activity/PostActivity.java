@@ -39,7 +39,7 @@ import code.vera.myblog.callback.FriendFragmentCallBack;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.db.PostDao;
 import code.vera.myblog.model.PostModel;
-import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.fragment.other.AtSomebodyFragment;
 import code.vera.myblog.presenter.fragment.other.AuthorityFragment;
 import code.vera.myblog.presenter.fragment.other.EmojFragment;

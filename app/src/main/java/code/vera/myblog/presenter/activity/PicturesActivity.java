@@ -10,7 +10,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.model.base.VoidModel;
-import code.vera.myblog.presenter.PresenterActivity;
+import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.view.pic.PicturesView;
 import ww.com.core.Debug;
 

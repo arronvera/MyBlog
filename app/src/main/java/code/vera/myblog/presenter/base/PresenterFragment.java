@@ -4,7 +4,6 @@ import android.view.View;
 
 import butterknife.ButterKnife;
 import code.vera.myblog.model.base.IModel;
-import code.vera.myblog.presenter.IPresenter;
 import code.vera.myblog.view.base.IView;
 
 /**
