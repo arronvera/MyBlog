@@ -11,6 +11,7 @@ import java.util.List;
 import cn.finalteam.rxgalleryfinal.bean.MediaBean;
 import code.vera.myblog.api.PostApi;
 import code.vera.myblog.bean.CommentRequestBean;
+import code.vera.myblog.bean.GeoBean;
 import code.vera.myblog.bean.PostBean;
 import code.vera.myblog.model.base.IModel;
 import rx.Observable;
@@ -125,6 +126,26 @@ public class PostModel implements IModel {
                 return null;
             }
         }).compose(RxHelper.<String>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+
+    /**
+     * 转发
+     * @param context
+     * @param transformer
+     * @param subscriber
+     */
+    public void gpsToOffSet(Context context,double longitude,double latitude,Observable.Transformer
+            transformer, Subscriber<List<GeoBean>> subscriber){
+        PostApi.gpsToOffset(context,longitude,latitude) .map(new Func1<String, List<GeoBean>>() {
+            @Override
+            public  List<GeoBean> call(String s) {
+                JSONObject result= JSON.parseObject(s);
+                List<GeoBean> geoBeanList=JSON.parseArray(result.getString("geos"),GeoBean.class);
+                return geoBeanList;
+            }
+        }).compose(RxHelper.<List<GeoBean>>cutMain())
                 .compose(transformer)
                 .subscribe(subscriber);
     }

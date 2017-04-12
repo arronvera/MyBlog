@@ -70,4 +70,7 @@ public class NetWorkConfig {
     public static final String DESTROY_FAVORITES=BASE_URL+"/favorites/destroy.json";
     //收藏列表
     public static final String FAVORITES_LIST=BASE_URL+"/favorites.json";
+
+    //收藏列表
+    public static final String GPSTOOFFSET=BASE_URL+"/location/geo/gps_to_offset.json";
 }

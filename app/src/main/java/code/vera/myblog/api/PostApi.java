@@ -157,4 +157,21 @@ public class PostApi {
         params.addParameters("is_comment","0");//是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
         return onPost(url, params);
     }
+
+    /**
+     * 根据GPS坐标获取偏移后的坐标
+     * @param context
+     * @param longitude
+     * @param latitude
+     * @return
+     */
+    public static  Observable<String > gpsToOffset(Context context,double longitude,double latitude) {
+        String url = NetWorkConfig.GPSTOOFFSET;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("coordinate", longitude+","+latitude);
+        return onGet(url, params);
+    }
+
+
 }

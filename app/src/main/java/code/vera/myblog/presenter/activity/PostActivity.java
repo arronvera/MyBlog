@@ -31,6 +31,7 @@ import cn.finalteam.rxgalleryfinal.rxbus.event.ImageMultipleResultEvent;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.Emoji;
+import code.vera.myblog.bean.GeoBean;
 import code.vera.myblog.bean.PostBean;
 import code.vera.myblog.bean.SortBean;
 import code.vera.myblog.bean.home.StatusesBean;
@@ -448,6 +449,19 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 address = data.getStringExtra(LocationActivity.PARAM_ADDRESS);
                 lat=data.getDoubleExtra(LocationActivity.PARAM_LATITUDE,0);
                 lon=data.getDoubleExtra(LocationActivity.PARAM_LONGTITUDE,0);
+                if (lat!=0&&lon!=0){
+                    //转换偏移坐标
+                    model.gpsToOffSet(mContext,lon,lat,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<List<GeoBean>>(mContext,false){
+                        @Override
+                        public void onNext(List<GeoBean> geoBeen) {
+                            super.onNext(geoBeen);
+                            if (geoBeen!=null&&geoBeen.size()!=0){
+                                lat=Double.parseDouble(geoBeen.get(0).getLatitude());
+                                lon=Double.parseDouble(geoBeen.get(0).getLongitude());
+                            }
+                        }
+                    });
+                }
                 if (!TextUtils.isEmpty(address)){
                     view.showAddress(address);
                 }
