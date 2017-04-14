@@ -62,6 +62,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public static final String PARAM_POST_TYPE = "type";
     public static final String PARAM_POST_BEAN = "postbean";
     public static final String ACTION_SAVE_DRAFT = "action.save.draft";
+    public static final String PARAM_COMMENT_CID= "cid";
+    public static final String PARAM_COMMENT_WEIB_ID= "comment.weiboId";
 
     private int type;
     private String picPath;
@@ -86,6 +88,9 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private boolean isShowAuthority;
     private boolean isAddAuthorityFragment=false;
     private int visible;
+    private long cid;//评论id
+    private long weibId;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_post;
@@ -107,6 +112,10 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         if (postBean!=null){
             view.showPostBean(postBean);
         }
+
+        //回复评论相关
+        cid=intent.getLongExtra(PARAM_COMMENT_CID,0);
+        weibId=intent.getLongExtra(PARAM_COMMENT_WEIB_ID,0);
         initData();
         addListener();
     }
@@ -191,6 +200,10 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                     case Constants.POST_TYPE_REPOST://转发
                         repost(msg);
                         break;
+                    case Constants.POST_TYPE_REPLY_COMMENT://回复评论
+                        reply(msg);
+
+                        break;
                     default://发布新的
                         postBean = new PostBean();
                         postBean.setStatus(msg);
@@ -270,6 +283,19 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 break;
 
         }
+    }
+
+    private void reply(String msg) {
+        model.reply(mContext,cid+"",weibId+"",msg,view.getComment_ori(),bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,false){
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                if (!TextUtils.isEmpty(s)){
+                    ToastUtil.showToast(mContext,"回复成功");
+                    finish();
+                }
+            }
+        });
     }
 
     /**
@@ -545,6 +571,9 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         intent.putExtra(PARAM_POST_TYPE, bundle.getInt(PARAM_POST_TYPE));
         intent.putExtra(PARAM_STATUS_BEAN, bundle.getSerializable(PARAM_STATUS_BEAN));
         intent.putExtra(PARAM_POST_BEAN,bundle.getSerializable(PARAM_POST_BEAN));
+        //回复评论相关
+        intent.putExtra(PARAM_COMMENT_CID,bundle.getLong(PARAM_COMMENT_CID));
+        intent.putExtra(PARAM_COMMENT_WEIB_ID,bundle.getLong(PARAM_COMMENT_WEIB_ID));
         context.startActivity(intent);
     }
 

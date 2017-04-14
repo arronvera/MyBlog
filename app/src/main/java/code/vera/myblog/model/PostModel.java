@@ -131,7 +131,7 @@ public class PostModel implements IModel {
     }
 
     /**
-     * 转发
+     * gps
      * @param context
      * @param transformer
      * @param subscriber
@@ -146,6 +146,34 @@ public class PostModel implements IModel {
                 return geoBeanList;
             }
         }).compose(RxHelper.<List<GeoBean>>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+
+
+    /**
+     * 回复
+     * @param context
+     * @param id
+     * @param transformer
+     * @param subscriber
+     */
+    public void reply(Context context,String cid, String id,String comment,int comment_ori, Observable.Transformer
+            transformer, Subscriber<String> subscriber){
+        PostApi.reply(context,cid,id,comment,comment_ori) .map(new Func1<String, String>() {
+            @Override
+            public  String call(String s) {
+                JSONObject result= JSON.parseObject(s);
+                if (result!=null){
+                    if (TextUtils.isEmpty(result.getString("error"))){
+                        long id=result.getLong("id");
+                        return id+"";
+                    }else
+                        return null;
+                }
+                return null;
+            }
+        }).compose(RxHelper.<String>cutMain())
                 .compose(transformer)
                 .subscribe(subscriber);
     }

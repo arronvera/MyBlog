@@ -67,6 +67,9 @@ public class MessageBymeAdapter extends RvAdapter<CommentUserBean>{
         RelativeLayout rlOriginalInfo;//原信息
         @BindView(item_delete)
         TextView tvDelete;
+        @BindView(R.id.tv_reply)
+        TextView tvReply;
+
 
         public MessageAtmeHolder(View itemView) {
             super(itemView);
@@ -76,6 +79,7 @@ public class MessageBymeAdapter extends RvAdapter<CommentUserBean>{
         @Override
         public void onBindData(final int position, CommentUserBean bean) {
             tvDelete.setVisibility(View.VISIBLE);
+            tvReply.setVisibility(View.GONE);
             if (bean.getUserBean()!=null){
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
                         .getDisplayImageOptions(R.mipmap.ic_user_default));//头像

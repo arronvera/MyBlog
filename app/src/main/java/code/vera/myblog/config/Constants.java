@@ -23,6 +23,7 @@ public class Constants {
     public static final int POST_TYPE_NEW=0;//新建信息
     public static final int POST_TYPE_COMMENT=1;//新建评论
     public static final int POST_TYPE_REPOST=2;//转发
+    public static final int POST_TYPE_REPLY_COMMENT=3;//回复评论
 
     //--------------关注和粉丝-------------------
     public static final int TYPE_CONCERN=1001;//关注

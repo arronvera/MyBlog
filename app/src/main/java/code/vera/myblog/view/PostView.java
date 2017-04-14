@@ -75,6 +75,9 @@ public class PostView extends BaseView {
     LinearLayout llIfOriginal;
     @BindView(R.id.cb_if_original)
     CheckBox cbIfOriginal;
+//    @BindView(R.id.iv_choose_pic)
+//    ImageView ivChoosPic;
+
 
 
 
@@ -166,6 +169,15 @@ public class PostView extends BaseView {
                 llAuthority.setVisibility(View.GONE);
                 llLocation.setVisibility(View.GONE);
                 llIfOriginal.setVisibility(View.GONE);
+                break;
+            case Constants.POST_TYPE_REPLY_COMMENT:
+                tvTitle.setText("回复评论");
+                etMessage.setHint("回复评论");
+                llAuthority.setVisibility(View.GONE);
+                llLocation.setVisibility(View.GONE);
+                llIfOriginal.setVisibility(View.GONE);
+//                ivChoosPic.setEnabled(false);
+
                 break;
             default:
                 tvTitle.setText("分享圈子");

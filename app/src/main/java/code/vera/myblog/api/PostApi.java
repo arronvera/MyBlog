@@ -157,7 +157,22 @@ public class PostApi {
         params.addParameters("is_comment","0");//是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
         return onPost(url, params);
     }
-
+    /**
+     * 回复
+     * @param context
+     * @param id
+     * @return
+     */
+    public static  Observable<String > reply(Context context,String cid,String id,String comment,int comment_ori) {
+        String url = NetWorkConfig.REPLY_COMMENT;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("id", id);
+        params.addParameters("cid",cid);
+        params.addParameters("comment", comment);
+        params.addParameters("comment_ori",comment_ori+"");
+        return onPost(url, params);
+    }
     /**
      * 根据GPS坐标获取偏移后的坐标
      * @param context

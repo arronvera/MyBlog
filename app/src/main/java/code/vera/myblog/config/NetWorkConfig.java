@@ -42,7 +42,8 @@ public class NetWorkConfig {
     public static final String COMMENT_TO_ME=BASE_URL+ "/comments/to_me.json";
     //删除评论
     public static final String DELETE_COMMENT=BASE_URL+ "/comments/destroy.json";
-
+    //回复评论
+    public static final String REPLY_COMMENT=BASE_URL+ "/comments/reply.json";
     //获取定微博的转发微博列表
     public static final String REPOSTS_INFO=BASE_URL+  "/statuses/repost_timeline.json";
 

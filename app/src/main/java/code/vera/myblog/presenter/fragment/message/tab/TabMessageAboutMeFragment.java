@@ -10,6 +10,7 @@ import java.util.List;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.MessageAtmeAdapter;
 import code.vera.myblog.bean.CommentUserBean;
+import code.vera.myblog.config.Constants;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemOriginalListener;
@@ -21,6 +22,10 @@ import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.message.tab.TabMessageAboutMeView;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
+
+import static code.vera.myblog.presenter.activity.PostActivity.PARAM_COMMENT_CID;
+import static code.vera.myblog.presenter.activity.PostActivity.PARAM_COMMENT_WEIB_ID;
+import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 
 /**
  * 关于我的评论
@@ -100,7 +105,11 @@ public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAbout
 
     @Override
     public void onItemReply(View v, int pos) {
+        CommentUserBean commentUserBean=adapter.getItem(pos);
         Bundle bundle=new Bundle();
+        bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_REPLY_COMMENT);
+        bundle.putLong(PARAM_COMMENT_CID,commentUserBean.getId());
+        bundle.putLong(PARAM_COMMENT_WEIB_ID,commentUserBean.getStatusesBean().getId());
 
         PostActivity.start(mContext,bundle);
     }
