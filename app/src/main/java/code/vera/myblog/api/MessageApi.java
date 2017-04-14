@@ -8,6 +8,7 @@ import rx.Observable;
 import ww.com.http.core.AjaxParams;
 
 import static code.vera.myblog.api.BaseApi.onGet;
+import static code.vera.myblog.api.BaseApi.onPost;
 
 /**
  * Created by vera on 2017/2/10 0010.
@@ -68,5 +69,17 @@ public class MessageApi {
         params.addParameters("filter_by_source","0");//来源筛选类型，0：全部、1：来自微博的评论、2：来自微群的评论，默认为0
 
         return onGet(url, params);
+    }
+    /**
+     * 获取接收的评论列表
+     * @param context
+     * @return
+     */
+    public static Observable<String > deleteComment(Context context,String cid) {
+        String url = NetWorkConfig.DELETE_COMMENT;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("cid",cid);
+        return onPost(url, params);
     }
 }

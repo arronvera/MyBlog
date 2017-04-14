@@ -4,6 +4,8 @@
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>
     <string name="search">搜索</string>
+    <string name="reply">回复</string>
+
     <string name="edit">编辑</string>
     <string name="title_my_friend">我的好友</string>
     <string name="cancel_concern">取消关注</string>
@@ -22,6 +24,7 @@
     <string name="about_app">关于圈艺</string>
     <string name="problems">常见问题</string>
     <string name="net_toast">网络环境检测提示</string>
+    <string name="delete">删除</string>
 
     <string name="share">分享</string>
 
@@ -36,5 +39,5 @@
     <string name="str_bear">小熊</string>
     <string name="wront_net">请检查网络状态</string>
     <string name="register">注册</string>
-
+    <string name="str_if_original_weibo_comment">是否评论给原作者</string>
 </resources>

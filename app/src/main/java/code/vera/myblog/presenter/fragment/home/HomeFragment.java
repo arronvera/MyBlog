@@ -50,10 +50,12 @@ import code.vera.myblog.view.home.HomeView;
 import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
 
+import static code.vera.myblog.presenter.activity.BrowserActivity.BUNDLER_PARAM_LINK;
 import static code.vera.myblog.presenter.activity.CommentDetailActivity.BUNDLE_PARAM_STATUS;
 import static code.vera.myblog.presenter.activity.PersonalityActivity.BUNDLER_PARAM_USER;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_STATUS_BEAN;
+import static code.vera.myblog.presenter.activity.TopicActivity.BUNDLER_PARAM_TOPIC;
 
 
 /**
@@ -371,9 +373,9 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         //链接
         switch (type){
             case Constants.LINK_TYPE_WEBSITE:
-                Intent intent = new Intent(getActivity(), BrowserActivity.class);
-                intent.putExtra("link", str);
-                startActivity(intent);
+                Bundle bundle=new Bundle();
+                bundle.putString(BUNDLER_PARAM_LINK,str);
+                BrowserActivity.start(mContext,bundle);
                 break;
             case Constants.LINK_TYPE_MUSIC:
                 //todo 音乐
@@ -383,9 +385,9 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 
                 break;
             default:
-                 intent = new Intent(getActivity(), BrowserActivity.class);
-                intent.putExtra("link", str);
-                startActivity(intent);
+                bundle=new Bundle();
+                bundle.putString(BUNDLER_PARAM_LINK,str);
+                BrowserActivity.start(mContext,bundle);
                 break;
         }
 
@@ -393,16 +395,16 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
     @Override
     public void onItemTopicListener(View v, int pos, String str) {
-        Intent intent = new Intent(getContext(), TopicActivity.class);
-        intent.putExtra("topic", str.substring(1, str.length() - 1));
-        startActivity(intent);
+        Bundle bundle=new Bundle();
+        bundle.putString(BUNDLER_PARAM_TOPIC,str.substring(1, str.length() - 1));
+        TopicActivity.start(mContext,bundle);
     }
 
     @Override
     public void onItemAtListener(View v, int pos, String str) {
-        Intent intent = new Intent(getContext(), PersonalityActivity.class);
-        intent.putExtra("user_name", str.substring(str.indexOf("@") + 1, str.length()));
-        startActivity(intent);
+        Bundle bundle=new Bundle();
+        bundle.putString(BUNDLER_PARAM_USER,str.substring(str.indexOf("@") + 1, str.length()));
+        PersonalityActivity.start(mContext,bundle);
     }
 
     @Override

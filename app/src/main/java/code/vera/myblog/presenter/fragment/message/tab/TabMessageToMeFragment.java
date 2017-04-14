@@ -12,12 +12,14 @@ import code.vera.myblog.bean.CommentUserBean;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemOriginalListener;
+import code.vera.myblog.listener.OnItemReplyListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.message.TabMessageModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.message.tab.TabMessageToMeView;
 import ww.com.core.Debug;
+import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 /**
  * 关于我
@@ -25,7 +27,8 @@ import ww.com.core.Debug;
  */
 
 public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView,TabMessageModel>
-        implements OnItemLinkListener,OnItemAtListener,OnItemTopicListener,OnItemOriginalListener {
+        implements OnItemLinkListener,OnItemAtListener,OnItemTopicListener,OnItemOriginalListener
+        ,OnItemReplyListener {
     private MessageAtmeAdapter adapter;
 
     @Override
@@ -37,7 +40,7 @@ public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView
     protected void onAttach() {
         super.onAttach();
         setAdapter();
-        getMessageToMe();
+        getMessageToMe(true);
         addListener();
     }
     private void addListener() {
@@ -45,9 +48,23 @@ public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView
         adapter.setOnItemTopicListener(this);
         adapter.setOnItemAtListener(this);
         adapter.setOnItemOriginalListener(this);
+        adapter.setOnItemReplyListener(this);
+
+        view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
+            @Override
+            public void onHeaderRefreshing() {
+                getMessageToMe(false);
+
+            }
+
+            @Override
+            public void onFooterRefreshing() {
+
+            }
+        });
     }
-    private void getMessageToMe() {
-        model.getCommentToMe(1,getContext(),bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<CommentUserBean>>(mContext,true){
+    private void getMessageToMe(boolean isDialog) {
+        model.getCommentToMe(1,getContext(),bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<CommentUserBean>>(mContext,isDialog){
             @Override
             public void onNext(List<CommentUserBean> commentUserBeen) {
                 super.onNext(commentUserBeen);
@@ -79,6 +96,11 @@ public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView
 
     @Override
     public void onItemLinkListener(View v, int pos, String str, int type) {
+
+    }
+
+    @Override
+    public void onItemReply(View v, int pos) {
 
     }
 }

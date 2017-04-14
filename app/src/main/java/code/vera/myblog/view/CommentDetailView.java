@@ -115,6 +115,12 @@ public class CommentDetailView extends BaseView {
         if (!TextUtils.isEmpty(statusesBean.getSource())&& Html.fromHtml(statusesBean.getSource())!=null){
             tvSource.setText("来自"+ Html.fromHtml(statusesBean.getSource()));
         }
+        //收藏
+        if (statusesBean.isFavorited()){
+            ivCollection.setImageResource(R.mipmap.ic_star_sel);
+        }else {
+            ivCollection.setImageResource(R.mipmap.ic_star);
+        }
 
     }
     public void showInfo2(RetweetedStatusBean statusesBean){

@@ -14,27 +14,29 @@ import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.CommentUserBean;
 import code.vera.myblog.listener.OnItemAtListener;
+import code.vera.myblog.listener.OnItemDeleteClickListener;
 import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemOriginalListener;
-import code.vera.myblog.listener.OnItemReplyListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.CircleImageView;
 
+import static code.vera.myblog.R.id.item_delete;
+
 /**
  * Created by vera on 2017/2/14 0014.
  */
 
-public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
+public class MessageBymeAdapter extends RvAdapter<CommentUserBean>{
 
     private OnItemAtListener onItemAtListener;
     private OnItemTopicListener onItemTopicListener;
     private OnItemLinkListener onItemLinkListener;
     private OnItemOriginalListener onItemOriginalListener;
-    private OnItemReplyListener onItemReplyListener;
+    private OnItemDeleteClickListener onItemDeleteClickListener;
 
-    public MessageAtmeAdapter(Context context) {
+    public MessageBymeAdapter(Context context) {
         super(context);
     }
 
@@ -63,8 +65,8 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
         private Context context;
         @BindView(R.id.rl_original_info)
         RelativeLayout rlOriginalInfo;//原信息
-        @BindView(R.id.tv_reply)
-        TextView tvReply;//回复
+        @BindView(item_delete)
+        TextView tvDelete;
 
         public MessageAtmeHolder(View itemView) {
             super(itemView);
@@ -73,6 +75,7 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
 
         @Override
         public void onBindData(final int position, CommentUserBean bean) {
+            tvDelete.setVisibility(View.VISIBLE);
             if (bean.getUserBean()!=null){
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
                         .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
@@ -101,16 +104,14 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
                     onItemOriginalListener.onItemOriginalListener(v,position);
                 }
             });
-            tvReply.setOnClickListener(new View.OnClickListener() {
+            tvDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (onItemReplyListener!=null){
-                        onItemReplyListener.onItemReply(view,position);
+                    if (onItemDeleteClickListener!=null){
+                        onItemDeleteClickListener.onItemDeleteClickListener(view,position);
                     }
                 }
             });
-
-
 
         }
     }
@@ -129,7 +130,7 @@ public class MessageAtmeAdapter extends RvAdapter<CommentUserBean>{
     public void setOnItemOriginalListener(OnItemOriginalListener onItemOriginalListener) {
         this.onItemOriginalListener = onItemOriginalListener;
     }
-    public void setOnItemReplyListener(OnItemReplyListener onItemReplyListener) {
-        this.onItemReplyListener = onItemReplyListener;
+    public void setOnItemDeleteClickListener(OnItemDeleteClickListener onItemDeleteClickListener) {
+        this.onItemDeleteClickListener = onItemDeleteClickListener;
     }
 }

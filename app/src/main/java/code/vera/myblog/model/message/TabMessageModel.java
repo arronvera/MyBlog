@@ -85,4 +85,27 @@ public class TabMessageModel implements IModel {
                 .compose(transformer)
                 .subscribe(subscriber);
     }
+
+
+    /**
+     * 删除评论
+     */
+    public void deleteComment(String cid, Context context, Observable.Transformer
+            transformer, Subscriber<Boolean> subscriber){
+        MessageApi.deleteComment(context,cid)
+                .map(new Func1<String, Boolean>() {
+                    @Override
+                    public  Boolean call(String s) {
+                        JSONObject result= JSON.parseObject(s);
+                        if (result!=null){
+                            if (result.getString("user")!=null){
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                }).compose(RxHelper.<Boolean>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
 }

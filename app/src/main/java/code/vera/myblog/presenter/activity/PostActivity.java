@@ -99,7 +99,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         statusesBean = (StatusesBean) intent.getSerializableExtra(PARAM_STATUS_BEAN);
         if (type != -1) {
             view.showTitleAndHint(type);
-            Debug.d("type==============" + type);
         }
         if (statusesBean != null) {
             view.showStatusesBean(statusesBean);
@@ -133,7 +132,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
 
     @OnClick({R.id.tv_cancle, R.id.iv_repost, R.id.iv_choose_pic,
             R.id.iv_emotion, R.id.iv_at, R.id.iv_topic, R.id.tv_location,
-            R.id.et_text,R.id.iv_close_location,R.id.tv_public})
+            R.id.et_text,R.id.iv_close_location,R.id.ll_authority})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
@@ -259,7 +258,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 lon=0;
                 view.showAddress(address);
                 break;
-            case R.id.tv_public://公共
+            case R.id.ll_authority://公共
                 if (!isAddAuthorityFragment){
                     fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out).add(R.id.rl_all_container, authorityFragment).commit();
                     isAddAuthorityFragment=true;
@@ -322,6 +321,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         commentRequestBean = new CommentRequestBean();
         commentRequestBean.setId(statusesBean.getId());
         commentRequestBean.setComment(view.getEditStr());
+        commentRequestBean.setComment_ori(view.getComment_ori());
         model.commentMessage(this, commentRequestBean, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
             @Override
             public void onNext(String s) {

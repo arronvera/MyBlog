@@ -24,6 +24,21 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/crv_item_photo"
             tools:text="vera"/>
+        <TextView
+            android:id="@+id/tv_reply"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorAccent"
+            android:layout_height="wrap_content"
+            android:text="@string/reply"/>
+        <TextView
+            android:id="@+id/item_delete"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorAccent"/>
         <LinearLayout
             android:id="@+id/ll_time"
             android:layout_marginTop="5dp"

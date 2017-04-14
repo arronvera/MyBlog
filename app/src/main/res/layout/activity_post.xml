@@ -107,46 +107,74 @@
            android:padding="5dp"
            android:gravity="center_vertical">
            <!--查看位置-->
-           <ImageView
-               android:id="@+id/iv_location"
-               android:layout_width="15dp"
-               android:layout_height="15dp"
-               android:src="@mipmap/ic_location"/>
-           <TextView
-               android:layout_toRightOf="@+id/iv_location"
-               android:id="@+id/tv_location"
-               android:layout_marginLeft="3dp"
+           <LinearLayout
+               android:id="@+id/ll_location"
                android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="添加位置"
-               android:ellipsize="end"
-               android:maxEms="12"
-               android:textColor="@color/text_hint"
-               android:singleLine="true"/>
-           <ImageView
-               android:layout_centerVertical="true"
-               android:layout_toRightOf="@+id/tv_location"
-               android:visibility="invisible"
-               android:id="@+id/iv_close_location"
-               android:layout_width="15dp"
-               android:layout_height="15dp"
-               android:src="@mipmap/ic_close"/>
+               android:layout_height="wrap_content">
+               <ImageView
+                   android:id="@+id/iv_location"
+                   android:layout_width="15dp"
+                   android:layout_height="15dp"
+                   android:src="@mipmap/ic_location"/>
+               <TextView
+                   android:layout_toRightOf="@+id/iv_location"
+                   android:id="@+id/tv_location"
+                   android:layout_marginLeft="3dp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="添加位置"
+                   android:ellipsize="end"
+                   android:maxEms="12"
+                   android:textColor="@color/text_hint"
+                   android:singleLine="true"/>
+               <ImageView
+                   android:layout_centerVertical="true"
+                   android:layout_toRightOf="@+id/tv_location"
+                   android:visibility="invisible"
+                   android:id="@+id/iv_close_location"
+                   android:layout_width="15dp"
+                   android:layout_height="15dp"
+                   android:src="@mipmap/ic_close"/>
+           </LinearLayout>
+
            <!--公开-->
-           <ImageView
-               android:src="@mipmap/ic_eye"
-               android:layout_width="15dp"
-               android:layout_marginRight="3dp"
-               android:layout_centerVertical="true"
-               android:layout_toLeftOf="@+id/tv_public"
-               android:layout_height="15dp" />
-           <TextView
-               android:id="@+id/tv_public"
-               android:textColor="@color/colorAccent"
-               android:layout_centerVertical="true"
+           <LinearLayout
+               android:id="@+id/ll_authority"
+               android:layout_marginRight="10dp"
+               android:layout_width="wrap_content"
+               android:layout_alignParentRight="true"
+               android:orientation="horizontal"
+               android:layout_height="wrap_content">
+               <ImageView
+                   android:src="@mipmap/ic_eye"
+                   android:layout_width="15dp"
+                   android:layout_marginRight="3dp"
+                   android:layout_centerVertical="true"
+                   android:layout_toLeftOf="@+id/tv_public"
+                   android:layout_height="15dp" />
+               <TextView
+                   android:id="@+id/tv_public"
+                   android:textColor="@color/colorAccent"
+                   android:layout_centerVertical="true"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="@string/text_public"
+                   android:layout_alignParentRight="true"/>
+           </LinearLayout>
+
+           <LinearLayout
+               android:id="@+id/ll_checkbox"
+               android:visibility="gone"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="@string/text_public"
-               android:layout_alignParentRight="true"/>
+               android:orientation="horizontal">
+               <CheckBox
+                   android:id="@+id/cb_if_original"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textColor="@color/colorAccent"
+                   android:text="@string/str_if_original_weibo_comment"/>
+           </LinearLayout>
        </RelativeLayout>
         <LinearLayout
             android:id="@+id/ll_line"

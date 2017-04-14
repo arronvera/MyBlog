@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +32,6 @@ import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.view.base.BaseView;
-import ww.com.core.Debug;
 
 /**
  * Created by vera on 2017/2/9 0009.
@@ -64,9 +65,17 @@ public class PostView extends BaseView {
     TextView tvLocation;
     @BindView(R.id.iv_close_location)
     ImageView ivCloseLocation;
-
     @BindView(R.id.tv_public)
     TextView tvAuthority;
+    @BindView(R.id.ll_authority)
+    LinearLayout llAuthority;
+    @BindView(R.id.ll_location)
+    LinearLayout llLocation;
+    @BindView(R.id.ll_checkbox)
+    LinearLayout llIfOriginal;
+    @BindView(R.id.cb_if_original)
+    CheckBox cbIfOriginal;
+
 
 
 
@@ -79,6 +88,7 @@ public class PostView extends BaseView {
     private View galleryView;
     private ImageView ivItemGallery;
     private ImageView ivItemDelete;
+    private int comment_ori=0;//是否评论原作者
 
     @Override
     public void onAttachView(@NonNull View view) {
@@ -112,6 +122,19 @@ public class PostView extends BaseView {
             }
         };
         etMessage.addTextChangedListener(textWatcher);
+        cbIfOriginal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    comment_ori=1;
+
+                }
+            }
+        });
+    }
+
+    public int getComment_ori() {
+        return comment_ori;
     }
 
     private void initGallery() {
@@ -132,14 +155,22 @@ public class PostView extends BaseView {
             case Constants.POST_TYPE_COMMENT:
                 tvTitle.setText("发评论");
                 etMessage.setHint("写评论");
+                llAuthority.setVisibility(View.GONE);
+                llLocation.setVisibility(View.GONE);
+                llIfOriginal.setVisibility(View.VISIBLE);
+                cbIfOriginal.setText(R.string.str_if_original_weibo_comment);
                 break;
             case Constants.POST_TYPE_REPOST:
                 tvTitle.setText("转发");
                 etMessage.setHint("转发");
+                llAuthority.setVisibility(View.GONE);
+                llLocation.setVisibility(View.GONE);
+                llIfOriginal.setVisibility(View.GONE);
                 break;
             default:
                 tvTitle.setText("分享圈子");
                 etMessage.setHint("分享你周围的圈子");
+                llIfOriginal.setVisibility(View.GONE);
                 break;
         }
     }
@@ -189,7 +220,6 @@ public class PostView extends BaseView {
      */
     public void showPhotos(List<MediaBean> mediaBeanList) {
         llGallery.setOrientation(LinearLayout.HORIZONTAL);
-        Debug.d("media="+mediaBeanList.size());
         for (int i=0;i<mediaBeanList.size();i++){
             initGallery();
             Bitmap bitmap= BitmapFactory.decodeFile(mediaBeanList.get(i).getOriginalPath());

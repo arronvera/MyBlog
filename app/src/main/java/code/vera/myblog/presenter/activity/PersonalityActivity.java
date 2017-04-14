@@ -37,6 +37,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
     private String user_name;
     public static final String HEAD_PHOTO_SHARE="photopic";
     public static final String BUNDLER_PARAM_USER="user";
+    public static final String BUNDLER_PARAM_USER_NAME="user_name";
 
     @Override
     protected int getLayoutResId() {
@@ -62,7 +63,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
             bundle.putString("id",userInfoBean.getId()+"");
             bundle.putString("name",userInfoBean.getName());
         }
-        user_name=intent.getStringExtra("user_name");
+        user_name=intent.getStringExtra(BUNDLER_PARAM_USER_NAME);
         if (!TextUtils.isEmpty(user_name)){
             model.getUserInfoByName(getApplicationContext(),user_name,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UserInfoBean>(mContext,true){
                 @Override
@@ -135,6 +136,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
     public static void start(Context context,Bundle bundle){
         Intent intent=new Intent(context,PersonalityActivity.class);
         intent.putExtra(BUNDLER_PARAM_USER, bundle.getSerializable(BUNDLER_PARAM_USER));
+        intent.putExtra(BUNDLER_PARAM_USER_NAME,bundle.getString(BUNDLER_PARAM_USER_NAME));
         context.startActivity(intent);
     }
 
