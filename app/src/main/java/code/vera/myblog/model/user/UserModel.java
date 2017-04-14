@@ -186,4 +186,23 @@ public class UserModel implements IModel {
                 .compose(transformer)
                 .subscribe(subscriber);
     }
+
+    public void destroyStatus(String id,Context context, Observable.Transformer
+            transformer, Subscriber<Boolean> subscriber){
+        UserApi.deleteStatus(context,id).map(new Func1<String, Boolean>() {
+            @Override
+            public Boolean call(String s) {
+                JSONObject object= JSON.parseObject(s);
+                if (object!=null){
+                    if (object.getString("user")!=null){
+                        return  true;
+                    }
+                }
+                return false;
+            }
+        }).compose(RxHelper.<Boolean>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
+
 }

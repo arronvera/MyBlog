@@ -23,6 +23,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
         android:paddingBottom="100dp">
@@ -41,7 +42,13 @@
             android:layout_height="wrap_content"
             style="@style/com_sina_weibo_sdk_loginview_silver_style"
             android:layout_above="@+id/imageView"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="50dp" />
+            android:layout_alignParentStart="true"/>
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginTop="30dp"
+            android:text="@string/register"/>
     </LinearLayout>
 </LinearLayout>

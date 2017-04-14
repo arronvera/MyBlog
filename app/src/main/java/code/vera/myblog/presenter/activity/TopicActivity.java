@@ -1,6 +1,8 @@
 package code.vera.myblog.presenter.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.trello.rxlifecycle.ActivityEvent;
 
@@ -20,6 +22,8 @@ import code.vera.myblog.view.other.TopicView;
  */
 public class TopicActivity extends PresenterActivity<TopicView,TopicModel> {
     private HomeAdapter adapter;
+    public static final String BUNDLER_PARAM_TOPIC="topic";
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_topic;
@@ -51,5 +55,10 @@ public class TopicActivity extends PresenterActivity<TopicView,TopicModel> {
                 }
             }
         });
+    }
+    public static void start(Context context, Bundle bundle){
+        Intent intent=new Intent(context,PersonalityActivity.class);
+        intent.putExtra(BUNDLER_PARAM_TOPIC, bundle.getSerializable(BUNDLER_PARAM_TOPIC));
+        context.startActivity(intent);
     }
 }

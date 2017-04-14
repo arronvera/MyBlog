@@ -22,6 +22,9 @@ import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.CommentDetailView;
 
+import static code.vera.myblog.presenter.activity.PersonalityActivity.BUNDLER_PARAM_USER;
+import static code.vera.myblog.presenter.activity.TopicActivity.BUNDLER_PARAM_TOPIC;
+
 /**
  * 评论详情
  */
@@ -68,7 +71,7 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
     }
 
     @OnClick({R.id.rl_item_comment, R.id.rl_item_repost,
-            R.id.rl_item_like,R.id.iv_back})
+            R.id.rl_item_like,R.id.iv_back,R.id.crv_photo,R.id.iv_shoucang})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.rl_item_comment://评论
@@ -89,43 +92,46 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
             case R.id.iv_back:
                 finish();
                 break;
-        }
-    }
-
-    @OnClick({R.id.crv_photo, R.id.iv_shoucang})
-    public void doCLick(View v) {
-        switch (v.getId()) {
             case R.id.crv_photo://头像
                 Intent intent = new Intent(this, PersonalityActivity.class);
                 intent.putExtra("user", statusesBean.getUserBean());
                 startActivity(intent);
                 break;
             case R.id.iv_shoucang://收藏
-                model.createFavorites(id+"",mContext,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,false){
-                    @Override
-                    public void onNext(String s) {
-                        super.onNext(s);
-                        if (!TextUtils.isEmpty(s)){
-                            view.showCollectionView();
-                        }else {
-                            ToastUtil.showToast(mContext,getString(R.string.wront_net));
-                        }
-                    }
-                });
+                createFavorites();
                 break;
         }
     }
 
+    private void createFavorites() {
+        model.createFavorites(id+"",mContext,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,false){
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                if (!TextUtils.isEmpty(s)){
+                    view.showCollectionView();
+                }else {
+                    ToastUtil.showToast(mContext,getString(R.string.wront_net));
+                }
+            }
+        });
+    }
+
     @Override
     public void onItemAtListener(View v, int pos, String str) {
-        Intent intent = new Intent(this, PersonalityActivity.class);
-        intent.putExtra("user_name", str.substring(str.indexOf("@") + 1, str.length()));
-        startActivity(intent);
+        Bundle bundle=new Bundle();
+        bundle.putString(BUNDLER_PARAM_USER,str.substring(str.indexOf("@") + 1, str.length()));
+        PersonalityActivity.start(mContext,bundle);
+//        Intent intent = new Intent(this, PersonalityActivity.class);
+//        intent.putExtra("user_name", str.substring(str.indexOf("@") + 1, str.length()));
+//        startActivity(intent);
     }
 
     @Override
     public void onItemTopicListener(View v, int pos, String str) {
-        //todo 话题
+        Bundle bundle=new Bundle();
+        bundle.putString(BUNDLER_PARAM_TOPIC,str);
+        TopicActivity.start(mContext,bundle);
     }
 
     public static void start(Context context, Bundle bundle) {

@@ -73,4 +73,8 @@ public class NetWorkConfig {
 
     //收藏列表
     public static final String GPSTOOFFSET=BASE_URL+"/location/geo/gps_to_offset.json";
+
+
+    //删除微博
+    public static final String DESTROY_STATUS=BASE_URL+"/statuses/destroy.json";
 }

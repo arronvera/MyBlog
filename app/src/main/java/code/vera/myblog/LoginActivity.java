@@ -10,6 +10,7 @@ import com.sina.weibo.sdk.exception.WeiboException;
 
 import java.text.SimpleDateFormat;
 
+import butterknife.OnClick;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.utils.ToastUtil;
@@ -69,6 +70,11 @@ public class LoginActivity extends PresenterActivity<LoginView, VoidModel> {
             Debug.d("cancel");
             ToastUtil.showToast(mContext,"取消");
         }
+    }
+    @OnClick(R.id.tv_register)
+    public void register(){
+        
+
     }
     public static void start(Context context){
         Intent intent=new Intent(context,LoginActivity.class);

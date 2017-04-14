@@ -9,6 +9,7 @@ import rx.Observable;
 import ww.com.http.core.AjaxParams;
 
 import static code.vera.myblog.api.BaseApi.onGet;
+import static code.vera.myblog.api.BaseApi.onPost;
 
 /**
  * Created by vera on 2016/12/19 0019.
@@ -46,5 +47,12 @@ public class UserApi  {
         params.addParameters("uid",uid);
         params.addParameters("screem_name",screem_name);
         return onGet(url, params);
+    }
+    public static Observable<String> deleteStatus(Context context,String id){
+        String url = NetWorkConfig.DESTROY_STATUS;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("id",id);
+        return onPost(url, params);
     }
 }

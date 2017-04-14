@@ -18,12 +18,12 @@ import code.vera.myblog.presenter.fragment.person.TabPersonPhotosFragment;
 public class TabPersonAdapter  extends FragmentPagerAdapter {
     List<Fragment> fragmentList = new ArrayList<>();
     // 标题数组
-    String[] titles = {"关于", "圈子","相册"};
+    String[] titles = {"圈子","关于","相册"};
 
     public TabPersonAdapter(FragmentManager fm) {
         super(fm);
-        fragmentList.add(TabPersonInfoFragment.getInstance());
         fragmentList.add(TabPersonAllCircleFragment.getInstance());
+        fragmentList.add(TabPersonInfoFragment.getInstance());
         fragmentList.add(TabPersonPhotosFragment.getInstance());
 
     }

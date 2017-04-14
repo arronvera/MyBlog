@@ -118,7 +118,7 @@
                android:layout_marginLeft="3dp"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="查看位置"
+               android:text="添加位置"
                android:ellipsize="end"
                android:maxEms="12"
                android:textColor="@color/text_hint"
