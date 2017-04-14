@@ -114,7 +114,6 @@ public class PostApi {
         params.addParameters("id", id+"");
 //        params.addParameters("since_id", "");
 //        params.addParameters("max_id", "");
-        //  todo
         params.addParameters("count", "20");
         params.addParameters("page","1");
         params.addParameters("filter_by_author","0");//	作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。

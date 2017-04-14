@@ -117,4 +117,12 @@ public class PersonalityView extends BaseView {
     public ImageView getCoverImgView(){
         return ivBg;
     }
+
+    public void setConcerText(boolean isFollow) {
+        if (isFollow){
+            tvConcern.setText(R.string.cancel_concern);
+        }else {
+            tvConcern.setText(R.string.concern);
+        }
+    }
 }

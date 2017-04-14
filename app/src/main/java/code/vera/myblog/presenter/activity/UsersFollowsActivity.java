@@ -23,6 +23,9 @@ public class UsersFollowsActivity extends PresenterActivity<UsersFollowsView, Us
     private String id;
     private int type;
     private UserAdapter adapter;
+    public static final String PARAM_USER_FOLLOW_ID="id";
+    public static final String PARAM_USER_FOLLOW_TYPE="type";
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_users_follows;
@@ -32,8 +35,8 @@ public class UsersFollowsActivity extends PresenterActivity<UsersFollowsView, Us
     public void onAttach(View viRoot) {
         super.onAttach(viRoot);
         Intent intent=getIntent();
-        id=intent.getStringExtra("id");
-        type=intent.getIntExtra("type",0);
+        id=intent.getStringExtra(PARAM_USER_FOLLOW_ID);
+        type=intent.getIntExtra(PARAM_USER_FOLLOW_TYPE,0);
         initView();
         setAdapter();
         if (type== Constants.TYPE_CONCERN){
@@ -79,8 +82,8 @@ public class UsersFollowsActivity extends PresenterActivity<UsersFollowsView, Us
     public static void start(Context context, Bundle bundle){
         Intent intent=new Intent(context,UsersFollowsActivity.class);
         if (bundle!=null){
-            intent.putExtra("id",bundle.getLong("id")+"");
-            intent.putExtra("type",bundle.getInt("type"));
+            intent.putExtra(PARAM_USER_FOLLOW_ID,bundle.getLong(PARAM_USER_FOLLOW_ID)+"");
+            intent.putExtra(PARAM_USER_FOLLOW_TYPE,bundle.getInt(PARAM_USER_FOLLOW_TYPE));
         }
         context.startActivity(intent);
     }

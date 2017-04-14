@@ -76,7 +76,7 @@ public class BaseDao<T> {
 
 
     public Boolean createOrUpdateList(List<T> list) {
-        // TODO 使用事务进行修改和保存数据(提高效率)
+        //使用事务进行修改和保存数据(提高效率)
         boolean flag = false;
         AndroidDatabaseConnection adConnection =
                 new AndroidDatabaseConnection(DatabaseHelper.getInstance().getWritableDatabase(), false);

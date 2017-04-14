@@ -25,6 +25,8 @@ import code.vera.myblog.view.PersonalityView;
 import ww.com.core.Debug;
 
 import static code.vera.myblog.presenter.activity.BigPhotoActivity.PARAM_PHOTO;
+import static code.vera.myblog.presenter.activity.UsersFollowsActivity.PARAM_USER_FOLLOW_ID;
+import static code.vera.myblog.presenter.activity.UsersFollowsActivity.PARAM_USER_FOLLOW_TYPE;
 
 
 /**
@@ -85,40 +87,21 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
         switch (v.getId()){
             case R.id.tv_concern:
                 if (userInfoBean.isFollowing()){//取消关注
-                    model.destroyFriendShip(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
-                        @Override
-                        public void onNext(String s) {
-                            super.onNext(s);
-                            if (!TextUtils.isEmpty(s)){
-                                ToastUtil.showToast(getApplicationContext(),getString(R.string.concern_success));
-                                //todo 更新view
-                            }
-                        }
-                    });
+                    destroyFriendShip();
                 }else{//关注
-                    model.createFriendShip(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
-                        @Override
-                        public void onNext(String s) {
-                            super.onNext(s);
-                            if (!TextUtils.isEmpty(s)){
-                                ToastUtil.showToast(getApplicationContext(),getString(R.string.concern_success));
-                                //todo 更新view
-                            }
-                        }
-                    });
+                    createFriendShip();
                 }
-
                 break;
             case R.id.tv_friends://关注
                 Bundle bundle=new Bundle();
-                bundle.putLong("id",userInfoBean.getId());
-                bundle.putInt("type", Constants.TYPE_CONCERN);
+                bundle.putLong(PARAM_USER_FOLLOW_ID,userInfoBean.getId());
+                bundle.putInt(PARAM_USER_FOLLOW_TYPE, Constants.TYPE_CONCERN);
                 UsersFollowsActivity.start(this,bundle);
                 break;
             case R.id.tv_followers://粉丝
                  bundle=new Bundle();
-                bundle.putLong("id",userInfoBean.getId());
-                bundle.putInt("type", Constants.TYPE_FOLLOWERES);
+                bundle.putLong(PARAM_USER_FOLLOW_ID,userInfoBean.getId());
+                bundle.putInt(PARAM_USER_FOLLOW_TYPE, Constants.TYPE_FOLLOWERES);
                 UsersFollowsActivity.start(this,bundle);
                 break;
             case R.id.iv_bg://封面
@@ -133,6 +116,33 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
                 break;
         }
     }
+
+    private void createFriendShip() {
+        model.createFriendShip(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                if (!TextUtils.isEmpty(s)){
+                    ToastUtil.showToast(getApplicationContext(),getString(R.string.concern_success));
+                    view.setConcerText(true);
+                }
+            }
+        });
+    }
+
+    private void destroyFriendShip() {
+        model.destroyFriendShip(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                if (!TextUtils.isEmpty(s)){
+                    ToastUtil.showToast(getApplicationContext(),getString(R.string.cancel_concern_success));
+                    view.setConcerText(false);
+                }
+            }
+        });
+    }
+
     public static void start(Context context,Bundle bundle){
         Intent intent=new Intent(context,PersonalityActivity.class);
         intent.putExtra(BUNDLER_PARAM_USER, bundle.getSerializable(BUNDLER_PARAM_USER));
