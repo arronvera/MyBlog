@@ -24,7 +24,6 @@ import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.message.tab.TabMessageByMeView;
-import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 import static code.vera.myblog.presenter.activity.PersonalityActivity.BUNDLER_PARAM_USER;
@@ -39,6 +38,7 @@ public class TabMessageByMeFragment extends PresenterFragment<TabMessageByMeView
         implements OnItemLinkListener,OnItemAtListener,OnItemTopicListener,OnItemOriginalListener
 ,OnItemDeleteClickListener{
     private MessageBymeAdapter adapter;
+    private int page=1;
 
     @Override
     protected int getLayoutResId() {
@@ -62,23 +62,29 @@ public class TabMessageByMeFragment extends PresenterFragment<TabMessageByMeView
         view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
             @Override
             public void onHeaderRefreshing() {
+                page=1;
                 getMessageByMe(false);
             }
 
             @Override
             public void onFooterRefreshing() {
-
+                page++;
+                getMessageByMe(false);
             }
         });
     }
 
     private void getMessageByMe(boolean isDialog) {
-        model.getCommentByMe(1,getContext(),bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<CommentUserBean>>(mContext,isDialog){
+        model.getCommentByMe(page,getContext(),bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<CommentUserBean>>(mContext,isDialog){
             @Override
             public void onNext(List<CommentUserBean> commentUserBeen) {
                 super.onNext(commentUserBeen);
-                Debug.d("size="+commentUserBeen.size());
-                adapter.addList(commentUserBeen);
+                if (page==1){
+                    adapter.addList(commentUserBeen);
+                }else {
+                    adapter.appendList(commentUserBeen);
+                }
+                view.refreshFinished();
             }
         });
     }

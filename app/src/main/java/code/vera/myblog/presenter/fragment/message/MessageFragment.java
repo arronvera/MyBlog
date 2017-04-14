@@ -1,9 +1,5 @@
 package code.vera.myblog.presenter.fragment.message;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-
-import butterknife.BindView;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.TabMessageAdapter;
 import code.vera.myblog.model.message.MessageModel;
@@ -17,10 +13,6 @@ import code.vera.myblog.view.message.MessageView;
 
 public class MessageFragment extends PresenterFragment<MessageView,MessageModel> {
 
-    @BindView(R.id.tab_message_detail)
-    TabLayout tabLayout;
-    @BindView(R.id.vp_message_view)
-    ViewPager vpMessage;
 
     private TabMessageAdapter adapter;
     @Override
@@ -32,16 +24,10 @@ public class MessageFragment extends PresenterFragment<MessageView,MessageModel>
     protected void onAttach() {
         super.onAttach();
         setAdapter();
-
     }
 
     private void setAdapter() {
         adapter=new TabMessageAdapter(getFragmentManager());
-        //给ViewPager设置适配器
-        vpMessage.setAdapter(adapter);
-        //将TabLayout和ViewPager关联起来
-        tabLayout.setupWithViewPager(vpMessage);
-        //给Tabs设置适配器
-        tabLayout.setTabsFromPagerAdapter(adapter);
+        view.setAdapter(adapter);
     }
 }

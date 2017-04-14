@@ -21,7 +21,6 @@ import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.message.tab.TabMessageToMeView;
-import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_COMMENT_CID;
@@ -37,6 +36,7 @@ public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView
         implements OnItemLinkListener,OnItemAtListener,OnItemTopicListener,OnItemOriginalListener
         ,OnItemReplyListener {
     private MessageAtmeAdapter adapter;
+    private int page=1;
 
     @Override
     protected int getLayoutResId() {
@@ -58,15 +58,18 @@ public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView
         adapter.setOnItemReplyListener(this);
 
         view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
+
             @Override
             public void onHeaderRefreshing() {
+                page=1;
                 getMessageToMe(false);
 
             }
 
             @Override
             public void onFooterRefreshing() {
-
+                page++;
+                getMessageToMe(false);
             }
         });
     }
@@ -75,8 +78,12 @@ public class TabMessageToMeFragment extends PresenterFragment<TabMessageToMeView
             @Override
             public void onNext(List<CommentUserBean> commentUserBeen) {
                 super.onNext(commentUserBeen);
-                Debug.d("commentUseBeen.size="+commentUserBeen.size());
-                adapter.addList(commentUserBeen);
+                if (page==1){
+                    adapter.addList(commentUserBeen);
+                }else {
+                    adapter.appendList(commentUserBeen);
+                }
+                view.refreshFinished();
             }
         });
     }

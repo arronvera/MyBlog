@@ -35,6 +35,7 @@ import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAboutMeView,TabMessageModel>
         implements OnItemLinkListener,OnItemAtListener,OnItemTopicListener,OnItemOriginalListener,OnItemReplyListener {
     private MessageAtmeAdapter adapter;
+    private int page=1;
 
     @Override
     protected int getLayoutResId() {
@@ -57,12 +58,14 @@ public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAbout
         view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
             @Override
             public void onHeaderRefreshing() {
+                page=1;
                 getMessageAboutMe(false);
             }
 
             @Override
             public void onFooterRefreshing() {
-
+                page++;
+                getMessageAboutMe(false);
             }
         });
     }
@@ -73,11 +76,17 @@ public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAbout
     }
 
     private void getMessageAboutMe(boolean isDialog) {
-        model.getCommentMentions(1,getContext(),bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<CommentUserBean>>(mContext,isDialog){
+        model.getCommentMentions(page,getContext(),bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<CommentUserBean>>(mContext,isDialog){
             @Override
             public void onNext(List<CommentUserBean> commentUserBeen) {
                 super.onNext(commentUserBeen);
-                adapter.addList(commentUserBeen);
+                if (page==1){
+                    adapter.addList(commentUserBeen);
+                    view.refreshFinished();
+                }else {
+                    adapter.appendList(commentUserBeen);
+                    view.refreshFinished();
+                }
             }
         });
     }
