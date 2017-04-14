@@ -17,7 +17,6 @@ import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.view.other.CustomClickableSpan;
-import ww.com.core.Debug;
 
 /**
  * Created by vera on 2017/2/20 0020.
@@ -77,37 +76,6 @@ public class HomeUtils {
             if (url != null) {//链接
                 final int start = matcher.start(3);
                 final int end = start + url.length();
-                Debug.d("url="+url);
-//
-//                if (url.length()<20){//短链接
-//                    HomeModel.shortUrlExpand(context,url,new CustomSubscriber<List<UrlBean>>(context,false){
-//                        @Override
-//                        public void onNext(List<UrlBean> urlBeen) {
-//                            super.onNext(urlBeen);
-//                            Debug.d("转换的长链接url"+urlBeen.get(0).getUrl_long());
-//                            final int type=urlBeen.get(0).getType();
-//                            CustomClickableSpan ccsLink=new CustomClickableSpan() {
-//                                @Override
-//                                public void onClick(View widget) {
-//                                    if (onItemLinkListener!=null){
-//                                        onItemLinkListener.onItemLinkListener(widget,position,url,type);
-//                                    }
-//                                }
-//                            };
-//                            spannableString.setSpan(ccsLink, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                        }
-//                    });
-//                }else{
-//                    CustomClickableSpan ccsLink=new CustomClickableSpan() {
-//                        @Override
-//                        public void onClick(View widget) {
-//                            if (onItemLinkListener!=null){
-//                                onItemLinkListener.onItemLinkListener(widget,position,url,0);
-//                            }
-//                        }
-//                    };
-//                    spannableString.setSpan(ccsLink, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                }
                 CustomClickableSpan ccsLink=new CustomClickableSpan() {
                     @Override
                     public void onClick(View widget) {

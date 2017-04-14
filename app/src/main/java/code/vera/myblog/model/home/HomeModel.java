@@ -1,6 +1,7 @@
 package code.vera.myblog.model.home;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -208,18 +209,21 @@ public class HomeModel implements IModel{
      * @param subscriber
      */
     public void destroyFavorites( String weiboId,Context context,Observable.Transformer
-            transformer,  Subscriber<String> subscriber){
-        HomeApi.destroyFavorites(weiboId,context) .map(new Func1<String, String>() {
+            transformer,  Subscriber<Boolean> subscriber){
+        HomeApi.destroyFavorites(weiboId,context) .map(new Func1<String, Boolean>() {
             @Override
-            public  String call(String s) {
+            public  Boolean call(String s) {
                 JSONObject result=JSON.parseObject(s);
                 if (result.getString("error")!=null){
-                    return null;
+                    return false;
                 }
-                String time=result.getString("favorited_time");
-                return time;
+                String status=result.getString("status");
+                if (!TextUtils.isEmpty(status)){
+                    return true;
+                }
+                return false;
             }
-        }).compose(RxHelper.<String>cutMain())
+        }).compose(RxHelper.<Boolean>cutMain())
                 .compose(transformer)
                 .subscribe(subscriber);
     }

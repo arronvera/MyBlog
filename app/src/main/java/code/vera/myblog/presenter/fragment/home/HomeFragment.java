@@ -79,7 +79,10 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     private boolean isCollection;//是否收藏
     private AlertDialog.Builder cateDialog;//弹出框
     public static final String ACTION_CLEAR_UNREAD = "action.clearunread";
+    public static final String ACTION_UPDATE_FAVORITE = "action.updatefavorite";
 
+    private String[] cate = new String[] { "所有人", "好友" };
+    private int currentCateIndex;
 
     @Override
     protected int getLayoutResId() {
@@ -92,7 +95,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         requestBean = new HomeRequestBean();
         initData();
         setAdater();
-        getData();
+        getData(true);
         addListener();
     }
 
@@ -161,29 +164,9 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
             public void onClick(View v) {
                 String weibId=adapter.getItem(index).getId()+"";
                 if (isCollection) {
-                    model.destroyFavorites(weibId,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
-                        @Override
-                        public void onNext(String s) {
-                            super.onNext(s);
-                            if (!TextUtils.isEmpty(s)){
-                                ToastUtil.showToast(mContext,"取消收藏成功");
-                                menuPopupWindow.dismiss();
-                                //todo 取消收藏 更新
-                            }
-                        }
-                    });
+                    destroyFavorites(weibId);
                 } else {
-                    model.createFavorites(weibId,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
-                        @Override
-                        public void onNext(String s) {
-                            super.onNext(s);
-                            if (!TextUtils.isEmpty(s)){
-                                ToastUtil.showToast(mContext,"收藏成功");
-                                menuPopupWindow.dismiss();
-                                //todo 收藏 更新
-                            }
-                        }
-                    });
+                    createFavorites(weibId);
                 }
             }
         });
@@ -200,13 +183,53 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
        cateDialog = new AlertDialog.Builder(getContext());
     }
 
+    private void createFavorites(String weibId) {
+        model.createFavorites(weibId,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                if (!TextUtils.isEmpty(s)){
+                    ToastUtil.showToast(mContext,"收藏成功");
+                    menuPopupWindow.dismiss();
+                    //收藏 更新
+                    adapter.getItem(index).setFavorited(true);
+                    adapter.notifyItemChanged(index);
+                    mContext.sendBroadcast(new Intent(ACTION_UPDATE_FAVORITE));
+                }
+            }
+        });
+    }
+
+    private void destroyFavorites(String weibId) {
+        model.destroyFavorites(weibId,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<Boolean>(mContext,true){
+            @Override
+            public void onNext(Boolean b) {
+                super.onNext(b);
+                if (b){
+                    ToastUtil.showToast(mContext,"取消收藏成功");
+                    menuPopupWindow.dismiss();
+                    //取消收藏 更新
+                    adapter.getItem(index).setFavorited(false);
+                    adapter.notifyItemChanged(index);
+                    mContext.sendBroadcast(new Intent(ACTION_UPDATE_FAVORITE));
+                }else {
+                    ToastUtil.showToast(mContext,"取消收藏失败");
+                }
+            }
+        });
+    }
+
     private void addListener() {
         view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
             @Override
             public void onHeaderRefreshing() {
                 //下拉刷新
                 requestBean.page = "1";//
-                getData();
+                if (currentCateIndex==0){
+                    getData(false);
+                }else if (currentCateIndex==1){
+                    getDoubleData(false);
+                }
             }
 
             @Override
@@ -215,10 +238,13 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 int nextPage = Integer.parseInt(requestBean.getPage()) + 1;
                 Debug.d("bean=" + requestBean.toString());
                 requestBean.setPage(nextPage + "");
-                getData();
+                if (currentCateIndex==0){
+                    getData(false);
+                }else if (currentCateIndex==1){
+                    getDoubleData(false);
+                }
             }
         });
-
         adapter.setOnItemCommentListener(this);
         adapter.setOnItemRepostListener(this);
         adapter.setOnItemLikeListener(this);
@@ -248,8 +274,8 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     /**
      * 获取数据
      */
-    private void getData() {
-        model.getHomeTimeLine(requestBean, getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, false) {
+    private void getData(boolean isDialog) {
+        model.getHomeTimeLine(requestBean, getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, isDialog) {
             @Override
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
@@ -307,27 +333,17 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
     @OnClick(R.id.iv_filter)
     public void filter() {
-        cateDialog.setSingleChoiceItems(new String[]{"我关注的", "双向关注"}, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case 0:
-                        getData();
-                        break;
-                    case 1:
-                        getDoubleData();
-                        break;
-                }
-            }
-        });
+        ButtonOnClick buttonOnClick=new ButtonOnClick();
+        cateDialog.setSingleChoiceItems(cate,0,buttonOnClick);
+        cateDialog.setSingleChoiceItems(cate,1,buttonOnClick);
         cateDialog.show();
     }
 
     /*
     获取双向关注
      */
-    private void getDoubleData() {
-        model.getBilateralTimeLine(requestBean, getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, false) {
+    private void getDoubleData(boolean isDialog) {
+        model.getBilateralTimeLine(requestBean, getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, isDialog) {
             @Override
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
@@ -423,5 +439,19 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         Bundle bundle=new Bundle();
         bundle.putSerializable(BUNDLE_PARAM_STATUS,adapter.getItem(pos));
         CommentDetailActivity.start(mContext,bundle);
+    }
+    private class ButtonOnClick implements DialogInterface.OnClickListener{
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            currentCateIndex=i;
+            switch (i) {
+                case 0:
+                    getData(true);
+                    break;
+                case 1:
+                    getDoubleData(true);
+                    break;
+            }
+        }
     }
 }

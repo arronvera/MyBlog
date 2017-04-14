@@ -24,7 +24,6 @@ import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.collection.CollectionView;
-import code.vera.myblog.view.widget.MenuPopuWindow;
 import ww.com.core.Debug;
 
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
@@ -40,7 +39,6 @@ implements OnItemLikeListener,OnItemCommentListener,OnItemMenuListener,OnItemRep
     private int count=15;
     private int page=1;
     private CollectionAdapter adapter;
-    private MenuPopuWindow menuPopupWindow;//菜单
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_collection;
@@ -49,7 +47,6 @@ implements OnItemLikeListener,OnItemCommentListener,OnItemMenuListener,OnItemRep
     @Override
     protected void onAttach() {
         super.onAttach();
-        menuPopupWindow=new MenuPopuWindow(mContext);
         setAdapter();
         getFavorites();
         addListener();
@@ -100,7 +97,7 @@ implements OnItemLikeListener,OnItemCommentListener,OnItemMenuListener,OnItemRep
 
     @Override
     public void onItemMenuListener(View v, int pos) {
-        menuPopupWindow.showAsDropDown(v);
+        view.showMenuPopwindow(v);
     }
 
     @Override

@@ -14,9 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.trello.rxlifecycle.ActivityEvent;
@@ -26,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 import code.vera.myblog.adapter.MenuItemAdapter;
 import code.vera.myblog.bean.CollectionBean;
 import code.vera.myblog.bean.MenuItem;
@@ -33,9 +32,9 @@ import code.vera.myblog.bean.UnReadBean;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.user.UserModel;
-import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
+import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.fragment.MenuFragment;
 import code.vera.myblog.presenter.fragment.collection.CollectionFragment;
 import code.vera.myblog.presenter.fragment.draft.DraftFragment;
@@ -46,14 +45,15 @@ import code.vera.myblog.presenter.fragment.set.SetFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.SaveUtils;
 import code.vera.myblog.utils.ToastUtil;
-import code.vera.myblog.view.CircleImageView;
 import code.vera.myblog.view.MainView;
 
 import static code.vera.myblog.R.id.lv_left_menu;
+import static code.vera.myblog.presenter.activity.PersonalityActivity.BUNDLER_PARAM_USER;
 import static code.vera.myblog.presenter.activity.PostActivity.ACTION_SAVE_DRAFT;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 import static code.vera.myblog.presenter.fragment.draft.DraftFragment.ACTION_DELETE_DRAFT;
 import static code.vera.myblog.presenter.fragment.home.HomeFragment.ACTION_CLEAR_UNREAD;
+import static code.vera.myblog.presenter.fragment.home.HomeFragment.ACTION_UPDATE_FAVORITE;
 
 /**
  * 主界面
@@ -68,12 +68,8 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     ListView lvMenu;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.iv_title)
-    ImageView ivTitle;
-    @BindView(R.id.civ_user_photo)
-    CircleImageView civHeadPhoto;
-    @BindView(R.id.tv_user_name)
-    TextView tvUserName;
+
+
     private ActionBarDrawerToggle drawerToggle;
     //使用集合来储存侧滑菜单的菜单项
     private ArrayList<MenuItem> menuList;
@@ -105,14 +101,12 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
 
     private void addListener() {
         toolbar.setOnMenuItemClickListener(this);
-        lvMenu.setOnItemClickListener(this);
     }
 
     private void setAdapter() {
         adapter = new MenuItemAdapter(menuList, this);
         lvMenu.setAdapter(adapter);
     }
-
     private void initData() {
         //初始化menulists
         menuList = new ArrayList<>();
@@ -148,11 +142,11 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
             public void onNext(UserInfoBean userInfoBean) {
                 super.onNext(userInfoBean);
                 if (userInfoBean!=null){
+                    view.showUser(userInfoBean);
                     //存储
                     SaveUtils.saveUser(userInfoBean,MainActivity.this);
+                    user=userInfoBean;
                 }
-                view.showUser(userInfoBean);
-                user=userInfoBean;
                 //获取未读信息
                 model.getUnreadCount(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UnReadBean>(mContext,false){
                     @Override
@@ -161,19 +155,25 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
                         if (unReadBean!=null){
                             adapter.setUnreadBean(unReadBean);
                         }
-                    }
+              }
                 });
                 //获取收藏个数
-                model.getFavorites(50,1,mContext,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<List<CollectionBean>>(mContext,false){
-                    @Override
-                    public void onNext(List<CollectionBean> collectionBeen) {
-                        super.onNext(collectionBeen);
-                        if (collectionBeen!=null&&collectionBeen.size()!=0){
-                            adapter.setFaviroteNum(collectionBeen.size());
-                        }
-                    }
-                });
-
+                getFavorites();
+            }
+        });
+    }
+    @OnItemClick(R.id.lv_left_menu)
+    public void onItemClick(int position){
+        selectItem(position);
+    }
+    private void getFavorites() {
+        model.getFavorites(50,1,mContext,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<List<CollectionBean>>(mContext,false){
+            @Override
+            public void onNext(List<CollectionBean> collectionBeen) {
+                super.onNext(collectionBeen);
+                if (collectionBeen!=null&&collectionBeen.size()!=0){
+                    adapter.setFaviroteNum(collectionBeen.size());
+                }
             }
         });
     }
@@ -197,7 +197,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
                 break;
             case R.id.civ_user_photo://用户头像
                 Intent intent=new Intent(this, PersonalityActivity.class);
-                intent.putExtra("user",user);
+                intent.putExtra(BUNDLER_PARAM_USER,user);
                 startActivity(intent);
                 break;
         }
@@ -218,29 +218,27 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         switch (position) {
             case 0:
                 fragment = new HomeFragment();
-                ivTitle.setImageResource(R.mipmap.ic_circle);
+                view.setImageResouce(R.mipmap.ic_circle);
                 break;
             case 1:
                 fragment = new MessageFragment();
-                ivTitle.setImageResource(R.mipmap.ic_title_message);
+                view.setImageResouce(R.mipmap.ic_title_message);
                 break;
             case 2:
                 fragment = new FindFragment();
-                ivTitle.setImageResource(R.mipmap.ic_title_find);
+                view.setImageResouce(R.mipmap.ic_title_find);
                 break;
             case 3:
                 fragment = new CollectionFragment();
-                ivTitle.setImageResource(R.mipmap.ic_me);
-
+                view.setImageResouce(R.mipmap.ic_me);
                 break;
             case 4:
                 fragment = new DraftFragment();
-                ivTitle.setImageResource(R.mipmap.ic_draft);
-
+                view.setImageResouce(R.mipmap.ic_draft);
                 break;
             case 5://设置
                 fragment=new SetFragment();
-                ivTitle.setImageResource(R.mipmap.ic_set);
+                view.setImageResouce(R.mipmap.ic_set);
                 break;
         }
         fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
@@ -295,13 +293,18 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     class RefreshBroadCastReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            adapter.notifyDataSetChanged();
+            if (intent.getAction().equals(ACTION_UPDATE_FAVORITE)){
+                getFavorites();
+            }else {
+                adapter.notifyDataSetChanged();
+            }
         }
         public void registRecevier() {
             IntentFilter filter = new IntentFilter();
             filter.addAction(ACTION_SAVE_DRAFT);
             filter.addAction(ACTION_DELETE_DRAFT);
             filter.addAction(ACTION_CLEAR_UNREAD);//清空未读
+            filter.addAction(ACTION_UPDATE_FAVORITE);//更新收藏
             mContext.registerReceiver(this, filter);
         }
         public void unRgistRecevier() {
