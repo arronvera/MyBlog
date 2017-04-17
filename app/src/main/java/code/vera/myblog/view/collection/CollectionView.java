@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import code.vera.myblog.R;
+import code.vera.myblog.listener.OnItemFavoriteListener;
 import code.vera.myblog.view.RefreshView;
 import code.vera.myblog.view.widget.LikeView;
 import code.vera.myblog.view.widget.MenuPopuWindow;
@@ -25,17 +26,19 @@ public class CollectionView extends RefreshView {
     private Context context;
     private PopupWindow menuPopupWindow;//菜单
     private Button btnFavorites;
+    private Button btnCopy;
+    private OnItemFavoriteListener onItemFavoriteListener;
 
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
-        context=view.getContext();
+        context = view.getContext();
         likeView = new LikeView(context);
         initPopWindow();
     }
 
     private void initPopWindow() {
-        menuPopupWindow=new MenuPopuWindow(context);
+        menuPopupWindow = new MenuPopuWindow(context);
         View menu = LayoutInflater.from(context).inflate(R.layout.pop_bottom, null);
         menuPopupWindow = new PopupWindow(menu, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         menuPopupWindow.setFocusable(true);
@@ -43,8 +46,21 @@ public class CollectionView extends RefreshView {
         menuPopupWindow.setBackgroundDrawable(dw);
         // 设置popWindow的显示和消失动画
         menuPopupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
-        btnFavorites= (Button) menu.findViewById(R.id.btn_shoucang);
+        btnFavorites = (Button) menu.findViewById(R.id.btn_shoucang);
         btnFavorites.setText(R.string.cancel_collection);
+        btnCopy = (Button) menu.findViewById(R.id.btn_copy);
+        btnFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemFavoriteListener.onItemFavorite(view);
+            }
+        });
+        btnCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     public void showLikeView(ImageView imageView) {
@@ -55,5 +71,13 @@ public class CollectionView extends RefreshView {
 
     public void showMenuPopwindow(View v) {
         menuPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
+    }
+
+    public void setOnItemFavoriteListener(OnItemFavoriteListener onItemFavoriteListener) {
+        this.onItemFavoriteListener = onItemFavoriteListener;
+    }
+
+    public void dismissPop() {
+        menuPopupWindow.dismiss();
     }
 }

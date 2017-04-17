@@ -45,9 +45,9 @@ import code.vera.myblog.view.CircleImageView;
  * Created by vera on 2017/2/7 0007.
  */
 
-public class CollectionAdapter extends RvAdapter<CollectionBean>{
+public class CollectionAdapter extends RvAdapter<CollectionBean> {
     private Context context;
-    private NineGridImageViewAdapter<PicBean>adapter;
+    private NineGridImageViewAdapter<PicBean> adapter;
     //监听-------------
     private OnItemRepostListener onItemRepostListener;//转发监听
     private OnItemCommentListener onItemCommentListener;//评论监听
@@ -62,7 +62,7 @@ public class CollectionAdapter extends RvAdapter<CollectionBean>{
 
     public CollectionAdapter(Context context) {
         super(context);
-        this.context=context;
+        this.context = context;
     }
 
     @Override
@@ -74,6 +74,7 @@ public class CollectionAdapter extends RvAdapter<CollectionBean>{
     protected RvViewHolder<CollectionBean> getViewHolder(int viewType, View view) {
         return new HomeViewHolder(view);
     }
+
     class HomeViewHolder extends RvViewHolder<CollectionBean> {
         @BindView(R.id.tv_item_text)
         TextView tvContent;
@@ -116,21 +117,22 @@ public class CollectionAdapter extends RvAdapter<CollectionBean>{
 
         public HomeViewHolder(View itemView) {
             super(itemView);
-            adapter=new NineGridImageViewAdapter<PicBean>() {
+            adapter = new NineGridImageViewAdapter<PicBean>() {
                 //显示
                 @Override
                 protected void onDisplayImage(Context context, ImageView imageView, PicBean s) {
                     ImageLoader.getInstance().displayImage(s.getThumbnail_pic(), imageView, BaseApplication
                             .getDisplayImageOptions(R.mipmap.ic_photo_default));
                 }
+
                 //点击
                 @Override
                 protected void onItemImageClick(Context context, int index, List<PicBean> list) {
                     super.onItemImageClick(context, index, list);
                     //跳转到图片
-                    Intent intent=new Intent(context, PicturesActivity.class);
-                    intent.putExtra("index",index);
-                    intent.putExtra("bean",getItem(position).getStatusesBean());
+                    Intent intent = new Intent(context, PicturesActivity.class);
+                    intent.putExtra("index", index);
+                    intent.putExtra("bean", getItem(position).getStatusesBean());
                     context.startActivity(intent);
                 }
             };
@@ -140,117 +142,117 @@ public class CollectionAdapter extends RvAdapter<CollectionBean>{
 
         @Override
         public void onBindData(final int position, CollectionBean collectionBean) {
-            StatusesBean bean=collectionBean.getStatusesBean();
+            StatusesBean bean = collectionBean.getStatusesBean();
             //来源
-            if (!TextUtils.isEmpty(bean.getSource())&&Html.fromHtml(bean.getSource())!=null){
-                tvSource.setText("来自"+ Html.fromHtml(bean.getSource()));
+            if (!TextUtils.isEmpty(bean.getSource()) && Html.fromHtml(bean.getSource()) != null) {
+                tvSource.setText("来自" + Html.fromHtml(bean.getSource()));
             }
             //时间
-            String timeStr=bean.getCreated_at();
+            String timeStr = bean.getCreated_at();
             tvTime.setText(TimeUtils.dateTransfer(timeStr));
             //内容
-            final String content=bean.getText();
-            SpannableStringBuilder spannableString=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content,context,position,tvContent);
+            final String content = bean.getText();
+            SpannableStringBuilder spannableString = HomeUtils.getWeiBoContent(onItemAtListener, onItemTopicListener, onItemLinkListener, content, context, position, tvContent);
             tvContent.setText(spannableString);
-            if (bean.getUserBean()!=null){
+            if (bean.getUserBean() != null) {
                 tvName.setText(bean.getUserBean().getName());//用户名
                 ImageLoader.getInstance().displayImage(bean.getUserBean().getProfile_image_url(), civPhoto, BaseApplication
                         .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
-            }else {
+            } else {
                 civPhoto.setImageResource(R.mipmap.ic_user_default);
                 tvName.setText("未知");
             }
             //九宫格图片
-            if (bean.getPic_list()!=null&&bean.getPic_list().size()!=0){
+            if (bean.getPic_list() != null && bean.getPic_list().size() != 0) {
                 nineGridImageView.setImagesData(bean.getPic_list());
                 nineGridImageView.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 nineGridImageView.setVisibility(View.GONE);
             }
             //微博原作者-有的才返回
-            if (bean.getRetweetedStatusBean()!=null){
+            if (bean.getRetweetedStatusBean() != null) {
                 //
                 llLine.setVisibility(View.VISIBLE);
-                RetweetedStatusBean statusBean=bean.getRetweetedStatusBean();
+                RetweetedStatusBean statusBean = bean.getRetweetedStatusBean();
                 llAuthorInfo.setVisibility(View.VISIBLE);
-                String content_author="@"+statusBean.getUserbean().getName()+":"+statusBean.getText();
-                SpannableStringBuilder spannableString2=HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener,onItemLinkListener,content_author,context,position,tvAuthorText);
+                String content_author = "@" + statusBean.getUserbean().getName() + ":" + statusBean.getText();
+                SpannableStringBuilder spannableString2 = HomeUtils.getWeiBoContent(onItemAtListener, onItemTopicListener, onItemLinkListener, content_author, context, position, tvAuthorText);
                 tvAuthorText.setText(spannableString2);
-                if (statusBean.getPic_list()!=null&&statusBean.getPic_list().size()!=0){
+                if (statusBean.getPic_list() != null && statusBean.getPic_list().size() != 0) {
                     oriNineGirdImageView.setImagesData(statusBean.getPic_list());
                     oriNineGirdImageView.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     oriNineGirdImageView.setVisibility(View.GONE);
                 }
-            }else {
+            } else {
                 llAuthorInfo.setVisibility(View.GONE);
             }
             //转发
-            if (bean.getReposts_count()!=0){
-              tvRepost.setText(bean.getReposts_count()+"");
-            }else {
+            if (bean.getReposts_count() != 0) {
+                tvRepost.setText(bean.getReposts_count() + "");
+            } else {
                 tvRepost.setText("转发");
             }
             //评论
-            if (bean.getComments_count()!=0){
-                tvComment.setText(bean.getComments_count()+"");
-            }else{
+            if (bean.getComments_count() != 0) {
+                tvComment.setText(bean.getComments_count() + "");
+            } else {
                 tvComment.setText("评论");
             }
             //喜欢
-            if (bean.getAttitudes_count()!=0){
-                tvLike.setText(bean.getAttitudes_count()+"");
-            }else{
+            if (bean.getAttitudes_count() != 0) {
+                tvLike.setText(bean.getAttitudes_count() + "");
+            } else {
                 tvLike.setText("喜欢");
             }
             //-----------------------------监听-----------------------
             rlRepost.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onItemRepostListener!=null)
+                    if (onItemRepostListener != null)
                         onItemRepostListener.onItemRepostListener(v, position);
                 }
             });
             rlComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onItemCommentListener!=null)
+                    if (onItemCommentListener != null)
                         onItemCommentListener.onItemCommentListener(v, position);
                 }
             });
             rlLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onItemLikeListener!=null)
-                        onItemLikeListener.onItemLikeListener(v, ivLike,position);
+                    if (onItemLikeListener != null)
+                        onItemLikeListener.onItemLikeListener(v, ivLike, position);
                 }
             });
             llAuthorInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onItemOriginalListener!=null)
-                        onItemOriginalListener.onItemOriginalListener(v,position);
+                    if (onItemOriginalListener != null)
+                        onItemOriginalListener.onItemOriginalListener(v, position);
                 }
             });
             ivMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onItemClickListener!=null)
-                    onItemMenuListener.onItemMenuListener(v,position);
+                    if (onItemMenuListener != null)
+                        onItemMenuListener.onItemMenuListener(v, position);
                 }
             });
             civPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onItemHeadPhotoListener!=null)
-                        onItemHeadPhotoListener.onItemHeadPhotoListener(v,position);
+                    if (onItemHeadPhotoListener != null)
+                        onItemHeadPhotoListener.onItemHeadPhotoListener(v, position);
                 }
             });
             llItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onItemClickListener!=null)
-                    onItemClickListener.onItemClickListener(v,position);
+                    if (onItemClickListener != null)
+                        onItemClickListener.onItemClickListener(v, position);
                 }
             });
 
@@ -285,13 +287,16 @@ public class CollectionAdapter extends RvAdapter<CollectionBean>{
     public void setOnItemAtListener(OnItemAtListener onItemAtListener) {
         this.onItemAtListener = onItemAtListener;
     }
-    public void setOnItemMenuListener(OnItemMenuListener onItemMenuListener){
-        this.onItemMenuListener=onItemMenuListener;
+
+    public void setOnItemMenuListener(OnItemMenuListener onItemMenuListener) {
+        this.onItemMenuListener = onItemMenuListener;
     }
-    public void setOnItemHeadPhotoListener(OnItemHeadPhotoListener onItemHeadPhotoListener){
-        this.onItemHeadPhotoListener=onItemHeadPhotoListener;
+
+    public void setOnItemHeadPhotoListener(OnItemHeadPhotoListener onItemHeadPhotoListener) {
+        this.onItemHeadPhotoListener = onItemHeadPhotoListener;
     }
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        this.onItemClickListener=onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

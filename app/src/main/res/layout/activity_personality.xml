@@ -8,19 +8,27 @@
     android:orientation="vertical"
     android:background="@color/color_efefef"
     tools:context="code.vera.myblog.presenter.activity.CommentDetailActivity">
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/rl_top"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:gravity="center"-->
-        <!--style="@style/TopRelativeLayout">-->
-        <!--<TextView-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="个人详情"-->
-            <!--android:textColor="@color/colorWhite" />-->
-    <!--</RelativeLayout>-->
-
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_back"/>
+        <TextView
+            android:id="@+id/tv_author_name"
+            android:layout_toRightOf="@+id/iv_back"
+            android:textColor="@color/colorAccent"
+            android:layout_centerInParent="true"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
     <android.support.design.widget.CoordinatorLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent">
@@ -34,6 +42,7 @@
           android:background="@color/colorWhite" />
 
       <android.support.design.widget.AppBarLayout
+          android:id="@+id/app_bar_layout"
           android:background="@color/colorWhite"
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
@@ -41,28 +50,28 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              app:layout_scrollFlags="scroll|enterAlways">
+              app:layout_scrollFlags="scroll|exitUntilCollapsed">
               <RelativeLayout
-                  android:background="@color/colorPrimary"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content">
                   <ImageView
                       android:layout_width="match_parent"
                       android:id="@+id/iv_bg"
                       android:scaleType="fitXY"
-                      android:layout_height="140dp"
-                      />
+                      android:layout_height="wrap_content" />
                   <code.vera.myblog.view.CircleImageView
                       android:id="@+id/crv_photo"
                       android:layout_width="80dp"
-                      android:layout_height="80dp"
-                      android:layout_marginLeft="20dp"
-                      android:layout_marginTop="80dp"/>
+                      android:layout_centerHorizontal="true"
+                      android:layout_marginTop="40dp"
+                      android:layout_height="80dp"/>
                   <TextView
                       style="@style/TextWhiteStyle"
                       android:id="@+id/tv_name"
                       android:layout_below="@+id/crv_photo"
+                      android:layout_centerHorizontal="true"
                       android:layout_marginLeft="20dp"
+                      android:layout_marginTop="5dp"
                       android:textColor="@color/colorWhite"
                       tools:text="vera" />
                   <ImageView
@@ -89,6 +98,7 @@
                       android:layout_height="50dp"
                       android:gravity="center_vertical"
                       android:layout_below="@+id/tv_name"
+                      android:layout_centerHorizontal="true"
                       android:layout_marginLeft="20dp"
                       android:layout_marginRight="20dp"
                       android:orientation="horizontal">
@@ -118,6 +128,7 @@
                   <TextView
                       style="@style/TextWhiteStyle"
                       android:id="@+id/tv_intro"
+                      android:layout_centerHorizontal="true"
                       android:layout_below="@+id/tv_vertify_reason"
                       android:layout_marginLeft="20dp"
                       android:layout_marginBottom="20dp"
@@ -125,7 +136,7 @@
                   <TextView  style="@style/TextWhiteStyle"
                       android:id="@+id/tv_concern"
                       android:layout_alignParentRight="true"
-                      android:layout_marginTop="160dp"
+                      android:layout_marginTop="150dp"
                       android:layout_marginRight="20dp"
                       android:text="关注"/>
               </RelativeLayout>
@@ -135,9 +146,9 @@
               android:id="@+id/tab_person"
               android:layout_width="match_parent"
               android:layout_height="40dp"
-              android:background="@color/color_ff8162"
-              app:tabIndicatorColor="@color/colorWhite"
-              app:tabSelectedTextColor="@color/colorWhite"
+              android:background="@color/colorWhite"
+              app:tabIndicatorColor="@color/colorAccent"
+              app:tabSelectedTextColor="@color/colorBlack"
               app:tabTextColor="@color/color_bcbcbc">
 
           </android.support.design.widget.TabLayout>

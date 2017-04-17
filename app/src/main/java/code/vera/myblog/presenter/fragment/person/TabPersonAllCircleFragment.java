@@ -100,6 +100,7 @@ implements OnItemDeleteClickListener{
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
                 adapter.addList(statusesBeen);
+                view.refreshFinished();
             }
         });
     }
