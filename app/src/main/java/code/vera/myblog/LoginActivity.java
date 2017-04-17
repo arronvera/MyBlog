@@ -34,6 +34,8 @@ public class LoginActivity extends PresenterActivity<LoginView, VoidModel> {
     @Override
     protected void onAttach() {
         super.onAttach();
+
+
         loginListener=new AuthListener();//登陆认证的listener
         view.setAuthInfo(loginListener);
     }
