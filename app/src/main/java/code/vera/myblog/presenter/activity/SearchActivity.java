@@ -77,6 +77,10 @@ public class SearchActivity extends PresenterActivity<SearchView, SearchModel> {
     public void doClick(){//搜索
         getData();
     }
+    @OnClick(R.id.tv_cancle)
+    public void cancle(){
+        finish();
+    }
     public static void start(Context context) {
         Intent intent = new Intent(context, SearchActivity.class);
         context.startActivity(intent);

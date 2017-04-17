@@ -57,7 +57,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presenter.activity.SearchActivity"
-            android:theme="@style/AppBaseTheme" />
+            android:theme="@style/AppBaseTheme2" />
         <activity
             android:name=".presenter.activity.PostActivity"
             android:screenOrientation="portrait"

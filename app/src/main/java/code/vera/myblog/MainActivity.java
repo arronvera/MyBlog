@@ -34,6 +34,7 @@ import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
+import code.vera.myblog.presenter.activity.SearchActivity;
 import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.fragment.MenuFragment;
 import code.vera.myblog.presenter.fragment.collection.CollectionFragment;
@@ -280,8 +281,8 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
                 PostActivity.start(this,bundle);
                 break;
             case R.id.action_search://搜索
-                ToastUtil.showToast(this,"由于当前微博Api不提供权限，当前功能不提供");
-//                SearchActivity.start(this);
+//                ToastUtil.showToast(this,"由于当前微博Api不提供权限，当前功能不提供");
+                SearchActivity.start(this);
                 break;
         }
         return false;

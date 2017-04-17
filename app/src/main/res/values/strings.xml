@@ -19,6 +19,8 @@
     <string name="manager_user">账号管理</string>
     <string name="clear_catch">清理缓存</string>
     <string name="vison">检查更新</string>
+    <string name="privicy_set">隐私设置</string>
+
 
     <string name="about_author">关于作者</string>
     <string name="about_app">关于圈艺</string>
@@ -27,7 +29,7 @@
     <string name="delete">删除</string>
 
     <string name="share">分享</string>
-
+    <string name="cancel">取消</string>
     <string name="cancel_collection">取消收藏</string>
     <string name="collection">收藏</string>
     <string name="title_location">我在这里</string>

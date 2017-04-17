@@ -27,6 +27,23 @@
                     android:layout_height="30dp" />
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/rl_privaciy"
+                style="@style/ItemSetLLayout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:text="@string/privicy_set"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_arrow"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+            <RelativeLayout
                 android:id="@+id/rl_clear_cache"
                 android:layout_marginTop="2dp"
                 style="@style/ItemSetLLayout">

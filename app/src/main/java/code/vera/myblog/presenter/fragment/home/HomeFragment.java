@@ -79,12 +79,14 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     private int index;//当前item
     private boolean isFollow;
     private boolean isCollection;//是否收藏
-    private AlertDialog.Builder cateDialog;//弹出框
+    private AlertDialog.Builder cateDialogBuilder;//弹出框
+    private AlertDialog cateDialog;
+
     public static final String ACTION_CLEAR_UNREAD = "action.clearunread";
     public static final String ACTION_UPDATE_FAVORITE = "action.updatefavorite";
 
     private String[] cate = new String[] { "所有人", "好友" };
-    private int currentCateIndex;
+    private int currentCateIndex=0;
 
     @Override
     protected int getLayoutResId() {
@@ -133,31 +135,9 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
             public void onClick(View v) {
                 if (isFollow) {
                     // 取消关注
-                    model.destroyFriendShip(getContext(), adapter.getItem(index).getId() + "", bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
-                        @Override
-                        public void onNext(String s) {
-                            super.onNext(s);
-                            if (!TextUtils.isEmpty(s)) {
-                                ToastUtil.showToast(getContext(), getString(R.string.cancel_concern_success));
-                                adapter.getItem(index).setFavorited(false);
-                                adapter.notifyItemChanged(index);
-                            }else {
-                                ToastUtil.showToast(getContext(), getString(R.string.wrong_api));
-                            }
-                        }
-                    });
+                    destroyFriendShip();
                 } else {
-                    model.createFriendShip(getContext(), adapter.getItem(index).getId() + "", bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
-                        @Override
-                        public void onNext(String s) {
-                            super.onNext(s);
-                            if (!TextUtils.isEmpty(s)) {
-                                ToastUtil.showToast(getContext(), getString(R.string.concern_success));
-                                adapter.getItem(index).setFavorited(true);
-                                adapter.notifyItemChanged(index);
-                            }
-                        }
-                    });
+                    createFriendShip();
                 }
             }
         });
@@ -182,7 +162,37 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 menuPopupWindow.dismiss();
             }
         });
-       cateDialog = new AlertDialog.Builder(getContext());
+        cateDialogBuilder = new AlertDialog.Builder(getContext());
+    }
+
+    private void createFriendShip() {
+        model.createFriendShip(getContext(), adapter.getItem(index).getId() + "", bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                if (!TextUtils.isEmpty(s)) {
+                    ToastUtil.showToast(getContext(), getString(R.string.concern_success));
+                    adapter.getItem(index).setFavorited(true);
+                    adapter.notifyItemChanged(index);
+                }
+            }
+        });
+    }
+
+    private void destroyFriendShip() {
+        model.destroyFriendShip(getContext(), adapter.getItem(index).getId() + "", bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                if (!TextUtils.isEmpty(s)) {
+                    ToastUtil.showToast(getContext(), getString(R.string.cancel_concern_success));
+                    adapter.getItem(index).setFavorited(false);
+                    adapter.notifyItemChanged(index);
+                }else {
+                    ToastUtil.showToast(getContext(), getString(R.string.wrong_api));
+                }
+            }
+        });
     }
 
     private void createFavorites(String weibId) {
@@ -335,10 +345,10 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
     @OnClick(R.id.iv_filter)
     public void filter() {
-        ButtonOnClick buttonOnClick=new ButtonOnClick();
-        cateDialog.setSingleChoiceItems(cate,0,buttonOnClick);
-        cateDialog.setSingleChoiceItems(cate,1,buttonOnClick);
-        cateDialog.show();
+        ButtonOnClick buttonOnClick=new ButtonOnClick();//默认为0表示选中第一个项目，-1表示没有项目被选中
+        cateDialogBuilder.setSingleChoiceItems(cate,1,buttonOnClick);
+        cateDialogBuilder.setSingleChoiceItems(cate,currentCateIndex,buttonOnClick);
+        cateDialog=cateDialogBuilder.show();
     }
 
     /*
@@ -445,7 +455,9 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     private class ButtonOnClick implements DialogInterface.OnClickListener{
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
+            Debug.d("i="+i);
             currentCateIndex=i;
+            cateDialog.dismiss();
             switch (i) {
                 case 0:
                     getData(true);
