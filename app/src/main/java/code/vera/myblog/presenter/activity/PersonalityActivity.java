@@ -53,7 +53,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
         Intent intent=getIntent();
         Bundle bundle=new Bundle();
 
-        userInfoBean= (UserInfoBean) intent.getSerializableExtra("user");
+        userInfoBean= (UserInfoBean) intent.getSerializableExtra(BUNDLER_PARAM_USER);
         if (userInfoBean!=null){
             view.showInfo(userInfoBean);
             TabPersonInfoFragment.getInstance().setUid(userInfoBean.getId());

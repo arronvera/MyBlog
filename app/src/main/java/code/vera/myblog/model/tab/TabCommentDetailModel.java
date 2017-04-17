@@ -28,20 +28,21 @@ public class TabCommentDetailModel implements IModel {
 
     /**
      * 获取评论
+     *
      * @param context
-     * @param id id
+     * @param id          id
      * @param transformer
      * @param subscriber
      */
-    public void getComments(Context context, long id, Observable.Transformer
-            transformer, Subscriber<List<CommentUserBean>> subscriber){
-        PostApi.getComments(context,id) .map(new Func1<String, List<CommentUserBean>>() {
+    public void getComments(Context context, long id, int page, Observable.Transformer
+            transformer, Subscriber<List<CommentUserBean>> subscriber) {
+        PostApi.getComments(context, id, page).map(new Func1<String, List<CommentUserBean>>() {
             @Override
-            public  List<CommentUserBean> call(String s) {
-                List<CommentUserBean> userBeen=new ArrayList<>();
-                JSONObject result= JSON.parseObject(s);
-                if (result!=null){
-                    userBeen=JSON.parseArray(result.getString("comments"),CommentUserBean.class);
+            public List<CommentUserBean> call(String s) {
+                List<CommentUserBean> userBeen = new ArrayList<>();
+                JSONObject result = JSON.parseObject(s);
+                if (result != null) {
+                    userBeen = JSON.parseArray(result.getString("comments"), CommentUserBean.class);
                 }
                 return userBeen;
             }

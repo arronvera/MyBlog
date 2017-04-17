@@ -19,16 +19,16 @@ import code.vera.myblog.presenter.fragment.tab.TabRepostFragment;
 public class TabCommentAdapter extends FragmentPagerAdapter {
     List<Fragment> fragmentList = new ArrayList<>();
     // 标题数组
-    String[] titles = {"转发", "评论","喜欢"};
+    String[] titles = {"评论", "转发", "喜欢"};
 
     public TabCommentAdapter(FragmentManager fm, StatusesBean statusesBean) {
         super(fm);
-        if (statusesBean!=null){
-            titles = new String[]{"转发"+statusesBean.getReposts_count(),
-                    "评论"+statusesBean.getComments_count(), "喜欢"+statusesBean.getAttitudes_count()};
+        if (statusesBean != null) {
+            titles = new String[]{"评论" + statusesBean.getComments_count(), "转发" + statusesBean.getReposts_count(),
+                    "喜欢" + statusesBean.getAttitudes_count()};
         }
-        fragmentList.add(new TabRepostFragment());
         fragmentList.add(new TabCommentFragment());
+        fragmentList.add(new TabRepostFragment());
         fragmentList.add(new TabLikeFragment());
     }
 

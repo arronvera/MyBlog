@@ -9,6 +9,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jaeger.ninegridimageview.NineGridImageView;
@@ -59,6 +60,12 @@ public class CommentDetailView extends BaseView {
     ImageView ivLike;//喜欢
     @BindView(R.id.iv_shoucang)
     ImageView ivCollection;//收藏
+    @BindView(R.id.ll_Original_Layout)
+    LinearLayout llOriginal;
+    @BindView(R.id.tv_ori_text)
+    TextView tvOriginal;
+
+
     private LikeView likeView;
     private TabCommentAdapter tabCommentAdapter;
     private NineGridImageViewAdapter<PicBean> adapter;
@@ -120,6 +127,20 @@ public class CommentDetailView extends BaseView {
             ivCollection.setImageResource(R.mipmap.ic_star_sel);
         }else {
             ivCollection.setImageResource(R.mipmap.ic_star);
+        }
+        if (statusesBean.getRetweetedStatusBean()!=null){
+            RetweetedStatusBean bean=statusesBean.getRetweetedStatusBean();
+            llOriginal.setVisibility(View.VISIBLE);
+            text="@"+bean.getUserbean().getName()+":"+bean.getText();
+            tvOriginal.setText(HomeUtils.getWeiBoContent(onItemAtListener,onItemTopicListener, onItemLinkListener,text,context,0,tvOriginal));
+            if (bean.getPic_list()!=null&&bean.getPic_list().size()!=0){
+                nineGridImageView.setImagesData(bean.getPic_list());
+                nineGridImageView.setVisibility(View.VISIBLE);
+            }else {
+                nineGridImageView.setVisibility(View.GONE);
+            }
+
+
         }
 
     }

@@ -94,7 +94,7 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
                 break;
             case R.id.crv_photo://头像
                 Intent intent = new Intent(this, PersonalityActivity.class);
-                intent.putExtra("user", statusesBean.getUserBean());
+                intent.putExtra(BUNDLER_PARAM_USER, statusesBean.getUserBean());
                 startActivity(intent);
                 break;
             case R.id.iv_shoucang://收藏

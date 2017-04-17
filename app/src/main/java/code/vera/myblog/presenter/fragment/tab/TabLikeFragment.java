@@ -1,10 +1,5 @@
 package code.vera.myblog.presenter.fragment.tab;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import code.vera.myblog.R;
 import code.vera.myblog.model.tab.TabCommentDetailModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
@@ -21,8 +16,7 @@ public class TabLikeFragment extends PresenterFragment<TabLikeView, TabCommentDe
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab_like, container, false);
-        return view;
+    protected void onAttach() {
+        super.onAttach();
     }
 }

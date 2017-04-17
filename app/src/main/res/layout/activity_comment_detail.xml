@@ -114,7 +114,20 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     tools:text="这个一个text" />
-
+                <LinearLayout
+                    android:id="@+id/ll_Original_Layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <include layout="@layout/layout_line"
+                        android:id="@+id/line"/>
+                    <TextView
+                        android:id="@+id/tv_ori_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/about_app"/>
+                </LinearLayout>
                 <com.jaeger.ninegridimageview.NineGridImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/nineGridImageView"
                     android:layout_width="match_parent"
@@ -147,12 +160,16 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorWhite">
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_bcbcbc"></LinearLayout>
         <include layout="@layout/layout_bottom_atitu" />
     </LinearLayout>
 

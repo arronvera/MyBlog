@@ -107,7 +107,7 @@ public class PostApi {
      * @param id
      * @return
      */
-    public static Observable<String > getComments(Context context, long id) {
+    public static Observable<String > getComments(Context context, long id,int page) {
         String url = NetWorkConfig.COMMENT_INFO_BY_ID;
         AjaxParams params = new AjaxParams();
         params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
@@ -115,7 +115,7 @@ public class PostApi {
 //        params.addParameters("since_id", "");
 //        params.addParameters("max_id", "");
         params.addParameters("count", "20");
-        params.addParameters("page","1");
+        params.addParameters("page",page+"");
         params.addParameters("filter_by_author","0");//	作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
         return onGet(url, params);
     }
