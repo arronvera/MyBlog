@@ -25,6 +25,7 @@ import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.view.draft.DraftView;
 import ww.com.core.Debug;
+import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_BEAN;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
@@ -58,7 +59,18 @@ public class DraftFragment extends PresenterFragment<DraftView, PostModel>
     private void addListener() {
         adapter.setOnItemDeleteClickListener(this);
         adapter.setOnItemSendListener(this);
+        view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
+            @Override
+            public void onHeaderRefreshing() {
+                getDraft();
 
+            }
+
+            @Override
+            public void onFooterRefreshing() {
+
+            }
+        });
     }
 
     private void setAdapter() {
@@ -76,6 +88,7 @@ public class DraftFragment extends PresenterFragment<DraftView, PostModel>
             Debug.d("size=" + postBeanList.size());
             adapter.addList(postBeanList);
         }
+        view.refreshFinished();
     }
 
     @Override

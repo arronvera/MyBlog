@@ -10,6 +10,7 @@ import code.vera.myblog.adapter.SimpleRecyclerCardAdapter;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
@@ -45,6 +46,7 @@ public class TabPersonPhotosFragment extends PresenterFragment<TabPersonPhotosVi
         pics=new ArrayList<>();
         homeRequestBean=new HomeRequestBean();
         homeRequestBean.setUid(uid);
+        homeRequestBean.setFeature(Constants.FILTER_PHOTO);
     }
 
     private void getPics() {

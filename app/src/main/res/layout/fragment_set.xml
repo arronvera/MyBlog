@@ -27,6 +27,7 @@
                     android:layout_height="30dp" />
             </RelativeLayout>
             <RelativeLayout
+                android:layout_marginTop="2dp"
                 android:id="@+id/rl_privaciy"
                 style="@style/ItemSetLLayout">
                 <TextView
@@ -87,6 +88,12 @@
                 android:id="@+id/rl_problems"
                 android:layout_marginTop="20dp"
                 style="@style/ItemSetLLayout">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_arrow"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,6 +105,12 @@
             <RelativeLayout
                 android:layout_marginTop="2dp"
                 style="@style/ItemSetLLayout">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_arrow"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

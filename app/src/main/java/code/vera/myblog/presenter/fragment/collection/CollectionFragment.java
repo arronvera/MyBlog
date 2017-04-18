@@ -28,6 +28,7 @@ import code.vera.myblog.utils.ScreenUtils;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.collection.CollectionView;
 import ww.com.core.Debug;
+import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_STATUS_BEAN;
@@ -54,7 +55,7 @@ implements OnItemLikeListener,OnItemCommentListener,OnItemMenuListener,OnItemRep
     protected void onAttach() {
         super.onAttach();
         setAdapter();
-        getFavorites();
+        getFavorites(true);
         addListener();
     }
 
@@ -64,6 +65,20 @@ implements OnItemLikeListener,OnItemCommentListener,OnItemMenuListener,OnItemRep
         adapter.setOnItemRepostListener(this);
         adapter.setOnItemLikeListener(this);
         view.setOnItemFavoriteListener(this);
+        view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
+            @Override
+            public void onHeaderRefreshing() {
+                page=1;
+                getFavorites(false);
+            }
+
+            @Override
+            public void onFooterRefreshing() {
+                page++;
+                getFavorites(false);
+
+            }
+        });
     }
 
     private void setAdapter() {
@@ -71,13 +86,18 @@ implements OnItemLikeListener,OnItemCommentListener,OnItemMenuListener,OnItemRep
         view.setAdapter(adapter);
     }
 
-    private void getFavorites() {
-        model.getFavorites(count,page,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<CollectionBean>>(mContext,true){
+    private void getFavorites(boolean isDialog) {
+        model.getFavorites(count,page,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<List<CollectionBean>>(mContext,isDialog){
             @Override
             public void onNext(List<CollectionBean> collectionBeen) {
                 Debug.d("收藏------"+collectionBeen.size());
                 super.onNext(collectionBeen);
-                adapter.addList(collectionBeen);
+                if (page==1){
+                    adapter.addList(collectionBeen);
+                }else {
+                    adapter.appendList(collectionBeen);
+                }
+                view.refreshFinished();
             }
         });
     }

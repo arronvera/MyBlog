@@ -2,6 +2,7 @@ package code.vera.myblog.presenter.fragment.person;
 
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,12 @@ import com.trello.rxlifecycle.FragmentEvent;
 
 import java.util.List;
 
+import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.TabPersonAllCircleAdapter;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.config.Constants;
 import code.vera.myblog.listener.OnItemDeleteClickListener;
 import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
@@ -23,6 +26,7 @@ import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.utils.ScreenUtils;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.personality.TabPersonAllCircleView;
+import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 /**
@@ -37,6 +41,10 @@ implements OnItemDeleteClickListener{
     private TabPersonAllCircleAdapter adapter;
     private PopupWindow menuPopupWindow;
     private String uid;
+    private AlertDialog.Builder cateDialogBuilder;//弹出框
+    private AlertDialog cateDialog;
+    private int currentCateIndex=0;
+    private String[] cate = new String[] { "全部", "原创","图片","视频","音乐" };
 
     @Override
     protected int getLayoutResId() {
@@ -62,6 +70,8 @@ implements OnItemDeleteClickListener{
         menuPopupWindow.setBackgroundDrawable(dw);
         // 设置popWindow的显示和消失动画
         menuPopupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+        cateDialogBuilder = new AlertDialog.Builder(getContext());
+
     }
 
     private void addListener() {
@@ -145,4 +155,45 @@ implements OnItemDeleteClickListener{
             }
         });
     }
+    @OnClick(R.id.tv_filter)
+    public void filter(){
+        ButtonOnClick buttonOnClick=new ButtonOnClick();//默认为0表示选中第一个项目，-1表示没有项目被选中
+        cateDialogBuilder.setSingleChoiceItems(cate,4,buttonOnClick);
+        cateDialogBuilder.setSingleChoiceItems(cate,3,buttonOnClick);
+        cateDialogBuilder.setSingleChoiceItems(cate,2,buttonOnClick);
+        cateDialogBuilder.setSingleChoiceItems(cate,1,buttonOnClick);
+        cateDialogBuilder.setSingleChoiceItems(cate,currentCateIndex,buttonOnClick);
+        cateDialog=cateDialogBuilder.show();
+    }
+    private class ButtonOnClick implements DialogInterface.OnClickListener{
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            Debug.d("i="+i);
+            currentCateIndex=i;
+            cateDialog.dismiss();
+            switch (i) {
+                case 0:
+                    homeRequestBean.setFeature(Constants.FILTER_ALL);
+                    getCircles(true);
+                    break;
+                case 1:
+                    homeRequestBean.setFeature(Constants.FILTER_ORIGI);
+                    getCircles(true);
+                    break;
+                case 2:
+                    homeRequestBean.setFeature(Constants.FILTER_PHOTO);
+                    getCircles(true);
+                    break;
+                case 3:
+                    homeRequestBean.setFeature(Constants.FILTER_MOVIE);
+                    getCircles(true);
+                    break;
+                case 4:
+                    homeRequestBean.setFeature(Constants.FILTER_MUSIC);
+                    getCircles(true);
+                    break;
+            }
+        }
+    }
+
 }

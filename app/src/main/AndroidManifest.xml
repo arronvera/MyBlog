@@ -100,9 +100,15 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="c30a1b437296779969288015139e53bc"></meta-data>
+            android:value="c30a1b437296779969288015139e53bc" />
 
-        <activity android:name=".presenter.activity.AboutAuthorActivity"></activity>
+        <activity
+            android:name=".presenter.activity.AboutAuthorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppBaseTheme2" />
+        <activity android:name=".presenter.activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppBaseTheme2"></activity>
     </application>
 
 </manifest>

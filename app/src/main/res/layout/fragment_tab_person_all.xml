@@ -3,5 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background">
+    <TextView
+        android:id="@+id/tv_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="筛选"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/colorAccent"
+        android:layout_gravity="right"/>
 <include layout="@layout/item_refresh"/>
 </LinearLayout>

@@ -33,8 +33,18 @@ public class Constants {
     public static final int VISIBLE_ALL=0;//公开
     public static final int VISIBLE_SELF=1;//自己
     public static final int VISIBLE_FRIENDS=2;//朋友圈
-    //--------------链接的类型，0：普通网页、1：视频、2：音乐、3：活动、5、投票-------------------
+    //-----------------权限----------------
     public static final int LINK_TYPE_WEBSITE=0;//公开
     public static final int LINK_TYPE_VIDEO=1;//朋友圈
     public static final int LINK_TYPE_MUSIC=2;//自己
+
+
+    //-------过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0----------
+    public static final int FILTER_ALL=0;
+    public static final int FILTER_ORIGI=1;
+    public static final int FILTER_PHOTO=2;
+    public static final int FILTER_MOVIE=3;
+    public static final int FILTER_MUSIC=4;
+
+
 }
