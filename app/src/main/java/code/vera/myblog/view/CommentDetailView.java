@@ -197,4 +197,8 @@ public class CommentDetailView extends BaseView {
         likeView.setImage(context.getResources().getDrawable(R.mipmap.ic_star_sel));
         likeView.show(ivCollection);
     }
+
+    public void updateView() {
+
+    }
 }

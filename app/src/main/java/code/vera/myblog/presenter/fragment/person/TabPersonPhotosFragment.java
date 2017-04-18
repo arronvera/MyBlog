@@ -14,6 +14,7 @@ import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.personality.TabPersonPhotosView;
+import ww.com.core.Debug;
 
 /**
  * Created by vera on 2017/2/24 0024.
@@ -52,12 +53,15 @@ public class TabPersonPhotosFragment extends PresenterFragment<TabPersonPhotosVi
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
                 if (statusesBeen!=null){
+                    Debug.d("statusesBeen.size="+statusesBeen.size());
                     for (int i=0;i<statusesBeen.size();i++){
                         List<PicBean>pic=statusesBeen.get(i).getPic_list();
                         if (pic!=null&&pic.size()!=0){
+                            Debug.d("pic.size="+pic.size());
                             pics.addAll(pic);
                         }
                     }
+                    Debug.d("pics.size="+pics.size());
                     adapter.addList(pics);
                 }
             }

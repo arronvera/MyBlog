@@ -8,6 +8,7 @@ import com.trello.rxlifecycle.ActivityEvent;
 
 import java.util.List;
 
+import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.HomeAdapter;
 import code.vera.myblog.bean.home.StatusesBean;
@@ -56,8 +57,12 @@ public class TopicActivity extends PresenterActivity<TopicView,TopicModel> {
             }
         });
     }
+    @OnClick(R.id.iv_back)
+    public void finish(){
+        finish();
+    }
     public static void start(Context context, Bundle bundle){
-        Intent intent=new Intent(context,PersonalityActivity.class);
+        Intent intent=new Intent(context,TopicActivity.class);
         intent.putExtra(BUNDLER_PARAM_TOPIC, bundle.getSerializable(BUNDLER_PARAM_TOPIC));
         context.startActivity(intent);
     }

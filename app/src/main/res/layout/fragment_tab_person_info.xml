@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_background"
     android:padding="10dp">
 <ScrollView
     android:layout_width="match_parent"
@@ -48,7 +49,8 @@
                 tools:text="我哦呜哦哦"/>
         </LinearLayout>
         <include layout="@layout/layout_line"/>
-        <LinearLayout style="@style/ItemPersonLLayout">
+        <LinearLayout style="@style/ItemPersonLLayout"
+            android:id="@+id/ll_link">
             <TextView style="@style/ItemPersonTextView"
                 android:text="地址："/>
             <TextView style="@style/ItemPersonTextView"

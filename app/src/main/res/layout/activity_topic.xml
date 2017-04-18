@@ -5,19 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/color_background"
     tools:context="code.vera.myblog.presenter.activity.TopicActivity">
     <RelativeLayout
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:background="@color/colorAccent"
+        android:background="@color/colorWhite"
         android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_back"/>
         <TextView
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="话题"
-            android:textColor="@color/colorWhite" />
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorAccent" />
     </RelativeLayout>
     <include layout="@layout/item_refresh"/>
 </LinearLayout>

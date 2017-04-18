@@ -2,6 +2,7 @@ package code.vera.myblog.presenter.fragment.person;
 
 import com.trello.rxlifecycle.FragmentEvent;
 
+import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.model.user.UserModel;
@@ -50,5 +51,9 @@ public class TabPersonInfoFragment extends PresenterFragment<TabPersonInfoView, 
     public void setUid(long id) {
         uid=id+"";
         Debug.d("uid="+uid);
+    }
+    @OnClick(R.id.ll_link)
+    public void doClick(){
+        //todo
     }
 }

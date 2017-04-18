@@ -33,6 +33,8 @@ import code.vera.myblog.config.Constants;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.view.base.BaseView;
 
+import static code.vera.myblog.config.Constants.POST_TYPE_REPOST;
+
 /**
  * Created by vera on 2017/2/9 0009.
  */
@@ -92,7 +94,7 @@ public class PostView extends BaseView {
     private ImageView ivItemGallery;
     private ImageView ivItemDelete;
     private int comment_ori=0;//是否评论原作者
-
+    private int type;
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
@@ -154,6 +156,7 @@ public class PostView extends BaseView {
      * 显示标题和提示
      */
     public void showTitleAndHint(int type) {
+        this.type=type;
         switch (type){
             case Constants.POST_TYPE_COMMENT:
                 tvTitle.setText("发评论");
@@ -162,13 +165,16 @@ public class PostView extends BaseView {
                 llLocation.setVisibility(View.GONE);
                 llIfOriginal.setVisibility(View.VISIBLE);
                 cbIfOriginal.setText(R.string.str_if_original_weibo_comment);
+                ivChoosePic.setEnabled(false);//禁用选择图片
                 break;
-            case Constants.POST_TYPE_REPOST:
+            case POST_TYPE_REPOST:
                 tvTitle.setText("转发");
                 etMessage.setHint("转发");
                 llAuthority.setVisibility(View.GONE);
                 llLocation.setVisibility(View.GONE);
                 llIfOriginal.setVisibility(View.GONE);
+                ivChoosePic.setEnabled(false);//禁用选择图片
+
                 break;
             case Constants.POST_TYPE_REPLY_COMMENT:
                 tvTitle.setText("回复评论");
@@ -176,7 +182,7 @@ public class PostView extends BaseView {
                 llAuthority.setVisibility(View.GONE);
                 llLocation.setVisibility(View.GONE);
                 llIfOriginal.setVisibility(View.GONE);
-//                ivChoosPic.setEnabled(false);
+                ivChoosePic.setEnabled(false);//禁用选择图片
 
                 break;
             default:
@@ -214,11 +220,17 @@ public class PostView extends BaseView {
             tvOriName.setText(retweetedStatusBean.getUserbean().getName());
             ImageLoader.getInstance().displayImage(retweetedStatusBean.getUserbean().getProfile_image_url(), ivOriPhoto, BaseApplication
                     .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
-            String text="//@"+statusesBean.getUserBean().getName()+":"+statusesBean.getText();
             //设置样式，但是不可以点击
-            etMessage.setText( HomeUtils.getWeiBoContent(null,null,null,text,context,0,etMessage));
-            etMessage.setSelection(0);//移动光标
+            if (type==Constants.POST_TYPE_REPOST){//转发才显示
+                String text="//@"+statusesBean.getUserBean().getName()+":"+statusesBean.getText();
+                etMessage.setText( HomeUtils.getWeiBoContent(null,null,null,text,context,0,etMessage));
+                etMessage.setSelection(0);//移动光标
+            }
+
+            llIfOriginal.setVisibility(View.VISIBLE);
+
         }else if (statusesBean.getRetweetedStatusBean()==null){
+            llIfOriginal.setVisibility(View.GONE);
             tvOriContent.setText(statusesBean.getText());
             tvOriName.setText(statusesBean.getUserBean().getName());
             ImageLoader.getInstance().displayImage(statusesBean.getUserBean().getProfile_image_url(), ivOriPhoto, BaseApplication

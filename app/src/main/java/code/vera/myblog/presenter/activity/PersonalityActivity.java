@@ -82,7 +82,7 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
         view.setAdapter();
 
     }
-    @OnClick({R.id.tv_concern,R.id.tv_friends,R.id.tv_followers,R.id.iv_bg,R.id.crv_photo})
+    @OnClick({R.id.tv_concern,R.id.tv_friends,R.id.tv_followers,R.id.iv_bg,R.id.crv_photo,R.id.iv_back})
     public void doClick(View v){
         switch (v.getId()){
             case R.id.tv_concern:
@@ -113,6 +113,9 @@ public class PersonalityActivity  extends PresenterActivity<PersonalityView, Per
                 Intent intent2=new Intent(this,BigPhotoActivity.class);
                 intent2.putExtra(PARAM_PHOTO,userInfoBean.getAvatar_hd());
                 startActivity(intent2, ActivityOptions.makeSceneTransitionAnimation(this,view.getPhotoView(),HEAD_PHOTO_SHARE).toBundle());
+                break;
+            case R.id.iv_back:
+                finish();
                 break;
         }
     }

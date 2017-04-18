@@ -405,6 +405,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
     @Override
     public void onItemTopicListener(View v, int pos, String str) {
+        Debug.d("点击topic话题"+str);
         Bundle bundle=new Bundle();
         bundle.putString(BUNDLER_PARAM_TOPIC,str.substring(1, str.length() - 1));
         TopicActivity.start(mContext,bundle);
@@ -412,6 +413,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
     @Override
     public void onItemAtListener(View v, int pos, String str) {
+        Debug.d("点击@某人"+str);
         Bundle bundle=new Bundle();
         bundle.putString(BUNDLER_PARAM_USER,str.substring(str.indexOf("@") + 1, str.length()));
         PersonalityActivity.start(mContext,bundle);

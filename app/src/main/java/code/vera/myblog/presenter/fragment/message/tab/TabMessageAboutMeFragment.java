@@ -119,7 +119,6 @@ public class TabMessageAboutMeFragment extends PresenterFragment<TabMessageAbout
         bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_REPLY_COMMENT);
         bundle.putLong(PARAM_COMMENT_CID,commentUserBean.getId());
         bundle.putLong(PARAM_COMMENT_WEIB_ID,commentUserBean.getStatusesBean().getId());
-
         PostActivity.start(mContext,bundle);
     }
 }

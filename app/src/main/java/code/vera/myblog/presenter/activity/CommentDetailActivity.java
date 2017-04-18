@@ -1,7 +1,9 @@
 package code.vera.myblog.presenter.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -34,6 +36,9 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
     public static long id;
     private StatusesBean statusesBean;
     public static final  String BUNDLE_PARAM_STATUS="status";
+    public static final  String ACTION_UPDATE_COMMENT_NUM="com.action.update.comment";
+    private UpdateBroadCast broadCast;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_comment_detail;
@@ -42,6 +47,8 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
     @Override
     protected void onAttach() {
         super.onAttach();
+        broadCast=new UpdateBroadCast();
+        broadCast.register();
         initData();
         view.setActivity(this);
         view.setAdapter();
@@ -146,5 +153,25 @@ public class CommentDetailActivity extends PresenterActivity<CommentDetailView, 
         Intent intent = new Intent(this, BrowserActivity.class);
         intent.putExtra("link", str);
         startActivity(intent);
+    }
+    public class UpdateBroadCast extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            view.updateView();
+        }
+        public void register(){
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(ACTION_UPDATE_COMMENT_NUM);//更新
+            mContext.registerReceiver(this, filter);
+        }
+        public void unRegister(){
+            mContext.unregisterReceiver(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        broadCast.unRegister();
     }
 }

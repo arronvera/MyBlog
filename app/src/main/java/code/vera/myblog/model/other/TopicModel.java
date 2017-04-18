@@ -11,6 +11,7 @@ import java.util.List;
 import code.vera.myblog.api.HomeApi;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.model.base.IModel;
+import code.vera.myblog.utils.ToastUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
@@ -28,7 +29,7 @@ public class TopicModel implements IModel {
     /**
      * 获取某一话题下的分享信息
      */
-    public void getTopicStatus(String q, Context context, Observable.Transformer
+    public void getTopicStatus(String q, final Context context, Observable.Transformer
             transformer, Subscriber<List<StatusesBean>> subscriber){
         HomeApi.getTopicStatus(q,context)
                 .map(new Func1<String, List<StatusesBean>>() {
@@ -36,6 +37,9 @@ public class TopicModel implements IModel {
                     public  List<StatusesBean> call(String s) {
                         List<StatusesBean>beanList=new ArrayList<>();
                         JSONObject result= JSON.parseObject(s);
+                        if (result.getString("error")!=null){
+                            ToastUtil.showToast(context,result.getString("error"));
+                        }
                         if (result!=null){
                             beanList= JSON.parseArray(result.getString("statuses"),StatusesBean.class);
 //                            Debug.d("beanlist.size="+beanList.size());

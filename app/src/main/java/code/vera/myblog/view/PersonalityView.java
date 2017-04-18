@@ -18,7 +18,6 @@ import code.vera.myblog.adapter.TabPersonAdapter;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.view.base.BaseView;
-import ww.com.core.Debug;
 
 /**
  * Created by vera on 2017/2/7 0007.
@@ -67,7 +66,7 @@ public class PersonalityView extends BaseView {
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                Debug.d("verticalOffset=" + verticalOffset);
+//                Debug.d("verticalOffset=" + verticalOffset);
                 if (verticalOffset == 0) {
                     rlTop.setVisibility(View.GONE);
                 } else {

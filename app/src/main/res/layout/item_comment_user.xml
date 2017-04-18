@@ -42,21 +42,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_alignParentRight="true">
+
+                android:layout_toLeftOf="@+id/ll_reply">
                 <ImageView
                     android:id="@+id/iv_heart"
                     android:layout_marginRight="10dp"
                     android:layout_width="18dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_height="20dp"
                     android:src="@mipmap/ic_heart"/>
                 <TextView
                     android:id="@+id/item_comment_user_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="22222"/>
+                    tools:text="22"/>
             </LinearLayout>
+        <!--回复评论-->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/ll_reply"
+        android:layout_width="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/ic_bubble"/>
+    </LinearLayout>
 
         <code.vera.myblog.view.CircleImageView
             android:id="@+id/item_comment_user_photo"

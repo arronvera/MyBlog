@@ -3,10 +3,10 @@ package code.vera.myblog.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
@@ -15,6 +15,7 @@ import code.vera.myblog.bean.CommentUserBean;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemLikeListener;
 import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemReplyListener;
 import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.utils.TimeUtils;
@@ -29,7 +30,7 @@ public class CommentAdapter extends RvAdapter<CommentUserBean> {
     private OnItemTopicListener onItemTopicListener;
     private OnItemLinkListener onItemLinkListener;
     private OnItemLikeListener onItemLikeListener;
-
+    private OnItemReplyListener onItemReplyListener;
     public CommentAdapter(Context context) {
         super(context);
     }
@@ -57,6 +58,9 @@ public class CommentAdapter extends RvAdapter<CommentUserBean> {
         CircleImageView civPhoto;
         @BindView(R.id.iv_heart)
         ImageView ivHeart;
+        @BindView(R.id.ll_reply)
+        LinearLayout llReply;//回复
+
 
 
         public CommentViewHolder(View itemView) {
@@ -82,6 +86,14 @@ public class CommentAdapter extends RvAdapter<CommentUserBean> {
                     }
                 }
             });
+            llReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemReplyListener!=null){
+                        onItemReplyListener.onItemReply(view,position);
+                    }
+                }
+            });
         }
     }
     public void setOnItemAtListener(OnItemAtListener onItemAtListener){
@@ -95,5 +107,8 @@ public class CommentAdapter extends RvAdapter<CommentUserBean> {
     }
     public void setOnItemLikeListener(OnItemLikeListener onItemLikeListener){
         this.onItemLikeListener=onItemLikeListener;
+    }
+    public void setOnItemReplyListener(OnItemReplyListener onItemReplyListener){
+        this.onItemReplyListener=onItemReplyListener;
     }
 }
