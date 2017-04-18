@@ -45,7 +45,6 @@ import code.vera.myblog.presenter.fragment.message.MessageFragment;
 import code.vera.myblog.presenter.fragment.set.SetFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.SaveUtils;
-import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.MainView;
 
 import static code.vera.myblog.R.id.lv_left_menu;
@@ -197,6 +196,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
                 dlLeft.closeDrawer(GravityCompat.START);
                 break;
             case R.id.civ_user_photo://用户头像
+                dlLeft.closeDrawer(GravityCompat.START);
                 Intent intent=new Intent(this, PersonalityActivity.class);
                 intent.putExtra(BUNDLER_PARAM_USER,user);
                 startActivity(intent);

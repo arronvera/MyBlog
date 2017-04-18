@@ -32,7 +32,7 @@ public class SplashActivity extends PresenterActivity<VoidView, VoidModel> {
         textView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                textView.setAnimateType(HTextViewType.TYPER);
+                textView.setAnimateType(HTextViewType.LINE);
                 textView.animateText("用圈艺");
             }
         }, 100);
