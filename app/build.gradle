@@ -88,7 +88,7 @@ dependencies {
     //特效textview sdk >= 15
     compile 'hanks.xyz:htextview-library:0.1.5'
     //gif
-    compile 'com.github.Cutta:GifView:1.1'
+//    compile 'com.github.Cutta:GifView:1.1'
     //菜单
     compile 'com.yalantis:contextmenu:1.0.7'
     //cardView
