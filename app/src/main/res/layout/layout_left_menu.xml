@@ -11,9 +11,9 @@
         android:layout_alignParentStart="true">
         <ImageView
             android:id="@+id/iv_menu_close"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerHorizontal="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
             android:src="@mipmap/ic_menu_close"/>
     </RelativeLayout>
 
@@ -22,23 +22,28 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/rl_close"/>
     <TextView
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_alignBottom="@+id/civ_user_photo"
         android:textSize="18sp"
         android:textColor="@color/colorWhite"
         android:layout_marginLeft="20dp"
         tools:text="vera"
-        android:layout_below="@+id/civ_user_photo"/>
+        android:layout_below="@+id/rl_close"
+        android:layout_alignBaseline="@+id/civ_user_photo"
+        android:layout_toRightOf="@+id/civ_user_photo"/>
     <ListView
-        android:layout_below="@+id/tv_user_name"
+        android:layout_below="@+id/civ_user_photo"
         android:id="@+id/lv_left_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="20dp"/>
         <!--android:layout_above="@+id/iv_sign_out"-->
         />
     <!--<ImageView-->

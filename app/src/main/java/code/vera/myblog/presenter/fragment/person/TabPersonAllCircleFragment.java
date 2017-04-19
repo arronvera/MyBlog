@@ -83,6 +83,7 @@ public class TabPersonAllCircleFragment extends PresenterFragment<TabPersonAllCi
 
     private void addListener() {
         adapter.setOnItemDeleteClickListener(this);
+        adapter.setOnItemLocationListener(this);
         menuPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {

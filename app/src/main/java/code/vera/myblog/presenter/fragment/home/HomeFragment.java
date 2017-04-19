@@ -167,7 +167,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 menuPopupWindow.dismiss();
             }
         });
-        cateDialogBuilder = new AlertDialog.Builder(getContext());
+        cateDialogBuilder = new AlertDialog.Builder(mContext);
     }
 
     private void createFriendShip() {

@@ -17,12 +17,12 @@ import java.io.IOException;
  */
 
 public class PictureUtils {
-   private static final File file=new File(Environment.getExternalStorageDirectory()+"/circle/image");
+    private static final File file = new File(Environment.getExternalStorageDirectory() + "/circle/image");
 
     /**
      * 保存图片
      */
-    public static void  savePic(Bitmap bitmap, Context context){
+    public static void savePic(Bitmap bitmap, Context context) {
         File appDir = new File(Environment.getExternalStorageDirectory(), "circle");
         if (!appDir.exists()) {
             appDir.mkdir();    //创建文件夹
@@ -34,13 +34,13 @@ public class PictureUtils {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);  //保存成图片
             fos.flush();
             fos.close();
-            ToastUtil.showToast(context,"保存图片成功~");
+            ToastUtil.showToast(context, "保存图片成功~");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            ToastUtil.showToast(context,"保存图片失败~");
+            ToastUtil.showToast(context, "保存图片失败~");
         } catch (IOException e) {
             e.printStackTrace();
-            ToastUtil.showToast(context,"保存图片失败~");
+            ToastUtil.showToast(context, "保存图片失败~");
         }
     }
 
@@ -60,28 +60,28 @@ public class PictureUtils {
         Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);
         return bitmap;
     }
-  public static void saveGif(String path){
-      File appDir = new File(Environment.getExternalStorageDirectory(), "circle");
-      if (!appDir.exists()) {
-          appDir.mkdir();    //创建文件夹
-      }
-      String fileName = System.currentTimeMillis() + ".gif"; //需要的图片格式
-      File file = new File(appDir, fileName);
-//      try {
-//          FileOutputStream fos = new FileOutputStream(file); //获取文件流
-//          bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);  //保存成图片
-//          fos.flush();
-//          fos.close();
-//          ToastUtil.showToast(context,"保存图片成功~");
-//      } catch (FileNotFoundException e) {
-//          e.printStackTrace();
-//          ToastUtil.showToast(context,"保存图片失败~");
-//      } catch (IOException e) {
-//          e.printStackTrace();
-//          ToastUtil.showToast(context,"保存图片失败~");
-//      }
-  }
 
-
+    public static void saveGif(byte[] bytes, Context context) {
+        File appDir = new File(Environment.getExternalStorageDirectory(), "circle");
+        if (!appDir.exists()) {
+            appDir.mkdir();    //创建文件夹
+        }
+        String fileName = System.currentTimeMillis() + ".gif"; //需要的图片格式
+        File file = new File(appDir, fileName);
+        FileOutputStream fileWriter = null;
+        try {
+            fileWriter = new FileOutputStream(file);
+            fileWriter.write(bytes);
+            fileWriter.flush();
+            fileWriter.close();
+            ToastUtil.showToast(context, "保存图片成功~");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            ToastUtil.showToast(context, "保存图片失败~");
+        } catch (IOException e) {
+            e.printStackTrace();
+            ToastUtil.showToast(context, "保存图片失败~");
+        }
+    }
 
 }

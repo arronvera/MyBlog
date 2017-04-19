@@ -47,6 +47,7 @@
         </activity>
         <activity
             android:name=".presenter.activity.PersonalityActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppBaseTheme" />
         <!-- 必须注册在微博授权，分享微博时候用到 -->
         <activity
@@ -71,6 +72,7 @@
             android:theme="@style/AppBaseTheme2" />
         <activity
             android:name=".presenter.activity.PicturesActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppBaseTheme2" />
         <activity
             android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"

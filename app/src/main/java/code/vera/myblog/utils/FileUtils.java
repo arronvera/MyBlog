@@ -151,4 +151,9 @@ public class FileUtils {
         }
         return fileSizeLong;
     }
+
+    public static void saveGif(byte[] bytes) {
+
+
+    }
 }

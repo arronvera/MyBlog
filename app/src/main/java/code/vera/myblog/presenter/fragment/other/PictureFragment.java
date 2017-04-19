@@ -6,8 +6,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+
+import com.bumptech.glide.Glide;
+
+import java.util.concurrent.ExecutionException;
 
 import code.vera.myblog.R;
 import code.vera.myblog.model.base.VoidModel;
@@ -24,9 +30,12 @@ import static code.vera.myblog.presenter.activity.PicturesActivity.ACTION_SAVE_P
  * Created by vera on 2017/2/20 0020.
  */
 
-public class PictureFragment  extends PresenterFragment<PictureView,VoidModel>  {
+public class PictureFragment extends PresenterFragment<PictureView, VoidModel> {
     private String url;
     private PictureSaveBroadCastReceiver broadCastReceiver;
+    private byte[] bytes;
+    private Handler handler;
+    private static final int GIF_SAVE = 3;
 
     @Override
     protected int getLayoutResId() {
@@ -42,48 +51,72 @@ public class PictureFragment  extends PresenterFragment<PictureView,VoidModel>  
     }
 
     @Override
+
     protected void onAttach() {
         super.onAttach();
-        broadCastReceiver=new PictureSaveBroadCastReceiver();
+        broadCastReceiver = new PictureSaveBroadCastReceiver();
         broadCastReceiver.registRecevier();
         url = getArguments().getString("url");
         if (!TextUtils.isEmpty(url)) {
             view.showPic(url);
         }
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case GIF_SAVE:
+                        PictureUtils.saveGif(bytes, mContext);
+                        break;
+
+                }
+            }
+        };
     }
-    class PictureSaveBroadCastReceiver extends BroadcastReceiver{
+
+    class PictureSaveBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             //保存图片
             Debug.d("接收---");
-            if (url.endsWith(".gif")){
+            if (url.endsWith(".gif")) {
                 //保存gif图片
-//                try {
-//                    File file=Glide.with(mContext).load(url)
-//                            .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-//                            .get();
-//                    String path = file.getPath();
-//                    Debug.d("path="+path);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } catch (ExecutionException e) {
-//                    e.printStackTrace();
-//                }
-            }else {
-                Bitmap bitmap=view.getLoadBitmap();
-                if (bitmap==null){
-                    ToastUtil.showToast(mContext,"图片正在加载中哦~不能保存");
-                }else{
-                    PictureUtils.savePic(bitmap,mContext);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            bytes = Glide.with(mContext)
+                                    .load(url)
+                                    .asGif()
+                                    .toBytes()
+                                    .into(250, 250)
+                                    .get();
+                            handler.sendEmptyMessage(GIF_SAVE);
+//                            PictureUtils.saveGif(bytes, mContext);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+            } else {
+                Bitmap bitmap = view.getLoadBitmap();
+                if (bitmap == null) {
+                    ToastUtil.showToast(mContext, "图片正在加载中哦~不能保存");
+                } else {
+                    PictureUtils.savePic(bitmap, mContext);
                 }
             }
 
         }
+
         public void registRecevier() {
             IntentFilter filter = new IntentFilter();
             filter.addAction(ACTION_SAVE_PIC);
             mContext.registerReceiver(this, filter);
         }
+
         public void unRgistRecevier() {
             mContext.unregisterReceiver(this);
         }
