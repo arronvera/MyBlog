@@ -12,7 +12,6 @@ import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.view.pic.PicturesView;
-import ww.com.core.Debug;
 
 /**
  * 查看多张图片
@@ -54,17 +53,8 @@ public class PicturesActivity extends PresenterActivity<PicturesView,VoidModel> 
               finish();
                break;
            case R.id.tv_save_pic://保存图片
-               Debug.d("发送---");
+//               Debug.d("发送---");
                sendBroadcast(new Intent(ACTION_SAVE_PIC));
-//               PictureFragment currentFragment= (PictureFragment) view.getCurrentFragment();
-//               Debug.d("currentFragment="+currentFragment);
-//               Bitmap bitmap=currentFragment.getCurrentBitmap();
-//               Debug.d("bitmap="+bitmap);
-//               if (bitmap==null){
-//                   ToastUtil.showToast(this,"图片正在加载中哦~不能保存");
-//               }else{
-//                   PictureUtils.savePic(bitmap,mContext);
-//               }
                break;
        }
 

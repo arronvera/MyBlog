@@ -23,6 +23,7 @@ import java.util.List;
 import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.HomeAdapter;
+import code.vera.myblog.bean.GeoBean;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
@@ -32,6 +33,7 @@ import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.listener.OnItemLikeListener;
 import code.vera.myblog.listener.OnItemLinkListener;
+import code.vera.myblog.listener.OnItemLocationListener;
 import code.vera.myblog.listener.OnItemMenuListener;
 import code.vera.myblog.listener.OnItemOriginalListener;
 import code.vera.myblog.listener.OnItemRepostListener;
@@ -39,6 +41,7 @@ import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.home.HomeModel;
 import code.vera.myblog.presenter.activity.BrowserActivity;
 import code.vera.myblog.presenter.activity.CommentDetailActivity;
+import code.vera.myblog.presenter.activity.NearByLocationActivity;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.TopicActivity;
@@ -52,6 +55,8 @@ import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 import static code.vera.myblog.presenter.activity.BrowserActivity.BUNDLER_PARAM_LINK;
 import static code.vera.myblog.presenter.activity.CommentDetailActivity.BUNDLE_PARAM_STATUS;
+import static code.vera.myblog.presenter.activity.NearByLocationActivity.PARAM_LOCATION_LATITUDE;
+import static code.vera.myblog.presenter.activity.NearByLocationActivity.PARAM_LOCATION_LONGTITUDE;
 import static code.vera.myblog.presenter.activity.PersonalityActivity.BUNDLER_PARAM_USER;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_STATUS_BEAN;
@@ -65,7 +70,7 @@ import static code.vera.myblog.presenter.activity.TopicActivity.BUNDLER_PARAM_TO
 
 public class HomeFragment extends PresenterFragment<HomeView, HomeModel> implements
         OnItemCommentListener, OnItemRepostListener, OnItemLikeListener, OnItemOriginalListener,
-        OnItemLinkListener, OnItemTopicListener, OnItemAtListener
+        OnItemLinkListener, OnItemTopicListener, OnItemAtListener,OnItemLocationListener
         , OnItemMenuListener, OnItemHeadPhotoListener, OnItemClickListener {
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
@@ -85,8 +90,8 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     public static final String ACTION_CLEAR_UNREAD = "action.clearunread";
     public static final String ACTION_UPDATE_FAVORITE = "action.updatefavorite";
 
-    private String[] cate = new String[] { "所有人", "好友" };
-    private int currentCateIndex=0;
+    private String[] cate = new String[]{"所有人", "好友"};
+    private int currentCateIndex = 0;
 
     @Override
     protected int getLayoutResId() {
@@ -144,7 +149,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         btnShoucang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String weibId=adapter.getItem(index).getId()+"";
+                String weibId = adapter.getItem(index).getId() + "";
                 if (isCollection) {
                     destroyFavorites(weibId);
                 } else {
@@ -188,7 +193,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                     ToastUtil.showToast(getContext(), getString(R.string.cancel_concern_success));
                     adapter.getItem(index).setFavorited(false);
                     adapter.notifyItemChanged(index);
-                }else {
+                } else {
                     ToastUtil.showToast(getContext(), getString(R.string.wrong_api));
                 }
             }
@@ -196,12 +201,12 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     }
 
     private void createFavorites(String weibId) {
-        model.createFavorites(weibId,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+        model.createFavorites(weibId, mContext, bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
             @Override
             public void onNext(String s) {
                 super.onNext(s);
-                if (!TextUtils.isEmpty(s)){
-                    ToastUtil.showToast(mContext,"收藏成功");
+                if (!TextUtils.isEmpty(s)) {
+                    ToastUtil.showToast(mContext, "收藏成功");
                     menuPopupWindow.dismiss();
                     //收藏 更新
                     adapter.getItem(index).setFavorited(true);
@@ -213,19 +218,19 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     }
 
     private void destroyFavorites(String weibId) {
-        model.destroyFavorites(weibId,mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<Boolean>(mContext,true){
+        model.destroyFavorites(weibId, mContext, bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<Boolean>(mContext, true) {
             @Override
             public void onNext(Boolean b) {
                 super.onNext(b);
-                if (b){
-                    ToastUtil.showToast(mContext,"取消收藏成功");
+                if (b) {
+                    ToastUtil.showToast(mContext, "取消收藏成功");
                     menuPopupWindow.dismiss();
                     //取消收藏 更新
                     adapter.getItem(index).setFavorited(false);
                     adapter.notifyItemChanged(index);
                     mContext.sendBroadcast(new Intent(ACTION_UPDATE_FAVORITE));
-                }else {
-                    ToastUtil.showToast(mContext,"取消收藏失败");
+                } else {
+                    ToastUtil.showToast(mContext, "取消收藏失败");
                 }
             }
         });
@@ -237,9 +242,9 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
             public void onHeaderRefreshing() {
                 //下拉刷新
                 requestBean.page = "1";//
-                if (currentCateIndex==0){
+                if (currentCateIndex == 0) {
                     getData(false);
-                }else if (currentCateIndex==1){
+                } else if (currentCateIndex == 1) {
                     getDoubleData(false);
                 }
             }
@@ -250,9 +255,9 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 int nextPage = Integer.parseInt(requestBean.getPage()) + 1;
                 Debug.d("bean=" + requestBean.toString());
                 requestBean.setPage(nextPage + "");
-                if (currentCateIndex==0){
+                if (currentCateIndex == 0) {
                     getData(false);
-                }else if (currentCateIndex==1){
+                } else if (currentCateIndex == 1) {
                     getDoubleData(false);
                 }
             }
@@ -301,7 +306,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 }
             }
         });
-        model.clearUnread(mContext,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,false){
+        model.clearUnread(mContext, bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, false) {
             @Override
             public void onNext(String s) {
                 super.onNext(s);
@@ -313,16 +318,16 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     @Override
     public void onItemCommentListener(View v, int pos) {
         //评论
-        StatusesBean statusesBean=adapter.getItem(pos);
+        StatusesBean statusesBean = adapter.getItem(pos);
         Debug.d("count=" + statusesBean.getComments_count());
         if (statusesBean.getComments_count() == 0) {//如果没有评论数，直接跳到发布评论
-            Bundle bundle=new Bundle();
+            Bundle bundle = new Bundle();
             bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_COMMENT);
-            bundle.putSerializable(PARAM_STATUS_BEAN,statusesBean);
-            PostActivity.start(mContext,bundle);
+            bundle.putSerializable(PARAM_STATUS_BEAN, statusesBean);
+            PostActivity.start(mContext, bundle);
         } else {//跳转到评论详情
             Bundle bundle = new Bundle();
-            bundle.putSerializable(BUNDLE_PARAM_STATUS,statusesBean);
+            bundle.putSerializable(BUNDLE_PARAM_STATUS, statusesBean);
             CommentDetailActivity.start(getContext(), bundle);
         }
 
@@ -331,10 +336,10 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     @Override
     public void onItemRepostListener(View v, int pos) {
         //转发
-        Bundle bundle=new Bundle();
-        bundle.putInt(PARAM_POST_TYPE,Constants.POST_TYPE_REPOST);
-        bundle.putSerializable(PARAM_STATUS_BEAN,adapter.getItem(pos));
-        PostActivity.start(mContext,bundle);
+        Bundle bundle = new Bundle();
+        bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_REPOST);
+        bundle.putSerializable(PARAM_STATUS_BEAN, adapter.getItem(pos));
+        PostActivity.start(mContext, bundle);
     }
 
     @Override
@@ -345,10 +350,10 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
     @OnClick(R.id.iv_filter)
     public void filter() {
-        ButtonOnClick buttonOnClick=new ButtonOnClick();//默认为0表示选中第一个项目，-1表示没有项目被选中
-        cateDialogBuilder.setSingleChoiceItems(cate,1,buttonOnClick);
-        cateDialogBuilder.setSingleChoiceItems(cate,currentCateIndex,buttonOnClick);
-        cateDialog=cateDialogBuilder.show();
+        ButtonOnClick buttonOnClick = new ButtonOnClick();//默认为0表示选中第一个项目，-1表示没有项目被选中
+        cateDialogBuilder.setSingleChoiceItems(cate, 1, buttonOnClick);
+        cateDialogBuilder.setSingleChoiceItems(cate, currentCateIndex, buttonOnClick);
+        cateDialog = cateDialogBuilder.show();
     }
 
     /*
@@ -370,6 +375,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
             }
         });
     }
+
     @Override
     public void onItemOriginalListener(View v, int pos) {
         //原
@@ -379,25 +385,25 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     }
 
     @Override
-    public void onItemLinkListener(View v, int pos, String str,int type) {
+    public void onItemLinkListener(View v, int pos, String str, int type) {
         //链接
-        switch (type){
+        switch (type) {
             case Constants.LINK_TYPE_WEBSITE:
-                Bundle bundle=new Bundle();
-                bundle.putString(BUNDLER_PARAM_LINK,str);
-                BrowserActivity.start(mContext,bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString(BUNDLER_PARAM_LINK, str);
+                BrowserActivity.start(mContext, bundle);
                 break;
             case Constants.LINK_TYPE_MUSIC:
                 //todo 音乐
                 break;
             case Constants.LINK_TYPE_VIDEO:
                 //todo 电影
-                
+
                 break;
             default:
-                bundle=new Bundle();
-                bundle.putString(BUNDLER_PARAM_LINK,str);
-                BrowserActivity.start(mContext,bundle);
+                bundle = new Bundle();
+                bundle.putString(BUNDLER_PARAM_LINK, str);
+                BrowserActivity.start(mContext, bundle);
                 break;
         }
 
@@ -405,18 +411,18 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
     @Override
     public void onItemTopicListener(View v, int pos, String str) {
-        Debug.d("点击topic话题"+str);
-        Bundle bundle=new Bundle();
-        bundle.putString(BUNDLER_PARAM_TOPIC,str.substring(1, str.length() - 1));
-        TopicActivity.start(mContext,bundle);
+        Debug.d("点击topic话题" + str);
+        Bundle bundle = new Bundle();
+        bundle.putString(BUNDLER_PARAM_TOPIC, str.substring(1, str.length() - 1));
+        TopicActivity.start(mContext, bundle);
     }
 
     @Override
     public void onItemAtListener(View v, int pos, String str) {
-        Debug.d("点击@某人"+str);
-        Bundle bundle=new Bundle();
-        bundle.putString(BUNDLER_PARAM_USER,str.substring(str.indexOf("@") + 1, str.length()));
-        PersonalityActivity.start(mContext,bundle);
+        Debug.d("点击@某人" + str);
+        Bundle bundle = new Bundle();
+        bundle.putString(BUNDLER_PARAM_USER, str.substring(str.indexOf("@") + 1, str.length()));
+        PersonalityActivity.start(mContext, bundle);
     }
 
     @Override
@@ -442,23 +448,34 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     @Override
     public void onItemHeadPhotoListener(View v, int pos) {
         //点击头头像，跳转到个人界面
-        Bundle bundle=new Bundle();
-        bundle.putSerializable(BUNDLER_PARAM_USER,adapter.getItem(pos).getUserBean());
-        PersonalityActivity.start(mContext,bundle);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BUNDLER_PARAM_USER, adapter.getItem(pos).getUserBean());
+        PersonalityActivity.start(mContext, bundle);
     }
 
     @Override
     public void onItemClickListener(View v, int pos) {
         //点击单个Item
-        Bundle bundle=new Bundle();
-        bundle.putSerializable(BUNDLE_PARAM_STATUS,adapter.getItem(pos));
-        CommentDetailActivity.start(mContext,bundle);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BUNDLE_PARAM_STATUS, adapter.getItem(pos));
+        CommentDetailActivity.start(mContext, bundle);
     }
-    private class ButtonOnClick implements DialogInterface.OnClickListener{
+
+    @Override
+    public void onItemLocation(View v, int pos) {
+        //查看位置
+        Bundle bundle=new Bundle();
+        GeoBean geoBean=adapter.getItem(pos).getGeoBean();
+        bundle.putDouble(PARAM_LOCATION_LATITUDE,geoBean.getCoordinates().get(0));
+        bundle.putDouble(PARAM_LOCATION_LONGTITUDE,geoBean.getCoordinates().get(1));
+        NearByLocationActivity.start(mContext,bundle);
+    }
+
+    private class ButtonOnClick implements DialogInterface.OnClickListener {
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
-            Debug.d("i="+i);
-            currentCateIndex=i;
+            Debug.d("i=" + i);
+            currentCateIndex = i;
             cateDialog.dismiss();
             switch (i) {
                 case 0:

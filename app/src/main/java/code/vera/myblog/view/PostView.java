@@ -81,10 +81,6 @@ public class PostView extends BaseView {
 //    ImageView ivChoosPic;
 
 
-
-
-
-
     private Context context;
     private TextWatcher textWatcher;
     private CharSequence temp;
@@ -93,8 +89,9 @@ public class PostView extends BaseView {
     private View galleryView;
     private ImageView ivItemGallery;
     private ImageView ivItemDelete;
-    private int comment_ori=0;//是否评论原作者
+    private int comment_ori = 0;//是否评论原作者
     private int type;
+
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
@@ -114,7 +111,7 @@ public class PostView extends BaseView {
             public void afterTextChanged(Editable s) {
                 editStart = etMessage.getSelectionStart();
                 editEnd = etMessage.getSelectionEnd();
-                tvNum.setText(temp.length()+"");
+                tvNum.setText(temp.length() + "");
                 if (temp.length() > 140) {
                     Toast.makeText(context, "你输入的字数已经超过了限制！", Toast.LENGTH_SHORT).show();
                     //改变颜色
@@ -130,8 +127,8 @@ public class PostView extends BaseView {
         cbIfOriginal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    comment_ori=1;
+                if (b) {
+                    comment_ori = 1;
 
                 }
             }
@@ -143,12 +140,12 @@ public class PostView extends BaseView {
     }
 
     private void initGallery() {
-         galleryView = LayoutInflater.from(context).inflate(R.layout.item_gallery, llGallery, false);
-         ivItemGallery = (ImageView) galleryView.findViewById(R.id.iv_item_gallery);//图片
-         ivItemDelete = (ImageView) galleryView.findViewById(R.id.iv_delete);//删除
+        galleryView = LayoutInflater.from(context).inflate(R.layout.item_gallery, llGallery, false);
+        ivItemGallery = (ImageView) galleryView.findViewById(R.id.iv_item_gallery);//图片
+        ivItemDelete = (ImageView) galleryView.findViewById(R.id.iv_delete);//删除
     }
 
-    public String getEditStr(){
+    public String getEditStr() {
         return etMessage.getText().toString();
     }
 
@@ -156,8 +153,8 @@ public class PostView extends BaseView {
      * 显示标题和提示
      */
     public void showTitleAndHint(int type) {
-        this.type=type;
-        switch (type){
+        this.type = type;
+        switch (type) {
             case Constants.POST_TYPE_COMMENT:
                 tvTitle.setText("发评论");
                 etMessage.setHint("写评论");
@@ -192,20 +189,23 @@ public class PostView extends BaseView {
                 break;
         }
     }
-    public EditText getEt(){
+
+    public EditText getEt() {
         return etMessage;
     }
 
     /**
      * 追加
+     *
      * @param str
      */
-    public void addStr(String str){
+    public void addStr(String str) {
         etMessage.append(str);
     }
 
     /**
      * 显示标题
+     *
      * @param s
      */
     public void setTitle(String s) {
@@ -214,22 +214,20 @@ public class PostView extends BaseView {
 
     public void showStatusesBean(StatusesBean statusesBean) {
         llOri.setVisibility(View.VISIBLE);
-        if (statusesBean!=null&&statusesBean.getRetweetedStatusBean()!=null){//有原weib
-            RetweetedStatusBean retweetedStatusBean=statusesBean.getRetweetedStatusBean();
+        if (statusesBean != null && statusesBean.getRetweetedStatusBean() != null) {//有原weib
+            RetweetedStatusBean retweetedStatusBean = statusesBean.getRetweetedStatusBean();
             tvOriContent.setText(retweetedStatusBean.getText());
             tvOriName.setText(retweetedStatusBean.getUserbean().getName());
             ImageLoader.getInstance().displayImage(retweetedStatusBean.getUserbean().getProfile_image_url(), ivOriPhoto, BaseApplication
                     .getDisplayImageOptions(R.mipmap.ic_user_default));//头像
             //设置样式，但是不可以点击
-            if (type==Constants.POST_TYPE_REPOST){//转发才显示
-                String text="//@"+statusesBean.getUserBean().getName()+":"+statusesBean.getText();
-                etMessage.setText( HomeUtils.getWeiBoContent(null,null,null,text,context,0,etMessage));
+            if (type == Constants.POST_TYPE_REPOST) {//转发才显示
+                String text = "//@" + statusesBean.getUserBean().getName() + ":" + statusesBean.getText();
+                etMessage.setText(HomeUtils.getWeiBoContent(null, null, null, text, context, 0, etMessage));
                 etMessage.setSelection(0);//移动光标
             }
-
             llIfOriginal.setVisibility(View.VISIBLE);
-
-        }else if (statusesBean.getRetweetedStatusBean()==null){
+        } else if (statusesBean.getRetweetedStatusBean() == null) {
             llIfOriginal.setVisibility(View.GONE);
             tvOriContent.setText(statusesBean.getText());
             tvOriName.setText(statusesBean.getUserBean().getName());
@@ -244,9 +242,9 @@ public class PostView extends BaseView {
      */
     public void showPhotos(List<MediaBean> mediaBeanList) {
         llGallery.setOrientation(LinearLayout.HORIZONTAL);
-        for (int i=0;i<mediaBeanList.size();i++){
+        for (int i = 0; i < mediaBeanList.size(); i++) {
             initGallery();
-            Bitmap bitmap= BitmapFactory.decodeFile(mediaBeanList.get(i).getOriginalPath());
+            Bitmap bitmap = BitmapFactory.decodeFile(mediaBeanList.get(i).getOriginalPath());
             ivItemGallery.setImageBitmap(bitmap);
             llGallery.addView(galleryView);
             llGallery.setTag(i);
@@ -254,21 +252,30 @@ public class PostView extends BaseView {
     }
 
     public void showPhoto(String picPath) {
-        Bitmap bitmap= BitmapFactory.decodeFile(picPath);
+        Bitmap bitmap = BitmapFactory.decodeFile(picPath);
         ivItemGallery.setImageBitmap(bitmap);
         llGallery.addView(galleryView);
     }
 
     public void showPostBean(PostBean postBean) {
-        //todo
+        int type = postBean.getPostStatus();
+        showTitleAndHint(type);
+        etMessage.setText(postBean.getStatus());
+        if (postBean.getOriId() != 0) {
+            llOri.setVisibility(View.VISIBLE);
+            tvOriContent.setText(postBean.getOriStatus());
+            tvOriName.setText(postBean.getOriName());
+            ImageLoader.getInstance().displayImage(postBean.getOriHeadPhoto(), ivOriPhoto);
+        }
+
     }
 
     public void showAddress(String address) {
-        if (!TextUtils.isEmpty(address)){
+        if (!TextUtils.isEmpty(address)) {
             tvLocation.setText(address);
             tvLocation.setTextColor(Color.parseColor("#ff8162"));
             ivCloseLocation.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvLocation.setText("查看位置");
             tvLocation.setTextColor(Color.parseColor("#909090"));
             ivCloseLocation.setVisibility(View.INVISIBLE);
@@ -277,7 +284,7 @@ public class PostView extends BaseView {
     }
 
     public void setVisible(int visible) {
-        switch (visible){
+        switch (visible) {
             case Constants.VISIBLE_ALL:
                 tvAuthority.setText("公开");
                 break;
@@ -288,5 +295,10 @@ public class PostView extends BaseView {
                 tvAuthority.setText("自己可见");
                 break;
         }
+    }
+
+    public void showFeedback(String feedback) {
+        etMessage.setText(feedback);
+        etMessage.setSelection(feedback.length());
     }
 }

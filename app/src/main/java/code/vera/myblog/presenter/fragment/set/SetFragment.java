@@ -2,6 +2,7 @@ package code.vera.myblog.presenter.fragment.set;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import com.nostra13.universalimageloader.utils.StorageUtils;
@@ -13,9 +14,11 @@ import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.LoginActivity;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.config.Constants;
 import code.vera.myblog.manager.DataCleanManager;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.activity.AboutAuthorActivity;
+import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.utils.FileUtils;
@@ -23,6 +26,8 @@ import code.vera.myblog.utils.SaveUtils;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.other.SetView;
 
+import static code.vera.myblog.presenter.activity.PostActivity.PARAM_NEW_TEXT;
+import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 import static code.vera.myblog.utils.FileUtils.SIZETYPE_MB;
 
 /**
@@ -55,7 +60,8 @@ public class SetFragment extends PresenterFragment<SetView, VoidModel> {
     }
 
     @OnClick({R.id.rl_exit, R.id.rl_clear_cache, R.id.rl_problems,
-            R.id.rl_author, R.id.rl_check_vision,R.id.rl_about_app})
+            R.id.rl_author, R.id.rl_check_vision, R.id.rl_about_app,
+            R.id.rl_feedback})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.rl_exit:
@@ -85,6 +91,14 @@ public class SetFragment extends PresenterFragment<SetView, VoidModel> {
                 break;
             case R.id.rl_about_app:
                 //todo
+                break;
+            case R.id.rl_feedback://反馈
+                Bundle bundle = new Bundle();
+                bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_NEW);
+                String feedback = "@炎小香 ";
+                bundle.putString(PARAM_NEW_TEXT, feedback);
+                PostActivity.start(mContext, bundle);
+
                 break;
         }
     }

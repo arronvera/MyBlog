@@ -11,38 +11,36 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by vera on 2017/3/10 0010.
  */
 
 public class PictureUtils {
-   private static final File file=new File(Environment.getExternalStorageDirectory()+"circle/image");
+   private static final File file=new File(Environment.getExternalStorageDirectory()+"/circle/image");
 
     /**
      * 保存图片
      */
     public static void  savePic(Bitmap bitmap, Context context){
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd _HH_mm_ss");
-        if (!file.isDirectory()){
-            file.mkdir();//新建
+        File appDir = new File(Environment.getExternalStorageDirectory(), "circle");
+        if (!appDir.exists()) {
+            appDir.mkdir();    //创建文件夹
         }
-        String fileName=file+"/"+simpleDateFormat.format(new Date())+".png";//文件名
-        FileOutputStream fileOutputStream=null;
+        String fileName = System.currentTimeMillis() + ".jpg"; //需要的图片格式
+        File file = new File(appDir, fileName);
         try {
-            fileOutputStream=new FileOutputStream(fileName);
-            if (null!=fileOutputStream){
-                bitmap.compress(Bitmap.CompressFormat.PNG,90,fileOutputStream);
-                fileOutputStream.flush();
-                fileOutputStream.close();
-                ToastUtil.showToast(context,"图片保存成功");
-            }
+            FileOutputStream fos = new FileOutputStream(file); //获取文件流
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);  //保存成图片
+            fos.flush();
+            fos.close();
+            ToastUtil.showToast(context,"保存图片成功~");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            ToastUtil.showToast(context,"保存图片失败~");
         } catch (IOException e) {
             e.printStackTrace();
+            ToastUtil.showToast(context,"保存图片失败~");
         }
     }
 
@@ -62,4 +60,28 @@ public class PictureUtils {
         Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);
         return bitmap;
     }
+  public static void saveGif(String path){
+      File appDir = new File(Environment.getExternalStorageDirectory(), "circle");
+      if (!appDir.exists()) {
+          appDir.mkdir();    //创建文件夹
+      }
+      String fileName = System.currentTimeMillis() + ".gif"; //需要的图片格式
+      File file = new File(appDir, fileName);
+//      try {
+//          FileOutputStream fos = new FileOutputStream(file); //获取文件流
+//          bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);  //保存成图片
+//          fos.flush();
+//          fos.close();
+//          ToastUtil.showToast(context,"保存图片成功~");
+//      } catch (FileNotFoundException e) {
+//          e.printStackTrace();
+//          ToastUtil.showToast(context,"保存图片失败~");
+//      } catch (IOException e) {
+//          e.printStackTrace();
+//          ToastUtil.showToast(context,"保存图片失败~");
+//      }
+  }
+
+
+
 }

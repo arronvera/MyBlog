@@ -3,7 +3,10 @@ package code.vera.myblog.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.BindView;
 import code.vera.myblog.R;
@@ -19,6 +22,7 @@ import code.vera.myblog.listener.OnItemSendListener;
 public class DraftAdapter extends RvAdapter<PostBean> {
     private OnItemDeleteClickListener onItemDeleteClickListener;
     private OnItemSendListener onItemSendListener;
+
     public DraftAdapter(Context context) {
         super(context);
     }
@@ -33,7 +37,7 @@ public class DraftAdapter extends RvAdapter<PostBean> {
         return new DraftViewHolder(view);
     }
 
-     class DraftViewHolder extends RvViewHolder<PostBean> {
+    class DraftViewHolder extends RvViewHolder<PostBean> {
         @BindView(R.id.tv_draft_type)
         TextView tvType;
         @BindView(R.id.tv_draft_content)
@@ -42,6 +46,15 @@ public class DraftAdapter extends RvAdapter<PostBean> {
         ImageView ivDelete;//删除
         @BindView(R.id.iv_send)
         ImageView ivSend;//发送
+        @BindView(R.id.ll_Origina_Layout)
+        LinearLayout llOriginal;
+        @BindView(R.id.iv_original_photo)
+        ImageView ivPhoto;
+        @BindView(R.id.tv_ori_name)
+        TextView tvOriName;
+        @BindView(R.id.tv_ori_content)
+        TextView tvOriContent;
+
 
         public DraftViewHolder(View view) {
             super(view);
@@ -49,7 +62,7 @@ public class DraftAdapter extends RvAdapter<PostBean> {
 
         @Override
         public void onBindData(final int position, PostBean bean) {
-            switch (bean.getPostStatus()){
+            switch (bean.getPostStatus()) {
                 case Constants.POST_TYPE_COMMENT:
                     tvType.setText("评论");
                     break;
@@ -61,19 +74,28 @@ public class DraftAdapter extends RvAdapter<PostBean> {
                     break;
             }
             tvContent.setText(bean.getStatus());
+
+            if (bean.getOriId() != 0) {
+                llOriginal.setVisibility(View.VISIBLE);
+                tvOriName.setText(bean.getOriName());
+                tvOriContent.setText(bean.getOriStatus());
+                ImageLoader.getInstance().displayImage(bean.getOriHeadPhoto(), ivPhoto);
+            } else {
+                llOriginal.setVisibility(View.GONE);
+            }
             ivDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (onItemDeleteClickListener!=null){
-                        onItemDeleteClickListener.onItemDeleteClickListener(view,position);
+                    if (onItemDeleteClickListener != null) {
+                        onItemDeleteClickListener.onItemDeleteClickListener(view, position);
                     }
                 }
             });
             ivSend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (onItemSendListener!=null){
-                        onItemSendListener.onItemSendListener(view,position,getItem(position));
+                    if (onItemSendListener != null) {
+                        onItemSendListener.onItemSendListener(view, position, getItem(position));
                     }
                 }
             });

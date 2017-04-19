@@ -33,6 +33,48 @@ public class PostBean implements Serializable {
     @DatabaseField(columnName = "postType")
     private int postType;//类型(0-新建,1-新建评论,2-回复评论,,3-转发)
 
+    ///-------------原始微博信息--------
+    @DatabaseField(columnName = "oriId")
+    private long oriId;
+    @DatabaseField(columnName = "oriName")
+    private String oriName;
+    @DatabaseField(columnName = "oriStatus")
+    private String oriStatus;
+    @DatabaseField(columnName = "oriHeadPhoto")
+    private String oriHeadPhoto;
+
+    public String getOriName() {
+        return oriName;
+    }
+
+    public void setOriName(String oriName) {
+        this.oriName = oriName;
+    }
+
+    public long getOriId() {
+        return oriId;
+    }
+
+    public void setOriId(long oriId) {
+        this.oriId = oriId;
+    }
+
+    public String getOriStatus() {
+        return oriStatus;
+    }
+
+    public void setOriStatus(String oriStatus) {
+        this.oriStatus = oriStatus;
+    }
+
+    public String getOriHeadPhoto() {
+        return oriHeadPhoto;
+    }
+
+    public void setOriHeadPhoto(String oriHeadPhoto) {
+        this.oriHeadPhoto = oriHeadPhoto;
+    }
+
     public int getPostStatus() {
         return postStatus;
     }
@@ -119,5 +161,23 @@ public class PostBean implements Serializable {
 
     public void setRip(String rip) {
         this.rip = rip;
+    }
+
+    @Override
+    public String toString() {
+        return "PostBean{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                ", visible=" + visible +
+                ", list_id='" + list_id + '\'' +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                ", postStatus=" + postStatus +
+                ", postType=" + postType +
+                ", oriId=" + oriId +
+                ", oriName='" + oriName + '\'' +
+                ", oriStatus='" + oriStatus + '\'' +
+                ", oriHeadPhoto='" + oriHeadPhoto + '\'' +
+                '}';
     }
 }

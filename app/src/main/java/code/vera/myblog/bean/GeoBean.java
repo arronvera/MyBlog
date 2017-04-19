@@ -1,27 +1,35 @@
 package code.vera.myblog.bean;
 
+import java.util.List;
+
 /**
  * 地理位置
  * Created by vera on 2017/2/24 0024.
  */
 
 public class GeoBean {
-    private String longitude;
-    private String latitude;
 
-    public String getLongitude() {
-        return longitude;
+    /**
+     * type : Point
+     * coordinates : [30.61587,104.069649]
+     */
+
+    private String type;
+    private List<Double> coordinates;//0-lat 1-lon
+
+    public String getType() {
+        return type;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getLatitude() {
-        return latitude;
+    public List<Double> getCoordinates() {
+        return coordinates;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
+    public void setCoordinates(List<Double> coordinates) {
+        this.coordinates = coordinates;
     }
 }

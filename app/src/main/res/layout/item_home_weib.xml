@@ -101,6 +101,27 @@
             app:imgGap="4dp"
             app:showStyle="fill"
             app:singleImgSize="120dp"/>
+        <!--定位-->
+        <LinearLayout
+            android:id="@+id/ll_location"
+            android:visibility="gone"
+            android:padding="2dp"
+            android:background="@color/color_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/ic_location"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:text="查看位置 "/>
+        </LinearLayout>
+        <include layout="@layout/layout_line"/>
     <include layout="@layout/layout_bottom_atitu"/>
     </LinearLayout>
 </LinearLayout>

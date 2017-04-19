@@ -54,15 +54,30 @@ public class PictureFragment  extends PresenterFragment<PictureView,VoidModel>  
     class PictureSaveBroadCastReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
+            //保存图片
             Debug.d("接收---");
+            if (url.endsWith(".gif")){
+                //保存gif图片
+//                try {
+//                    File file=Glide.with(mContext).load(url)
+//                            .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+//                            .get();
+//                    String path = file.getPath();
+//                    Debug.d("path="+path);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
+            }else {
                 Bitmap bitmap=view.getLoadBitmap();
                 if (bitmap==null){
-                    Debug.d("图片为空");
-                   ToastUtil.showToast(mContext,"图片正在加载中哦~不能保存");
-               }else{
-                    Debug.d("图片不为空");
-                   PictureUtils.savePic(bitmap,mContext);
-               }
+                    ToastUtil.showToast(mContext,"图片正在加载中哦~不能保存");
+                }else{
+                    PictureUtils.savePic(bitmap,mContext);
+                }
+            }
+
         }
         public void registRecevier() {
             IntentFilter filter = new IntentFilter();

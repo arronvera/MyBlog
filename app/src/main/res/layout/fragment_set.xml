@@ -1,178 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_f2f2f2">
+    android:background="@color/color_f2f2f2"
+    android:orientation="vertical">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:id="@+id/rl_manager_user"
                 style="@style/ItemSetLLayout">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:text="@string/manager_user"/>
+                    android:text="@string/manager_user"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
+
                 <ImageView
                     android:id="@+id/iv_photo"
-                    android:layout_alignParentRight="true"
                     android:layout_width="30dp"
-                    android:layout_height="30dp" />
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true" />
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginTop="2dp"
                 android:id="@+id/rl_privaciy"
-                style="@style/ItemSetLLayout">
+                style="@style/ItemSetLLayout"
+                android:layout_marginTop="2dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:text="@string/privicy_set"/>
+                    android:text="@string/privicy_set"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"/>
+                    android:src="@mipmap/ic_arrow" />
             </RelativeLayout>
+
             <RelativeLayout
-                android:id="@+id/rl_clear_cache"
-                android:layout_marginTop="2dp"
-                style="@style/ItemSetLLayout">
+                android:id="@+id/rl_feedback"
+                style="@style/ItemSetLLayout"
+                android:layout_marginTop="2dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:text="@string/clear_catch"/>
+                    android:text="@string/feedback"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_clear_cache"
+                style="@style/ItemSetLLayout"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/clear_catch"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
+
                 <TextView
                     android:id="@+id/tv_cache"
-                    android:text="0M"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:textSize="14sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:text="0M"
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_check_vision"
-                android:layout_marginTop="2dp"
-                style="@style/ItemSetLLayout">
+                style="@style/ItemSetLLayout"
+                android:layout_marginTop="2dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:text="@string/vison"/>
+                    android:text="@string/vison"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
+
                 <TextView
-                    android:text="V1.0.0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:textSize="14sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:text="V1.0.0"
+                    android:textSize="14sp" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rl_problems"
-                android:layout_marginTop="20dp"
-                style="@style/ItemSetLLayout">
+                style="@style/ItemSetLLayout"
+                android:layout_marginTop="20dp">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"/>
+                    android:src="@mipmap/ic_arrow" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:text="@string/problems"/>
+                    android:text="@string/problems"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginTop="2dp"
-                style="@style/ItemSetLLayout">
+                style="@style/ItemSetLLayout"
+                android:layout_marginTop="2dp">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"/>
+                    android:src="@mipmap/ic_arrow" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:text="@string/net_toast"/>
+                    android:text="@string/net_toast"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rl_author"
-                android:layout_marginTop="20dp"
-                style="@style/ItemSetLLayout">
+                style="@style/ItemSetLLayout"
+                android:layout_marginTop="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:text="@string/about_author"/>
+                    android:text="@string/about_author"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"/>
+                    android:src="@mipmap/ic_arrow" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rl_about_app"
-                android:layout_marginTop="2dp"
-                style="@style/ItemSetLLayout">
+                style="@style/ItemSetLLayout"
+                android:layout_marginTop="2dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:text="@string/about_app"/>
+                    android:text="@string/about_app"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"/>
+                    android:src="@mipmap/ic_arrow" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rl_exit"
-                android:layout_marginTop="20dp"
-                style="@style/ItemSetLLayout">
+                style="@style/ItemSetLLayout"
+                android:layout_marginTop="20dp">
+
                 <TextView
-                    android:text="@string/exit_log_out"
-                    android:layout_centerInParent="true"
-                    android:textSize="16sp"
-                    android:textColor="@color/btn_login_bg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/exit_log_out"
+                    android:textColor="@color/btn_login_bg"
+                    android:textSize="16sp" />
             </RelativeLayout>
+
             <ImageView
-                android:layout_marginTop="20dp"
-                android:background="@color/colorWhite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_set_pro"/>
+                android:layout_marginTop="20dp"
+                android:background="@color/colorWhite"
+                android:src="@mipmap/ic_set_pro" />
         </LinearLayout>
     </ScrollView>
 

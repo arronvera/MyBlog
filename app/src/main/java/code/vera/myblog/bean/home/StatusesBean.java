@@ -9,6 +9,8 @@ import com.alibaba.fastjson.JSONObject;
 import java.io.Serializable;
 import java.util.List;
 
+import code.vera.myblog.bean.GeoBean;
+
 /**
  * Created by vera on 2017/1/19 0019.
  */
@@ -37,6 +39,8 @@ public class StatusesBean implements Serializable {
     private long reposts_count;//	转发数
     private long comments_count;//评论数
     private long attitudes_count;//表态数
+    private String geo;//地理位置
+    private GeoBean geoBean;
 
     public String getSource() {
         return source;
@@ -180,6 +184,22 @@ public class StatusesBean implements Serializable {
 
     public void setAttitudes_count(long attitudes_count) {
         this.attitudes_count = attitudes_count;
+    }
+
+    public String getGeo() {
+        return geo;
+    }
+
+    public void setGeo(String geo) {
+        this.geo = geo;
+    }
+
+    public GeoBean getGeoBean() {
+        return JSON.parseObject(geo,GeoBean.class);
+    }
+
+    public void setGeoBean(GeoBean geoBean) {
+        this.geoBean = geoBean;
     }
 
     @Override
