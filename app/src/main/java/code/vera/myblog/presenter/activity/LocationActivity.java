@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
@@ -16,12 +15,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.CameraPosition;
-import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.services.cloud.CloudItemDetail;
-import com.amap.api.services.cloud.CloudResult;
-import com.amap.api.services.cloud.CloudSearch;
 import com.trello.rxlifecycle.ActivityEvent;
 
 import java.util.List;
@@ -30,11 +24,13 @@ import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.PoiAdapter;
 import code.vera.myblog.bean.PoiBean;
+import code.vera.myblog.listener.OnItemClickListener;
 import code.vera.myblog.model.other.LocationModel;
 import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.view.location.LocationView;
 import ww.com.core.Debug;
+import ww.com.core.widget.CustomSwipeRefreshLayout;
 
 import static android.R.attr.action;
 
@@ -42,9 +38,8 @@ import static android.R.attr.action;
  * 定位
  */
 public class LocationActivity extends PresenterActivity<LocationView, LocationModel> implements
-        LocationSource, AMapLocationListener, CloudSearch.OnCloudSearchListener,
-        AMap.OnCameraChangeListener, AMap.OnMapLoadedListener, AMap.OnMapTouchListener
-        , AMap.OnMarkerClickListener {
+        LocationSource, AMapLocationListener,OnItemClickListener{
+    private static final int NEARBY_POI = 1;
     private MapView mapView = null;
     private AMap aMap;
     private boolean isFollow = false;
@@ -69,9 +64,7 @@ public class LocationActivity extends PresenterActivity<LocationView, LocationMo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location);
         initMap(savedInstanceState);
-        setAdapter();
     }
 
     @Override
@@ -82,6 +75,25 @@ public class LocationActivity extends PresenterActivity<LocationView, LocationMo
     @Override
     public void onAttach(View viRoot) {
         super.onAttach(viRoot);
+        setAdapter();
+        addListener();
+    }
+
+    private void addListener() {
+        adapter.setOnItemClickListener(this);
+        view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
+            @Override
+            public void onHeaderRefreshing() {
+                page=1;
+                getNearByAddress(false);
+            }
+
+            @Override
+            public void onFooterRefreshing() {
+                page++;
+                getNearByAddress(false);
+            }
+        });
     }
 
     private void setAdapter() {
@@ -102,9 +114,7 @@ public class LocationActivity extends PresenterActivity<LocationView, LocationMo
         //定位图标
         myLocationStyle = new MyLocationStyle().myLocationIcon((BitmapDescriptorFactory.fromResource(R.mipmap.location_marker)));//初始化定位蓝点样式类
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);//定位一次，且将视角移动到地图中心点。
-        myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
-        //aMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
         // 设置定位监听
         aMap.setLocationSource(this);
@@ -112,6 +122,7 @@ public class LocationActivity extends PresenterActivity<LocationView, LocationMo
         aMap.setMyLocationEnabled(true);
         // 设置定位的类型为定位模式，有定位、跟随或地图根据面向方向旋转几种
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
+        aMap.setMinZoomLevel(13f);
     }
 
     @Override
@@ -141,13 +152,8 @@ public class LocationActivity extends PresenterActivity<LocationView, LocationMo
         mapView.onSaveInstanceState(outState);
     }
 
-    @OnClick(R.id.tv_sure)
+    @OnClick(R.id.iv_back)
     public void back() {
-        Intent data = new Intent();
-        data.putExtra(PARAM_ADDRESS, address);
-        data.putExtra(PARAM_LATITUDE, lat);
-        data.putExtra(PARAM_LONGTITUDE, lon);
-        setResult(action, data);
         finish();
     }
 
@@ -186,8 +192,8 @@ public class LocationActivity extends PresenterActivity<LocationView, LocationMo
                 lat = aMapLocation.getLatitude();
                 lon = aMapLocation.getLongitude();
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
-                view.setAddress(address);
-                getNearByAddress();
+//                view.setAddress(address);
+                getNearByAddress(true);
             } else {
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 Log.e("AmapErr", errText);
@@ -198,50 +204,33 @@ public class LocationActivity extends PresenterActivity<LocationView, LocationMo
     /**
      * 获取附近地址
      */
-    private void getNearByAddress() {
-        model.getNearByAddress(lat, lon, q, count, page, mContext, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<List<PoiBean>>(mContext, false) {
+    private void getNearByAddress(boolean isDialog) {
+        model.getNearByAddress(lat, lon, q, count, page, mContext, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<List<PoiBean>>(mContext, isDialog) {
             @Override
             public void onNext(List<PoiBean> poiBeen) {
                 super.onNext(poiBeen);
                 Debug.d("size=" + poiBeen.size());
-                adapter.addList(poiBeen);
+                if (page==1){
+                    adapter.addList(poiBeen);
+                }else {
+                    adapter.appendList(poiBeen);
+                }
                 view.refreshFinished();
             }
         });
     }
 
     @Override
-    public void onCameraChange(CameraPosition cameraPosition) {
-
-    }
-
-    @Override
-    public void onCameraChangeFinish(CameraPosition cameraPosition) {
-
-    }
-
-    @Override
-    public void onMapLoaded() {
-
-    }
-
-    @Override
-    public void onTouch(MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return false;
-    }
-
-    @Override
-    public void onCloudSearched(CloudResult cloudResult, int i) {
-
-    }
-
-    @Override
-    public void onCloudItemDetailSearched(CloudItemDetail cloudItemDetail, int i) {
-
+    public void onItemClickListener(View v, int pos) {
+        PoiBean poiBean=adapter.getItem(pos);
+        lat=Double.parseDouble(poiBean.getLat());
+        lon=Double.parseDouble(poiBean.getLon());
+        address=poiBean.getAddress();
+        Intent data = new Intent();
+        data.putExtra(PARAM_ADDRESS, address);
+        data.putExtra(PARAM_LATITUDE, lat);
+        data.putExtra(PARAM_LONGTITUDE, lon);
+        setResult(action, data);
+        finish();
     }
 }

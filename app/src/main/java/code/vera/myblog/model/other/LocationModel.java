@@ -22,7 +22,6 @@ import ww.com.http.rx.RxHelper;
 public class LocationModel implements IModel {
     @Override
     public void onAttach() {
-
     }
 
     public void getNearByAddress(double lat, double lon, String q, int count, int page,

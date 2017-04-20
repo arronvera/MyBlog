@@ -31,32 +31,32 @@
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tv_sure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="20dp"
-            android:text="@string/ok"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_sure"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:text="@string/ok"-->
+            <!--android:textColor="@color/colorAccent"-->
+            <!--android:textSize="16sp" />-->
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_address"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center_vertical"
-        android:text="定位中...."
-        android:textSize="14sp"></TextView>
+    <!--<TextView-->
+        <!--android:id="@+id/tv_address"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:text="定位中...."-->
+        <!--android:textSize="14sp"></TextView>-->
 
     <com.amap.api.maps.MapView
         android:id="@+id/mapview"
         android:layout_width="match_parent"
-        android:layout_height="180dp"></com.amap.api.maps.MapView>
-
+        android:layout_height="180dp">
+    </com.amap.api.maps.MapView>
     <include layout="@layout/item_refresh" />
 </LinearLayout>
