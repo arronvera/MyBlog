@@ -58,11 +58,10 @@ public class SplashActivity extends PresenterActivity<VoidView, VoidModel> {
      */
     private void isLogin() {
         String token = AccessTokenKeeper.readAccessToken(getApplicationContext()).getToken();
-        if (!TextUtils.isEmpty(token)) {
+        if (!TextUtils.isEmpty(token)) {//已登陆
             MainActivity.start(mContext);
             finish();
-        } else {
-            Debug.d("未登陆---");
+        } else {//未登陆
             LoginActivity.start(mContext);
             finish();
         }

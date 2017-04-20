@@ -2,12 +2,15 @@ package code.vera.myblog.presenter.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.View;
 
 import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.base.PresenterActivity;
+import code.vera.myblog.utils.PictureUtils;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.other.BigPhotoView;
 
 /**
@@ -34,8 +37,12 @@ public class BigPhotoActivity extends PresenterActivity<BigPhotoView, VoidModel>
                 finish();
                 break;
             case R.id.btn_save:
-                //todo
-
+                Bitmap bitmap=view.getLoadBitmap();
+                if (bitmap!=null){
+                    PictureUtils.savePic(bitmap,mContext);
+                }else {
+                    ToastUtil.showToast(mContext,"保存失败");
+                }
                 break;
             case R.id.btn_cancel:
                 finish();

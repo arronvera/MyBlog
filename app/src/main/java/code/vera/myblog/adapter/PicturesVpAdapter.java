@@ -30,4 +30,5 @@ public class PicturesVpAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return url.size();
     }
+
 }

@@ -42,12 +42,12 @@
             android:layout_marginRight="10dp"/>
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
+    <code.vera.myblog.view.widget.PhotoViewPager
         android:layout_below="@+id/rl_top"
         android:id="@+id/vp_pictures"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+    </code.vera.myblog.view.widget.PhotoViewPager>
     <ImageView
         android:id="@+id/iv_save_pic"
         android:layout_width="wrap_content"

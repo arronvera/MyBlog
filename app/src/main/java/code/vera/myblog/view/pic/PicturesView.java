@@ -14,6 +14,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.adapter.PicturesVpAdapter;
 import code.vera.myblog.bean.home.PicBean;
 import code.vera.myblog.view.base.BaseView;
+import code.vera.myblog.view.widget.PhotoViewPager;
 
 /**
  * Created by vera on 2017/2/16 0016.
@@ -21,7 +22,7 @@ import code.vera.myblog.view.base.BaseView;
 
 public class PicturesView extends BaseView {
     @BindView(R.id.vp_pictures)
-    ViewPager viewPager;
+    PhotoViewPager viewPager;
     @BindView(R.id.tv_pic_num)
     TextView tvPicNum;
     private int currentIndex;//当前下标
