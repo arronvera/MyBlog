@@ -47,7 +47,7 @@
             android:layout_width="92dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/str_bear"
+            android:text="@string/str_cute"
             android:textColor="#9E9E9E"
             android:background="@drawable/selector_face_text"/>
         <TextView

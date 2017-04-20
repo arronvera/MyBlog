@@ -25,6 +25,7 @@ public class EmojiUtil {
 
     /**
      * 获取默认表情集合
+     *
      * @return
      */
     public static ArrayList<Emoji> getEmojiList() {
@@ -33,18 +34,22 @@ public class EmojiUtil {
         }
         return emojiList;
     }
+
     /**
-     * 获取小熊表情集合
+     * 获取可爱表情集合
+     *
      * @return
      */
     public static ArrayList<Emoji> getAntiEmojiList() {
         if (antiEmojiList == null) {
-            antiEmojiList = generateEmojis();
+            antiEmojiList = generateAntiEmojis();
         }
         return antiEmojiList;
     }
+
     /**
      * 生成表情对象集合
+     *
      * @return
      */
     private static ArrayList<Emoji> generateEmojis() {
@@ -58,6 +63,16 @@ public class EmojiUtil {
         return list;
     }
 
+    private static ArrayList<Emoji> generateAntiEmojis() {
+        ArrayList<Emoji> list = new ArrayList<>();
+        for (int i = 0; i < AntiEmojiResArray.length; i++) {
+            Emoji emoji = new Emoji();
+            emoji.setDrawable(AntiEmojiResArray[i]);
+            emoji.setValue(AntiEmojiTextArray[i]);
+            list.add(emoji);
+        }
+        return list;
+    }
 
     public static final int[] EmojiResArray = {
             R.drawable.d_huaixiao,
@@ -115,12 +130,31 @@ public class EmojiUtil {
             "[衰]",
             "[委屈]",
             "[吐]",
-
     };
 
     static {
         emojiList = generateEmojis();
     }
+
+    public static final int[] AntiEmojiResArray = {
+            R.drawable.d_zhongdu,
+            R.drawable.d_touyun,
+            R.drawable.d_shengqi,
+            R.drawable.d_ku,
+            R.drawable.d_mimang,
+            R.drawable.d_mianwubiaoqing,
+
+    };
+    public static final String[] AntiEmojiTextArray = {
+            "[中毒]",
+            "[头晕]",
+            "[生气]",
+            "[酷]",
+            "[迷茫]",
+            "[面无表情]",
+
+    };
+
 
     public static int calculateInSampleSize(BitmapFactory.Options options,
                                             int reqWidth, int reqHeight) {
@@ -160,6 +194,7 @@ public class EmojiUtil {
 
     /**
      * 处理表情文本
+     *
      * @param comment
      * @param content
      * @param context
@@ -180,10 +215,24 @@ public class EmojiUtil {
                 if (tempText.equals(emoji.getValue())) {
                     //转换为Span并设置Span的大小
                     sb.setSpan(new ImageSpan(context, decodeSampledBitmapFromResource(context.getResources(), emoji.getDrawable()
-                                    , dip2px(context, 18), dip2px(context, 18))), m.start(), m.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            , dip2px(context, 18), dip2px(context, 18))), m.start(), m.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     break;
                 }
             }
+            //可爱
+            iterator = antiEmojiList.iterator();
+            tempText = m.group();
+            while (iterator.hasNext()) {
+                emoji = iterator.next();
+                if (tempText.equals(emoji.getValue())) {
+                    //转换为Span并设置Span的大小
+                    sb.setSpan(new ImageSpan(context, decodeSampledBitmapFromResource(context.getResources(), emoji.getDrawable()
+                            , dip2px(context, 18), dip2px(context, 18))), m.start(), m.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    break;
+                }
+            }
+
+
         }
         comment.setText(sb);
     }

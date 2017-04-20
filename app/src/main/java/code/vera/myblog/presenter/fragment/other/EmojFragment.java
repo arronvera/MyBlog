@@ -30,7 +30,7 @@ import code.vera.myblog.view.widget.EmojiIndicatorView;
  * Created by vera on 2017/2/15 0015.
  */
 
-public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
+public class EmojFragment extends PresenterFragment<EmojView, VoidModel> {
     @BindView(R.id.face_viewPager)
     ViewPager faceViewPager;
     @BindView(R.id.face_indicator)
@@ -73,8 +73,8 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
         recentManager = RecentEmojiManager.make(activity);
         emojiList = EmojiUtil.getEmojiList();
         //表情添加
-        antiEmojiList=new ArrayList<>();
-        carttonEmojiList=new ArrayList<>();
+        antiEmojiList = EmojiUtil.getAntiEmojiList();
+        carttonEmojiList = new ArrayList<>();
         try {
             if (recentManager.getCollection(RecentEmojiManager.PREFERENCE_NAME) != null) {
                 recentlyEmojiList = (ArrayList<Emoji>) recentManager.getCollection(RecentEmojiManager.PREFERENCE_NAME);
@@ -88,10 +88,12 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
         }
         initViews();
     }
+
     private void initViews() {
         initViewPager(emojiList);
         faceFirstSetTv.setSelected(true);
     }
+
     private void initViewPager(ArrayList<Emoji> list) {
         intiIndicator(list);
         ViewPagerItems.clear();
@@ -127,9 +129,9 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
         faceIndicator.init(getPagerCount(list));
     }
 
-    @OnClick({R.id.face_first_set,R.id.face_recent,R.id.face_anti,R.id.face_cartoon})
+    @OnClick({R.id.face_first_set, R.id.face_recent, R.id.face_anti, R.id.face_cartoon})
     public void doClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.face_first_set://默认
                 if (faceIndicator.getVisibility() == View.GONE) {
                     faceIndicator.setVisibility(View.VISIBLE);
@@ -225,12 +227,12 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == columns * rows - 1) {
-                    if(listener != null){
+                    if (listener != null) {
                         listener.onEmojiDelete();
                     }
                     return;
                 }
-                if(listener != null){
+                if (listener != null) {
                     listener.onEmojiClick(subList.get(position));
                 }
                 insertToRecentList(subList.get(position));
@@ -268,8 +270,6 @@ public class EmojFragment extends PresenterFragment<EmojView,VoidModel>   {
             e.printStackTrace();
         }
     }
-
-
 
 
     public interface OnEmojiClickListener {
