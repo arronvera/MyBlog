@@ -208,7 +208,6 @@ public class HomeAdapter extends RvAdapter<StatusesBean> {
             }
             //定位
             if (null != bean.getGeoBean()) {
-                //// TODO: 2017/4/19 0019
                 llLocation.setVisibility(View.VISIBLE);
             }
             //-----------------------------监听-----------------------

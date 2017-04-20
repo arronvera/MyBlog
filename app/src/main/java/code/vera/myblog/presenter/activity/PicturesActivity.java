@@ -46,15 +46,18 @@ public class PicturesActivity extends PresenterActivity<PicturesView,VoidModel> 
         }
 
     }
-    @OnClick({R.id.tv_back,R.id.tv_save_pic})
+    @OnClick({R.id.tv_back,R.id.iv_save_pic,R.id.tv_big_pic})
     public void doClick(View v){
        switch (v.getId()){
            case R.id.tv_back:
               finish();
                break;
-           case R.id.tv_save_pic://保存图片
+           case R.id.iv_save_pic://保存图片
 //               Debug.d("发送---");
                sendBroadcast(new Intent(ACTION_SAVE_PIC));
+               break;
+           case R.id.tv_big_pic://查看大图
+                //todo
                break;
        }
 

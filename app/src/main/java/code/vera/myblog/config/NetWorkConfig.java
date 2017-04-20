@@ -23,8 +23,7 @@ public class NetWorkConfig {
     public static final String SEARCH_USER=BASE_URL+"/search/suggestions/users.json";
     //话题下的所有信息
     public static final String SEARCH_GET_TOPICS=BASE_URL+"/search/topics.json";
-    //转发一条微博
-    public static final String REPOST_WEIB=BASE_URL+"/statuses/repost.json";
+
     //发布上传（带图片）
     public static final String UPLOAD_WEIB=BASE_URL+"/statuses/upload.json";
     //发布上传（不带图片）
@@ -44,9 +43,12 @@ public class NetWorkConfig {
     public static final String DELETE_COMMENT=BASE_URL+ "/comments/destroy.json";
     //回复评论
     public static final String REPLY_COMMENT=BASE_URL+ "/comments/reply.json";
+    //-----------------------------转发----------------------------------------
+
     //获取定微博的转发微博列表
     public static final String REPOSTS_INFO=BASE_URL+  "/statuses/repost_timeline.json";
-
+    //转发一条微博
+    public static final String REPOST_WEIB=BASE_URL+"/statuses/repost.json";
 
     //获取双向关注列表，即互粉列表
     public static final String GET_FRIENDSHIP=BASE_URL+"/friendships/friends/bilateral.json";

@@ -279,6 +279,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 ScreenUtils.backgroundAlpaha(getActivity(), 1.0f);
             }
         });
+        adapter.setOnItemLocationListener(this);
 
     }
 

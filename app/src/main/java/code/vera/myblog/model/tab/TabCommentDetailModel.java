@@ -50,4 +50,29 @@ public class TabCommentDetailModel implements IModel {
                 .compose(transformer)
                 .subscribe(subscriber);
     }
+
+    /**
+     * 获取转发
+     *
+     * @param context
+     * @param id          id
+     * @param transformer
+     * @param subscriber
+     */
+    public void getReposts(Context context, long id, int page, Observable.Transformer
+            transformer, Subscriber<List<CommentUserBean>> subscriber) {
+        PostApi.getReposts(context, id, page).map(new Func1<String, List<CommentUserBean>>() {
+            @Override
+            public List<CommentUserBean> call(String s) {
+                List<CommentUserBean> userBeen = new ArrayList<>();
+                JSONObject result = JSON.parseObject(s);
+                if (result != null) {
+                    userBeen = JSON.parseArray(result.getString("reposts"), CommentUserBean.class);
+                }
+                return userBeen;
+            }
+        }).compose(RxHelper.<List<CommentUserBean>>cutMain())
+                .compose(transformer)
+                .subscribe(subscriber);
+    }
 }

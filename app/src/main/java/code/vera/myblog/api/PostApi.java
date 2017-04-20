@@ -119,6 +119,24 @@ public class PostApi {
         params.addParameters("filter_by_author","0");//	作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
         return onGet(url, params);
     }
+    /**
+     * 获取转发列表
+     * @param context
+     * @param id
+     * @return
+     */
+    public static Observable<String > getReposts(Context context, long id,int page) {
+        String url = NetWorkConfig.REPOSTS_INFO;
+        AjaxParams params = new AjaxParams();
+        params.addParameters("access_token", AccessTokenKeeper.readAccessToken(context).getToken());
+        params.addParameters("id", id+"");
+//        params.addParameters("since_id", "");
+//        params.addParameters("max_id", "");
+        params.addParameters("count", "20");
+        params.addParameters("page",page+"");
+        params.addParameters("filter_by_author","0");//	作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
+        return onGet(url, params);
+    }
     public static  Observable<String > getFriendShip(Context context) {
         String url = NetWorkConfig.GET_FRIENDSHIP;
         AjaxParams params = new AjaxParams();

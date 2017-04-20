@@ -458,7 +458,10 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                         } else if (pictureList.size() < 9) {//如果集合不为空并且图片数量小于9
                             int re = 9 - pictureList.size();//剩余可以添加的图片数量
                             if (resultEvent.getResult().size() <= re) {//如果添加的图片小于可以添加的数量，则全部添加
-                                pictureList.addAll(resultEvent.getResult());
+                                for (int i=0;i<resultEvent.getResult().size();i++){
+                                    pictureList.add(resultEvent.getResult().get(i));
+                                }
+//                                pictureList.addAll(resultEvent.getResult());
                                 view.showPhotos(resultEvent.getResult());
                             } else {//否则
                                 List<MediaBean> reList = new ArrayList<>();
