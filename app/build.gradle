@@ -53,10 +53,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.2.1'
     //添加这行
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
-    //添加这行
-    //    compile 'com.jakewharton:butterknife:8.4.0'
-    //    apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    //    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8' //增加这一句
     //Rxjava
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
@@ -87,8 +83,6 @@ dependencies {
     compile files('libs/ormlite-core-5.0.jar')
     //特效textview sdk >= 15
     compile 'hanks.xyz:htextview-library:0.1.5'
-    //gif
-//    compile 'com.github.Cutta:GifView:1.1'
     //菜单
     compile 'com.yalantis:contextmenu:1.0.7'
     //cardView
