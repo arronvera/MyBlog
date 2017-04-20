@@ -61,7 +61,7 @@ import static code.vera.myblog.presenter.fragment.home.HomeFragment.ACTION_UPDAT
 public class MainActivity extends PresenterActivity<MainView, UserModel>
         implements AdapterView.OnItemClickListener,
         MenuFragment.FragmentDrawerListener,
-        Toolbar.OnMenuItemClickListener{
+        Toolbar.OnMenuItemClickListener {
     @BindView(R.id.dl_left)
     DrawerLayout dlLeft;
     @BindView(lv_left_menu)
@@ -80,6 +80,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     Fragment fragment = null;
     private UserInfoBean user;//当前用户
     private RefreshBroadCastReceiver broadcastReceiver;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -89,7 +90,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     protected void onAttach() {
         super.onAttach();
         //注册广播
-        broadcastReceiver=new RefreshBroadCastReceiver();
+        broadcastReceiver = new RefreshBroadCastReceiver();
         broadcastReceiver.registRecevier();
         initView();
         initData();
@@ -107,6 +108,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         adapter = new MenuItemAdapter(menuList, this);
         lvMenu.setAdapter(adapter);
     }
+
     private void initData() {
         //初始化menulists
         menuList = new ArrayList<>();
@@ -137,41 +139,43 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         item.setText("设置");
         menuList.add(item);
         //获取用户
-        model.getUserInfo(this,"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UserInfoBean>(mContext,false){
+        model.getUserInfo(this, "", bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<UserInfoBean>(mContext, false) {
             @Override
             public void onNext(UserInfoBean userInfoBean) {
                 super.onNext(userInfoBean);
-                if (userInfoBean!=null){
+                if (userInfoBean != null) {
                     view.showUser(userInfoBean);
                     //存储
-                    SaveUtils.saveUser(userInfoBean,MainActivity.this);
-                    user=userInfoBean;
+                    SaveUtils.saveUser(userInfoBean, MainActivity.this);
+                    user = userInfoBean;
                 }
                 //获取未读信息
-                model.getUnreadCount(getApplicationContext(),userInfoBean.getId()+"",bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<UnReadBean>(mContext,false){
+                model.getUnreadCount(getApplicationContext(), userInfoBean.getId() + "", bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<UnReadBean>(mContext, false) {
                     @Override
                     public void onNext(UnReadBean unReadBean) {
                         super.onNext(unReadBean);
-                        if (unReadBean!=null){
+                        if (unReadBean != null) {
                             adapter.setUnreadBean(unReadBean);
                         }
-              }
+                    }
                 });
                 //获取收藏个数
                 getFavorites();
             }
         });
     }
+
     @OnItemClick(R.id.lv_left_menu)
-    public void onItemClick(int position){
+    public void onItemClick(int position) {
         selectItem(position);
     }
+
     private void getFavorites() {
-        model.getFavorites(50,1,mContext,bindUntilEvent(ActivityEvent.DESTROY),new CustomSubscriber<List<CollectionBean>>(mContext,false){
+        model.getFavorites(50, 1, mContext, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<List<CollectionBean>>(mContext, false) {
             @Override
             public void onNext(List<CollectionBean> collectionBeen) {
                 super.onNext(collectionBeen);
-                if (collectionBeen!=null&&collectionBeen.size()!=0){
+                if (collectionBeen != null && collectionBeen.size() != 0) {
                     adapter.setFaviroteNum(collectionBeen.size());
                 }
             }
@@ -189,7 +193,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     }
 
 
-    @OnClick({ R.id.iv_menu_close,R.id.civ_user_photo})
+    @OnClick({R.id.iv_menu_close, R.id.civ_user_photo})
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.iv_menu_close://关闭菜单
@@ -197,8 +201,8 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
                 break;
             case R.id.civ_user_photo://用户头像
                 dlLeft.closeDrawer(GravityCompat.START);
-                Intent intent=new Intent(this, PersonalityActivity.class);
-                intent.putExtra(BUNDLER_PARAM_USER,user);
+                Intent intent = new Intent(this, PersonalityActivity.class);
+                intent.putExtra(BUNDLER_PARAM_USER, user);
                 startActivity(intent);
                 break;
         }
@@ -231,14 +235,14 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
                 break;
             case 3:
                 fragment = new CollectionFragment();
-                view.setImageResouce(R.mipmap.ic_me);
+                view.setImageResouce(R.mipmap.ic_favorite);
                 break;
             case 4:
                 fragment = new DraftFragment();
                 view.setImageResouce(R.mipmap.ic_draft);
                 break;
             case 5://设置
-                fragment=new SetFragment();
+                fragment = new SetFragment();
                 view.setImageResouce(R.mipmap.ic_set);
                 break;
         }
@@ -265,7 +269,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
                     firstTime = secondTime;//更新firstTime
                     return true;
                 } else {//两次按键小于2秒时，退出应用
-                  finish();
+                    finish();
                 }
             }
         }
@@ -276,9 +280,9 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
     public boolean onMenuItemClick(android.view.MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit://发布
-                Bundle bundle=new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_NEW);
-                PostActivity.start(this,bundle);
+                PostActivity.start(this, bundle);
                 break;
             case R.id.action_search://搜索
 //                ToastUtil.showToast(this,"由于当前微博Api不提供权限，当前功能不提供");
@@ -287,19 +291,22 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         }
         return false;
     }
-    public static void start(Context context){
-        Intent intent=new Intent(context,MainActivity.class);
+
+    public static void start(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
     }
-    class RefreshBroadCastReceiver extends BroadcastReceiver{
+
+    class RefreshBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(ACTION_UPDATE_FAVORITE)){
+            if (intent.getAction().equals(ACTION_UPDATE_FAVORITE)) {
                 getFavorites();
-            }else {
+            } else {
                 adapter.notifyDataSetChanged();
             }
         }
+
         public void registRecevier() {
             IntentFilter filter = new IntentFilter();
             filter.addAction(ACTION_SAVE_DRAFT);
@@ -308,6 +315,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
             filter.addAction(ACTION_UPDATE_FAVORITE);//更新收藏
             mContext.registerReceiver(this, filter);
         }
+
         public void unRgistRecevier() {
             mContext.unregisterReceiver(this);
         }

@@ -35,14 +35,14 @@ public class SplashActivity extends PresenterActivity<VoidView, VoidModel> {
                 textView.setAnimateType(HTextViewType.LINE);
                 textView.animateText("用圈艺");
             }
-        }, 100);
+        }, 500);
         textView.postDelayed(new Runnable() {
             @Override
             public void run() {
                 textView.setAnimateType(HTextViewType.ANVIL);
                 textView.animateText("用圈艺,分享属于你的艺术");
             }
-        }, 1000);
+        }, 1500);
 
         handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -50,7 +50,7 @@ public class SplashActivity extends PresenterActivity<VoidView, VoidModel> {
             public void run() {
                 isLogin();
             }
-        }, 2600);
+        }, 3000);
     }
 
     /**

@@ -46,5 +46,6 @@ public class Constants {
     public static final int FILTER_MOVIE=3;
     public static final int FILTER_MUSIC=4;
 
+    public static final int POST_SEND_DRAFT=4;//发送草稿
 
 }

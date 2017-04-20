@@ -22,7 +22,7 @@ public class StatusesBean implements Serializable {
     private String idstr;//	字符串型的微博ID
     private String text;//文字
     private int textLength; //文字长度
-    private int  source_allowclick;//来源是否可以点击
+    private int source_allowclick;//来源是否可以点击
     private String source;//来源
     private boolean favorited;//是否已经收藏
     //配图
@@ -41,6 +41,11 @@ public class StatusesBean implements Serializable {
     private long attitudes_count;//表态数
     private String geo;//地理位置
     private GeoBean geoBean;
+
+    @Nullable
+    private String retweeted_status;//被转发的原微博信息字段，当该微博为转发微博时返回
+    @Nullable
+    private RetweetedStatusBean retweetedStatusBean;
 
     public String getSource() {
         return source;
@@ -78,21 +83,20 @@ public class StatusesBean implements Serializable {
     }
 
     @Nullable
-    private String retweeted_status;//被转发的原微博信息字段，当该微博为转发微博时返回
-    @Nullable
-    private RetweetedStatusBean retweetedStatusBean;
-    @Nullable
     public String getRetweeted_status() {
         return retweeted_status;
     }
+
     @Nullable
     public void setRetweeted_status(String retweeted_status) {
         this.retweeted_status = retweeted_status;
     }
+
     @Nullable
     public RetweetedStatusBean getRetweetedStatusBean() {
-        return JSON.parseObject(retweeted_status,RetweetedStatusBean.class);
+        return JSON.parseObject(retweeted_status, RetweetedStatusBean.class);
     }
+
     @Nullable
     public void setRetweetedStatusBean(RetweetedStatusBean retweetedStatusBean) {
         this.retweetedStatusBean = retweetedStatusBean;
@@ -119,7 +123,7 @@ public class StatusesBean implements Serializable {
     }
 
     public List<PicBean> getPic_list() {
-        return JSONArray.parseArray(pic_urls,PicBean.class);
+        return JSONArray.parseArray(pic_urls, PicBean.class);
     }
 
     public void setPic_list(List<PicBean> pic_list) {
@@ -195,7 +199,7 @@ public class StatusesBean implements Serializable {
     }
 
     public GeoBean getGeoBean() {
-        return JSON.parseObject(geo,GeoBean.class);
+        return JSON.parseObject(geo, GeoBean.class);
     }
 
     public void setGeoBean(GeoBean geoBean) {
@@ -206,17 +210,15 @@ public class StatusesBean implements Serializable {
     public String toString() {
         return "StatusesBean{" +
                 "created_at='" + created_at + '\'' +
-                ", id=" + id +
-                ", mid='" + mid + '\'' +
                 ", idstr='" + idstr + '\'' +
                 ", text='" + text + '\'' +
                 ", textLength=" + textLength +
                 ", source_allowclick=" + source_allowclick +
-//                ", source='" + source + '\'' +
                 ", user=" + user +
                 ", reposts_count=" + reposts_count +
                 ", comments_count=" + comments_count +
                 ", attitudes_count=" + attitudes_count +
+                ",retweeted_status=" + retweeted_status +
                 '}';
     }
 }

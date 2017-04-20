@@ -77,7 +77,7 @@ public class DraftAdapter extends RvAdapter<PostBean> {
 
             if (bean.getOriId() != 0) {
                 llOriginal.setVisibility(View.VISIBLE);
-                tvOriName.setText(bean.getOriName());
+                tvOriName.setText("@" + bean.getOriName());
                 tvOriContent.setText(bean.getOriStatus());
                 ImageLoader.getInstance().displayImage(bean.getOriHeadPhoto(), ivPhoto);
             } else {

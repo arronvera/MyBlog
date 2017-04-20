@@ -259,15 +259,16 @@ public class PostView extends BaseView {
 
     public void showPostBean(PostBean postBean) {
         int type = postBean.getPostStatus();
+        String text = postBean.getStatus();
         showTitleAndHint(type);
-        etMessage.setText(postBean.getStatus());
+        etMessage.setText(text);
+        etMessage.setSelection(text.length());
         if (postBean.getOriId() != 0) {
             llOri.setVisibility(View.VISIBLE);
             tvOriContent.setText(postBean.getOriStatus());
             tvOriName.setText(postBean.getOriName());
             ImageLoader.getInstance().displayImage(postBean.getOriHeadPhoto(), ivOriPhoto);
         }
-
     }
 
     public void showAddress(String address) {

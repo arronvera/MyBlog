@@ -38,7 +38,7 @@
     <LinearLayout
         android:id="@+id/ll_Origina_Layout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="110dp"
         android:visibility="gone"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
@@ -58,7 +58,7 @@
                 android:id="@+id/tv_ori_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 tools:text="vera"/>
             <TextView
                 android:id="@+id/tv_ori_content"
@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:textSize="14sp"
+                android:ellipsize="end"
                 tools:text="内容..........."/>
         </LinearLayout>
     </LinearLayout>

@@ -63,6 +63,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public static final String PARAM_POST_TYPE = "type";
     public static final String PARAM_POST_BEAN = "postbean";
     public static final String ACTION_SAVE_DRAFT = "action.save.draft";
+    public static final String ACTION_SEND_DRAFT = "action.seng.draft";
     public static final String PARAM_COMMENT_CID = "cid";
     public static final String PARAM_COMMENT_WEIB_ID = "comment.weiboId";
     public static final String PARAM_NEW_TEXT = "new.text";
@@ -168,11 +169,17 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 }
                 if ((!TextUtils.isEmpty(view.getEditStr())) || (pictureList.size() != 0)) {
                     //如果有内容  提示保存到草稿箱
-                    postBean = new PostBean();
-                    postBean.setStatus(view.getEditStr());
-                    postBean.setPostStatus(type);
-                    postBean.setLat(lat);
-                    postBean.setLon(lon);
+                    if (postBean == null) {
+                        postBean = new PostBean();
+                        postBean.setStatus(view.getEditStr());
+                        postBean.setPostStatus(type);
+                        postBean.setLat(lat);
+                        postBean.setLon(lon);
+                    } else {
+                        postBean.setStatus(view.getEditStr());
+                        postBean.setLat(lat);
+                        postBean.setLon(lon);
+                    }
                     if (statusesBean != null && statusesBean.getRetweetedStatusBean() != null) {//原始信息
                         RetweetedStatusBean statusBean = statusesBean.getRetweetedStatusBean();
                         postBean.setOriHeadPhoto(statusBean.getUserbean().getProfile_image_url());
@@ -595,6 +602,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         intent.putExtra(PARAM_COMMENT_WEIB_ID, bundle.getLong(PARAM_COMMENT_WEIB_ID));
         //反馈
         intent.putExtra(PARAM_NEW_TEXT, bundle.getString(PARAM_NEW_TEXT));
+        //草稿
+        intent.putExtra(ACTION_SEND_DRAFT, bundle.getInt(ACTION_SEND_DRAFT));
         context.startActivity(intent);
     }
 

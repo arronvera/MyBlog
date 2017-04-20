@@ -27,6 +27,8 @@ import code.vera.myblog.view.draft.DraftView;
 import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
 
+import static code.vera.myblog.config.Constants.POST_SEND_DRAFT;
+import static code.vera.myblog.presenter.activity.PostActivity.ACTION_SEND_DRAFT;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_BEAN;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 
@@ -63,7 +65,6 @@ public class DraftFragment extends PresenterFragment<DraftView, PostModel>
             @Override
             public void onHeaderRefreshing() {
                 getDraft();
-
             }
 
             @Override
@@ -110,45 +111,46 @@ public class DraftFragment extends PresenterFragment<DraftView, PostModel>
 
     @Override
     public void onItemSendListener(View view, int pos, final PostBean postBean) {
-        int type=postBean.getPostType();
-        Debug.d("type="+type);
+        int type = postBean.getPostType();
+        Debug.d("type=" + type);
         switch (type) {
             case Constants.POST_TYPE_NEW://分享
-                Bundle bundle=new Bundle();
-                bundle.putInt(PARAM_POST_TYPE,Constants.POST_TYPE_NEW);
-                bundle.putSerializable(PARAM_POST_BEAN,postBeanList.get(pos));
-                PostActivity.start(mContext,bundle);
+                Bundle bundle = new Bundle();
+                bundle.putInt(ACTION_SEND_DRAFT, Constants.POST_SEND_DRAFT);//草稿
+                bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_NEW);
+                bundle.putSerializable(PARAM_POST_BEAN, postBeanList.get(pos));
+                PostActivity.start(mContext, bundle);
                 break;
             case Constants.POST_TYPE_COMMENT://评论
-                CommentRequestBean requestBean=new CommentRequestBean();
+                CommentRequestBean requestBean = new CommentRequestBean();
                 requestBean.setId(postBean.getId());
                 requestBean.setComment(postBean.getStatus());
-                model.commentMessage(mContext,requestBean,bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+                model.commentMessage(mContext, requestBean, bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
                     @Override
                     public void onNext(String s) {
                         super.onNext(s);
-                        if (!TextUtils.isEmpty(s)){
+                        if (!TextUtils.isEmpty(s)) {
                             showToast("发布成功");
                             postDao.delete(postBean);
                             getDraft();
                             adapter.notifyDataSetChanged();
-                        }else {
+                        } else {
                             showToast("发布失败");
                         }
                     }
                 });
                 break;
             case Constants.POST_TYPE_REPOST://转发
-                model.repostMessage(mContext,postBean.getId()+"",postBean.getStatus(),bindUntilEvent(FragmentEvent.DESTROY),new CustomSubscriber<String>(mContext,true){
+                model.repostMessage(mContext, postBean.getId() + "", postBean.getStatus(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
                     @Override
                     public void onNext(String s) {
                         super.onNext(s);
-                        if (!TextUtils.isEmpty(s)){
+                        if (!TextUtils.isEmpty(s)) {
                             showToast("发布成功");
                             postDao.delete(postBean);
                             getDraft();
                             adapter.notifyDataSetChanged();
-                        }else {
+                        } else {
                             showToast("发布失败");
                         }
                     }
