@@ -56,8 +56,13 @@
             <com.amap.api.maps.MapView
                 android:id="@+id/mapview"
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
-            </com.amap.api.maps.MapView>
+                android:layout_height="180dp"></com.amap.api.maps.MapView>
+
+            <ListView
+                android:id="@+id/lv_places"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </ListView>
         </LinearLayout>
 
     </ScrollView>

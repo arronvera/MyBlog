@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.TextView;
+import android.view.View;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -23,53 +22,83 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.cloud.CloudItemDetail;
 import com.amap.api.services.cloud.CloudResult;
 import com.amap.api.services.cloud.CloudSearch;
+import com.trello.rxlifecycle.ActivityEvent;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.List;
+
 import butterknife.OnClick;
 import code.vera.myblog.R;
+import code.vera.myblog.adapter.PoiAdapter;
+import code.vera.myblog.bean.PoiBean;
+import code.vera.myblog.model.other.LocationModel;
+import code.vera.myblog.presenter.base.PresenterActivity;
+import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.view.location.LocationView;
+import ww.com.core.Debug;
 
 import static android.R.attr.action;
 
 /**
  * 定位
  */
-public class LocationActivity extends AppCompatActivity implements LocationSource, AMapLocationListener, CloudSearch.OnCloudSearchListener,
+public class LocationActivity extends PresenterActivity<LocationView, LocationModel> implements
+        LocationSource, AMapLocationListener, CloudSearch.OnCloudSearchListener,
         AMap.OnCameraChangeListener, AMap.OnMapLoadedListener, AMap.OnMapTouchListener
-        , AMap.OnMarkerClickListener{
-    private MapView mapView=null;
+        , AMap.OnMarkerClickListener {
+    private MapView mapView = null;
     private AMap aMap;
-    private boolean isFollow=false;
+    private boolean isFollow = false;
     private MyLocationStyle myLocationStyle;
     private OnLocationChangedListener mListener;
     private AMapLocationClient mlocationClient;
     private AMapLocationClientOption mLocationOption;
-    public static final String PARAM_ADDRESS="address";
-    public static final String PARAM_LATITUDE="latitude";
-    public static final String PARAM_LONGTITUDE="lontitude";
+    public static final String PARAM_ADDRESS = "address";
+    public static final String PARAM_LATITUDE = "latitude";
+    public static final String PARAM_LONGTITUDE = "lontitude";
 
     private static final String ACTION = "action";
     private String address;
-    @BindView(R.id.tv_address)
-    TextView tvAddress;
+
     private double lat;
     private double lon;
-
+    private String q;//查询关键字
+    private int count = 20;
+    private int page = 1;
+    private PoiAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       setContentView(R.layout.activity_location);
-        ButterKnife.bind(this);
+        setContentView(R.layout.activity_location);
         initMap(savedInstanceState);
+        setAdapter();
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_location;
+    }
+
+    @Override
+    public void onAttach(View viRoot) {
+        super.onAttach(viRoot);
+    }
+
+    private void setAdapter() {
+        adapter = new PoiAdapter(mContext);
+        view.setAdapter(adapter);
     }
 
     private void initMap(Bundle savedInstanceState) {
         mapView = (MapView) findViewById(R.id.mapview);
         mapView.onCreate(savedInstanceState);//创建地图
-        if (aMap==null){
-            aMap=mapView.getMap();
+        if (aMap == null) {
+            aMap = mapView.getMap();
         }
+        initLocation();
+    }
+
+    private void initLocation() {
         //定位图标
         myLocationStyle = new MyLocationStyle().myLocationIcon((BitmapDescriptorFactory.fromResource(R.mipmap.location_marker)));//初始化定位蓝点样式类
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);//定位一次，且将视角移动到地图中心点。
@@ -83,14 +112,13 @@ public class LocationActivity extends AppCompatActivity implements LocationSourc
         aMap.setMyLocationEnabled(true);
         // 设置定位的类型为定位模式，有定位、跟随或地图根据面向方向旋转几种
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
-        if(null != mlocationClient){
+        if (null != mlocationClient) {
             mlocationClient.onDestroy();
         }
     }
@@ -99,27 +127,30 @@ public class LocationActivity extends AppCompatActivity implements LocationSourc
     protected void onResume() {
         super.onResume();
         mapView.onResume();
-
     }
+
     public static void startActivityForResult(Context context, Bundle bundle, int action) {
         Intent intent = new Intent(context, LocationActivity.class);
         intent.putExtra("data", bundle);
         intent.putExtra("action", action);
         ((Activity) context).startActivityForResult(intent, action);
     }
+
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
-@OnClick(R.id.tv_sure)
-public void back(){
-    Intent data = new Intent();
-    data.putExtra(PARAM_ADDRESS,address);
-    data.putExtra(PARAM_LATITUDE,lat);
-    data.putExtra(PARAM_LONGTITUDE,lon);
-    setResult(action, data);
-    finish();
-}
+
+    @OnClick(R.id.tv_sure)
+    public void back() {
+        Intent data = new Intent();
+        data.putExtra(PARAM_ADDRESS, address);
+        data.putExtra(PARAM_LATITUDE, lat);
+        data.putExtra(PARAM_LONGTITUDE, lon);
+        setResult(action, data);
+        finish();
+    }
+
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
         mListener = onLocationChangedListener;
@@ -149,19 +180,34 @@ public void back(){
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
-        if (mListener != null&&aMapLocation != null) {
-            if (aMapLocation != null &&aMapLocation.getErrorCode() == 0) {
-                address=aMapLocation.getAddress();
-                lat=aMapLocation.getLatitude();
-                lon=aMapLocation.getLongitude();
+        if (mListener != null && aMapLocation != null) {
+            if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
+                address = aMapLocation.getAddress();
+                lat = aMapLocation.getLatitude();
+                lon = aMapLocation.getLongitude();
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
-                tvAddress.setText("地址："+address);
-
+                view.setAddress(address);
+                getNearByAddress();
             } else {
-                String errText = "定位失败," + aMapLocation.getErrorCode()+ ": " + aMapLocation.getErrorInfo();
-                Log.e("AmapErr",errText);
+                String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
+                Log.e("AmapErr", errText);
             }
         }
+    }
+
+    /**
+     * 获取附近地址
+     */
+    private void getNearByAddress() {
+        model.getNearByAddress(lat, lon, q, count, page, mContext, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<List<PoiBean>>(mContext, false) {
+            @Override
+            public void onNext(List<PoiBean> poiBeen) {
+                super.onNext(poiBeen);
+                Debug.d("size=" + poiBeen.size());
+                adapter.addList(poiBeen);
+                view.refreshFinished();
+            }
+        });
     }
 
     @Override

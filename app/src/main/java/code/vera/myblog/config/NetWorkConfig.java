@@ -81,4 +81,7 @@ public class NetWorkConfig {
 
     //删除微博
     public static final String DESTROY_STATUS=BASE_URL+"/statuses/destroy.json";
+    //-----------------------------位置----------------------------------------
+    //附近位置
+    public static final String NEARBY_PLACES=BASE_URL+"/place/nearby/pois.json";
 }
