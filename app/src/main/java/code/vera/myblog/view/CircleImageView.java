@@ -194,14 +194,16 @@ public class CircleImageView extends ImageView {
 
 		mBitmapHeight = mBitmap.getHeight();
 		mBitmapWidth = mBitmap.getWidth();
-
+// // 设置含边界显示区域，取的是CircleImageView的布局实际大小，为方形，查看xml也就是160dp(240px)  getWidth得到是某个view的实际尺寸
 		mBorderRect.set(0, 0, getWidth(), getHeight());
 		mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2, (mBorderRect.width() - mBorderWidth) / 2);
-
+		// 初始图片显示区域为mBorderRect（CircleImageView的布局实际大小）
 		mDrawableRect.set(mBorderWidth, mBorderWidth, mBorderRect.width() - mBorderWidth, mBorderRect.height() - mBorderWidth);
+		//计算 圆形带边界部分（外圆）的最小半径，取mBorderRect的宽高减去一个边缘大小的一半的较小值
 		mDrawableRadius = Math.min(mDrawableRect.height() / 2, mDrawableRect.width() / 2);
-
+		//设置渲染器的变换矩阵也即是mBitmap用何种缩放形式填充
 		updateShaderMatrix();
+		//手动触发ondraw()函数 完成最终的绘制z
 		invalidate();
 	}
 

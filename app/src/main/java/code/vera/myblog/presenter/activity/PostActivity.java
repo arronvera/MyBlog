@@ -387,6 +387,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     }
 
     private void upLoad() {
+        Debug.d("上传的图片大小为:"+pictureList.size());
         model.uploadMessage(this, postBean, pictureList, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
             @Override
             public void onNext(String s) {
