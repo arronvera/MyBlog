@@ -14,29 +14,43 @@ import code.vera.myblog.adapter.FindAdapter;
 import code.vera.myblog.bean.home.HomeRequestBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
+import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemConcernListener;
+import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.listener.OnItemLikeListener;
+import code.vera.myblog.listener.OnItemLinkListener;
 import code.vera.myblog.listener.OnItemRepostListener;
+import code.vera.myblog.listener.OnItemTopicListener;
 import code.vera.myblog.model.find.FindModel;
+import code.vera.myblog.presenter.activity.BrowserActivity;
 import code.vera.myblog.presenter.activity.CommentDetailActivity;
+import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
+import code.vera.myblog.presenter.activity.TopicActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.find.FindView;
+import ww.com.core.Debug;
+import ww.com.core.widget.CustomSwipeRefreshLayout;
 
+import static code.vera.myblog.presenter.activity.BrowserActivity.BUNDLER_PARAM_LINK;
 import static code.vera.myblog.presenter.activity.CommentDetailActivity.BUNDLE_PARAM_STATUS;
+import static code.vera.myblog.presenter.activity.PersonalityActivity.BUNDLER_PARAM_USER;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_STATUS_BEAN;
+import static code.vera.myblog.presenter.activity.TopicActivity.BUNDLER_PARAM_TOPIC;
 
 /**
  * Created by vera on 2017/1/20 0020.
  */
 
 public class FindFragment extends PresenterFragment<FindView, FindModel>
-        implements OnItemConcernListener, OnItemRepostListener, OnItemCommentListener
-        , OnItemLikeListener {
+        implements OnItemConcernListener,
+        OnItemRepostListener, OnItemCommentListener
+        , OnItemLikeListener, OnItemHeadPhotoListener,
+        OnItemAtListener, OnItemTopicListener, OnItemLinkListener {
     private FindAdapter adapter;
     private HomeRequestBean requestBean;
 
@@ -50,7 +64,7 @@ public class FindFragment extends PresenterFragment<FindView, FindModel>
         super.onAttach();
         requestBean = new HomeRequestBean();
         setAdapter();
-        getTimeLine();
+        getTimeLine(true);
         addListener();
     }
 
@@ -58,14 +72,34 @@ public class FindFragment extends PresenterFragment<FindView, FindModel>
         adapter.setOnItemConcernListener(this);
         adapter.setOnItemCommentListener(this);
         adapter.setOnItemRepostListener(this);
+        adapter.setOnItemLikeListener(this);
+        adapter.setOnItemAtListener(this);
+        adapter.setOnItemHeadPhotoListener(this);
+        view.setOnSwipeRefreshListener(new CustomSwipeRefreshLayout.OnSwipeRefreshLayoutListener() {
+            @Override
+            public void onHeaderRefreshing() {
+                requestBean.page = "1";
+                getTimeLine(false);
+            }
+
+            @Override
+            public void onFooterRefreshing() {
+                requestBean.page = (Integer.parseInt(requestBean.page) + 1) + "";
+                getTimeLine(false);
+            }
+        });
     }
 
-    private void getTimeLine() {
-        model.getPublic(requestBean, mContext, bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, true) {
+    private void getTimeLine(boolean isDialog) {
+        model.getPublic(requestBean, mContext, bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, isDialog) {
             @Override
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
-                adapter.addList(statusesBeen);
+                if ("1".equals(requestBean.page)) {
+                    adapter.addList(statusesBeen);
+                } else {
+                    adapter.appendList(statusesBeen);
+                }
             }
         });
     }
@@ -76,7 +110,7 @@ public class FindFragment extends PresenterFragment<FindView, FindModel>
     }
 
     @Override
-    public void onItemConcern(final View view, int pos) {
+    public void onItemConcern(final View view, final int pos) {
         //关注
         long id = adapter.getItem(pos).getId();
         model.createFriendShip(mContext, id + "", bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, true) {
@@ -86,6 +120,9 @@ public class FindFragment extends PresenterFragment<FindView, FindModel>
                 if (!TextUtils.isEmpty(s)) {
                     if (!TextUtils.isEmpty(s)) {
                         ToastUtil.showToast(getContext(), getString(R.string.concern_success));
+                        //更新
+                        adapter.getItem(pos).getUserBean().setFollowing(true);
+                        adapter.notifyItemChanged(pos);
                     }
                 }
             }
@@ -120,5 +157,36 @@ public class FindFragment extends PresenterFragment<FindView, FindModel>
     @Override
     public void onItemLikeListener(View v, ImageView imageView, int pos) {
         view.setLikeView(imageView);
+    }
+
+    @Override
+    public void onItemAtListener(View v, int pos, String str) {
+        Debug.d("点击@某人" + str);
+        Bundle bundle = new Bundle();
+        bundle.putString(BUNDLER_PARAM_USER, str.substring(str.indexOf("@") + 1, str.length()));
+        PersonalityActivity.start(mContext, bundle);
+    }
+
+    @Override
+    public void onItemHeadPhotoListener(View v, int pos) {
+        //点击头头像，跳转到个人界面
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BUNDLER_PARAM_USER, adapter.getItem(pos).getUserBean());
+        PersonalityActivity.start(mContext, bundle);
+    }
+
+    @Override
+    public void onItemLinkListener(View v, int pos, String str, int type) {
+        Bundle bundle = new Bundle();
+        bundle.putString(BUNDLER_PARAM_LINK, str);
+        BrowserActivity.start(mContext, bundle);
+    }
+
+    @Override
+    public void onItemTopicListener(View v, int pos, String str) {
+        Debug.d("点击topic话题" + str);
+        Bundle bundle = new Bundle();
+        bundle.putString(BUNDLER_PARAM_TOPIC, str.substring(1, str.length() - 1));
+        TopicActivity.start(mContext, bundle);
     }
 }

@@ -204,6 +204,12 @@ public class FindAdapter extends RvAdapter<StatusesBean> {
             } else {
                 tvLike.setText("喜欢");
             }
+            //关注
+            if (bean.getUserBean().isFollowing()){
+                btnConcern.setText("取消关注");
+            }else {
+                btnConcern.setText("关注");
+            }
             //-----------------------------监听-----------------------
             rlRepost.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -236,7 +242,7 @@ public class FindAdapter extends RvAdapter<StatusesBean> {
             btnConcern.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onItemClickListener != null)
+                    if (onItemConcernListener != null)
                         onItemConcernListener.onItemConcern(v, position);
                 }
             });
