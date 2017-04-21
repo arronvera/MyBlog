@@ -5,6 +5,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.adapter.TabPersonAdapter;
 import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
+import code.vera.myblog.utils.NumUtils;
 import code.vera.myblog.view.base.BaseView;
 
 /**
@@ -45,8 +47,8 @@ public class PersonalityView extends BaseView {
     ImageView ivIdentity;//身份
     @BindView(R.id.iv_gender)
     ImageView ivGender;//性别
-    @BindView(R.id.tv_concern)
-    TextView tvConcern;//关注
+    @BindView(R.id.btn_concern)
+    Button btnConcern;//关注
     @BindView(R.id.tv_vertify_reason)
     TextView tvIdentityReason;//认证理由
     @BindView(R.id.app_bar_layout)
@@ -93,8 +95,8 @@ public class PersonalityView extends BaseView {
      * @param userInfoBean
      */
     public void showInfo(UserInfoBean userInfoBean) {
-        tvFriends.setText("关注：" + userInfoBean.getFriends_count());//关注
-        tvFolloweres.setText("粉丝：" + userInfoBean.getFollowers_count());//粉丝
+        tvFriends.setText("关注：" + NumUtils.CaculateWan(userInfoBean.getFriends_count()));//关注
+        tvFolloweres.setText("粉丝：" + NumUtils.CaculateWan(userInfoBean.getFollowers_count()));//粉丝
         tvIntro.setText("简介：" + userInfoBean.getDescription());//介绍
         tvName.setText(userInfoBean.getName());//名字
         tvAuthor.setText(userInfoBean.getName());
@@ -108,10 +110,10 @@ public class PersonalityView extends BaseView {
         } else {
             ivGender.setVisibility(View.INVISIBLE);
         }
-        if (userInfoBean.isFollow_me()) {
-            tvConcern.setText("取消关注");
+        if (userInfoBean.isFollowing()) {
+            btnConcern.setText("取消关注");
         } else {
-            tvConcern.setText("关注");
+            btnConcern.setText("关注");
         }
         if (userInfoBean.isVerified()) {//认证
             ivIdentity.setVisibility(View.VISIBLE);
@@ -130,9 +132,9 @@ public class PersonalityView extends BaseView {
 
     public void setConcernVisible(boolean b) {
         if (b) {
-            tvConcern.setVisibility(View.VISIBLE);
+            btnConcern.setVisibility(View.VISIBLE);
         } else {
-            tvConcern.setVisibility(View.INVISIBLE);
+            btnConcern.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -146,9 +148,9 @@ public class PersonalityView extends BaseView {
 
     public void setConcerText(boolean isFollow) {
         if (isFollow) {
-            tvConcern.setText(R.string.cancel_concern);
+            btnConcern.setText(R.string.cancel_concern);
         } else {
-            tvConcern.setText(R.string.concern);
+            btnConcern.setText(R.string.concern);
         }
     }
 }

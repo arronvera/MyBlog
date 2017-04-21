@@ -40,14 +40,14 @@
                 tools:text="四川成都"/>
         </LinearLayout>
         <include layout="@layout/layout_line"/>
-        <LinearLayout style="@style/ItemPersonLLayout">
-            <TextView style="@style/ItemPersonTextView"
-                android:text="简介："/>
-            <TextView style="@style/ItemPersonTextView"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/tv_introduce"
-                tools:text="我哦呜哦哦"/>
-        </LinearLayout>
+        <!--<LinearLayout style="@style/ItemPersonLLayout">-->
+            <!--<TextView style="@style/ItemPersonTextView"-->
+                <!--android:text="简介："/>-->
+            <!--<TextView style="@style/ItemPersonTextView"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:id="@+id/tv_introduce"-->
+                <!--tools:text="我哦呜哦哦"/>-->
+        <!--</LinearLayout>-->
         <include layout="@layout/layout_line"/>
         <LinearLayout style="@style/ItemPersonLLayout"
             android:id="@+id/ll_link">

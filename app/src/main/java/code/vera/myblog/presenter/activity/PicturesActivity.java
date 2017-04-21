@@ -18,10 +18,11 @@ import code.vera.myblog.view.pic.PicturesView;
  * Created by vera on 2017/2/16 0016.
  */
 
-public class PicturesActivity extends PresenterActivity<PicturesView,VoidModel> {
-    private List<PicBean>beanList;
+public class PicturesActivity extends PresenterActivity<PicturesView, VoidModel> {
+    private List<PicBean> beanList;
     private int index;
     public static final String ACTION_SAVE_PIC = "action_save_pic";
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_pictures;
@@ -30,36 +31,34 @@ public class PicturesActivity extends PresenterActivity<PicturesView,VoidModel> 
     @Override
     protected void onAttach() {
         super.onAttach();
-        Intent intent=getIntent();
-        int index=intent.getIntExtra("index",-1);//选中的下标
-        StatusesBean statusesBean= (StatusesBean) intent.getSerializableExtra("bean");
-        if (statusesBean!=null&&index!=-1){
-           beanList=statusesBean.getPic_list();
-            if (statusesBean.getRetweetedStatusBean()!=null&&index!=-1){//原
-                beanList=statusesBean.getRetweetedStatusBean().getPic_list();
+        Intent intent = getIntent();
+        int index = intent.getIntExtra("index", -1);//选中的下标
+        StatusesBean statusesBean = (StatusesBean) intent.getSerializableExtra("bean");
+        if (statusesBean != null && index != -1) {
+            beanList = statusesBean.getPic_list();
+            if (statusesBean.getRetweetedStatusBean() != null && index != -1) {//原
+                beanList = statusesBean.getRetweetedStatusBean().getPic_list();
             }
-            for (int i=0;i<beanList.size();i++){
+            for (int i = 0; i < beanList.size(); i++) {
                 //将thumbnail代替成bmiddle
-                beanList.get(i).setThumbnail_pic(beanList.get(i).getThumbnail_pic().replace("thumbnail","bmiddle"));
+                beanList.get(i).setThumbnail_pic(beanList.get(i).getThumbnail_pic().replace("thumbnail", "bmiddle"));
             }
-            view.setAdapter( getSupportFragmentManager(),beanList,index);
+            view.setAdapter(getSupportFragmentManager(), beanList, index);
         }
 
     }
-    @OnClick({R.id.tv_back,R.id.iv_save_pic,R.id.tv_big_pic})
-    public void doClick(View v){
-       switch (v.getId()){
-           case R.id.tv_back:
-              finish();
-               break;
-           case R.id.iv_save_pic://保存图片
+
+    @OnClick({R.id.tv_back, R.id.iv_save_pic})
+    public void doClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_back:
+                finish();
+                break;
+            case R.id.iv_save_pic://保存图片
 //               Debug.d("发送---");
-               sendBroadcast(new Intent(ACTION_SAVE_PIC));
-               break;
-           case R.id.tv_big_pic://查看大图
-                //todo
-               break;
-       }
+                sendBroadcast(new Intent(ACTION_SAVE_PIC));
+                break;
+        }
 
     }
 }

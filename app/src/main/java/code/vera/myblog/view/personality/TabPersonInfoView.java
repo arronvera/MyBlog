@@ -46,7 +46,7 @@ public class TabPersonInfoView extends BaseView {
             tvGender.setText("未知");
         }
         tvLocation.setText(userInfoBean.getLocation());
-        tvIntroduce.setText(userInfoBean.getDescription());
+//        tvIntroduce.setText(userInfoBean.getDescription());
         tvUrl.setText(userInfoBean.getUrl());
         if (userInfoBean.getOnline_status()==0){
             tvState.setText("不在线");

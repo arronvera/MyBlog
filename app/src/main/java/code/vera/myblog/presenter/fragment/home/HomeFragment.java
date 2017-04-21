@@ -58,6 +58,7 @@ import static code.vera.myblog.presenter.activity.CommentDetailActivity.BUNDLE_P
 import static code.vera.myblog.presenter.activity.NearByLocationActivity.PARAM_LOCATION_LATITUDE;
 import static code.vera.myblog.presenter.activity.NearByLocationActivity.PARAM_LOCATION_LONGTITUDE;
 import static code.vera.myblog.presenter.activity.PersonalityActivity.BUNDLER_PARAM_USER;
+import static code.vera.myblog.presenter.activity.PersonalityActivity.BUNDLER_PARAM_USER_NAME;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_POST_TYPE;
 import static code.vera.myblog.presenter.activity.PostActivity.PARAM_STATUS_BEAN;
 import static code.vera.myblog.presenter.activity.TopicActivity.BUNDLER_PARAM_TOPIC;
@@ -347,6 +348,9 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     public void onItemLikeListener(View v, ImageView imageView, int pos) {
         //喜欢
         view.setLikeView(imageView);
+        StatusesBean statusesBean=adapter.getItem(pos);
+        statusesBean.setAttitudes_count(statusesBean.getAttitudes_count()+1);
+        adapter.notifyItemChanged(pos,imageView);
     }
 
     @OnClick(R.id.iv_filter)
@@ -422,7 +426,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     public void onItemAtListener(View v, int pos, String str) {
         Debug.d("点击@某人" + str);
         Bundle bundle = new Bundle();
-        bundle.putString(BUNDLER_PARAM_USER, str.substring(str.indexOf("@") + 1, str.length()));
+        bundle.putString(BUNDLER_PARAM_USER_NAME, str.substring(str.indexOf("@") + 1, str.length()));
         PersonalityActivity.start(mContext, bundle);
     }
 

@@ -100,6 +100,7 @@ public class FindFragment extends PresenterFragment<FindView, FindModel>
                 } else {
                     adapter.appendList(statusesBeen);
                 }
+                view.refreshFinished();
             }
         });
     }
@@ -157,6 +158,9 @@ public class FindFragment extends PresenterFragment<FindView, FindModel>
     @Override
     public void onItemLikeListener(View v, ImageView imageView, int pos) {
         view.setLikeView(imageView);
+        StatusesBean statusesBean=adapter.getItem(pos);
+        statusesBean.setAttitudes_count(statusesBean.getAttitudes_count()+1);
+        adapter.notifyItemChanged(pos);
     }
 
     @Override

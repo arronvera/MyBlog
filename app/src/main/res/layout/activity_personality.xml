@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+
     <android.support.design.widget.CoordinatorLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent">
@@ -47,6 +48,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
           <LinearLayout
+              android:background="@color/colorAccent"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
@@ -95,7 +97,7 @@
                   <LinearLayout
                       android:id="@+id/ll_fans"
                       android:layout_width="wrap_content"
-                      android:layout_height="50dp"
+                      android:layout_height="40dp"
                       android:gravity="center_vertical"
                       android:layout_below="@+id/tv_name"
                       android:layout_centerHorizontal="true"
@@ -108,15 +110,26 @@
                           tools:text="关注：20万"/>
                       <LinearLayout
                           android:layout_width="1dp"
-                          android:layout_height="25dp"
-                          android:layout_marginLeft="20dp"
+                          android:layout_height="20dp"
+                          android:layout_marginLeft="10dp"
                           android:background="@color/colorWhite"/>
                       <TextView
                           android:id="@+id/tv_followers"
                           style="@style/TextWhiteStyle"
-                          android:layout_marginLeft="20dp"
+                          android:layout_marginLeft="10dp"
                           tools:text="粉丝：20万"/>
                   </LinearLayout>
+                  <Button  style="@style/TextWhiteStyle"
+                      android:id="@+id/btn_concern"
+                      android:background="@drawable/btn_concern_white_shape"
+                      android:layout_toRightOf="@+id/ll_fans"
+                      android:layout_alignParentRight="true"
+                      android:layout_alignTop="@+id/ll_fans"
+                      android:gravity="center"
+                      android:layout_alignBottom="@id/ll_fans"
+                      android:layout_marginRight="10dp"
+                      android:textSize="14sp"
+                      android:text="关注"/>
                   <TextView
                       style="@style/TextWhiteStyle"
                       android:visibility="gone"
@@ -132,13 +145,8 @@
                       android:layout_below="@+id/tv_vertify_reason"
                       android:layout_marginLeft="20dp"
                       android:layout_marginBottom="20dp"
+                      android:textSize="14sp"
                       tools:text="这是介绍"/>
-                  <TextView  style="@style/TextWhiteStyle"
-                      android:id="@+id/tv_concern"
-                      android:layout_alignParentRight="true"
-                      android:layout_marginTop="150dp"
-                      android:layout_marginRight="20dp"
-                      android:text="关注"/>
               </RelativeLayout>
           </LinearLayout>
 
