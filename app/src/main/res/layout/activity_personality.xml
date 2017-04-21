@@ -60,7 +60,7 @@
                       android:layout_width="match_parent"
                       android:id="@+id/iv_bg"
                       android:scaleType="fitXY"
-                      android:layout_height="wrap_content" />
+                      android:layout_height="match_parent" />
                   <code.vera.myblog.view.CircleImageView
                       android:id="@+id/crv_photo"
                       android:layout_width="80dp"
@@ -137,6 +137,7 @@
                       android:layout_below="@+id/ll_fans"
                       android:layout_marginLeft="20dp"
                       android:layout_marginBottom="10dp"
+                      android:textSize="14sp"
                       tools:text="认证理由"/>
                   <TextView
                       style="@style/TextWhiteStyle"
@@ -144,7 +145,6 @@
                       android:layout_centerHorizontal="true"
                       android:layout_below="@+id/tv_vertify_reason"
                       android:layout_marginLeft="20dp"
-                      android:layout_marginBottom="20dp"
                       android:textSize="14sp"
                       tools:text="这是介绍"/>
               </RelativeLayout>

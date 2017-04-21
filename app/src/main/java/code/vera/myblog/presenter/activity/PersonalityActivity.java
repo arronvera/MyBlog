@@ -74,6 +74,9 @@ public class PersonalityActivity extends PresenterActivity<PersonalityView, Pers
                     Debug.d("user=" + user.toString());
                     userInfoBean = user;
                     view.showInfo(user);
+                    TabPersonInfoFragment.getInstance().setUid(user.getId());
+                    TabPersonAllCircleFragment.getInstance().setUid(user.getId());
+                    TabPersonPhotosFragment.getInstance().setUid(user.getId());
                 }
             });
             bundle.putString("name", user_name);

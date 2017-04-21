@@ -21,8 +21,8 @@ public class TabPersonInfoView extends BaseView {
     TextView tvGender;
     @BindView(R.id.tv_location)
     TextView tvLocation;
-    @BindView(R.id.tv_introduce)
-    TextView tvIntroduce;
+//    @BindView(R.id.tv_introduce)
+//    TextView tvIntroduce;
     @BindView(R.id.tv_url)
     TextView tvUrl;
     @BindView(R.id.tv_state)

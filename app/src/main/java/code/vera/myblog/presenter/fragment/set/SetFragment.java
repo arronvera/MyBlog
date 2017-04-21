@@ -19,6 +19,7 @@ import code.vera.myblog.manager.DataCleanManager;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.activity.AboutAuthorActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
+import code.vera.myblog.presenter.activity.ProblemsActivity;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.utils.DialogUtils;
 import code.vera.myblog.utils.FileUtils;
@@ -79,9 +80,10 @@ public class SetFragment extends PresenterFragment<SetView, VoidModel> {
                         clearCache();
                     }
                 }, "取消", null);
-                break;
+               break;
             case R.id.rl_problems:
-                //todo
+                ProblemsActivity.start(mContext);
+
                 break;
             case R.id.rl_author:
                 AboutAuthorActivity.start(mContext);

@@ -23,7 +23,8 @@ import code.vera.myblog.view.other.CustomClickableSpan;
  */
 
 public class HomeUtils {
-    private static final String AT = "@[\u4e00-\u9fa5\\w]+";// @人
+//    private static final String AT = "@[\u4e00-\u9fa5\\w]+";// @人
+    private static final String AT = "@[\\u4e00-\\u9fa5a-zA-Z0-9_-]{2,30}";// @人
     private static final String TOPIC = "#[\u4e00-\u9fa5\\w]+#";// ##话题
     private static final String EMOJI = "\\[(\\S+?)\\]";// 表情
     private static final String URL = "http://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";// url

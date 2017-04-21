@@ -137,14 +137,13 @@
             <RelativeLayout
                 style="@style/ItemSetLLayout"
                 android:layout_marginTop="2dp">
-
-                <ImageView
+                <CheckBox
+                    android:id="@+id/cb_net_toast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_arrow" />
-
+                    android:layout_alignParentRight="true"
+                    android:button="@drawable/checkbox_selctor"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
