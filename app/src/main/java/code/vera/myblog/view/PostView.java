@@ -1,18 +1,16 @@
 package code.vera.myblog.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,16 +18,15 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.util.List;
-
 import butterknife.BindView;
-import cn.finalteam.rxgalleryfinal.bean.MediaBean;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
+import code.vera.myblog.adapter.ImageGridViewAdapter;
 import code.vera.myblog.bean.PostBean;
 import code.vera.myblog.bean.home.RetweetedStatusBean;
 import code.vera.myblog.bean.home.StatusesBean;
 import code.vera.myblog.config.Constants;
+import code.vera.myblog.listener.OnItemDeleteClickListener;
 import code.vera.myblog.utils.HomeUtils;
 import code.vera.myblog.view.base.BaseView;
 
@@ -61,8 +58,6 @@ public class PostView extends BaseView {
     ImageView ivOriPhoto;
     @BindView(R.id.tv_ori_name)
     TextView tvOriName;
-    @BindView(R.id.ll_gallery)
-    LinearLayout llGallery;//选择的图片
     @BindView(R.id.tv_location)
     TextView tvLocation;
     @BindView(R.id.iv_close_location)
@@ -79,6 +74,8 @@ public class PostView extends BaseView {
     CheckBox cbIfOriginal;
 //    @BindView(R.id.iv_choose_pic)
 //    ImageView ivChoosPic;
+    @BindView(R.id.gvPhotos)
+    GridView gvPhotos;
 
 
     private Context context;
@@ -91,6 +88,7 @@ public class PostView extends BaseView {
     private ImageView ivItemDelete;
     private int comment_ori = 0;//是否评论原作者
     private int type;
+    private OnItemDeleteClickListener onItemDeleteClickListener;
 
     @Override
     public void onAttachView(@NonNull View view) {
@@ -140,9 +138,17 @@ public class PostView extends BaseView {
     }
 
     private void initGallery() {
-        galleryView = LayoutInflater.from(context).inflate(R.layout.item_gallery, llGallery, false);
-        ivItemGallery = (ImageView) galleryView.findViewById(R.id.iv_item_gallery);//图片
-        ivItemDelete = (ImageView) galleryView.findViewById(R.id.iv_delete);//删除
+//        galleryView = LayoutInflater.from(context).inflate(R.layout.item_gallery, llGallery, false);
+//        ivItemGallery = (ImageView) galleryView.findViewById(R.id.iv_item_gallery);//图片
+//        ivItemDelete = (ImageView) galleryView.findViewById(R.id.iv_delete);//删除
+//        ivItemDelete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (onItemDeleteClickListener!=null){
+//                    onItemDeleteClickListener.onItemDeleteClickListener(v);
+//                }
+//            }
+//        });
     }
 
     public String getEditStr() {
@@ -240,22 +246,24 @@ public class PostView extends BaseView {
     /**
      * 显示选择的图片
      */
-    public void showPhotos(List<MediaBean> mediaBeanList) {
-        llGallery.setOrientation(LinearLayout.HORIZONTAL);
-        for (int i = 0; i < mediaBeanList.size(); i++) {
-            initGallery();
-            Bitmap bitmap = BitmapFactory.decodeFile(mediaBeanList.get(i).getOriginalPath());
-            ivItemGallery.setImageBitmap(bitmap);
-            llGallery.addView(galleryView);
-            llGallery.setTag(i);
-        }
+//    public void showPhotos(List<MediaBean> mediaBeanList) {
+//        llGallery.setOrientation(LinearLayout.HORIZONTAL);
+//        for (int i = 0; i < mediaBeanList.size(); i++) {
+//            initGallery();
+//            Bitmap bitmap = BitmapFactory.decodeFile(mediaBeanList.get(i).getOriginalPath());
+//            ivItemGallery.setImageBitmap(bitmap);
+//            llGallery.addView(galleryView);
+//            llGallery.setTag(i);
+//        }
+//    }
+    public void deletePhoto(int i){
+//        llGallery.removeViewAt(i);
     }
-
-    public void showPhoto(String picPath) {
-        Bitmap bitmap = BitmapFactory.decodeFile(picPath);
-        ivItemGallery.setImageBitmap(bitmap);
-        llGallery.addView(galleryView);
-    }
+//    public void showPhoto(String picPath) {
+//        Bitmap bitmap = BitmapFactory.decodeFile(picPath);
+//        ivItemGallery.setImageBitmap(bitmap);
+//        llGallery.addView(galleryView);
+//    }
 
     public void showPostBean(PostBean postBean) {
         int type = postBean.getPostStatus();
@@ -301,5 +309,10 @@ public class PostView extends BaseView {
     public void showFeedback(String feedback) {
         etMessage.setText(feedback);
         etMessage.setSelection(feedback.length());
+    }
+
+    public void setImageAdapter(ImageGridViewAdapter imageGridViewAdapter) {
+        imageGridViewAdapter.setGridView(gvPhotos);
+        gvPhotos.setAdapter(imageGridViewAdapter);
     }
 }

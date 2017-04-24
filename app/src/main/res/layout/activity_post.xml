@@ -182,24 +182,21 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_above="@+id/hsv_photo"
+            android:layout_above="@+id/gvPhotos"
             android:background="@color/colorAccent"
             android:layout_marginBottom="10dp">
         </LinearLayout>
-        <HorizontalScrollView
-            android:id="@+id/hsv_photo"
+        <GridView
+            android:id="@+id/gvPhotos"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginBottom="10dp"
-            android:layout_above="@+id/rl_bottom">
-            <LinearLayout
-                android:id="@+id/ll_gallery"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal" >
-            </LinearLayout>
-        </HorizontalScrollView>
+            android:layout_above="@+id/rl_bottom"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="9"
+            android:overScrollMode="never"
+            android:smoothScrollbar="false"
+            />
            <LinearLayout
                android:id="@+id/rl_bottom"
                android:layout_width="match_parent"

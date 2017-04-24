@@ -29,6 +29,7 @@ import cn.finalteam.rxgalleryfinal.imageloader.ImageLoaderType;
 import cn.finalteam.rxgalleryfinal.rxbus.RxBusResultSubscriber;
 import cn.finalteam.rxgalleryfinal.rxbus.event.ImageMultipleResultEvent;
 import code.vera.myblog.R;
+import code.vera.myblog.adapter.ImageGridViewAdapter;
 import code.vera.myblog.bean.CommentRequestBean;
 import code.vera.myblog.bean.Emoji;
 import code.vera.myblog.bean.GeoBean;
@@ -52,12 +53,14 @@ import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.PostView;
 import ww.com.core.Debug;
 
+import static code.vera.myblog.presenter.activity.BigPhotoActivity.PARAM_PHOTO;
+
 
 /**
  * 发布
  */
 public class PostActivity extends PresenterActivity<PostView, PostModel> implements
-        EmojFragment.OnEmojiClickListener, FriendFragmentCallBack, AuthorityFragmentCallBack {
+        EmojFragment.OnEmojiClickListener, FriendFragmentCallBack, AuthorityFragmentCallBack,ImageGridViewAdapter.AddImgGridListener {
     public static final int TAKE_PICTURE = 0025;
     public static final String PARAM_STATUS_BEAN = "StatusesBean";
     public static final String PARAM_POST_TYPE = "type";
@@ -93,6 +96,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private int visible;
     private long cid;//评论id
     private long weibId;
+    private ImageGridViewAdapter imageGridViewAdapter;
 
     @Override
     protected int getLayoutResId() {
@@ -124,9 +128,14 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
         if (!TextUtils.isEmpty(feedback)) {
             view.showFeedback(feedback);
         }
-
         initData();
+        setAdapter();
         addListener();
+    }
+
+    private void setAdapter() {
+        imageGridViewAdapter=new ImageGridViewAdapter(mContext);
+        view.setImageAdapter(imageGridViewAdapter);
     }
 
     private void initData() {
@@ -146,6 +155,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     private void addListener() {
         atSomebodyFragment.setFragmentCallBack(this);
         authorityFragment.setFragmentCallBack(this);
+        imageGridViewAdapter.setListener(this);
     }
 
     @OnClick({R.id.tv_cancle, R.id.iv_repost, R.id.iv_choose_pic,
@@ -437,7 +447,6 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
             Toast.makeText(this, "请确认已经插入SD卡", Toast.LENGTH_SHORT).show();
         }
     }
-
     /**
      * 选择图片
      */
@@ -451,41 +460,21 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 .subscribe(new RxBusResultSubscriber<ImageMultipleResultEvent>() {
                     @Override
                     protected void onEvent(ImageMultipleResultEvent resultEvent) throws Exception {
-//                        Debug.d("pic.size="+resultEvent.getResult().size());
-//                        view.showPhotos(resultEvent.getResult());
-                        if (pictureList == null || pictureList.size() == 0) {//如果集合为空
+                        if (pictureList!=null &&pictureList.size()==0){
+                            pictureList=resultEvent.getResult();
+                            imageGridViewAdapter.addList(resultEvent.getResult());
+                        }else if (pictureList.size()>0&&pictureList.size()<10){
                             pictureList.addAll(resultEvent.getResult());
-                            view.showPhotos(resultEvent.getResult());//显示
-                        } else if (pictureList.size() < 9) {//如果集合不为空并且图片数量小于9
-                            int re = 9 - pictureList.size();//剩余可以添加的图片数量
-                            if (resultEvent.getResult().size() <= re) {//如果添加的图片小于可以添加的数量，则全部添加
-                                for (int i=0;i<resultEvent.getResult().size();i++){
-                                    pictureList.add(resultEvent.getResult().get(i));
-                                }
-//                                pictureList.addAll(resultEvent.getResult());
-                                view.showPhotos(resultEvent.getResult());
-                            } else {//否则
-                                List<MediaBean> reList = new ArrayList<>();
-                                for (int i = 0; i < re; i++) {
-                                    pictureList.add(resultEvent.getResult().get(i));
-                                    reList.add(resultEvent.getResult().get(i));
-                                }
-                                view.showPhotos(reList);//显示
-                                ToastUtil.showToast(getApplicationContext(), "最多选择9张照片");
-                            }
-                        } else {//集合图片数量等于9
-                            //不做任何处理
-                            ToastUtil.showToast(getApplicationContext(), "最多选择9张照片");
+                            imageGridViewAdapter.appendList(resultEvent.getResult());
+                        }else if (pictureList.size()==9){
+                            ToastUtil.showToast(mContext, "最多选择9张照片");
                         }
                     }
-
                     @Override
                     public void onCompleted() {
                         super.onCompleted();
-
                     }
                 }).openGallery();
-        ToastUtil.showToast(getApplicationContext(), "你一共选择了" + pictureList.size() + "张图片");
     }
 
     @Override
@@ -496,7 +485,8 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 MediaBean mediaBean = new MediaBean();
                 mediaBean.setOriginalPath(picPath);
                 pictureList.add(mediaBean);
-                view.showPhoto(picPath);
+                //显示
+                imageGridViewAdapter.addItem(mediaBean);
             }
         }
         if (requestCode == ACTION_LOCATION) {
@@ -620,5 +610,20 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
             view.setTitle("分享圈子");
             view.setVisible(visible);
         }
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+//        ToastUtil.showToast(mContext,"点击");
+        Bundle bundle=new Bundle();
+        bundle.putString(PARAM_PHOTO,pictureList.get(position).getOriginalPath());
+        BigPhotoActivity.start(mContext,bundle);
+    }
+
+    @Override
+    public void onDeleteItem(int position) {
+//        ToastUtil.showToast(mContext,"删除");
+        imageGridViewAdapter.delItem(position);
+
     }
 }
