@@ -3,6 +3,7 @@ package code.vera.myblog.presenter.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.view.View;
 
 import butterknife.OnClick;
@@ -49,8 +50,9 @@ public class BigPhotoActivity extends PresenterActivity<BigPhotoView, VoidModel>
                 break;
         }
     }
-    public static void start(Context context){
-        Intent intent=new Intent(context,PersonalityActivity.class);
+    public static void start(Context context, Bundle bundle){
+        Intent intent=new Intent(context,BigPhotoActivity.class);
+        intent.putExtra(PARAM_PHOTO,bundle.getString(PARAM_PHOTO));
         context.startActivity(intent);
     }
 

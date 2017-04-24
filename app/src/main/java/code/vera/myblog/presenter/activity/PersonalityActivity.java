@@ -37,9 +37,11 @@ import static code.vera.myblog.presenter.activity.UsersFollowsActivity.PARAM_USE
 public class PersonalityActivity extends PresenterActivity<PersonalityView, PersonalityModel> {
     private UserInfoBean userInfoBean;
     private String user_name;
+    private long user_id;
     public static final String HEAD_PHOTO_SHARE = "photopic";
     public static final String BUNDLER_PARAM_USER = "user";
     public static final String BUNDLER_PARAM_USER_NAME = "user_name";
+    public static final String BUNDLER_PARAM_USER_ID = "user_id";
 
     @Override
     protected int getLayoutResId() {
@@ -67,19 +69,34 @@ public class PersonalityActivity extends PresenterActivity<PersonalityView, Pers
         }
         user_name = intent.getStringExtra(BUNDLER_PARAM_USER_NAME);
         if (!TextUtils.isEmpty(user_name)) {
-            model.getUserInfoByName(getApplicationContext(), user_name, bindUntilEvent(ActivityEvent.DESTROY), new CustomSubscriber<UserInfoBean>(mContext, true) {
-                @Override
-                public void onNext(UserInfoBean user) {
-                    super.onNext(user);
-                    Debug.d("user=" + user.toString());
-                    userInfoBean = user;
-                    view.showInfo(user);
-                    TabPersonInfoFragment.getInstance().setUid(user.getId());
-                    TabPersonAllCircleFragment.getInstance().setUid(user.getId());
-                    TabPersonPhotosFragment.getInstance().setUid(user.getId());
-                }
-            });
+            model.getUserInfoByName(mContext, user_name, bindUntilEvent(ActivityEvent.DESTROY),
+                    new CustomSubscriber<UserInfoBean>(mContext, true) {
+                        @Override
+                        public void onNext(UserInfoBean user) {
+                            super.onNext(user);
+                            Debug.d("user=" + user.toString());
+                            userInfoBean = user;
+                            view.showInfo(user);
+                            TabPersonInfoFragment.getInstance().setUid(user.getId());
+                            TabPersonAllCircleFragment.getInstance().setUid(user.getId());
+                            TabPersonPhotosFragment.getInstance().setUid(user.getId());
+                        }
+                    });
             bundle.putString("name", user_name);
+        }
+        //传入的是用户id
+        user_id = intent.getLongExtra(BUNDLER_PARAM_USER_ID, 0);
+        if (user_id != 0) {
+            model.getUserInfoById(mContext, user_id + "", bindUntilEvent(ActivityEvent.DESTROY),
+                    new CustomSubscriber<UserInfoBean>(mContext, true) {
+                        @Override
+                        public void onNext(UserInfoBean userInfoBean) {
+                            super.onNext(userInfoBean);
+                            TabPersonInfoFragment.getInstance().setUid(userInfoBean.getId());
+                            TabPersonAllCircleFragment.getInstance().setUid(userInfoBean.getId());
+                            TabPersonPhotosFragment.getInstance().setUid(userInfoBean.getId());
+                        }
+                    });
         }
         view.setAdapter();
 
@@ -153,6 +170,8 @@ public class PersonalityActivity extends PresenterActivity<PersonalityView, Pers
         Intent intent = new Intent(context, PersonalityActivity.class);
         intent.putExtra(BUNDLER_PARAM_USER, bundle.getSerializable(BUNDLER_PARAM_USER));
         intent.putExtra(BUNDLER_PARAM_USER_NAME, bundle.getString(BUNDLER_PARAM_USER_NAME));
+        intent.putExtra(BUNDLER_PARAM_USER_ID, bundle.getLong(BUNDLER_PARAM_USER_ID));
+
         context.startActivity(intent);
     }
 
