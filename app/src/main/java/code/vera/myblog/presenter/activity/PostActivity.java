@@ -164,61 +164,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public void doClick(View v) {
         switch (v.getId()) {
             case R.id.tv_cancle://取消
-                if (isShowFriend) {
-                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out).hide(atSomebodyFragment).commit();
-//                    hideFriendFragment();
-                    isShowFriend = false;
-                    view.setTitle("分享圈子");
-                    return;
-                }
-                if (isShowAuthority) {
-                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out).hide(authorityFragment).commit();
-                    isShowAuthority = false;
-                    view.setTitle("分享圈子");
-                    return;
-                }
-                if ((!TextUtils.isEmpty(view.getEditStr())) || (pictureList.size() != 0)) {
-                    //如果有内容  提示保存到草稿箱
-                    if (postBean == null) {
-                        postBean = new PostBean();
-                        postBean.setStatus(view.getEditStr());
-                        postBean.setPostStatus(type);
-                        postBean.setLat(lat);
-                        postBean.setLon(lon);
-                    } else {
-                        postBean.setStatus(view.getEditStr());
-                        postBean.setLat(lat);
-                        postBean.setLon(lon);
-                    }
-                    if (statusesBean != null && statusesBean.getRetweetedStatusBean() != null) {//原始信息
-                        RetweetedStatusBean statusBean = statusesBean.getRetweetedStatusBean();
-                        postBean.setOriHeadPhoto(statusBean.getUserbean().getProfile_image_url());
-                        postBean.setOriId(statusBean.getId());
-                        postBean.setOriName(statusBean.getUserbean().getName());
-                        postBean.setOriStatus(statusBean.getText());
-                    }
-                    Debug.d(postBean.toString());
-                    DialogUtils.showDialog(this, "", "是否保存到草稿箱?", "是", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (saveMessage()) {
-                                //发送广播
-                                sendBroadcast(new Intent(ACTION_SAVE_DRAFT));
-                                ToastUtil.showToast(mContext, "保存成功");
-                                finish();
-                            } else {
-                                ToastUtil.showToast(mContext, "保存失败");
-                            }
-                        }
-                    }, "否", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    });
-                } else {
-                    finish();
-                }
+                cancel();
                 break;
             case R.id.iv_repost://发送
                 String msg = view.getEditStr();
@@ -238,9 +184,11 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
 
                         break;
                     default://发布新的
-                        postBean = new PostBean();
+                        if (postBean==null){
+                            postBean = new PostBean();
+                        }
                         postBean.setStatus(msg);
-                        postBean.setPostStatus(Constants.POST_STATUS_NEW);
+                        postBean.setPostStatus(Constants.POST_TYPE_NEW);
                         postBean.setLat(lat);
                         postBean.setLon(lon);
                         postBean.setVisible(visible);
@@ -315,6 +263,65 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
                 view.setTitle("选择分享范围");
                 break;
 
+        }
+    }
+
+    private void cancel() {
+        if (isShowFriend) {
+            fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out)
+                    .hide(atSomebodyFragment).commit();
+            isShowFriend = false;
+            view.setTitle("分享圈子");
+            return;
+        }
+        if (isShowAuthority) {
+            fragmentManager.beginTransaction().setCustomAnimations(R.anim.pop_anim_in, R.anim.pop_anim_out)
+                    .hide(authorityFragment).commit();
+            isShowAuthority = false;
+            view.setTitle("分享圈子");
+            return;
+        }
+        if ((!TextUtils.isEmpty(view.getEditStr())) || (pictureList.size() != 0)) {
+            //如果有内容  提示保存到草稿箱
+            if (postBean == null) {
+                postBean = new PostBean();
+                postBean.setStatus(view.getEditStr());
+                postBean.setPostStatus(type);
+                postBean.setLat(lat);
+                postBean.setLon(lon);
+            } else {
+                postBean.setStatus(view.getEditStr());
+                postBean.setLat(lat);
+                postBean.setLon(lon);
+            }
+            if (statusesBean != null && statusesBean.getRetweetedStatusBean() != null) {//原始信息
+                RetweetedStatusBean statusBean = statusesBean.getRetweetedStatusBean();
+                postBean.setOriHeadPhoto(statusBean.getUserbean().getProfile_image_url());
+                postBean.setOriId(statusBean.getId());
+                postBean.setOriName(statusBean.getUserbean().getName());
+                postBean.setOriStatus(statusBean.getText());
+            }
+            Debug.d(postBean.toString());
+            DialogUtils.showDialog(this, "", "是否保存到草稿箱?", "是", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (saveMessage()) {
+                        //发送广播
+                        sendBroadcast(new Intent(ACTION_SAVE_DRAFT));
+                        ToastUtil.showToast(mContext, "保存成功");
+                        finish();
+                    } else {
+                        ToastUtil.showToast(mContext, "保存失败");
+                    }
+                }
+            }, "否", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+        } else {
+            finish();
         }
     }
 
@@ -624,5 +631,13 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public void onDeleteItem(int position) {
 //        ToastUtil.showToast(mContext,"删除");
         imageGridViewAdapter.delItem(position);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK){
+            cancel();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

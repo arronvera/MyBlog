@@ -14,6 +14,7 @@ import java.util.List;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.MenuItem;
 import code.vera.myblog.bean.UnReadBean;
+import code.vera.myblog.config.Constants;
 import code.vera.myblog.db.PostDao;
 
 /**
@@ -71,23 +72,24 @@ public class MenuItemAdapter extends BaseAdapter {
         //显示未读信息
         if (unreadBean!=null){
             switch (position){
-                case 0://首页
+                case Constants.MENU_INDEX_HOME://首页
                     if (unreadBean.getStatus()!=0){
                         holder.rlNumber.setVisibility(View.VISIBLE);
                         holder.tvNum.setText(unreadBean.getStatus()+"");
                     }
                     break;
-                case 1://消息
+                case Constants.MENU_INDEX_MESSAGE://消息
                     holder.tvNum.setText(unreadBean.getStatus()+"");
                     break;
-            }
+           }
         }
         //显示收藏数
-        if (favoriteSize!=0&&position==3){
+        if (favoriteSize!=0&&position== Constants.MENU_INDEX_FAVORITE){
             holder.tvNum.setText(favoriteSize+"");
             holder.rlNumber.setVisibility(View.VISIBLE);
         }
-        if (postDao.getAll()!=null&&postDao.getAll().size()!=0&&position==4){//草稿
+        if (postDao.getAll()!=null&&postDao.getAll().size()!=0
+                &&position== Constants.MENU_INDEX_DRAFT){//草稿
             holder.rlNumber.setVisibility(View.VISIBLE);
             holder.tvNum.setText(postDao.getAll().size()+"");
         }

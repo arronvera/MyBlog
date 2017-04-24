@@ -12,12 +12,6 @@ public class Constants {
                     + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
                     + "follow_app_official_microblog," + "invitation_write";
 
-    //--------------发送状态status-------------------(0-新建,1-失败,2-草稿,,3-正在发送,4-等待发送)
-    public static final int POST_STATUS_NEW=0;//新建
-    public static final int POST_STATUS_FAILED=1;//失败
-    public static final int POST_STATUS_DRAFT=2;//草稿
-    public static final int POST_STATUS_SENDING=3;//正在发送
-    public static final int POST_STATUS_WAITING=4;//等待发送
 
     //--------------发送类型type-------------------(0-新建信息,1-新建评论,,2-转发)
     public static final int POST_TYPE_NEW=0;//新建信息
@@ -47,5 +41,15 @@ public class Constants {
     public static final int FILTER_MUSIC=4;
 
     public static final int POST_SEND_DRAFT=4;//发送草稿
+
+    //-------左侧菜单下标----------
+    public static final int MENU_INDEX_HOME=0;//首页
+    public static final int MENU_INDEX_MESSAGE=1;//消息
+    public static final int MENU_INDEX_FIND=2;//发现
+    public static final int MENU_INDEX_FAVORITE=3;//收藏
+    public static final int MENU_INDEX_DRAFT=4;//草稿
+    public static final int MENU_INDEX_SET=5;//设置
+
+
 
 }

@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,6 +47,7 @@ import code.vera.myblog.presenter.fragment.message.MessageFragment;
 import code.vera.myblog.presenter.fragment.set.SetFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
 import code.vera.myblog.utils.SaveUtils;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.MainView;
 
 import static code.vera.myblog.R.id.lv_left_menu;
@@ -98,6 +101,9 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         addListener();
         fragment = new HomeFragment();
         fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
+        //网络状态
+        isToastNet();
+
     }
 
     private void addListener() {
@@ -310,7 +316,7 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
         public void registRecevier() {
             IntentFilter filter = new IntentFilter();
             filter.addAction(ACTION_SAVE_DRAFT);
-            filter.addAction(ACTION_DELETE_DRAFT);
+            filter.addAction(ACTION_DELETE_DRAFT);//删除草稿
             filter.addAction(ACTION_CLEAR_UNREAD);//清空未读
             filter.addAction(ACTION_UPDATE_FAVORITE);//更新收藏
             mContext.registerReceiver(this, filter);
@@ -320,10 +326,25 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
             mContext.unregisterReceiver(this);
         }
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         broadcastReceiver.unRgistRecevier();
     }
+    public void isToastNet(){
+       if ( SaveUtils.getNetState(mContext)){
+           ConnectivityManager connectivityManager=(ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+           NetworkInfo mobNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+           NetworkInfo  wifiNetInfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+           if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
+               ToastUtil.showToast(mContext, "当前网络不可用");
+           }else if (wifiNetInfo.isAvailable()){
+               ToastUtil.showToast(mContext, "当前网络处于Wifi状态下");
+           }else if (mobNetInfo.isAvailable()){
+               ToastUtil.showToast(mContext, "当前网络处于数据状态下");
+           }
+       }
+
+    }
+
 }
