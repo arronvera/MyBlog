@@ -39,7 +39,11 @@ public class ImageGridViewAdapter extends ABaseAdapter<MediaBean> {
     @Override
     public int getCount() {
         if (datas != null && datas.size() > 0) {
-            return datas.size();
+            if (datas.size()>maxSize){
+                return maxSize;
+            }else {
+                return datas.size();
+            }
         }
             return 0;
     }

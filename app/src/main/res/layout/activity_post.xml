@@ -190,13 +190,13 @@
             android:id="@+id/gvPhotos"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginBottom="10dp"
-            android:layout_above="@+id/rl_bottom"
             android:listSelector="@android:color/transparent"
             android:numColumns="9"
+            android:horizontalSpacing="1dp"
+            android:layout_above="@+id/rl_bottom"
             android:overScrollMode="never"
-            android:smoothScrollbar="false"
-            />
+            android:smoothScrollbar="false" />
+
            <LinearLayout
                android:id="@+id/rl_bottom"
                android:layout_width="match_parent"
