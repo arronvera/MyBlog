@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import cn.finalteam.rxgalleryfinal.bean.MediaBean;
 import code.vera.myblog.R;
-import ww.com.core.Debug;
 
 /**
  * Created by vera on 2017/4/24 0024.
@@ -69,7 +68,6 @@ public class ImageGridViewAdapter extends ABaseAdapter<MediaBean> {
             @Override
             public void buildData(final int position, MediaBean obj) {
                 if (obj!=null) {
-                    Debug.d("path="+obj.getOriginalPath());
                     Bitmap bitmap = BitmapFactory.decodeFile(obj.getOriginalPath());
                     itemImg.setImageBitmap(bitmap);
                     itemView.setOnClickListener(new View.OnClickListener() {

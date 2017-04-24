@@ -301,10 +301,10 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 if (statusesBeen != null) {
                     if (requestBean.getPage().equals("1")) {
                         adapter.addList(statusesBeen);//清空加载进去
-                        view.refreshFinished();//加载完成
                     } else {//往后面追加
                         adapter.appendList(statusesBeen);
                     }
+                    view.refreshFinished();//加载完成
                 }
             }
         });

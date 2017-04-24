@@ -624,6 +624,5 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
     public void onDeleteItem(int position) {
 //        ToastUtil.showToast(mContext,"删除");
         imageGridViewAdapter.delItem(position);
-
     }
 }

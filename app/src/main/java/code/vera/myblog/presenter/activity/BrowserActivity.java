@@ -9,8 +9,6 @@ import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.view.other.BrowserView;
 
-import static code.vera.myblog.presenter.activity.TopicActivity.BUNDLER_PARAM_TOPIC;
-
 /**
  * 浏览器
  * Created by vera on 2017/2/13 0013.
@@ -29,7 +27,7 @@ public class BrowserActivity extends PresenterActivity<BrowserView,VoidModel> {
     protected void onAttach() {
         super.onAttach();
         Intent intent=getIntent();
-         link=intent.getStringExtra("link");
+         link=intent.getStringExtra(BUNDLER_PARAM_LINK);
         loadView();
     }
 

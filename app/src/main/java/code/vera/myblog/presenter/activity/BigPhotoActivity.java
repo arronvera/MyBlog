@@ -13,6 +13,7 @@ import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.utils.PictureUtils;
 import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.other.BigPhotoView;
+import ww.com.core.Debug;
 
 /**
  * 查看大图
@@ -29,7 +30,12 @@ public class BigPhotoActivity extends PresenterActivity<BigPhotoView, VoidModel>
         super.onAttach(viRoot);
         Intent intent=getIntent();
         String url=intent.getStringExtra(PARAM_PHOTO);
-        view.showBigPhoto(url);
+        Debug.d("url="+url);
+        if (url.startsWith("http://")){
+            view.showBigPhoto(url);
+        }else if (url.startsWith("/storage/")){
+            view.showLocalPhoto(url);
+        }
     }
     @OnClick({R.id.iv_photo,R.id.btn_save,R.id.btn_cancel})
     public void doClick(View v){

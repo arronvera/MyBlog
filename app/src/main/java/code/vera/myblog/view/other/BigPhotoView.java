@@ -1,6 +1,7 @@
 package code.vera.myblog.view.other;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
@@ -61,5 +62,11 @@ public class BigPhotoView extends BaseView {
 
     public void setLoadBitmap(Bitmap loadBitmap) {
         this.loadBitmap = loadBitmap;
+    }
+
+    public void showLocalPhoto(String url) {
+        Bitmap bitmap = BitmapFactory.decodeFile(url);
+        loadBitmap=bitmap;
+        ivPhoto.setImageBitmap(bitmap);
     }
 }
