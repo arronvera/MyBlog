@@ -143,6 +143,12 @@ public class EmojiUtil {
             R.drawable.d_ku,
             R.drawable.d_mimang,
             R.drawable.d_mianwubiaoqing,
+            R.drawable.d_shoushang,
+            R.drawable.d_qinwen,
+            R.drawable.d_mogui,
+            R.drawable.d_relian,
+            R.drawable.d_xieyan,
+            R.drawable.d_zhayan,
 
     };
     public static final String[] AntiEmojiTextArray = {
@@ -152,6 +158,12 @@ public class EmojiUtil {
             "[酷]",
             "[迷茫]",
             "[面无表情]",
+            "[受伤]",
+            "[亲吻]",
+            "[魔鬼]",
+            "[热恋]",
+            "[斜眼]",
+            "[眨眼]",
 
     };
 

@@ -116,9 +116,13 @@
             android:name=".presenter.activity.NearByLocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppBaseTheme2" />
-        <activity android:name=".presenter.activity.ProblemsActivity"
+        <activity
+            android:name=".presenter.activity.ProblemsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppBaseTheme2" ></activity>
+            android:theme="@style/AppBaseTheme2" />
+        <activity android:name=".presenter.activity.AboutAppActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppBaseTheme2"></activity>
     </application>
 
 </manifest>

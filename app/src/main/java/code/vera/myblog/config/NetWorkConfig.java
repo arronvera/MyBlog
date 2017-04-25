@@ -86,4 +86,9 @@ public class NetWorkConfig {
     //-----------------------------位置----------------------------------------
     //附近位置
     public static final String NEARBY_PLACES=BASE_URL+"/place/nearby/pois.json";
+
+
+    //-----------------------------分享---------------------------------------
+    public static final String SHARE_STATUS=BASE_URL+"/statuses/share.json";
+
 }

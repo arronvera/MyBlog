@@ -7,20 +7,23 @@
     android:background="@color/color_background"
     android:orientation="vertical"
     tools:context="code.vera.myblog.presenter.activity.ProblemsActivity">
+
     <RelativeLayout
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorWhite"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:background="@color/colorWhite">
+
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:src="@mipmap/ic_back"
-            android:layout_centerVertical="true"/>
+            android:src="@mipmap/ic_back" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,38 +31,42 @@
             android:text="常见问题"
             android:textColor="@color/colorAccent" />
     </RelativeLayout>
+
     <LinearLayout
-    android:layout_width="wrap_content"
-    android:padding="10dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="1dp"
-    android:background="@color/colorWhite">
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="1.为什么无法获取部分用户的微博信息以及部分发布列表？"/>
+        android:layout_marginTop="1dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.为什么无法获取部分用户的微博信息以及部分发布列表？"
+            android:textSize="16sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
-        android:text="答：因为微博官方Api限制只能获取授权用户的信息，所以无法显示。"
-        android:id="@+id/textView" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:text="2.这是商业APP吗？"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:text="答：这只是我的一个毕业设计，不是商用App，欢迎支持"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="答：因为微博官方Api限制只能获取授权用户的信息，所以无法显示。"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="2.这是商业APP吗？"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="答：这只是我的一个毕业设计，不是商用App，欢迎支持"
+            android:textSize="16sp" />
 
 
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>

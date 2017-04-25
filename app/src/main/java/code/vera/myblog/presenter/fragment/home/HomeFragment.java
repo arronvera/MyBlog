@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
+import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.trello.rxlifecycle.FragmentEvent;
 
 import java.util.List;
@@ -71,7 +72,7 @@ import static code.vera.myblog.presenter.activity.TopicActivity.BUNDLER_PARAM_TO
 
 public class HomeFragment extends PresenterFragment<HomeView, HomeModel> implements
         OnItemCommentListener, OnItemRepostListener, OnItemLikeListener, OnItemOriginalListener,
-        OnItemLinkListener, OnItemTopicListener, OnItemAtListener,OnItemLocationListener
+        OnItemLinkListener, OnItemTopicListener, OnItemAtListener, OnItemLocationListener
         , OnItemMenuListener, OnItemHeadPhotoListener, OnItemClickListener {
     private HomeRequestBean requestBean;
     private HomeAdapter adapter;//适配器
@@ -133,7 +134,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo 分享
+                share();
             }
         });
         btnConcern.setOnClickListener(new View.OnClickListener() {
@@ -141,9 +142,11 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
             public void onClick(View v) {
                 if (isFollow) {
                     // 取消关注
-                    destroyFriendShip();
+                    ToastUtil.showToast(getContext(), getString(R.string.api_not_found));
+//                    destroyFriendShip();
                 } else {
-                    createFriendShip();
+                    ToastUtil.showToast(getContext(), getString(R.string.api_not_found));
+//                    createFriendShip();
                 }
             }
         });
@@ -169,6 +172,14 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
             }
         });
         cateDialogBuilder = new AlertDialog.Builder(mContext);
+    }
+
+    private void share() {
+        //todo 分享
+        StatusesBean statusesBean = adapter.getItem(index);
+//        model.share(statusesBean.getText(),);
+        WeiboMultiMessage weiboMultiMessage = new WeiboMultiMessage();
+//        weiboMultiMessage.textObject=getTextObj();
     }
 
     private void createFriendShip() {
@@ -348,9 +359,9 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     public void onItemLikeListener(View v, ImageView imageView, int pos) {
         //喜欢
         view.setLikeView(imageView);
-        StatusesBean statusesBean=adapter.getItem(pos);
-        statusesBean.setAttitudes_count(statusesBean.getAttitudes_count()+1);
-        adapter.notifyItemChanged(pos,imageView);
+        StatusesBean statusesBean = adapter.getItem(pos);
+        statusesBean.setAttitudes_count(statusesBean.getAttitudes_count() + 1);
+        adapter.notifyItemChanged(pos, imageView);
     }
 
     @OnClick(R.id.iv_filter)
@@ -469,11 +480,11 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
     @Override
     public void onItemLocation(View v, int pos) {
         //查看位置
-        Bundle bundle=new Bundle();
-        GeoBean geoBean=adapter.getItem(pos).getGeoBean();
-        bundle.putDouble(PARAM_LOCATION_LATITUDE,geoBean.getCoordinates().get(0));
-        bundle.putDouble(PARAM_LOCATION_LONGTITUDE,geoBean.getCoordinates().get(1));
-        NearByLocationActivity.start(mContext,bundle);
+        Bundle bundle = new Bundle();
+        GeoBean geoBean = adapter.getItem(pos).getGeoBean();
+        bundle.putDouble(PARAM_LOCATION_LATITUDE, geoBean.getCoordinates().get(0));
+        bundle.putDouble(PARAM_LOCATION_LONGTITUDE, geoBean.getCoordinates().get(1));
+        NearByLocationActivity.start(mContext, bundle);
     }
 
     private class ButtonOnClick implements DialogInterface.OnClickListener {

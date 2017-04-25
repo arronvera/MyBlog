@@ -33,26 +33,26 @@
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_privaciy"
-                style="@style/ItemSetLLayout"
-                android:layout_marginTop="2dp">
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rl_privaciy"-->
+                <!--style="@style/ItemSetLLayout"-->
+                <!--android:layout_marginTop="2dp">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/privicy_set"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:text="@string/privicy_set"-->
+                    <!--android:textColor="@color/colorBlack"-->
+                    <!--android:textSize="14sp" />-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_arrow" />
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:src="@mipmap/ic_arrow" />-->
+            <!--</RelativeLayout>-->
 
             <RelativeLayout
                 android:id="@+id/rl_feedback"

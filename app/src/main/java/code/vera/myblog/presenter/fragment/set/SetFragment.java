@@ -17,6 +17,7 @@ import code.vera.myblog.bean.home.UserInfoBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.manager.DataCleanManager;
 import code.vera.myblog.model.base.VoidModel;
+import code.vera.myblog.presenter.activity.AboutAppActivity;
 import code.vera.myblog.presenter.activity.AboutAuthorActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.ProblemsActivity;
@@ -45,7 +46,6 @@ public class SetFragment extends PresenterFragment<SetView, VoidModel> {
     }
 
     @Override
-
     protected void onAttach() {
         super.onAttach();
         initData();
@@ -65,7 +65,7 @@ public class SetFragment extends PresenterFragment<SetView, VoidModel> {
             R.id.rl_feedback})
     public void doClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_exit:
+            case R.id.rl_exit://退出登录
                 DialogUtils.showDialog(mContext, "", "你是否确定注销登陆？", "确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -73,34 +73,32 @@ public class SetFragment extends PresenterFragment<SetView, VoidModel> {
                     }
                 }, "取消", null);
                 break;
-            case R.id.rl_clear_cache:
+            case R.id.rl_clear_cache://清空缓存
                 DialogUtils.showDialog(mContext, "", "你是否确定清除缓存？", "确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         clearCache();
                     }
                 }, "取消", null);
-               break;
-            case R.id.rl_problems:
-                ProblemsActivity.start(mContext);
-
                 break;
-            case R.id.rl_author:
+            case R.id.rl_problems://问题
+                ProblemsActivity.start(mContext);
+                break;
+            case R.id.rl_author://关于作者
                 AboutAuthorActivity.start(mContext);
                 break;
             case R.id.rl_check_vision://检查更新
                 ToastUtil.showToast(mContext, "当前版本已经是最新版本了哦~");
                 break;
-            case R.id.rl_about_app:
-                //todo
+            case R.id.rl_about_app://关于App
+                AboutAppActivity.start(mContext);
                 break;
             case R.id.rl_feedback://反馈
                 Bundle bundle = new Bundle();
-                bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_NEW);
                 String feedback = "@炎小香 ";
                 bundle.putString(PARAM_NEW_TEXT, feedback);
+                bundle.putInt(PARAM_POST_TYPE, Constants.POST_TYPE_NEW);
                 PostActivity.start(mContext, bundle);
-
                 break;
         }
     }
