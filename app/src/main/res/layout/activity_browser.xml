@@ -2,11 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/color_background"
     android:layout_height="match_parent">
     <RelativeLayout
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_back"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -15,16 +22,21 @@
             android:textSize="20sp"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_e3e4e5"
-        android:layout_alignParentBottom="true">
-    </LinearLayout>
-<code.vera.myblog.view.widget.WebViewWithProgress
-    android:id="@+id/progress"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</code.vera.myblog.view.widget.WebViewWithProgress>
+    <ProgressBar
+        android:id="@+id/progrese_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp" />
+    <!--<code.vera.myblog.view.widget.WebViewWithProgress-->
+        <!--android:id="@+id/progress"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+    <!--</code.vera.myblog.view.widget.WebViewWithProgress>-->
+    <code.vera.myblog.view.widget.X5WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </code.vera.myblog.view.widget.X5WebView>
 </LinearLayout>

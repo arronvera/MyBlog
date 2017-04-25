@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.model.base.VoidModel;
 import code.vera.myblog.presenter.base.PresenterActivity;
@@ -14,9 +15,9 @@ import code.vera.myblog.view.other.BrowserView;
  * Created by vera on 2017/2/13 0013.
  */
 
-public class BrowserActivity extends PresenterActivity<BrowserView,VoidModel> {
+public class BrowserActivity extends PresenterActivity<BrowserView, VoidModel> {
     private String link;
-    public static final String BUNDLER_PARAM_LINK="link";
+    public static final String BUNDLER_PARAM_LINK = "link";
 
     @Override
     protected int getLayoutResId() {
@@ -26,17 +27,23 @@ public class BrowserActivity extends PresenterActivity<BrowserView,VoidModel> {
     @Override
     protected void onAttach() {
         super.onAttach();
-        Intent intent=getIntent();
-         link=intent.getStringExtra(BUNDLER_PARAM_LINK);
+        Intent intent = getIntent();
+        link = intent.getStringExtra(BUNDLER_PARAM_LINK);
         loadView();
     }
 
     private void loadView() {
-      view.load(link);
+        view.load(link);
     }
-    public static void start(Context context, Bundle bundle){
-        Intent intent=new Intent(context,BrowserActivity.class);
+
+    public static void start(Context context, Bundle bundle) {
+        Intent intent = new Intent(context, BrowserActivity.class);
         intent.putExtra(BUNDLER_PARAM_LINK, bundle.getSerializable(BUNDLER_PARAM_LINK));
         context.startActivity(intent);
+    }
+
+    @OnClick(R.id.iv_back)
+    public void back() {
+        finish();
     }
 }
