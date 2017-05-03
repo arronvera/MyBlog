@@ -1,9 +1,11 @@
 package code.vera.myblog.presenter.fragment.home;
 
+import android.content.ActivityNotFoundException;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -176,10 +178,26 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
 
     private void share() {
         //todo 分享
-        StatusesBean statusesBean = adapter.getItem(index);
+//        StatusesBean statusesBean = adapter.getItem(index);
 //        model.share(statusesBean.getText(),);
-        WeiboMultiMessage weiboMultiMessage = new WeiboMultiMessage();
+//        WeiboMultiMessage weiboMultiMessage = new WeiboMultiMessage();
 //        weiboMultiMessage.textObject=getTextObj();
+        Intent intent=new Intent(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_TEXT, "文本");
+//        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File("/sdcard/aaa.jpg")));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        Context context = null;
+        try{
+            context=mContext.createPackageContext("com.sina.weibo", Context.CONTEXT_IGNORE_SECURITY);
+            intent.setClassName(context, "com.sina.weibo.EditActivity");
+            startActivity(intent);
+        }catch (ActivityNotFoundException e){
+            ToastUtil.showToast(mContext,"您的手机没有安装新浪微博客户端");
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createFriendShip() {
@@ -410,11 +428,10 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 BrowserActivity.start(mContext, bundle);
                 break;
             case Constants.LINK_TYPE_MUSIC:
-                //todo 音乐
+                //音乐
                 break;
             case Constants.LINK_TYPE_VIDEO:
-                //todo 电影
-
+                //电影
                 break;
             default:
                 bundle = new Bundle();
