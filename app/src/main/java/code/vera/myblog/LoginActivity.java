@@ -56,6 +56,7 @@ public class LoginActivity extends PresenterActivity<LoginView, VoidModel> {
                 ToastUtil.showToast(mContext,"登陆成功~");
                 AccessTokenKeeper.writeAccessToken(getApplicationContext(), accessToken);
                 MainActivity.start(mContext);
+                finish();
             }else{
                 Debug.d("token为空");
             }
