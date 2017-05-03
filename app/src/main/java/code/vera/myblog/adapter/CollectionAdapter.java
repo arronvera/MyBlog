@@ -41,7 +41,7 @@ import code.vera.myblog.view.CircleImageView;
 
 
 /**
- * 首页适配器
+ * 收藏适配器
  * Created by vera on 2017/2/7 0007.
  */
 
