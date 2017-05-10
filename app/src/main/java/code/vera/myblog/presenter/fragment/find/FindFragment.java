@@ -11,8 +11,8 @@ import java.util.List;
 
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.FindAdapter;
-import code.vera.myblog.bean.home.HomeRequestBean;
-import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.bean.HomeRequestBean;
+import code.vera.myblog.bean.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemCommentListener;

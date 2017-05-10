@@ -1,4 +1,4 @@
-package code.vera.myblog.bean.home;
+package code.vera.myblog.bean;
 
 import android.support.annotation.Nullable;
 

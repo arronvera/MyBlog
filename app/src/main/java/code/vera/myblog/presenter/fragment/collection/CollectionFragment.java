@@ -12,7 +12,7 @@ import java.util.List;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.CollectionAdapter;
 import code.vera.myblog.bean.CollectionBean;
-import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.bean.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemFavoriteListener;

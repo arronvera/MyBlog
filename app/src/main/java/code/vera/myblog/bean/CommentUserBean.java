@@ -2,9 +2,6 @@ package code.vera.myblog.bean;
 
 import com.alibaba.fastjson.JSON;
 
-import code.vera.myblog.bean.home.StatusesBean;
-import code.vera.myblog.bean.home.UserBean;
-
 /**
  * 评论实体类
  * Created by vera on 2017/2/10 0010.

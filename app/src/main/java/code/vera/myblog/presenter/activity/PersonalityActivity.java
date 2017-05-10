@@ -12,7 +12,7 @@ import com.trello.rxlifecycle.ActivityEvent;
 import butterknife.OnClick;
 import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.R;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.PersonalityModel;
 import code.vera.myblog.presenter.base.PresenterActivity;

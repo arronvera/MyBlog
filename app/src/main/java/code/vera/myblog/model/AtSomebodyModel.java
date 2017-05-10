@@ -8,7 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.List;
 
 import code.vera.myblog.api.PostApi;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.model.base.IModel;
 import rx.Observable;
 import rx.Subscriber;

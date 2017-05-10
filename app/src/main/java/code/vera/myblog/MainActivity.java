@@ -31,7 +31,7 @@ import code.vera.myblog.adapter.MenuItemAdapter;
 import code.vera.myblog.bean.CollectionBean;
 import code.vera.myblog.bean.MenuItem;
 import code.vera.myblog.bean.UnReadBean;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.activity.PersonalityActivity;

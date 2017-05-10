@@ -7,7 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import code.vera.myblog.api.HomeApi;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.model.base.IModel;
 import rx.Observable;
 import rx.Subscriber;

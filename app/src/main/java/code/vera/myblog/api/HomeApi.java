@@ -8,7 +8,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import code.vera.myblog.AccessTokenKeeper;
-import code.vera.myblog.bean.home.HomeRequestBean;
+import code.vera.myblog.bean.HomeRequestBean;
 import code.vera.myblog.config.NetWorkConfig;
 import code.vera.myblog.utils.IpUtils;
 import rx.Observable;

@@ -13,7 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.utils.SaveUtils;
 import code.vera.myblog.view.base.BaseView;
 

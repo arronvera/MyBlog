@@ -12,7 +12,7 @@ import java.util.List;
 import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.UserAdapter;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.listener.OnItemClickListener;
 import code.vera.myblog.listener.OnItemHeadPhotoListener;

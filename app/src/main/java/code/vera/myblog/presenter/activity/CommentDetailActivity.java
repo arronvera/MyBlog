@@ -12,8 +12,8 @@ import com.trello.rxlifecycle.ActivityEvent;
 
 import butterknife.OnClick;
 import code.vera.myblog.R;
-import code.vera.myblog.bean.home.RetweetedStatusBean;
-import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.bean.RetweetedStatusBean;
+import code.vera.myblog.bean.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemLinkListener;

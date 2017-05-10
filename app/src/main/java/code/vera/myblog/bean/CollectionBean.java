@@ -4,8 +4,6 @@ import com.alibaba.fastjson.JSON;
 
 import java.util.List;
 
-import code.vera.myblog.bean.home.StatusesBean;
-
 /**
  * Created by vera on 2017/4/12 0012.
  */

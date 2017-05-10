@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import code.vera.myblog.R;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.utils.TimeUtils;
 import code.vera.myblog.view.base.BaseView;
 

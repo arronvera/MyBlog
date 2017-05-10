@@ -15,7 +15,7 @@ import butterknife.BindView;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.SortFriendAdapter;
 import code.vera.myblog.bean.SortBean;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.callback.FriendFragmentCallBack;
 import code.vera.myblog.model.AtSomebodyModel;
 import code.vera.myblog.other.CharacterParser;

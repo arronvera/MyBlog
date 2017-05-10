@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import code.vera.myblog.api.HomeApi;
-import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.bean.StatusesBean;
 import code.vera.myblog.model.base.IModel;
 import code.vera.myblog.utils.ToastUtil;
 import rx.Observable;

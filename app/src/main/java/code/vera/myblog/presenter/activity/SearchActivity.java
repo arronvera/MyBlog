@@ -14,7 +14,7 @@ import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.SearchUserAdapter;
 import code.vera.myblog.bean.SearchUserBean;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.model.SearchModel;
 import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;

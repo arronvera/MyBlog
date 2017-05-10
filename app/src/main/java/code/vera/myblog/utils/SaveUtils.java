@@ -3,7 +3,7 @@ package code.vera.myblog.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 /**
  * 存储工具
  * Created by vera on 2017/2/7 0007.

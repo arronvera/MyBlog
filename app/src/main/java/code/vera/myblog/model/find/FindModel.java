@@ -10,8 +10,8 @@ import java.util.List;
 
 import code.vera.myblog.api.FindApi;
 import code.vera.myblog.api.HomeApi;
-import code.vera.myblog.bean.home.HomeRequestBean;
-import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.bean.HomeRequestBean;
+import code.vera.myblog.bean.StatusesBean;
 import code.vera.myblog.model.base.IModel;
 import rx.Observable;
 import rx.Subscriber;

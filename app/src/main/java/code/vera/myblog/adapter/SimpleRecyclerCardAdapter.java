@@ -8,7 +8,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.BindView;
 import code.vera.myblog.R;
-import code.vera.myblog.bean.home.PicBean;
+import code.vera.myblog.bean.PicBean;
 
 /**
  * Created by vera on 2017/3/30 0030.

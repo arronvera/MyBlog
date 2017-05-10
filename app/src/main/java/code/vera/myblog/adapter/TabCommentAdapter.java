@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.bean.StatusesBean;
 import code.vera.myblog.presenter.fragment.tab.TabCommentFragment;
 import code.vera.myblog.presenter.fragment.tab.TabLikeFragment;
 import code.vera.myblog.presenter.fragment.tab.TabRepostFragment;

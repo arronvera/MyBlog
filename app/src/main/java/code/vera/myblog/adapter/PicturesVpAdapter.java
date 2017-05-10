@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-import code.vera.myblog.bean.home.PicBean;
+import code.vera.myblog.bean.PicBean;
 import code.vera.myblog.presenter.fragment.other.PictureFragment;
 
 /**

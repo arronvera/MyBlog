@@ -13,7 +13,7 @@ import butterknife.OnClick;
 import code.vera.myblog.AccessTokenKeeper;
 import code.vera.myblog.LoginActivity;
 import code.vera.myblog.R;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.manager.DataCleanManager;
 import code.vera.myblog.model.base.VoidModel;

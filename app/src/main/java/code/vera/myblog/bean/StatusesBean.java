@@ -1,4 +1,4 @@
-package code.vera.myblog.bean.home;
+package code.vera.myblog.bean;
 
 import android.support.annotation.Nullable;
 
@@ -8,8 +8,6 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.io.Serializable;
 import java.util.List;
-
-import code.vera.myblog.bean.GeoBean;
 
 /**
  * Created by vera on 2017/1/19 0019.

@@ -1,4 +1,4 @@
-package code.vera.myblog.bean.home;
+package code.vera.myblog.bean;
 
 /**
  * Created by vera on 2017/1/19 0019.

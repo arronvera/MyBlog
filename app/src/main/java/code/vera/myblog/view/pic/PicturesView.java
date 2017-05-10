@@ -12,7 +12,7 @@ import java.util.List;
 import butterknife.BindView;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.PicturesVpAdapter;
-import code.vera.myblog.bean.home.PicBean;
+import code.vera.myblog.bean.PicBean;
 import code.vera.myblog.view.base.BaseView;
 import code.vera.myblog.view.widget.PhotoViewPager;
 

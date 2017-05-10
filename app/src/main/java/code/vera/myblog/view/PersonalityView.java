@@ -16,7 +16,7 @@ import butterknife.BindView;
 import code.vera.myblog.BaseApplication;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.TabPersonAdapter;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.utils.NumUtils;
 import code.vera.myblog.view.base.BaseView;

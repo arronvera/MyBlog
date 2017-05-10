@@ -4,7 +4,7 @@ import com.trello.rxlifecycle.FragmentEvent;
 
 import butterknife.OnClick;
 import code.vera.myblog.R;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.base.PresenterFragment;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;

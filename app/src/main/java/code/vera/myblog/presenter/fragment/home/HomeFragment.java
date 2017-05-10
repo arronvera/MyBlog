@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
-import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.trello.rxlifecycle.FragmentEvent;
 
 import java.util.List;
@@ -27,8 +26,8 @@ import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.HomeAdapter;
 import code.vera.myblog.bean.GeoBean;
-import code.vera.myblog.bean.home.HomeRequestBean;
-import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.bean.HomeRequestBean;
+import code.vera.myblog.bean.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemClickListener;

@@ -11,7 +11,7 @@ import java.util.List;
 import butterknife.OnClick;
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.HomeAdapter;
-import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.bean.StatusesBean;
 import code.vera.myblog.model.other.TopicModel;
 import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;

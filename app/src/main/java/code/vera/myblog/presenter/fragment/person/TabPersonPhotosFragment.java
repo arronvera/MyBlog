@@ -7,9 +7,9 @@ import java.util.List;
 
 import code.vera.myblog.R;
 import code.vera.myblog.adapter.SimpleRecyclerCardAdapter;
-import code.vera.myblog.bean.home.HomeRequestBean;
-import code.vera.myblog.bean.home.PicBean;
-import code.vera.myblog.bean.home.StatusesBean;
+import code.vera.myblog.bean.HomeRequestBean;
+import code.vera.myblog.bean.PicBean;
+import code.vera.myblog.bean.StatusesBean;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.base.PresenterFragment;

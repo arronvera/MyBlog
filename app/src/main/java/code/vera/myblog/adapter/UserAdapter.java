@@ -9,7 +9,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.BindView;
 import code.vera.myblog.R;
-import code.vera.myblog.bean.home.UserInfoBean;
+import code.vera.myblog.bean.UserInfoBean;
 import code.vera.myblog.listener.OnItemClickListener;
 import code.vera.myblog.listener.OnItemHeadPhotoListener;
 import code.vera.myblog.view.CircleImageView;
