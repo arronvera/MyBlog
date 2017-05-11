@@ -322,7 +322,7 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
      * 获取数据
      */
     private void getData(boolean isDialog) {
-        model.getHomeTimeLine(requestBean, getContext(), bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, isDialog) {
+        model.getHomeTimeLine(requestBean, mContext, bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<List<StatusesBean>>(mContext, isDialog) {
             @Override
             public void onNext(List<StatusesBean> statusesBeen) {
                 super.onNext(statusesBeen);
