@@ -37,6 +37,7 @@ import code.vera.myblog.model.user.UserModel;
 import code.vera.myblog.presenter.activity.PersonalityActivity;
 import code.vera.myblog.presenter.activity.PostActivity;
 import code.vera.myblog.presenter.activity.SearchActivity;
+import code.vera.myblog.presenter.activity.SetActivity;
 import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.fragment.MenuFragment;
 import code.vera.myblog.presenter.fragment.collection.CollectionFragment;
@@ -230,30 +231,38 @@ public class MainActivity extends PresenterActivity<MainView, UserModel>
             case 0:
                 fragment = new HomeFragment();
                 view.setImageResouce(R.mipmap.ic_circle);
+                fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
                 break;
             case 1:
                 fragment = new MessageFragment();
                 view.setImageResouce(R.mipmap.ic_title_message);
+                fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
+
                 break;
             case 2:
                 fragment = new FindFragment();
                 view.setImageResouce(R.mipmap.ic_title_find);
+                fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
+
                 break;
             case 3:
                 fragment = new CollectionFragment();
                 view.setImageResouce(R.mipmap.ic_favorite);
+                fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
                 break;
             case 4:
                 fragment = new DraftFragment();
                 view.setImageResouce(R.mipmap.ic_draft);
+                fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
+
                 break;
             case 5://设置
-                fragment = new SetFragment();
-                view.setImageResouce(R.mipmap.ic_set);
+//                fragment = new SetFragment();
+//                view.setImageResouce(R.mipmap.ic_set);
+                SetActivity.start(mContext);
                 break;
         }
-        fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
-        dlLeft.closeDrawer(GravityCompat.START);
+        dlLeft.closeDrawer(GravityCompat.START);//关闭菜单
         lvMenu.setItemChecked(position, true);
     }
 

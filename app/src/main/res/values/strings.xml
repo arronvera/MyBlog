@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">圈艺微博客户端</string>
+    <string name="app_name">圈艺</string>
     <string name="ok">确定</string>
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>
@@ -29,6 +29,7 @@
     <string name="net_toast">网络环境检测提示</string>
     <string name="delete">删除</string>
     <string name="api_no_data">当前Api无法提供数据</string>
+    <string name="title_set">设置</string>
 
     <string name="share">分享</string>
     <string name="cancel">取消</string>

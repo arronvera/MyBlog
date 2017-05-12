@@ -62,8 +62,8 @@
         <activity
             android:name=".presenter.activity.PostActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppBaseTheme2" />
+            android:theme="@style/AppBaseTheme2"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".presenter.activity.CommentDetailActivity"
             android:screenOrientation="portrait"
@@ -121,9 +121,15 @@
             android:name=".presenter.activity.ProblemsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppBaseTheme2" />
-        <activity android:name=".presenter.activity.AboutAppActivity"
+        <activity
+            android:name=".presenter.activity.AboutAppActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppBaseTheme2"></activity>
+            android:theme="@style/AppBaseTheme2" />
+        <activity android:name=".presenter.activity.SetActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppBaseTheme2" >
+
+        </activity>
     </application>
 
 </manifest>
