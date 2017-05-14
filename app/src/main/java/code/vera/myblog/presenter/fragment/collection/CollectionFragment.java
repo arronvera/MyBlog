@@ -1,5 +1,7 @@
 package code.vera.myblog.presenter.fragment.collection;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,10 @@ import code.vera.myblog.R;
 import code.vera.myblog.adapter.CollectionAdapter;
 import code.vera.myblog.bean.CollectionBean;
 import code.vera.myblog.bean.StatusesBean;
+import code.vera.myblog.callback.ChangeScreenCallBack;
+import code.vera.myblog.callback.MenuConcernCallback;
+import code.vera.myblog.callback.MenuCopyCallback;
+import code.vera.myblog.callback.MenuShareCallback;
 import code.vera.myblog.config.Constants;
 import code.vera.myblog.listener.OnItemCommentListener;
 import code.vera.myblog.listener.OnItemFavoriteListener;
@@ -40,7 +46,7 @@ import static code.vera.myblog.presenter.activity.PostActivity.PARAM_STATUS_BEAN
 
 public class CollectionFragment extends PresenterFragment<CollectionView, CollectionModel>
 implements OnItemLikeListener,OnItemCommentListener,OnItemMenuListener,OnItemRepostListener
-,OnItemFavoriteListener{
+,OnItemFavoriteListener,ChangeScreenCallBack,MenuCopyCallback,MenuConcernCallback,MenuShareCallback{
     private int count=15;
     private int page=1;
     private CollectionAdapter adapter;
@@ -79,6 +85,10 @@ implements OnItemLikeListener,OnItemCommentListener,OnItemMenuListener,OnItemRep
 
             }
         });
+        view.setChangeScreenCallBack(this);//屏幕亮度
+        view.setMenuCopyCallback(this);//复制到粘贴板
+        view.setMenuConcernCallback(this);//关注
+        view.setMenuShareCallback(this);
     }
 
     private void setAdapter() {
@@ -154,11 +164,36 @@ implements OnItemLikeListener,OnItemCommentListener,OnItemMenuListener,OnItemRep
                     adapter.getItem(index).getStatusesBean().setFavorited(false);
                     adapter.notifyItemRemoved(index);
                     ScreenUtils.backgroundAlpaha(getActivity(), 1.0f);
-
                 }else {
                     ToastUtil.showToast(mContext,"取消收藏失败");
                 }
             }
         });
+    }
+
+    @Override
+    public void changeScreen() {//更改屏幕亮度
+        ScreenUtils.backgroundAlpaha(getActivity(), 1.0f);
+    }
+
+    @Override
+    public void copy() {//复制到粘贴板
+        ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        cm.setText(adapter.getItem(index).getStatus());
+        ToastUtil.showToast(getContext(), "复制成功");
+        view.dismissPop();
+    }
+
+    @Override
+    public void concern() {//关注
+        ToastUtil.showToast(mContext,getString(R.string.api_not_found));
+        view.dismissPop();
+    }
+
+    @Override
+    public void share() {//分享
+        //todo
+        ToastUtil.showToast(mContext,getString(R.string.api_not_found));
+        view.dismissPop();
     }
 }

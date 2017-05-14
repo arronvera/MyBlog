@@ -1,5 +1,6 @@
 package code.vera.myblog.view.collection;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -12,7 +13,14 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import code.vera.myblog.R;
+import code.vera.myblog.callback.ChangeScreenCallBack;
+import code.vera.myblog.callback.MenuConcernCallback;
+import code.vera.myblog.callback.MenuCopyCallback;
+import code.vera.myblog.callback.MenuShareCallback;
+import code.vera.myblog.listener.OnItemConcernListener;
 import code.vera.myblog.listener.OnItemFavoriteListener;
+import code.vera.myblog.utils.ScreenUtils;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.RefreshView;
 import code.vera.myblog.view.widget.LikeView;
 import code.vera.myblog.view.widget.MenuPopuWindow;
@@ -27,8 +35,13 @@ public class CollectionView extends RefreshView {
     private PopupWindow menuPopupWindow;//菜单
     private Button btnFavorites;
     private Button btnCopy;
+    private Button btnConcern;
+    private Button btnShare;
     private OnItemFavoriteListener onItemFavoriteListener;
-
+    private ChangeScreenCallBack changeScreencallBack;
+    private MenuCopyCallback menuCopyCallback;
+    private MenuConcernCallback menuConcernCallback;
+    private MenuShareCallback menuShareCallback;
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
@@ -49,6 +62,16 @@ public class CollectionView extends RefreshView {
         btnFavorites = (Button) menu.findViewById(R.id.btn_shoucang);
         btnFavorites.setText(R.string.cancel_collection);
         btnCopy = (Button) menu.findViewById(R.id.btn_copy);
+        btnConcern= (Button) menu.findViewById(R.id.btn_concern);
+        btnShare= (Button) menu.findViewById(R.id.btn_share);
+        menuPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                if (changeScreencallBack!=null){// popupWindow隐藏时恢复屏幕正常透明度
+                    changeScreencallBack.changeScreen();
+                }
+            }
+        });
         btnFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +81,26 @@ public class CollectionView extends RefreshView {
         btnCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //复制到粘贴板
+                if (menuCopyCallback!=null){
+                    menuCopyCallback.copy();
+                }
+            }
+        });
+        btnConcern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (menuConcernCallback!=null){
+                    menuConcernCallback.concern();
+                }
+            }
+        });
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (menuShareCallback!=null){
+                    menuShareCallback.share();
+                }
             }
         });
     }
@@ -79,5 +121,20 @@ public class CollectionView extends RefreshView {
 
     public void dismissPop() {
         menuPopupWindow.dismiss();
+    }
+    public void setChangeScreenCallBack(ChangeScreenCallBack callBack){
+        this.changeScreencallBack=callBack;
+    }
+
+    public void setMenuCopyCallback(MenuCopyCallback menuCopyCallback) {
+        this.menuCopyCallback = menuCopyCallback;
+    }
+
+    public void setMenuConcernCallback(MenuConcernCallback menuConcernCallback) {
+        this.menuConcernCallback = menuConcernCallback;
+    }
+
+    public void setMenuShareCallback(MenuShareCallback menuShareCallback) {
+        this.menuShareCallback = menuShareCallback;
     }
 }
