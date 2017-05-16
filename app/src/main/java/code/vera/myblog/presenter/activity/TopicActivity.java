@@ -35,6 +35,7 @@ public class TopicActivity extends PresenterActivity<TopicView,TopicModel> {
         super.onAttach();
         Intent intent=getIntent();
         String topic=intent.getStringExtra("topic");
+        view.setTopicTitle(topic);
         setAdapter();
         getTopic(topic);
     }
@@ -54,6 +55,12 @@ public class TopicActivity extends PresenterActivity<TopicView,TopicModel> {
                 }else{
                     ToastUtil.showToast(mContext,getString(R.string.topic_no_share));
                 }
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+                super.onFailure(e);
+                ToastUtil.showToast(mContext,getString(R.string.api_not_found));
             }
         });
     }

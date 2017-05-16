@@ -2,7 +2,10 @@ package code.vera.myblog.view.other;
 
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.TextView;
 
+import butterknife.BindView;
+import code.vera.myblog.R;
 import code.vera.myblog.adapter.RvAdapter;
 import code.vera.myblog.view.RefreshView;
 
@@ -11,6 +14,9 @@ import code.vera.myblog.view.RefreshView;
  */
 
 public class TopicView extends RefreshView {
+    @BindView(R.id.tv_topic_title)
+    TextView tvTopicTtile;
+
     @Override
     public void onAttachView(@NonNull View view) {
         super.onAttachView(view);
@@ -19,5 +25,9 @@ public class TopicView extends RefreshView {
     @Override
     public void setAdapter(RvAdapter adapter) {
         super.setAdapter(adapter);
+    }
+
+    public void setTopicTitle(String topic) {
+        tvTopicTtile.setText(topic);
     }
 }
