@@ -34,12 +34,11 @@ public class LoginActivity extends PresenterActivity<LoginView, VoidModel> {
     @Override
     protected void onAttach() {
         super.onAttach();
-
-
-        loginListener=new AuthListener();//登陆认证的listener
+        loginListener = new AuthListener();//登陆认证的listener
         view.setAuthInfo(loginListener);
     }
-    public class AuthListener implements WeiboAuthListener{
+
+    public class AuthListener implements WeiboAuthListener {
         @Override
         public void onComplete(Bundle bundle) {
             Debug.d("complete");
@@ -49,38 +48,40 @@ public class LoginActivity extends PresenterActivity<LoginView, VoidModel> {
                 String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(
                         new java.util.Date(accessToken.getExpiresTime()));
                 String format = "Token：%1$s \\n有效期：%2$s";
-                token=String.format(format, accessToken.getToken(), date);
-                Debug.d("token="+ readAccessToken(getApplicationContext()).getToken());
-                Debug.d("time="+ readAccessToken(getApplicationContext()).getExpiresTime());
+                token = String.format(format, accessToken.getToken(), date);
+                Debug.d("token=" + readAccessToken(getApplicationContext()).getToken());
+                // Debug.d("time="+ readAccessToken(getApplicationContext()).getExpiresTime());
                 //保存
-                ToastUtil.showToast(mContext,"登陆成功~");
+                ToastUtil.showToast(mContext, "登陆成功~");
                 AccessTokenKeeper.writeAccessToken(getApplicationContext(), accessToken);
                 MainActivity.start(mContext);
                 finish();
-            }else{
+            } else {
                 Debug.d("token为空");
             }
         }
 
         @Override
         public void onWeiboException(WeiboException e) {
-            Debug.d("e="+e.getMessage());
-            ToastUtil.showToast(mContext,e.getMessage());
+            Debug.d("e=" + e.getMessage());
+            ToastUtil.showToast(mContext, "授权失败");
         }
 
         @Override
         public void onCancel() {
             Debug.d("cancel");
-            ToastUtil.showToast(mContext,"取消");
+            ToastUtil.showToast(mContext, "取消");
         }
     }
+
     @OnClick(R.id.tv_register)
-    public void register(){
-        
+    public void register() {
+
 
     }
-    public static void start(Context context){
-        Intent intent=new Intent(context,LoginActivity.class);
+
+    public static void start(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
     }
 }

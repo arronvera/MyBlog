@@ -30,7 +30,7 @@ import static code.vera.myblog.presenter.activity.PersonalityActivity.BUNDLER_PA
 import static code.vera.myblog.presenter.activity.TopicActivity.BUNDLER_PARAM_TOPIC;
 
 /**
- * 关于我
+ * 我发出的评论
  * Created by vera on 2017/1/20 0020.
  */
 
