@@ -336,13 +336,13 @@ public class HomeFragment extends PresenterFragment<HomeView, HomeModel> impleme
                 }
             }
         });
-        model.clearUnread(mContext, bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, false) {
-            @Override
-            public void onNext(String s) {
-                super.onNext(s);
-                mContext.sendBroadcast(new Intent(ACTION_CLEAR_UNREAD));
-            }
-        });
+//        model.clearUnread(mContext, bindUntilEvent(FragmentEvent.DESTROY), new CustomSubscriber<String>(mContext, false) {
+//            @Override
+//            public void onNext(String s) {
+//                super.onNext(s);
+//                mContext.sendBroadcast(new Intent(ACTION_CLEAR_UNREAD));
+//            }
+//        });
     }
 
     @Override
