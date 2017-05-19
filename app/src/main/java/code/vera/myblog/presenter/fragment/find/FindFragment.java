@@ -165,9 +165,9 @@ public class FindFragment extends PresenterFragment<FindView, FindModel>
 
     @Override
     public void onItemAtListener(View v, int pos, String str) {
-        Debug.d("点击@某人" + str);
+//        Debug.d("点击@某人" + str);
         Bundle bundle = new Bundle();
-        bundle.putString(BUNDLER_PARAM_USER, str.substring(str.indexOf("@") + 1, str.length()));
+        bundle.putString(PersonalityActivity.BUNDLER_PARAM_USER_NAME, str.substring(str.indexOf("@") + 1, str.length()));
         PersonalityActivity.start(mContext, bundle);
     }
 

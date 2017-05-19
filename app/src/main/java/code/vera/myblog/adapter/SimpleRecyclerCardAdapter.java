@@ -9,13 +9,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import butterknife.BindView;
 import code.vera.myblog.R;
 import code.vera.myblog.bean.PicBean;
+import code.vera.myblog.listener.OnItemClickListener;
 
 /**
  * Created by vera on 2017/3/30 0030.
  */
 
 public class SimpleRecyclerCardAdapter  extends RvAdapter<PicBean> {
-
+    private OnItemClickListener onItemClickListener;
     public SimpleRecyclerCardAdapter(Context context) {
         super(context);
     }
@@ -39,8 +40,20 @@ public class SimpleRecyclerCardAdapter  extends RvAdapter<PicBean> {
         }
 
         @Override
-        public void onBindData(int position, PicBean bean) {
+        public void onBindData(final int position, PicBean bean) {
             ImageLoader.getInstance().displayImage(bean.getThumbnail_pic(),ivPhoto);
+            ivPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener!=null){
+                        onItemClickListener.onItemClickListener(view,position);
+                    }
+                }
+            });
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }
