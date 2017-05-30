@@ -47,4 +47,6 @@
     <string name="register">注册</string>
     <string name="str_if_original_weibo_comment">是否评论给原作者</string>
     <string name="api_not_found">当前API不存在，等待SDK开放才可以使用</string>
+    <string name="str_camera">拍照</string>
+    <string name="str_photo">图库</string>
 </resources>

@@ -348,7 +348,7 @@ public class PostActivity extends PresenterActivity<PostView, PostModel> impleme
 
     private void showChosePicDialog() {
         new AlertDialog.Builder(this)
-                .setItems(new String[]{"拍照", "图库"}, new DialogInterface.OnClickListener() {
+                .setItems(new String[]{getString(R.string.str_camera), getString(R.string.str_photo)}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
