@@ -14,6 +14,8 @@
     <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name=".BaseApplication"
@@ -130,6 +132,7 @@
             android:theme="@style/AppBaseTheme2" >
 
         </activity>
+        <service android:name="com.amap.api.location.APSService"></service>
     </application>
 
 </manifest>

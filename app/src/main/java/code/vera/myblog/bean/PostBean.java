@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 上传请求实体类
  * Created by vera on 2017/2/9 0009.
  */
-@DatabaseTable(tableName = "tb_post")
+@DatabaseTable (tableName = "tb_post")
 public class PostBean implements Serializable {
     @DatabaseField(generatedId = true)
     private int id;//主键

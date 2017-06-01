@@ -23,6 +23,7 @@ import code.vera.myblog.R;
 import code.vera.myblog.bean.PicBean;
 import code.vera.myblog.bean.RetweetedStatusBean;
 import code.vera.myblog.bean.StatusesBean;
+import code.vera.myblog.bean.UserBean;
 import code.vera.myblog.listener.OnItemAtListener;
 import code.vera.myblog.listener.OnItemClickListener;
 import code.vera.myblog.listener.OnItemCommentListener;
@@ -176,9 +177,11 @@ public class HomeAdapter extends RvAdapter<StatusesBean> {
                 llLine.setVisibility(View.VISIBLE);
                 RetweetedStatusBean statusBean = bean.getRetweetedStatusBean();
                 llAuthorInfo.setVisibility(View.VISIBLE);
-                String content_author = "@" + statusBean.getUserbean().getName() + ":" + statusBean.getText();
-                SpannableStringBuilder spannableString2 = HomeUtils.getWeiBoContent(onItemAtListener, onItemTopicListener, onItemLinkListener, content_author, context, position, tvAuthorText);
-                tvAuthorText.setText(spannableString2);
+                if(statusBean.getUserbean()!=null){
+                    String content_author = "@" + statusBean.getUserbean().getName() + ":" + statusBean.getText();
+                    SpannableStringBuilder spannableString2 = HomeUtils.getWeiBoContent(onItemAtListener, onItemTopicListener, onItemLinkListener, content_author, context, position, tvAuthorText);
+                    tvAuthorText.setText(spannableString2);
+                }
                 if (statusBean.getPic_list() != null && statusBean.getPic_list().size() != 0) {
                     oriNineGirdImageView.setImagesData(statusBean.getPic_list());
                     oriNineGirdImageView.setVisibility(View.VISIBLE);

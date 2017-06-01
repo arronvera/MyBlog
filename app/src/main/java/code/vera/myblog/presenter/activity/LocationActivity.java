@@ -28,6 +28,7 @@ import code.vera.myblog.listener.OnItemClickListener;
 import code.vera.myblog.model.other.LocationModel;
 import code.vera.myblog.presenter.base.PresenterActivity;
 import code.vera.myblog.presenter.subscribe.CustomSubscriber;
+import code.vera.myblog.utils.ToastUtil;
 import code.vera.myblog.view.location.LocationView;
 import ww.com.core.Debug;
 import ww.com.core.widget.CustomSwipeRefreshLayout;
@@ -165,10 +166,11 @@ public class LocationActivity extends PresenterActivity<LocationView, LocationMo
             mlocationClient = new AMapLocationClient(this);
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
-            //设置定位回调监听
-            mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            //设置定位回调监听
+            mlocationClient.setLocationListener(this);
+            mLocationOption.setOnceLocation(true);
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.startLocation();//启动定位
         }
@@ -186,6 +188,7 @@ public class LocationActivity extends PresenterActivity<LocationView, LocationMo
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
+        Debug.d("定位====");
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
                 address = aMapLocation.getAddress();
@@ -193,10 +196,12 @@ public class LocationActivity extends PresenterActivity<LocationView, LocationMo
                 lon = aMapLocation.getLongitude();
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
 //                view.setAddress(address);
+                Debug.d("lat="+lat+",lon="+lon);
                 getNearByAddress(true);
             } else {
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 Log.e("AmapErr", errText);
+                ToastUtil.showToast(mContext,"定位失败，请检查定位权限是否开启");
             }
         }
     }
