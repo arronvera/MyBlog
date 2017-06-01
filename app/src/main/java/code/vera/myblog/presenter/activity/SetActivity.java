@@ -50,7 +50,8 @@ public class SetActivity extends PresenterActivity<SetView,VoidModel> {
     }
     private void initData() {
         File cacheDir = StorageUtils.getCacheDirectory(mContext);
-        Double size = FileUtils.getFileOrFilesSize(cacheDir.getAbsolutePath(), SIZETYPE_MB);
+        Double size = FileUtils.getFileOrFilesSize(cacheDir .getAbsolutePath(), SIZETYPE_MB);
+//        Double size = FileUtils.getFileOrFilesSize(cacheDir.getAbsolutePath(), SIZETYPE_MB);
         view.setCache(size);
 
     }

@@ -83,32 +83,6 @@ public class CustomSubscriber<T> extends Subscriber<T> implements SubscribeCance
     }
 
     public void onFailure(Throwable e) {
-//        if (e instanceof ApiException) {
-//            ApiException apiException = (ApiException) e;
-//            ResponseBean responseBean = apiException.getResponseBean();
-//            if (responseBean != null && responseBean.isNeedRelogin()) {
-//                DialogUtils.showDialog(context, "温馨提示", "需要重新登录", "确定", new DialogInterface
-//                        .OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        BaseApplication.getInstance().saveUser(null);
-//                        BaseApplication.getInstance().clearActivities();
-//                        LoginActivity.start(context);
-//                    }
-//                });
-//                return;
-//            }
-//            resultError(apiException.getCode(), apiException.getMessage(), context);
-
-//            e.printStackTrace();
-//        } else if (e instanceof SocketTimeoutException) {
-//            DialogUtils.showNotice(context, "提示", "网络请求超时！");
-//        } else if (e instanceof ConnectException) {
-//            DialogUtils.showNotice(context, "提示", "无法连接到服务器，请检查网络是否正常或请稍后再试！");
-//        } else {
-//            e.printStackTrace();
-//            DialogUtils.showNotice(context, "提示", "请求失败，请检查网络是否正常！");
-//        }
     }
 
     @Override
